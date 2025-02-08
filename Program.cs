@@ -1,5 +1,7 @@
 ﻿using Avalonia;
 using System;
+using NDBotUI.Modules.Shared.EventManager;
+using NDBotUI.Modules.Shared.TedBed.RxEvent;
 
 namespace NDBotUI;
 
@@ -9,8 +11,14 @@ sealed class Program
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
+    public static void Main(string[] args)
+    {
+        RxEventManager.RegisterEvent(new TedBedEffect());
+        RxEventManager.Dispatch(TestBedAction.FOO_ACTION.Create(null));
+
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+    }
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()

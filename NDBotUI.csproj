@@ -11,6 +11,7 @@
     <ItemGroup>
         <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
+        <Folder Include="Modules\Game\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,5 +25,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
+        <PackageReference Include="System.Reactive" Version="6.0.1" />
+        <PackageReference Include="System.Reactive.Linq" Version="6.0.1" />
     </ItemGroup>
 </Project>
