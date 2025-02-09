@@ -4,7 +4,6 @@ using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.Models;
 using AdvancedSharpAdbClient.Receivers;
-using NDBotUI.Modules.Shared.Emulator.Errors;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 
 namespace NDBotUI.Modules.Shared.Emulator.Models;
@@ -13,6 +12,8 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 {
     public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
     private DeviceClient? _deviceClient;
+    public string Serial => emulatorScanData.DeviceData.Serial;
+    public DeviceState State => emulatorScanData.DeviceData.State;
     public string DeviceType => DetectEmulatorType(emulatorScanData.DeviceData.Model);
 
     public string SendShellCommand(string command)

@@ -9,6 +9,7 @@ namespace NDBotUI.Modules.Shared.Emulator.Services;
 
 public class EmulatorManager(AdbHelper adbHelper)
 {
+    public static EmulatorManager Instance { get; } = new(new AdbHelper("Resources/platform-tools/adb.exe"));
     public List<EmulatorConnection> EmulatorConnections { get; } = [];
 
     public void RefreshDevices()

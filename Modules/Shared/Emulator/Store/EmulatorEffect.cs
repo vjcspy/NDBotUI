@@ -17,10 +17,7 @@ public class EmulatorEffect
         // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);
         // Console.WriteLine($"Found {results.Count} emulators");
 
-        var adbHelper = new AdbHelper("Resources/platform-tools/adb.exe");
-
-        // Tạo EmulatorManager và refresh danh sách emulator
-        var emulatorManager = new EmulatorManager(adbHelper);
+        var emulatorManager = EmulatorManager.Instance;
         emulatorManager.RefreshDevices();
 
         Console.WriteLine($"Found {emulatorManager.EmulatorConnections.Count} devices");

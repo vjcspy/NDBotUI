@@ -1,0 +1,34 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:NDBotUI.Modules.Core.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.Modules.Core.Views.AutoContainer"
+             x:DataType="viewModels:AutoContainerViewModel">
+    <Grid RowDefinitions="50,*,50">
+        <!-- Header (cố định chiều cao) -->
+        <Border Background="LightGray" Grid.Row="0">
+            <TextBlock Text="Header" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Border>
+
+        <!-- Content -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,5,*" RowDefinitions="*">
+            <Border Grid.Column="0" Background="LightBlue" MinWidth="150">
+                <TextBlock Text="Left Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+
+            <!-- GridSplitter -->
+            <GridSplitter Grid.Column="1" Width="5" Background="Gray" HorizontalAlignment="Stretch" />
+
+            <Border Grid.Column="2" Background="LightGreen" MinWidth="150">
+                <TextBlock Text="Right Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+        </Grid>
+
+        <!-- Footer (cố định chiều cao) -->
+        <Border Background="LightGray" Grid.Row="2">
+            <TextBlock Text="Footer" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Border>
+    </Grid>
+</UserControl>

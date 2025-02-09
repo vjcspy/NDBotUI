@@ -1,22 +1,20 @@
-﻿using System.Reactive;
+﻿using System;
+using System.Reactive;
+using System.Reactive.Disposables;
+using NDBotUI.Modules.Core.ViewModels;
 using NDBotUI.ViewModels.TedBed;
 using ReactiveUI;
 using GlobalState = NDBotUI.Modules.Core.Store.GlobalState;
 
 namespace NDBotUI.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase, IScreen
+public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 {
     public GlobalState State { get; } = GlobalState.Instance;
-
-    // The Router associated with this Screen.
-    // Required by the IScreen interface.
     public RoutingState Router { get; } = new RoutingState();
 
     // The command that navigates a user back.
     public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
-    public ReactiveCommand<Unit, IRoutableViewModel> NavigateToProductPage { get; }
-
     public MainWindowViewModel()
     {
         // Manage the routing state. Use the Router.Navigate.Execute
@@ -26,7 +24,16 @@ public class MainWindowViewModel : ViewModelBase, IScreen
         // of a view model, this allows you to pass parameters to 
         // your view models, or to reuse existing view models.
         //
-        NavigateToProductPage = ReactiveCommand.CreateFromObservable(() =>
-            Router.Navigate.Execute(new ProductPageViewModel(this)));
+
+        this.WhenActivated(disposables =>
+        {
+            Router.Navigate.Execute(new AutoContainerViewModel(this));
+
+            Disposable
+                .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))
+                .DisposeWith(disposables);
+        });
     }
+
+    public ViewModelActivator Activator { get; } = new();
 }
