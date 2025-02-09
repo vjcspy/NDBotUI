@@ -6,6 +6,7 @@
         <entry key="App.axaml" value="NDBotUI.csproj" />
         <entry key="Modules/Core/Views/AutoContainer.axaml" value="NDBotUI.csproj" />
         <entry key="Modules/Shared/Emulator/Views/Emulators.axaml" value="NDBotUI.csproj" />
+        <entry key="Modules/Shared/Emulator/Views/EmulatorsView.axaml" value="NDBotUI.csproj" />
         <entry key="Views/HomeWindow.axaml" value="NDBotUI.csproj" />
         <entry key="Views/MainWindow.axaml" value="NDBotUI.csproj" />
         <entry key="Views/TedBed/ProductDetailView.axaml" value="NDBotUI.csproj" />

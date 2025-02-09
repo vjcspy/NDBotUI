@@ -13,11 +13,11 @@ namespace NDBotUI.Modules.Shared.Emulator.ViewModels;
 
 public class EmulatorsViewModel : ViewModelBase
 {
-    public GlobalState State { get; } = GlobalState.Instance;
+    public AppStore Store { get; } = AppStore.Instance;
 
     public ReactiveCommand<Unit, Unit> CheckData { get; } = ReactiveCommand.Create(() =>
     {
-        Console.WriteLine($"Number of emulators {GlobalState.Instance.EmulatorConnections.Count}");
+        Console.WriteLine($"Number of emulators {AppStore.Instance.EmulatorConnections.Count}");
     });
 
     public EmulatorsViewModel()

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Disposables;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Core.ViewModels;
 using NDBotUI.ViewModels.TedBed;
 using ReactiveUI;
-using GlobalState = NDBotUI.Modules.Core.Store.GlobalState;
 
 namespace NDBotUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 {
-    public GlobalState State { get; } = GlobalState.Instance;
+    public AppStore Store => AppStore.Instance;
     public RoutingState Router { get; } = new RoutingState();
 
     // The command that navigates a user back.
     public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
+
     public MainWindowViewModel()
     {
         // Manage the routing state. Use the Router.Navigate.Execute
@@ -27,7 +28,8 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 
         this.WhenActivated(disposables =>
         {
-            Router.Navigate.Execute(new AutoContainerViewModel(this));
+            // Router.Navigate.Execute(new AutoContainerViewModel(this));
+            Router.Navigate.Execute(new ProductPageViewModel(this));
 
             Disposable
                 .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))

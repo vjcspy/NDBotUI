@@ -10,11 +10,11 @@
         x:DataType="vm:MainWindowViewModel"
         Title="NDBot" Width="400" Height="700">
 
-    <reactiveUi:RoutedViewHost Router="{Binding Router}">
-        <reactiveUi:RoutedViewHost.ViewLocator>
-            <ndBotUi:AppViewLocator />
-        </reactiveUi:RoutedViewHost.ViewLocator>
-    </reactiveUi:RoutedViewHost>
+    <!-- <reactiveUi:RoutedViewHost Router="{Binding Router}"> -->
+    <!--     <reactiveUi:RoutedViewHost.ViewLocator> -->
+    <!--         <ndBotUi:AppViewLocator /> -->
+    <!--     </reactiveUi:RoutedViewHost.ViewLocator> -->
+    <!-- </reactiveUi:RoutedViewHost> -->
 
     <!-- <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10"> -->
     <!--      -->
@@ -31,12 +31,11 @@
 
 
     <!-- ________________ TEDBED ________________ -->
-    <!-- <StackPanel> -->
-    <!--     <Button Content="Go to Product Page" Command="{Binding NavigateToProductPage}" /> -->
-    <!--     <reactiveUi:RoutedViewHost Router="{Binding Router}"> -->
-    <!--         <reactiveUi:RoutedViewHost.ViewLocator> -->
-    <!--             <services:AppViewLocator /> -->
-    <!--         </reactiveUi:RoutedViewHost.ViewLocator> -->
-    <!--     </reactiveUi:RoutedViewHost> -->
-    <!-- </StackPanel> -->
+    <StackPanel>
+        <reactiveUi:RoutedViewHost Router="{Binding Router}">
+            <reactiveUi:RoutedViewHost.ViewLocator>
+                <ndBotUi:AppViewLocator />
+            </reactiveUi:RoutedViewHost.ViewLocator>
+        </reactiveUi:RoutedViewHost>
+    </StackPanel>
 </Window>

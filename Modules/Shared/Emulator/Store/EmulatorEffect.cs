@@ -42,11 +42,11 @@ public class EmulatorEffect
         // TODO: move to store
         Dispatcher.UIThread.Post(() =>
         {
-            GlobalState.Instance.EmulatorConnections.Clear();
+            AppStore.Instance.EmulatorConnections.Clear();
             foreach (var emulator in emulatorManager.EmulatorConnections)
             {
                 Console.WriteLine($"Write to state: emulator {emulator.DeviceData.Serial}");
-                GlobalState.Instance.EmulatorConnections.Add(emulator);
+                AppStore.Instance.EmulatorConnections.Add(emulator);
             }
         });
 

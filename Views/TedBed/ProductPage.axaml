@@ -8,16 +8,19 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.Views.TedBed.ProductPage"
              x:DataType="vm:ProductPageViewModel">
-    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*">
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*,*,*">
         <!-- Header của trang Product -->
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Text="{Binding Store.State.Count}"
+                   FontSize="24"
+                   HorizontalAlignment="Center" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                    Text="Product Page"
                    FontSize="24"
-                   HorizontalAlignment="Center"
-                   Margin="10" />
+                   HorizontalAlignment="Center" />
 
         <!-- Vùng hiển thị danh sách hoặc chi tiết sản phẩm -->
-        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Router="{Binding Router}">
+        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="0" Router="{Binding Router}">
             <reactiveUi:RoutedViewHost.ViewLocator>
                 <ndBotUi:AppViewLocator />
             </reactiveUi:RoutedViewHost.ViewLocator>
@@ -33,7 +36,16 @@
         <Button Grid.Row="2" Grid.Column="1"
                 Content="Xem Chi Tiết"
                 Command="{Binding NavigateToDetail}"
-                HorizontalAlignment="Center"
-                Margin="10" />
+                HorizontalAlignment="Center" />
+
+        <Button Grid.Row="2" Grid.Column="2"
+                Content="Increase"
+                Command="{Binding IncreaseCounter}"
+                HorizontalAlignment="Center" />
+
+        <Button Grid.Row="2" Grid.Column="3"
+                Content="Decrease"
+                Command="{Binding NavigateToDetail}"
+                HorizontalAlignment="Center" />
     </Grid>
 </UserControl>
