@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:reactiveUi="http://reactiveui.net"
              xmlns:vm="clr-namespace:NDBotUI.ViewModels.TedBed"
-             xmlns:services="clr-namespace:NDBotUI.Services"
+             xmlns:ndBotUi="clr-namespace:NDBotUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.Views.TedBed.ProductPage"
              x:DataType="vm:ProductPageViewModel">
@@ -19,7 +19,7 @@
         <!-- Vùng hiển thị danh sách hoặc chi tiết sản phẩm -->
         <reactiveUi:RoutedViewHost Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Router="{Binding Router}">
             <reactiveUi:RoutedViewHost.ViewLocator>
-                <services:AppViewLocator />
+                <ndBotUi:AppViewLocator />
             </reactiveUi:RoutedViewHost.ViewLocator>
         </reactiveUi:RoutedViewHost>
 

@@ -3,8 +3,6 @@
         xmlns:vm="using:NDBotUI.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:reactiveUi="http://reactiveui.net"
-        xmlns:services="clr-namespace:NDBotUI.Services"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NDBotUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"

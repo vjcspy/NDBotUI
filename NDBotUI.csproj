@@ -9,10 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
-        <Folder Include="Modules\Game\Store\" />
-        <Folder Include="Views\Authentication\" />
+        <Folder Include="Modules\Core\" />
+        <Folder Include="Modules\Game\MementoMori\Store\" />
     </ItemGroup>
 
     <ItemGroup>

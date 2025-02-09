@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace NDBotUI.Store;
+namespace NDBotUI.Modules.Core.Store;
 
 public partial class GlobalState : ObservableObject
 {

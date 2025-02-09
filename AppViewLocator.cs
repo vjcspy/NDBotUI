@@ -5,7 +5,7 @@ using NDBotUI.Views;
 using NDBotUI.Views.TedBed;
 using ReactiveUI;
 
-namespace NDBotUI.Services;
+namespace NDBotUI;
 
 public class AppViewLocator : IViewLocator
 {

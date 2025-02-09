@@ -1,13 +1,13 @@
 ﻿using System.Reactive;
-using NDBotUI.Store;
 using NDBotUI.ViewModels.TedBed;
 using ReactiveUI;
+using GlobalState = NDBotUI.Modules.Core.Store.GlobalState;
 
 namespace NDBotUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, IScreen
 {
-    public GlobalState State { get; } = GlobalState.Instance; 
+    public GlobalState State { get; } = GlobalState.Instance;
 
     // The Router associated with this Screen.
     // Required by the IScreen interface.
