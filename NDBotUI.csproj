@@ -11,7 +11,7 @@
     <ItemGroup>
         <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
-        <Folder Include="Modules\Game\" />
+        <Folder Include="Modules\Game\Store\" />
         <Folder Include="Views\Authentication\" />
     </ItemGroup>
 

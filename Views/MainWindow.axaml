@@ -10,24 +10,25 @@
         x:DataType="vm:MainWindowViewModel"
         Title="Login" Width="400" Height="300">
 
-    <!-- <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10"> -->
-    <!-- -->
-    <!--     <TextBlock Text="{Binding PageHeader}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" /> -->
-    <!-- -->
-    <!--     <TextBox Name="Key" Width="250" Height="40" Watermark="Enter Key" /> -->
-    <!-- -->
-    <!--     <Button Content="Login" Width="250" Height="40" -->
-    <!--             VerticalAlignment="Center" HorizontalAlignment="Center" -->
-    <!--             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" /> -->
-    <!-- </StackPanel> -->
-    
-    
-    <StackPanel>
-        <Button Content="Go to Product Page" Command="{Binding NavigateToProductPage}" />
-        <reactiveUi:RoutedViewHost Router="{Binding Router}">
-            <reactiveUi:RoutedViewHost.ViewLocator>
-                <services:AppViewLocator />
-            </reactiveUi:RoutedViewHost.ViewLocator>
-        </reactiveUi:RoutedViewHost>
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+
+        <TextBlock Text="{Binding State.AppName}" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+
+        <TextBox Name="Key" Width="250" Height="40" Watermark="Enter Key" />
+
+        <Button Content="Login" Width="250" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
     </StackPanel>
+    
+    
+    <!-- ________________ TEDBED ________________ -->
+    <!-- <StackPanel> -->
+    <!--     <Button Content="Go to Product Page" Command="{Binding NavigateToProductPage}" /> -->
+    <!--     <reactiveUi:RoutedViewHost Router="{Binding Router}"> -->
+    <!--         <reactiveUi:RoutedViewHost.ViewLocator> -->
+    <!--             <services:AppViewLocator /> -->
+    <!--         </reactiveUi:RoutedViewHost.ViewLocator> -->
+    <!--     </reactiveUi:RoutedViewHost> -->
+    <!-- </StackPanel> -->
 </Window>

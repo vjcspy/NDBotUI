@@ -1,4 +1,5 @@
 ﻿using System.Reactive;
+using NDBotUI.Store;
 using NDBotUI.ViewModels.TedBed;
 using ReactiveUI;
 
@@ -6,13 +7,7 @@ namespace NDBotUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, IScreen
 {
-    private string _pageHeader = "Login";
-
-    public string PageHeader
-    {
-        get => _pageHeader;
-        set => this.RaiseAndSetIfChanged(ref _pageHeader, value);
-    }
+    public GlobalState State { get; } = GlobalState.Instance; 
 
     // The Router associated with this Screen.
     // Required by the IScreen interface.
