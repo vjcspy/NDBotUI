@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace NDBotUI.Modules.Shared.EventManager;
 
@@ -20,21 +22,18 @@ public class RxEventManager
     public static void RegisterEvent(string[] eventTypes, RxEventHandler eventHandler)
     {
         ActionSubject
-            .Where(action =>
-                eventTypes.Length == 0 || eventTypes.Contains(action.Type))
+            .Where(action => eventTypes.Length == 0 || eventTypes.Contains(action.Type))
             .SelectMany(originalEvent =>
                 eventHandler(Observable.Return(originalEvent))
-                    .Select(handledEvent =>
-                        new
-                        {
-                            Original = originalEvent, Handled = handledEvent
-                        }))
+                    .SubscribeOn(TaskPoolScheduler.Default)
+                    .Select(handledEvent => new { Original = originalEvent, Handled = handledEvent })
+            )
+            .ObserveOn(Scheduler.Default)
             .Subscribe(events =>
                 {
                     var originEvent = events.Original;
                     var handledEvent = events.Handled;
 
-                    // Cập nhật correlationId nếu cần
                     if (originEvent.CorrelationId != null && handledEvent.CorrelationId == null)
                     {
                         handledEvent.CorrelationId = originEvent.CorrelationId;
@@ -42,7 +41,8 @@ public class RxEventManager
 
                     Dispatch(handledEvent);
                 },
-                onError: error => Console.Error.WriteLine($"Error in event stream: {error.Message}"));
+                onError: error => Console.Error.WriteLine($"Error in event stream: {error.Message}")
+            );
     }
 
     public static void RegisterEvent(object eventEffectInstance)
@@ -53,7 +53,6 @@ public class RxEventManager
 
         foreach (var method in methods)
         {
-            // Lấy EffectAttribute và các types
             var effectAttribute = method.GetCustomAttribute<EffectAttribute>();
             var eventTypes = effectAttribute?.Types ?? [];
 
