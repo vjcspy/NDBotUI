@@ -5,7 +5,7 @@ namespace NDBotUI.Modules.Shared.EventManager;
 public class EventAction<T>(object type, T? payload = default)
 {
     public object Type { get; } = type;
-    private T? Payload { get; } = payload;
+    public T? Payload { get; } = payload;
 
     private Guid? _correlationId;
 

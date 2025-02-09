@@ -8,7 +8,7 @@
              x:DataType="viewModels:EmulatorsViewModel">
     <Grid RowDefinitions="*" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"
-                  ItemsSource="{Binding Store.EmulatorConnections}"
+                  ItemsSource="{Binding Store.EmulatorStore.State.EmulatorConnections}"
                   IsReadOnly="True"
                   CanUserReorderColumns="True"
                   CanUserResizeColumns="True"

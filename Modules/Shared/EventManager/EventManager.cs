@@ -5,17 +5,21 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Store;
 
 namespace NDBotUI.Modules.Shared.EventManager;
 
 public class RxEventManager
 {
-    private static readonly Subject<EventAction<object?>> ActionSubject = new Subject<EventAction<object?>>();
+    private static readonly Subject<EventAction<object?>> ActionSubject = new();
 
     public static void Dispatch(EventAction<object?> action)
     {
         Console.WriteLine("Dispatching event " + action.Type);
         action.CorrelationId ??= Guid.NewGuid();
+
+        AppStore.Instance.Reduce(action);
+
         ActionSubject.OnNext(action);
     }
 

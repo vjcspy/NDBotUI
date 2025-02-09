@@ -28,8 +28,8 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 
         this.WhenActivated(disposables =>
         {
-            // Router.Navigate.Execute(new AutoContainerViewModel(this));
-            Router.Navigate.Execute(new ProductPageViewModel(this));
+            Router.Navigate.Execute(new AutoContainerViewModel(this));
+            // Router.Navigate.Execute(new ProductPageViewModel(this));
 
             Disposable
                 .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))

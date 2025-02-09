@@ -38,24 +38,12 @@ public class EmulatorEffect
             }
         }
 
-
-        // TODO: move to store
-        Dispatcher.UIThread.Post(() =>
-        {
-            AppStore.Instance.EmulatorConnections.Clear();
-            foreach (var emulator in emulatorManager.EmulatorConnections)
-            {
-                Console.WriteLine($"Write to state: emulator {emulator.DeviceData.Serial}");
-                AppStore.Instance.EmulatorConnections.Add(emulator);
-            }
-        });
-
-        return Event.EMPTY_ACTION;
+        return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
     }
 
     [Effect]
     public RxEventHandler HandleUserEvents()
     {
-        return upstream => upstream.OfAction([EmulatorAction.EMULATOR_INIT_ACTION]).Select(Process);
+        return upstream => upstream.OfAction([EmulatorAction.EmulatorInitAction]).Select(Process);
     }
 }

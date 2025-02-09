@@ -4,7 +4,14 @@ namespace NDBotUI.Modules.Shared.Emulator.Store;
 
 public static class EmulatorAction
 {
-    private const string EMULATOR_INIT = "EMULATOR_INIT";
+    public enum Type
+    {
+        EmulatorInit,
+        EmulatorConnectSuccess,
+    }
 
-    public static EventActionFactory<object?> EMULATOR_INIT_ACTION = new(EMULATOR_INIT);
+    public static readonly EventActionFactory<object?> EmulatorInitAction = new(Type.EmulatorInit);
+
+    public static readonly EventActionFactory<object?> EmulatorConnectSuccessAction =
+        new(Type.EmulatorConnectSuccess);
 }

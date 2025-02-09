@@ -16,7 +16,7 @@ sealed class Program
     public static void Main(string[] args)
     {
         RxEventManager.RegisterEvent([new TedBedEffect(), new EmulatorEffect()]);
-        // RxEventManager.Dispatch(EmulatorAction.EMULATOR_INIT_ACTION.Create());
+        RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }

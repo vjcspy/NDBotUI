@@ -2,16 +2,16 @@
 
 namespace NDBotUI.Modules.Core.Store;
 
-public enum AppAction
+public class AppAction
 {
-    Increment,
-    Decrement,
-    Reset
-}
+    public enum Type
+    {
+        Increment,
+        Decrement,
+        Reset
+    }
 
-public class AppActionFactory
-{
-    public static EventActionFactory<object?> Increment = new(AppAction.Increment);
-    public static EventActionFactory<object?> Decrement = new(AppAction.Decrement);
-    public static EventActionFactory<object?> Reset = new(AppAction.Reset);
+    public static EventActionFactory<object?> Increment = new(Type.Increment);
+    public static EventActionFactory<object?> Decrement = new(Type.Decrement);
+    public static EventActionFactory<object?> Reset = new(Type.Reset);
 }

@@ -22,7 +22,7 @@ public partial class ProductPageViewModel : ReactiveObject, IRoutableViewModel, 
     [RelayCommand]
     public void IncreaseCounter()
     {
-        AppStore.Instance.Reduce(AppAction.Increment);
+        AppStore.Instance.Reduce(AppAction.Increment.Create());
     }
 
 
