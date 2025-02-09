@@ -61,4 +61,12 @@ public class RxEventManager
             RegisterEvent(eventTypes, eventHandler);
         }
     }
+
+    public static void RegisterEvent(object[] eventEffectInstances)
+    {
+        foreach (var eventEffectInstance in eventEffectInstances)
+        {
+            RegisterEvent(eventEffectInstance);
+        }
+    }
 }

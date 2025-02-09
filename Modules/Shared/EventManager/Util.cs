@@ -15,3 +15,8 @@ public static class ObservableExtensions
             .Contains(action.Type));
     }
 }
+
+public static class Event
+{
+    public static readonly EventAction<object?> EMPTY_ACTION = new("EMPTY_ACTION");
+}
