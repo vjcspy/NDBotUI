@@ -2,6 +2,8 @@
 using System.Reactive.Linq;
 using System.Threading;
 using AdvancedSharpAdbClient.DeviceCommands.Models;
+using Avalonia.Threading;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Shared.Emulator.Helpers;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
@@ -26,24 +28,27 @@ public class EmulatorEffect
             try
             {
                 Console.WriteLine($"Connected to emulator {emulator.DeviceData.Serial} ({emulator.DeviceType})");
-
-                Console.WriteLine($"Send shell command");
+                Console.WriteLine("Send shell command");
                 var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
                 Console.WriteLine($"Shell Output: {output}");
-
-                // Sử dụng DeviceClient
-                var deviceClient = emulator.GetDeviceClient();
-                var element = deviceClient.FindElement("//node[@text='Login']");
-                if (element != null)
-                {
-                    Console.WriteLine("Found the Login button!");
-                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
         }
+
+
+        // TODO: move to store
+        Dispatcher.UIThread.Post(() =>
+        {
+            GlobalState.Instance.EmulatorConnections.Clear();
+            foreach (var emulator in emulatorManager.EmulatorConnections)
+            {
+                Console.WriteLine($"Write to state: emulator {emulator.DeviceData.Serial}");
+                GlobalState.Instance.EmulatorConnections.Add(emulator);
+            }
+        });
 
         return Event.EMPTY_ACTION;
     }

@@ -17,10 +17,9 @@ public class AdbHelper
     public AdbHelper(string adbPath)
     {
         this.adbPath = adbPath;
-        InitAdbServer();
     }
 
-    private void InitAdbServer()
+    public void InitAdbServer()
     {
         if (AdbServer.Instance.GetStatus().IsRunning)
         {

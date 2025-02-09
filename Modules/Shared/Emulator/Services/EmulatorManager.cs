@@ -14,6 +14,7 @@ public class EmulatorManager(AdbHelper adbHelper)
 
     public void RefreshDevices()
     {
+        adbHelper.InitAdbServer();
         EmulatorConnections.Clear();
 
         foreach (var emulatorScanData in adbHelper.ConnectByGetDevices())
