@@ -4,7 +4,11 @@
     <option name="projectPerEditor">
       <map>
         <entry key="App.axaml" value="NDBotUI.csproj" />
+        <entry key="Views/HomeWindow.axaml" value="NDBotUI.csproj" />
         <entry key="Views/MainWindow.axaml" value="NDBotUI.csproj" />
+        <entry key="Views/TedBed/ProductDetailView.axaml" value="NDBotUI.csproj" />
+        <entry key="Views/TedBed/ProductListView.axaml" value="NDBotUI.csproj" />
+        <entry key="Views/TedBed/ProductPage.axaml" value="NDBotUI.csproj" />
       </map>
     </option>
   </component>

@@ -1,0 +1,21 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NDBotUI.ViewModels.TedBed"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.Views.TedBed.ProductListView"
+             x:DataType="vm:ProductListViewModel">
+    <StackPanel>
+        <TextBlock Text="Danh sách sản phẩm"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+
+        <ListBox>
+            <ListBoxItem Content="Sản phẩm 1" />
+            <ListBoxItem Content="Sản phẩm 2" />
+            <ListBoxItem Content="Sản phẩm 3" />
+        </ListBox>
+    </StackPanel>
+</UserControl>

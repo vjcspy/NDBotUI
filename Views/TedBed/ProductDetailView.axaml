@@ -1,0 +1,30 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NDBotUI.ViewModels.TedBed"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.Views.TedBed.ProductDetailView"
+             x:DataType="vm:ProductDetailViewModel">
+    <StackPanel>
+        <TextBlock Text="Chi tiết sản phẩm"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+
+        <TextBlock Text="Tên sản phẩm: Sản phẩm 1"
+                   FontSize="16"
+                   Margin="5" />
+        <TextBlock Text="Giá: $100"
+                   FontSize="16"
+                   Margin="5" />
+        <TextBlock Text="Mô tả: Đây là một sản phẩm chất lượng cao."
+                   FontSize="16"
+                   Margin="5" />
+
+        <Button Content="Quay lại danh sách"
+                Command="{Binding NavigateBack}"
+                HorizontalAlignment="Center"
+                Margin="10" />
+    </StackPanel>
+</UserControl>

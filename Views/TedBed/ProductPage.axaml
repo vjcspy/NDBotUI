@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:reactiveUi="http://reactiveui.net"
+             xmlns:vm="clr-namespace:NDBotUI.ViewModels.TedBed"
+             xmlns:services="clr-namespace:NDBotUI.Services"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.Views.TedBed.ProductPage"
+             x:DataType="vm:ProductPageViewModel">
+    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*">
+        <!-- Header của trang Product -->
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+                   Text="Product Page"
+                   FontSize="24"
+                   HorizontalAlignment="Center"
+                   Margin="10" />
+
+        <!-- Vùng hiển thị danh sách hoặc chi tiết sản phẩm -->
+        <reactiveUi:RoutedViewHost Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Router="{Binding Router}">
+            <reactiveUi:RoutedViewHost.ViewLocator>
+                <services:AppViewLocator />
+            </reactiveUi:RoutedViewHost.ViewLocator>
+        </reactiveUi:RoutedViewHost>
+
+        <!-- Hai nút điều hướng -->
+        <Button Grid.Row="2" Grid.Column="0"
+                Content="Xem List"
+                Command="{Binding NavigateToList}"
+                HorizontalAlignment="Center"
+                Margin="10" />
+
+        <Button Grid.Row="2" Grid.Column="1"
+                Content="Xem Chi Tiết"
+                Command="{Binding NavigateToDetail}"
+                HorizontalAlignment="Center"
+                Margin="10" />
+    </Grid>
+</UserControl>

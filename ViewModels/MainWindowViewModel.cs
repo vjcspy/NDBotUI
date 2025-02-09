@@ -1,6 +1,37 @@
-﻿namespace NDBotUI.ViewModels;
+﻿using System.Reactive;
+using NDBotUI.ViewModels.TedBed;
+using ReactiveUI;
 
-public partial class MainWindowViewModel : ViewModelBase
+namespace NDBotUI.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase, IScreen
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    private string _pageHeader = "Login";
+
+    public string PageHeader
+    {
+        get => _pageHeader;
+        set => this.RaiseAndSetIfChanged(ref _pageHeader, value);
+    }
+
+    // The Router associated with this Screen.
+    // Required by the IScreen interface.
+    public RoutingState Router { get; } = new RoutingState();
+
+    // The command that navigates a user back.
+    public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
+    public ReactiveCommand<Unit, IRoutableViewModel> NavigateToProductPage { get; }
+
+    public MainWindowViewModel()
+    {
+        // Manage the routing state. Use the Router.Navigate.Execute
+        // command to navigate to different view models. 
+        //
+        // Note, that the Navigate.Execute method accepts an instance 
+        // of a view model, this allows you to pass parameters to 
+        // your view models, or to reuse existing view models.
+        //
+        NavigateToProductPage = ReactiveCommand.CreateFromObservable(() =>
+            Router.Navigate.Execute(new ProductPageViewModel(this)));
+    }
 }
