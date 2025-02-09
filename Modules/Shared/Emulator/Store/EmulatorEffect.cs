@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Threading;
 using AdvancedSharpAdbClient.DeviceCommands.Models;
 using NDBotUI.Modules.Shared.Emulator.Helpers;
 using NDBotUI.Modules.Shared.Emulator.Services;
@@ -22,14 +23,13 @@ public class EmulatorEffect
         var emulatorManager = new EmulatorManager(adbHelper);
         emulatorManager.RefreshDevices();
 
-
+        Console.WriteLine($"Found {emulatorManager.EmulatorConnections.Count} devices");
         foreach (var emulator in emulatorManager.EmulatorConnections)
         {
             try
             {
                 Console.WriteLine($"Connected to emulator {emulator.DeviceData.Serial} ({emulator.DeviceType})");
 
-                // Gửi lệnh shell
                 Console.WriteLine($"Send shell command");
                 var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
                 Console.WriteLine($"Shell Output: {output}");
@@ -47,7 +47,6 @@ public class EmulatorEffect
                 Console.WriteLine(e);
             }
         }
-
 
         return Event.EMPTY_ACTION;
     }

@@ -24,16 +24,14 @@ public class AdbHelper
     {
         if (AdbServer.Instance.GetStatus().IsRunning)
         {
-            Console.WriteLine("Adb server is already running.");
-            return;
-            // try
-            // {
-            //     AdbServer.Instance.StopServer();
-            // }
-            // catch
-            // {
-            //     // ignored
-            // }
+            try
+            {
+                AdbServer.Instance.StopServer();
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         adbServer = new AdbServer();
