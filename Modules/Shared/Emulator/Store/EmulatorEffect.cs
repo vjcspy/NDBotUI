@@ -13,20 +13,25 @@ public class EmulatorEffect
     {
         Console.WriteLine("Processing event " + action.Type);
 
-        var adbHelper = new AdbHelper("Resources/adb/adb.exe");
+        // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);
+        // Console.WriteLine($"Found {results.Count} emulators");
+
+        var adbHelper = new AdbHelper("Resources/platform-tools/adb.exe");
 
         // Tạo EmulatorManager và refresh danh sách emulator
         var emulatorManager = new EmulatorManager(adbHelper);
         emulatorManager.RefreshDevices();
 
-        try
+
+        foreach (var emulator in emulatorManager.EmulatorConnections)
         {
-            foreach (var emulator in emulatorManager.EmulatorConnections)
+            try
             {
-                Console.WriteLine($"Connected to emulator {emulator.Id} ({emulator.EmulatorType})");
+                Console.WriteLine($"Connected to emulator {emulator.DeviceData.Serial} ({emulator.DeviceType})");
 
                 // Gửi lệnh shell
-                var output = emulator.SendShellCommand("ls");
+                Console.WriteLine($"Send shell command");
+                var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
                 Console.WriteLine($"Shell Output: {output}");
 
                 // Sử dụng DeviceClient
@@ -37,10 +42,10 @@ public class EmulatorEffect
                     Console.WriteLine("Found the Login button!");
                 }
             }
-        }
-        catch (Exception)
-        {
-            // ignored
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
 
