@@ -10,11 +10,20 @@
 
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
-        <Folder Include="Modules\Core\" />
+        <Folder Include="Modules\Core\Models\" />
+        <Folder Include="Modules\Core\Services\" />
         <Folder Include="Modules\Game\MementoMori\Store\" />
+        <Folder Include="Resources\" />
     </ItemGroup>
 
     <ItemGroup>
+        <None Update="Resources\adb\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AdvancedSharpAdbClient" Version="3.3.13" />
         <PackageReference Include="Avalonia" Version="11.2.3" />
         <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.2.3" />
