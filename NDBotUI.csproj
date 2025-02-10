@@ -35,6 +35,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
         <PackageReference Include="ReactiveUI" Version="20.1.63" />
         <PackageReference Include="System.Management" Version="9.0.1" />
         <PackageReference Include="System.Reactive" Version="6.0.1" />

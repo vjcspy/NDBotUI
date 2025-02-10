@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Disposables;
+using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Modules.Core.Store;
 using ReactiveUI;
 
@@ -14,7 +15,7 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
     // The command that navigates a user back.
     public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(Func<IScreen, AutoContainerViewModel> autoContainerFactory)
     {
         // Manage the routing state. Use the Router.Navigate.Execute
         // command to navigate to different view models. 
@@ -26,7 +27,7 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 
         this.WhenActivated(disposables =>
         {
-            Router.Navigate.Execute(new AutoContainerViewModel(this));
+            Router.Navigate.Execute(autoContainerFactory(this));
             // Router.Navigate.Execute(new ProductPageViewModel(this));
 
             Disposable

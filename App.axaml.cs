@@ -4,6 +4,8 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
+using NDBotUI.Infrastructure;
 using NDBotUI.UI.Base.ViewModels;
 using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
 
@@ -23,9 +25,19 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
+
+            // Register all the services needed for the application to run
+            var collection = new ServiceCollection();
+            collection.AddCommonServices();
+            collection.AddViewModels();
+
+            // Creates a ServiceProvider containing services from the provided IServiceCollection
+            var services = collection.BuildServiceProvider();
+            var vm = services.GetRequiredService<MainWindowViewModel>();
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = vm
             };
         }
 
