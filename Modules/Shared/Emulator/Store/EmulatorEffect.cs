@@ -7,14 +7,17 @@ using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Shared.Emulator.Helpers;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
+using NLog;
 
 namespace NDBotUI.Modules.Shared.Emulator.Store;
 
 public class EmulatorEffect
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     private static EventAction<object?> Process(EventAction<object?> action)
     {
-        Console.WriteLine("Processing event " + action.Type);
+        Logger.Info("Processing event " + action.Type);
 
         if (AppStore.Instance.EmulatorStore.State.IsLoaded)
         {

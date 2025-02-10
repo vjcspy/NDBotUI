@@ -7,12 +7,15 @@ using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Infrastructure;
 using NDBotUI.UI.Base.ViewModels;
+using NLog;
 using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
 
 namespace NDBotUI;
 
 public partial class App : Application
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -42,6 +45,8 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+
+        Logger.Info("Application started");
     }
 
     private void DisableAvaloniaDataAnnotationValidation()
