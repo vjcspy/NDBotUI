@@ -3,11 +3,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NDBotUI.UI.Emulator.ViewModels"
+             xmlns:converters="clr-namespace:NDBotUI.UI.Emulator.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.UI.Emulator.Views.EmulatorsView"
              x:DataType="viewModels:EmulatorsViewModel">
+    <UserControl.Resources>
+        <converters:EmulatorConnectionStatusConverter x:Key="EmulatorConnectionStatusConverter" />
+    </UserControl.Resources>
     <Grid RowDefinitions="*" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"
+                  x:Name="DataGrid"
                   ItemsSource="{Binding Store.EmulatorStore.State.EmulatorConnections}"
                   IsReadOnly="True"
                   CanUserReorderColumns="True"
@@ -15,11 +20,22 @@
                   CanUserSortColumns="False"
                   GridLinesVisibility="All"
                   BorderThickness="1" BorderBrush="Gray"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding Store.EmulatorStore.State.EmulatorConnection, Mode=TwoWay}"
+                  SelectionChanged="OnSelectionChanged"
+                  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Serial}" />
-                <DataGridTextColumn Header="Store" Binding="{Binding State}" />
-                <DataGridTextColumn Header="Type" Binding="{Binding DeviceType}" Width="*" />
+                <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                <DataGridTemplateColumn Header="Status" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding Id, Converter={StaticResource EmulatorConnectionStatusConverter}}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <!-- <Button Grid.Row="1" Command="{Binding CheckData}">Check data</Button> -->

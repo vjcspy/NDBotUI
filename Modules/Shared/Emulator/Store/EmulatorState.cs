@@ -5,10 +5,13 @@ using NDBotUI.Modules.Shared.Emulator.Models;
 
 namespace NDBotUI.Modules.Shared.Emulator.Store;
 
-public record EmulatorState(List<EmulatorConnection> EmulatorConnections, bool IsLoaded)
+public record EmulatorState(
+    List<EmulatorConnection> EmulatorConnections,
+    bool IsLoaded,
+    EmulatorConnection? EmulatorConnection)
 {
     public static EmulatorState factory()
     {
-        return new EmulatorState([], false);
+        return new EmulatorState([], false, null);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
-public record GameInstance(string ConnectionId);
+public record GameInstance(string ConnectionId, string State, string Status);
 
 public record MoriState(List<GameInstance> GameInstances)
 {

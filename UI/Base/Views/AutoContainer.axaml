@@ -14,21 +14,31 @@
         </Border>
 
         <!-- Content -->
-        <Grid Grid.Row="1" RowDefinitions="250,*" ColumnDefinitions="*">
-            <Grid Grid.Row="0">
-                <views:EmulatorsView />
-            </Grid>
-            <Grid Grid.Row="1" ColumnDefinitions="*,5,*" RowDefinitions="*">
-                <Border Grid.Column="0" Background="LightBlue" MinWidth="150">
-                    <TextBlock Text="Left Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                </Border>
+        <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
+            <Grid RowDefinitions="*,5,*">
+                <Grid Grid.Row="0">
+                    <views:EmulatorsView />
+                </Grid>
 
-                <!-- GridSplitter -->
-                <GridSplitter Grid.Column="1" Width="5" Background="Gray" HorizontalAlignment="Stretch" />
+                <!-- Thanh chia có thể kéo -->
+                <GridSplitter Background="Gray"
+                              Height="5"
+                              VerticalAlignment="Stretch"
+                              Grid.Row="1"
+                              ShowsPreview="True" />
 
-                <Border Grid.Column="2" Background="LightGreen" MinWidth="150">
-                    <TextBlock Text="Right Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                </Border>
+                <Grid Grid.Row="2" ColumnDefinitions="*,5,*" RowDefinitions="*">
+                    <Border Grid.Column="0" Background="LightBlue" MinWidth="150">
+                        <TextBlock Text="Left Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+
+                    <!-- GridSplitter -->
+                    <GridSplitter Grid.Column="1" Width="5" Background="Gray" HorizontalAlignment="Stretch" />
+
+                    <Border Grid.Column="2" Background="LightGreen" MinWidth="150">
+                        <TextBlock Text="Right Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                </Grid>
             </Grid>
         </Grid>
 
