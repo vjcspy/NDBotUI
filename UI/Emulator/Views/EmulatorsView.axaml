@@ -20,7 +20,6 @@
                   CanUserResizeColumns="True"
                   CanUserSortColumns="False"
                   GridLinesVisibility="All"
-                  BorderThickness="1" BorderBrush="Gray"
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding Store.EmulatorStore.State.EmulatorConnection, Mode=TwoWay}"
                   SelectionChanged="OnSelectionChanged">

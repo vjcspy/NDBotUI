@@ -10,6 +10,7 @@
         <entry key="UI/Base/Views/AutoContainer.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Base/Views/MainWindow.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Emulator/Views/EmulatorsView.axaml" value="NDBotUI.csproj" />
+        <entry key="UI/Game/MementoMori/Views/MoriTwoColumnSpliter.axaml" value="NDBotUI.csproj" />
         <entry key="UI/TedBed/Views/ProductDetailView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/TedBed/Views/ProductListView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/TedBed/Views/ProductPage.axaml" value="NDBotUI.csproj" />

@@ -9,41 +9,28 @@
              x:DataType="viewModels:AutoContainerViewModel">
     <Grid RowDefinitions="50,*,50">
         <!-- Header (cố định chiều cao) -->
-        <Border Grid.Row="0" Background="LightGray">
+        <Border Grid.Row="0" Background="Black">
             <TextBlock Text="Header" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
 
         <!-- Content -->
         <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
-            <Grid RowDefinitions="*,5,*">
+            <Grid RowDefinitions="*,*,*">
                 <Grid Grid.Row="0">
                     <views:EmulatorsView />
                 </Grid>
 
                 <!-- Thanh chia có thể kéo -->
-                <GridSplitter Background="Gray"
-                              Height="5"
+                <GridSplitter Height="1" Background="Gray" Grid.Row="1"
                               VerticalAlignment="Stretch"
-                              Grid.Row="1"
                               ShowsPreview="True" />
 
-                <Grid Grid.Row="2" ColumnDefinitions="*,5,*" RowDefinitions="*">
-                    <Border Grid.Column="0" Background="LightBlue" MinWidth="150">
-                        <TextBlock Text="Left Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </Border>
-
-                    <!-- GridSplitter -->
-                    <GridSplitter Grid.Column="1" Width="5" Background="Gray" HorizontalAlignment="Stretch" />
-
-                    <Border Grid.Column="2" Background="LightGreen" MinWidth="150">
-                        <TextBlock Text="Right Panel" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </Border>
-                </Grid>
+                <Grid Grid.Row="2"></Grid>
             </Grid>
         </Grid>
 
         <!-- Footer (cố định chiều cao) -->
-        <Border Background="LightGray" Grid.Row="2">
+        <Border Background="Black" Grid.Row="2">
             <TextBlock Text="Footer" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
     </Grid>
