@@ -9,7 +9,7 @@
              x:DataType="viewModels:AutoContainerViewModel">
     <Grid RowDefinitions="50,*,50">
         <!-- Header (cố định chiều cao) -->
-        <Border Grid.Row="0" Background="Black">
+        <Border Grid.Row="0" Background="#141729">
             <TextBlock Text="Header" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
 
@@ -30,7 +30,7 @@
         </Grid>
 
         <!-- Footer (cố định chiều cao) -->
-        <Border Background="Black" Grid.Row="2">
+        <Border Background="#141729" Grid.Row="2">
             <TextBlock Text="Footer" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Border>
     </Grid>
