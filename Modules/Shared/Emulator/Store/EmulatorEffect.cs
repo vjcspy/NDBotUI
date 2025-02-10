@@ -32,7 +32,8 @@ public class EmulatorEffect
         {
             try
             {
-                Console.WriteLine($"Connected to emulator {emulator.DeviceData.Serial} ({emulator.DeviceType})");
+                Console.WriteLine(
+                    $"Connected to emulator {emulator.DeviceData.Serial} {emulator.DeviceData.Product} {emulator.DeviceData.TransportId}");
                 Console.WriteLine("Send shell command");
                 var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
                 Console.WriteLine($"Shell Output: {output}");
