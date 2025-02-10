@@ -12,6 +12,8 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 {
     public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
     private DeviceClient? _deviceClient;
+
+    public string Id => emulatorScanData.DeviceData.Serial;
     public string Serial => emulatorScanData.DeviceData.Serial;
     public DeviceState State => emulatorScanData.DeviceData.State;
     public string DeviceType => DetectEmulatorType(emulatorScanData.DeviceData.Model);
