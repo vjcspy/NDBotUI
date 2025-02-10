@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:NDBotUI.Modules.Core.ViewModels"
-             xmlns:views="clr-namespace:NDBotUI.Modules.Shared.Emulator.Views"
+             xmlns:viewModels="clr-namespace:NDBotUI.UI.Base.ViewModels"
+             xmlns:views="clr-namespace:NDBotUI.UI.Emulator.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NDBotUI.Modules.Core.Views.AutoContainer"
+             x:Class="NDBotUI.UI.Base.Views.AutoContainer"
              x:DataType="viewModels:AutoContainerViewModel">
     <Grid RowDefinitions="50,*,50">
         <!-- Header (cố định chiều cao) -->

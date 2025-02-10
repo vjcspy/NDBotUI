@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:NDBotUI.Modules.Shared.Emulator.ViewModels"
+             xmlns:viewModels="clr-namespace:NDBotUI.UI.Emulator.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NDBotUI.Modules.Shared.Emulator.Views.EmulatorsView"
+             x:Class="NDBotUI.UI.Emulator.Views.EmulatorsView"
              x:DataType="viewModels:EmulatorsViewModel">
     <Grid RowDefinitions="*" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"

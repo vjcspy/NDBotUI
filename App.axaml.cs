@@ -4,8 +4,8 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using NDBotUI.ViewModels;
-using NDBotUI.Views;
+using NDBotUI.UI.Base.ViewModels;
+using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
 
 namespace NDBotUI;
 

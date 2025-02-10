@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace NDBotUI.ViewModels;
+namespace NDBotUI.UI.Base.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {

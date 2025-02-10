@@ -1,13 +1,13 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:NDBotUI.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:reactiveUi="http://reactiveui.net"
         xmlns:ndBotUi="clr-namespace:NDBotUI"
+        xmlns:viewModels="clr-namespace:NDBotUI.UI.Base.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1000"
-        x:Class="NDBotUI.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:Class="NDBotUI.UI.Base.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
         Title="NDBot" Width="400" Height="700">
 
     <reactiveUi:RoutedViewHost Router="{Binding Router}">

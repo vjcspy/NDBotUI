@@ -1,11 +1,9 @@
-﻿using System;
-using System.Reactive;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Reactive;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
 using ReactiveUI;
 
-namespace NDBotUI.ViewModels.TedBed;
+namespace NDBotUI.UI.TedBed.ViewModels;
 
 public partial class ProductPageViewModel : ReactiveObject, IRoutableViewModel, IScreen
 {

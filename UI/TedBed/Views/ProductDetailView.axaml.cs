@@ -1,10 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
-using NDBotUI.ViewModels.TedBed;
+﻿using Avalonia.ReactiveUI;
+using NDBotUI.UI.TedBed.ViewModels;
 
-namespace NDBotUI.Views.TedBed;
+namespace NDBotUI.UI.TedBed.Views;
 
 public partial class ProductDetailView : ReactiveUserControl<ProductDetailViewModel>
 {

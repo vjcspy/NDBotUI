@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Reactive;
-using CommunityToolkit.Mvvm.ComponentModel;
 using NDBotUI.Modules.Core.Store;
-using NDBotUI.Modules.Shared.Emulator.Models;
-using NDBotUI.Modules.Shared.Emulator.Services;
-using NDBotUI.ViewModels;
+using NDBotUI.Modules.Shared.Emulator.Store;
+using NDBotUI.Modules.Shared.EventManager;
+using NDBotUI.UI.Base.ViewModels;
 using ReactiveUI;
 
-namespace NDBotUI.Modules.Shared.Emulator.ViewModels;
+namespace NDBotUI.UI.Emulator.ViewModels;
 
 public class EmulatorsViewModel : ViewModelBase
 {
@@ -22,5 +19,6 @@ public class EmulatorsViewModel : ViewModelBase
 
     public EmulatorsViewModel()
     {
+        RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
     }
 }

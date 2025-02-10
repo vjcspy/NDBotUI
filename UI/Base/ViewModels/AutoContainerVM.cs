@@ -1,7 +1,6 @@
-﻿using NDBotUI.ViewModels;
-using ReactiveUI;
+﻿using ReactiveUI;
 
-namespace NDBotUI.Modules.Core.ViewModels;
+namespace NDBotUI.UI.Base.ViewModels;
 
 public class AutoContainerViewModel(IScreen screen) : ViewModelBase, IRoutableViewModel
 {

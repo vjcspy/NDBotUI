@@ -2,11 +2,9 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using NDBotUI.Modules.Core.Store;
-using NDBotUI.Modules.Core.ViewModels;
-using NDBotUI.ViewModels.TedBed;
 using ReactiveUI;
 
-namespace NDBotUI.ViewModels;
+namespace NDBotUI.UI.Base.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 {

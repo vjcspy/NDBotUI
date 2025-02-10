@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:NDBotUI.ViewModels.TedBed"
+             xmlns:viewModels="clr-namespace:NDBotUI.UI.TedBed.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NDBotUI.Views.TedBed.ProductListView"
-             x:DataType="vm:ProductListViewModel">
+             x:Class="NDBotUI.UI.TedBed.Views.ProductListView"
+             x:DataType="viewModels:ProductListViewModel">
     <StackPanel>
         <TextBlock Text="Danh sách sản phẩm"
                    FontSize="20"

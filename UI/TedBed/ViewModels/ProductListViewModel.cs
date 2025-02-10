@@ -1,7 +1,7 @@
 ﻿using System.Reactive;
 using ReactiveUI;
 
-namespace NDBotUI.ViewModels.TedBed;
+namespace NDBotUI.UI.TedBed.ViewModels;
 
 public class ProductListViewModel : ReactiveObject, IRoutableViewModel, IScreen
 {

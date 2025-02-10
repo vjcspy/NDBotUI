@@ -1,8 +1,7 @@
-using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using NDBotUI.ViewModels;
+using NDBotUI.UI.Base.ViewModels;
 
-namespace NDBotUI.Views;
+namespace NDBotUI.UI.Base.Views;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {

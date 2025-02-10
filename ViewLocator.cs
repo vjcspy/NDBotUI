@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using NDBotUI.ViewModels;
+using NDBotUI.UI.Base.ViewModels;
 
 namespace NDBotUI;
 
