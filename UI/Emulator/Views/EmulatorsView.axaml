@@ -9,6 +9,7 @@
              x:DataType="viewModels:EmulatorsViewModel">
     <UserControl.Resources>
         <converters:EmulatorConnectionStatusConverter x:Key="EmulatorConnectionStatusConverter" />
+        <converters:StateToColorConverter x:Key="StateToColorConverter" />
     </UserControl.Resources>
     <Grid RowDefinitions="*" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"
@@ -22,11 +23,18 @@
                   BorderThickness="1" BorderBrush="Gray"
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding Store.EmulatorStore.State.EmulatorConnection, Mode=TwoWay}"
-                  SelectionChanged="OnSelectionChanged"
-                  >
+                  SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Serial}" />
-                <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                <DataGridTemplateColumn Header="State" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding State}"
+                                       Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Status" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
