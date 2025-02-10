@@ -16,6 +16,11 @@ public class EmulatorEffect
     {
         Console.WriteLine("Processing event " + action.Type);
 
+        if (AppStore.Instance.EmulatorStore.State.IsLoaded)
+        {
+            return CorAction.Empty;
+        }
+
         // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);
         // Console.WriteLine($"Found {results.Count} emulators");
 

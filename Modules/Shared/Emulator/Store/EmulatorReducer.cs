@@ -18,7 +18,8 @@ public class EmulatorReducer
                     Console.WriteLine($"Emulator Updated List: {list.Count}");
                     state = state with
                     {
-                        EmulatorConnections = list
+                        EmulatorConnections = list,
+                        IsLoaded = true
                     };
                 }
 

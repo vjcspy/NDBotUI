@@ -21,6 +21,4 @@ public partial class AppStore : ObservableObject
         State = AppReducer.Reduce(State, action);
         EmulatorStore.Instance.Reduce(action);
     }
-
-    [ObservableProperty] public ObservableCollection<EmulatorConnection> emulatorConnections = [];
 }

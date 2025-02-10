@@ -33,3 +33,8 @@ public class EventAction<T>(object type, T? payload = default)
         return (T)Payload;
     }
 }
+
+public class CorAction
+{
+    public static readonly EventAction<object?> Empty = new("EMPTY_ACTION");
+}
