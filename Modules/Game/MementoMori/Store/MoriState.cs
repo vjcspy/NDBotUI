@@ -1,8 +1,15 @@
 ﻿using System.Collections.Generic;
+using NDBotUI.Modules.Game.AutoCore.Typing;
+using NDBotUI.Modules.Game.MementoMori.Typing;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
-public record GameInstance(string ConnectionId, string State, string Status);
+public record GameInstance(
+    string ConnectionId,
+    AutoState State, // On/Off Auto
+    string Status, // Text cho user biết đang làm gì
+    MoriJobType JobType
+);
 
 public record MoriState(List<GameInstance> GameInstances)
 {
