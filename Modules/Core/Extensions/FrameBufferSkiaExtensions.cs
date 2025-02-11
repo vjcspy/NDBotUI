@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Provides extension methods of <see cref="SKBitmap"/> for the <see cref="Framebuffer"/> and <see cref="FramebufferHeader"/> classes.
+/// https://github.com/SharpAdb/AdvancedSharpAdbClient/wiki/Compatibility
 /// </summary>
 public static class FrameBufferSkiaExtensions
 {
