@@ -6,16 +6,18 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Store;
+using NLog;
 
 namespace NDBotUI.Modules.Shared.EventManager;
 
 public class RxEventManager
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly Subject<EventAction<object?>> ActionSubject = new();
 
     public static void Dispatch(EventAction<object?> action)
     {
-        Console.WriteLine("Dispatching event " + action.Type);
+        Logger.Info("Dispatching event " + action.Type);
         action.CorrelationId ??= Guid.NewGuid();
 
         AppStore.Instance.Reduce(action);
@@ -45,7 +47,7 @@ public class RxEventManager
 
                     Dispatch(handledEvent);
                 },
-                onError: error => Console.Error.WriteLine($"Error in event stream: {error.Message}")
+                onError: error =>  Logger.Error($"Error in event stream: {error.Message}")
             );
     }
 

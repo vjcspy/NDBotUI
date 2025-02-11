@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
+using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Shared.Emulator.Services;
+using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.UI.Game.MementoMori.Controls;
 
@@ -13,10 +15,6 @@ public partial class MoriConfigContainer : UserControl
 
     private void RollButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (EmulatorManager.Instance.EmulatorConnections.Count == 1)
-        {
-            var emulator = EmulatorManager.Instance.EmulatorConnections[0];
-            emulator.getPointByImage(null);
-        }
+        RxEventManager.Dispatch(MoriAction.TriggerScanCurrentScreen.Create());
     }
 }

@@ -12,11 +12,10 @@
         <AvaloniaResource Include="Assets\**"/>
         <Folder Include="Modules\Core\Models\" />
         <Folder Include="Modules\Core\Services\" />
-        <Folder Include="Resources\" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="Resources\platform-tools\**">
+        <None Update="Resources\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -35,10 +34,14 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="Emgu.CV" Version="4.10.0.5680" />
+        <PackageReference Include="Emgu.CV.Bitmap" Version="4.10.0.5680" />
+        <PackageReference Include="Emgu.CV.runtime.windows" Version="4.10.0.5680" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
         <PackageReference Include="NLog" Version="5.4.0" />
         <PackageReference Include="NLog.Config" Version="4.7.15" />
         <PackageReference Include="NLog.Extensions.Logging" Version="5.4.0" />
+        <PackageReference Include="OpenCvSharp4" Version="4.10.0.20241108" />
         <PackageReference Include="ReactiveUI" Version="20.1.63" />
         <PackageReference Include="SkiaSharp" Version="3.118.0-preview.2.3" />
         <PackageReference Include="System.Drawing.Common" Version="9.0.1" />

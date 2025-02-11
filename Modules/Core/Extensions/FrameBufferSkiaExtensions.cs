@@ -194,4 +194,10 @@ public static class FrameBufferSkiaExtensions
         using var data = image.Encode(SKEncodedImageFormat.Jpeg, 100);
         File.WriteAllBytes(filePath, data.ToArray());
     }
+    public static void SaveAsPng(this SKBitmap bitmap, string filePath)
+    {
+        using var image = SKImage.FromBitmap(bitmap);
+        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+        File.WriteAllBytes(filePath, data.ToArray());
+    }
 }
