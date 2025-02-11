@@ -9,6 +9,7 @@ using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.Models;
 using AdvancedSharpAdbClient.Receivers;
+using Emgu.CV;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
@@ -81,48 +82,41 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
             return bitmap;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Logger.Error("Failed to TakeScreenshot");
+            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshot");
         }
 
         return null;
     }
 
-    public async Task<Point?> GetPointByImageAsync()
+    public async Task<Point?> GetPointByMatAsync(Mat templateMat, bool isSaveMarkedImage = false)
     {
         var screenshot = await TakeScreenshotAsync();
 
         if (screenshot == null) return null;
 
-        // Tạo đường dẫn tuyệt đối đến ảnh template
-        var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "game", "mementomori",
-            "image-detector",
-            "start_setting_button.png");
+        string? markedScreenshotPath = null;
 
-        if (!File.Exists(templatePath))
+        if (isSaveMarkedImage)
         {
-            Logger.Info($"Không tìm thấy file: {templatePath}");
-            return null;
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), CoreValue.ScreenShotFolder);
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            markedScreenshotPath = Path.Combine(folderPath, $"marked_screenshot_{timestamp}.png");
         }
 
-        // 🕒 Tạo tên file theo thời gian
-        var folderPath = FileHelper.CreateFolderIfNotExist(CoreValue.ScreenShotFolder);
-        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string markedScreenshotPath = Path.Combine(folderPath, $"marked_screenshot_{timestamp}.png");
-
         // 🔍 Tìm kiếm ảnh trong screenshot
-        Point? matchPoint =
-            ImageProcessingHelper.FindImageInScreenshot(screenshot, templatePath, markedScreenshotPath);
+        var matchPoint =
+            ImageProcessingHelper.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
 
         if (matchPoint.HasValue)
         {
-            Logger.Info($"Found template image at {matchPoint.Value}");
+            Logger.Info($"OpenCV found template image at {matchPoint.Value}");
 
             return matchPoint;
         }
 
-        Logger.Info("Could not found template image");
+        Logger.Info("OpenCV could not found template image");
 
         return null;
     }

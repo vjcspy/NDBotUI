@@ -4,7 +4,6 @@ using System.IO;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using Microsoft.Extensions.Logging;
 using NLog;
 using SkiaSharp;
 
@@ -27,23 +26,30 @@ public static class ImageProcessingHelper
         try
         {
             Logger.Info($"FindImageInScreenshot: {templatePath}");
+            var templateMat = GetMatByPath(templatePath);
 
-            // Kiểm tra xem file template có tồn tại không
-            if (!File.Exists(templatePath))
-            {
-                Logger.Error($"Template image not found in path {templatePath}");
-                return null;
-            }
-
-            using var templateMat = CvInvoke.Imread(templatePath, ImreadModes.Color);
-            return FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
+            return templateMat == null ? null : FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
         }
         catch (Exception ex)
         {
-            Logger.Error($"Could not load template image from path {templatePath} with error " + ex.Message);
+            Logger.Error(ex, $"Could not load template image from path {templatePath}");
         }
 
         return null;
+    }
+
+    public static Mat? GetMatByPath(string imagePath)
+    {
+        // Kiểm tra xem file template có tồn tại không
+        if (!File.Exists(imagePath))
+        {
+            Logger.Error($"Template image not found in path {imagePath}");
+            throw new FileNotFoundException($"Template image not found in path {imagePath}");
+        }
+
+        var templateMat = CvInvoke.Imread(imagePath, ImreadModes.Color);
+
+        return templateMat;
     }
 
     /// <summary>

@@ -1,5 +1,7 @@
-﻿using System.Reactive.Linq;
+﻿using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Game.MementoMori.Store.Effects;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
@@ -15,14 +17,14 @@ public class MoriEffect
     {
         Logger.Info("Mori effect started");
 
-        if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CorAction.Empty;
-
-        var emulator = EmulatorManager.Instance.EmulatorConnections[0];
-
-        if (await emulator.GetPointByImageAsync() is { } point)
-        {
-            await emulator.clickOnPointAsync(point);
-        }
+        // if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CorAction.Empty;
+        //
+        // var emulator = EmulatorManager.Instance.EmulatorConnections[0];
+        //
+        // if (await emulator.GetPointByImageAsync() is { } point)
+        // {
+        //     await emulator.clickOnPointAsync(point);
+        // }
 
         return CorAction.Empty;
     }
@@ -32,4 +34,6 @@ public class MoriEffect
     {
         return upstream => upstream.OfAction([MoriAction.TriggerScanCurrentScreen]).SelectMany(Process);
     }
+
+    public static readonly List<object> Effects = [new InitTemplateDataEffect()];
 }
