@@ -16,9 +16,9 @@ public enum MoriTemplateKey
     StartSettingButton,
 }
 
-public class TemplateImageData(string fileName, Mat? templateMat = null, bool isLoadError = false)
+public class TemplateImageData(string[] filePath, Mat? templateMat = null, bool isLoadError = false)
 {
-    public string FileName { get; } = fileName;
+    public string[] FilePath { get; } = filePath;
     public Mat? TemplateMat { get; set; } = templateMat;
     public bool IsLoadError { get; set; } = isLoadError;
 }
@@ -31,28 +31,23 @@ public static class TemplateImageDataHelper
     public static Dictionary<MoriTemplateKey, TemplateImageData> TemplateImageData = new()
     {
         {
-            MoriTemplateKey.StartSettingButton, new TemplateImageData("start_setting_button.png")
+            MoriTemplateKey.StartSettingButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "start_setting_button.png"
+            ])
         }
     };
 
     public static Unit LoadTemplateImages()
     {
-        var FolderPath = Path.Combine(
-            Directory.GetCurrentDirectory(),
-            "Resources",
-            "game",
-            "mementomori",
-            "image-detector"
-        );
         FileHelper.CreateFolderIfNotExist(CoreValue.ScreenShotFolder);
-        FileHelper.CreateFolderIfNotExist(FolderPath);
 
         if (IsLoaded) return Unit.Default;
 
         Logger.Info($"Loading template images for Memento Mori");
         foreach (var moriTemplateKey in TemplateImageData.Keys.ToList())
         {
-            var imagePath = Path.Combine(FolderPath, TemplateImageData[moriTemplateKey].FileName);
+            var imagePath = Path.Combine(FileHelper.getFolderPath(TemplateImageData[moriTemplateKey].FilePath));
             try
             {
                 var mat = ImageProcessingHelper.GetMatByPath(imagePath);
