@@ -1,5 +1,4 @@
 ﻿using System.Reactive.Linq;
-using System.Threading.Tasks;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
@@ -12,12 +11,20 @@ public class EffectTemplate
 
     private static EventAction<object?> Process(EventAction<object?> action)
     {
+        Logger.Info("Processing Mori EffectTemplate");
+        if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CorAction.Empty;
+
+        var emulator = EmulatorManager.Instance.EmulatorConnections[0];
+        var resolution = emulator.GetScreenResolution();
+
+        Logger.Debug($"Screen resolution: {resolution}");
+
         return CorAction.Empty;
     }
 
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction([MoriAction.Init]).Select(Process);
+        return upstream => upstream.OfAction([MoriAction.TriggerManually]).Select(Process);
     }
 }

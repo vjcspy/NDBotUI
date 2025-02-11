@@ -10,6 +10,7 @@ using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.Models;
 using AdvancedSharpAdbClient.Receivers;
 using Emgu.CV;
+using Microsoft.Extensions.Logging;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
@@ -25,6 +26,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
     private DeviceClient? _deviceClient;
+    private int[]? _cacheScreenResolution = null;
 
     public string Id => emulatorScanData.DeviceData.Serial;
     public string Serial => emulatorScanData.DeviceData.Serial;
@@ -127,5 +129,78 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         await emulatorScanData.AdbClient.ClickAsync(emulatorScanData.DeviceData, point);
 
         return Unit.Default;
+    }
+
+    public Unit clickOnPoint(Point point)
+    {
+        Logger.Info($"Emulator: {Id} - Click on: {point}");
+        emulatorScanData.AdbClient.Click(emulatorScanData.DeviceData, point);
+
+        return Unit.Default;
+    }
+
+    public string? ExecuteRemoteCommand(string command)
+    {
+        Logger.Info($"Emulator: {Id} - ExecuteRemoteCommand: {command}");
+        emulatorScanData.AdbClient.ExecuteRemoteCommand(command, emulatorScanData.DeviceData);
+        IShellOutputReceiver receiver = new ConsoleOutputReceiver();
+        emulatorScanData.AdbClient.ExecuteRemoteCommand("wm size", emulatorScanData.DeviceData, receiver);
+        var allOutput = receiver.ToString();
+        Logger.Info($"Emulator: {Id} - ExecuteRemoteCommand Output: {allOutput}");
+        return allOutput;
+    }
+
+    public int[]? GetScreenResolution()
+    {
+        if (_cacheScreenResolution != null) return _cacheScreenResolution;
+
+        var resolutionText = ExecuteRemoteCommand("wm size");
+        // Kiểm tra kết quả đầu ra
+        if (!string.IsNullOrEmpty(resolutionText) && resolutionText.Contains("Physical size:"))
+        {
+            string resolution = resolutionText.Split(':')[1].Trim(); // Lấy phần "1080x1920"
+            string[] parts = resolution.Split('x'); // Tách thành ["1080", "1920"]
+
+            if (parts.Length == 2 && int.TryParse(parts[0], out int width) && int.TryParse(parts[1], out int height))
+            {
+                _cacheScreenResolution = [width, height];
+
+                return _cacheScreenResolution;
+            }
+        }
+
+        return null; // Trả về null nếu không lấy được độ phân giải
+    }
+
+    public Unit ClickPercent(float x, float y)
+    {
+        var currentResolution = GetScreenResolution();
+
+        if (currentResolution == null)
+        {
+            Logger.Error($"Emulator: {Id} - ClickPercent could not find resolution");
+            return Unit.Default;
+        }
+
+        var xi = Convert.ToInt32(x);
+        var yi = Convert.ToInt32(x);
+
+        return clickOnPoint(new Point(xi, yi));
+    }
+
+    public async Task<Unit> ClickPercentAsync(float x, float y)
+    {
+        var currentResolution = GetScreenResolution();
+
+        if (currentResolution == null)
+        {
+            Logger.Error($"Emulator: {Id} - ClickPercentAsync could not find resolution");
+            return Unit.Default;
+        }
+
+        var xi = Convert.ToInt32(x);
+        var yi = Convert.ToInt32(x);
+
+        return await clickOnPointAsync(new Point(xi, yi));
     }
 }

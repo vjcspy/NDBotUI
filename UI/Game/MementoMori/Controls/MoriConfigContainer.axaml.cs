@@ -15,6 +15,6 @@ public partial class MoriConfigContainer : UserControl
 
     private void RollButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        RxEventManager.Dispatch(MoriAction.TriggerScanCurrentScreen.Create());
+        RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 }
