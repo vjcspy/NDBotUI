@@ -1,9 +1,12 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriConfigContainer">
+             xmlns:controls="clr-namespace:NDBotUI.UI.Game.MementoMori.Controls"
+             x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriConfigContainer"
+             x:DataType="controls:MoriConfigContainerViewModel">
     <TabControl>
         <TabItem Header="Roll" FontSize="12">
-            <Button Click="RollButton_OnClick">Start</Button>
+            <Button Command="{Binding ToggleReRollCommand}"
+                    Content="{Binding ToggleButtonText}" />
         </TabItem>
         <TabItem Header="Hướng Dẫn" FontSize="12">
             <TextBlock Margin="5">This is tab 2 content</TextBlock>

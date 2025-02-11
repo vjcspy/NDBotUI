@@ -25,8 +25,8 @@ public class EmulatorManager(AdbHelper adbHelper)
         }
     }
 
-    public EmulatorConnection? getConnection(string id)
+    public EmulatorConnection? GetConnection(string id)
     {
-        return this.EmulatorConnections.Find(connection => connection.Id == id);
+        return EmulatorConnections.Find(connection => connection.Id == id);
     }
 }

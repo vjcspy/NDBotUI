@@ -21,7 +21,7 @@
                   CanUserSortColumns="False"
                   GridLinesVisibility="All"
                   AutoGenerateColumns="False"
-                  SelectedItem="{Binding Store.EmulatorStore.State.EmulatorConnection, Mode=TwoWay}"
+                  SelectionMode="Single"
                   SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Serial}" />

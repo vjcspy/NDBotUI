@@ -8,10 +8,14 @@ public static class EmulatorAction
     {
         EmulatorInit,
         EmulatorConnectSuccess,
+        SelectEmulatorConnection,
     }
 
     public static readonly EventActionFactory<object?> EmulatorInitAction = new(Type.EmulatorInit);
 
     public static readonly EventActionFactory<object?> EmulatorConnectSuccessAction =
         new(Type.EmulatorConnectSuccess);
+    
+    public static readonly EventActionFactory<object?> SelectEmulatorConnection =
+        new(Type.SelectEmulatorConnection);
 }
