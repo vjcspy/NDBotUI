@@ -4,11 +4,16 @@ using NDBotUI.Modules.Game.MementoMori.Typing;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
+public record JobRollState()
+{
+}
+
 public record GameInstance(
     string ConnectionId,
     AutoState State, // On/Off Auto
     string Status, // Text cho user biết đang làm gì
-    MoriJobType JobType
+    MoriJobType JobType,
+    JobRollState JobRollState
 );
 
 public record MoriState(List<GameInstance> GameInstances)

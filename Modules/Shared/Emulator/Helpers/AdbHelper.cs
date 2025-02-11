@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.Models;
 using NDBotUI.Modules.Shared.Emulator.Errors;
@@ -9,15 +8,9 @@ using NDBotUI.Modules.Shared.Emulator.Typing;
 
 namespace NDBotUI.Modules.Shared.Emulator.Helpers;
 
-public class AdbHelper
+public class AdbHelper(string adbPath)
 {
-    private readonly string adbPath;
-    private AdbServer adbServer;
-
-    public AdbHelper(string adbPath)
-    {
-        this.adbPath = adbPath;
-    }
+    private AdbServer? _adbServer;
 
     public void InitAdbServer()
     {
@@ -33,9 +26,9 @@ public class AdbHelper
             }
         }
 
-        adbServer = new AdbServer();
+        _adbServer = new AdbServer();
 
-        var result = adbServer.StartServer(adbPath, restartServerIfNewer: true);
+        var result = _adbServer.StartServer(adbPath, restartServerIfNewer: true);
 
         if (result != StartServerResult.Started)
         {
@@ -83,6 +76,6 @@ public class AdbHelper
 
     public AdbServer GetAdbServer()
     {
-        return adbServer ?? throw new InvalidOperationException("ADB Server is not initialized.");
+        return _adbServer ?? throw new InvalidOperationException("ADB Server is not initialized.");
     }
 }

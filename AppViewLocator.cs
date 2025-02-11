@@ -1,6 +1,7 @@
 ﻿using System;
 using NDBotUI.UI.Base.ViewModels;
 using NDBotUI.UI.Base.Views;
+using NDBotUI.UI.Game.MementoMori.Controls;
 using NDBotUI.UI.TedBed.ViewModels;
 using ReactiveUI;
 using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
@@ -22,6 +23,9 @@ public class AppViewLocator : IViewLocator
         ProductPageViewModel context => new ProductPage { DataContext = context },
         ProductListViewModel context => new ProductListView { DataContext = context },
         ProductDetailViewModel context => new ProductDetailView { DataContext = context },
+        
+        // MORI
+        MoriContainerViewModel context => new MoriContainer { DataContext = context },
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
     };
 }
