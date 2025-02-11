@@ -3,7 +3,7 @@
              x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriConfigContainer">
     <TabControl>
         <TabItem Header="Roll" FontSize="12">
-            <Button>Start</Button>
+            <Button Click="RollButton_OnClick">Start</Button>
         </TabItem>
         <TabItem Header="Hướng Dẫn" FontSize="12">
             <TextBlock Margin="5">This is tab 2 content</TextBlock>
