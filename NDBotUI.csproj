@@ -35,6 +35,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.10" />
         <PackageReference Include="Emgu.CV" Version="4.10.0.5680" />
         <PackageReference Include="Emgu.CV.Bitmap" Version="4.10.0.5680" />
         <PackageReference Include="Emgu.CV.runtime.windows" Version="4.10.0.5680" />

@@ -2,12 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="NDBotUI.App"
              xmlns:local="using:NDBotUI"
+             xmlns:converters="clr-namespace:NDBotUI.UI.Base.Converters"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>
+
+    <Application.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Application.Resources>
 
     <Application.Styles>
         <FluentTheme>
@@ -35,5 +40,6 @@
             </FluentTheme.Palettes>
         </FluentTheme>
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
     </Application.Styles>
 </Application>
