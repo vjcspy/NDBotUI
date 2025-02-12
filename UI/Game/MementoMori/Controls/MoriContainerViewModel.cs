@@ -3,12 +3,13 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Shared.Emulator.Store;
+using NDBotUI.UI.Base.Extensions;
 using NDBotUI.UI.Base.ViewModels;
 using ReactiveUI;
 
 namespace NDBotUI.UI.Game.MementoMori.Controls;
 
-public class MoriContainerViewModel : ReactiveObject, IRoutableViewModel
+public class MoriContainerViewModel : ViewModelBase, IRoutableViewModel
 {
     public string UrlPathSegment { get; } = "MoriContainer";
     public IScreen HostScreen { get; }
@@ -25,12 +26,12 @@ public class MoriContainerViewModel : ReactiveObject, IRoutableViewModel
     {
         HostScreen = screen;
         AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State)
-            .Subscribe(newVale =>
+            .AutoDispose(newVale =>
             {
                 if (newVale.Value.IsLoaded)
                 {
                     IsLoading = false;
                 }
-            });
+            }, Disposables);
     }
 }

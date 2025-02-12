@@ -7,11 +7,13 @@ using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.EventManager;
+using NDBotUI.UI.Base.Extensions;
+using NDBotUI.UI.Base.ViewModels;
 using ReactiveUI;
 
 namespace NDBotUI.UI.Game.MementoMori.Controls;
 
-public partial class MoriConfigContainerViewModel : ObservableObject
+public partial class MoriConfigContainerViewModel : ObservableViewModelBase
 {
     public AppStore Store { get; } = AppStore.Instance;
 
@@ -27,13 +29,13 @@ public partial class MoriConfigContainerViewModel : ObservableObject
     {
         Console.WriteLine($"MoriConfigContainerViewModel");
         AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State)
-            .Subscribe(newVale =>
+            .AutoDispose(newVale =>
             {
                 if (newVale.Value.SelectedEmulatorId is not null)
                 {
                     ToggleButtonText = "Start";
                 }
-            });
+            }, Disposables);
     }
 
     // Phương thức xử lý khi Id thay đổi

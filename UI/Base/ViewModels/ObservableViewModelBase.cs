@@ -1,12 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reactive.Disposables;
+using CommunityToolkit.Mvvm.ComponentModel;
 using NLog;
-using ReactiveUI;
 
 namespace NDBotUI.UI.Base.ViewModels;
 
-public class ViewModelBase : ReactiveObject, IDisposable
+public class ObservableViewModelBase : ObservableObject, IDisposable
 {
     protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
