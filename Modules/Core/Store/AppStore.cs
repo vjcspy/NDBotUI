@@ -15,7 +15,7 @@ public partial class AppStore : ObservableObject
 
     public MoriStore MoriStore { get; } = MoriStore.Instance;
 
-    public void Reduce(EventAction<object?> action)
+    public void Reduce(EventAction action)
     {
         State = AppReducer.Reduce(State, action);
         EmulatorStore.Instance.Reduce(action);

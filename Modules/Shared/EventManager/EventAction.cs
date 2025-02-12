@@ -2,10 +2,10 @@
 
 namespace NDBotUI.Modules.Shared.EventManager;
 
-public class EventAction<T>(object type, T? payload = default)
+public class EventAction(object type, object? payload = null)
 {
     public object Type { get; } = type;
-    public T? Payload { get; } = payload;
+    public object? Payload { get; } = payload;
 
     private Guid? _correlationId;
 
@@ -21,20 +21,9 @@ public class EventAction<T>(object type, T? payload = default)
             _correlationId = value;
         }
     }
-
-    public T AssertPayload()
-    {
-        if (Payload is not T)
-        {
-            throw new InvalidCastException(
-                $"Payload is not of type {typeof(T).Name}, but is of type {Payload?.GetType().Name ?? "null"}");
-        }
-
-        return (T)Payload;
-    }
 }
 
 public class CorAction
 {
-    public static readonly EventAction<object?> Empty = new("EMPTY_ACTION");
+    public static readonly EventAction Empty = new("EMPTY_ACTION");
 }

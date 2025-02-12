@@ -11,7 +11,7 @@ public class InitTemplateDataEffect
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    private static EventAction<object?> Process(EventAction<object?> action)
+    private static EventAction Process(EventAction action)
     {
         TemplateImageDataHelper.LoadTemplateImages();
         return CorAction.Empty;

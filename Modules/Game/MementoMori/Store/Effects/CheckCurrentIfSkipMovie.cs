@@ -12,7 +12,7 @@ public class CheckCurrentIfSkipMovie
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    private static async Task<EventAction<object?>> Process(EventAction<object?> action)
+    private static async Task<EventAction> Process(EventAction action)
     {
         Logger.Info("Processing Mori EffectTemplate");
 

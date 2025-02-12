@@ -6,7 +6,7 @@ namespace NDBotUI.Modules.Shared.TedBed.RxEvent;
 
 public class TedBedEffect
 {
-    private static EventAction<object?> Process(EventAction<object?> action)
+    private static EventAction Process(EventAction action)
     {
         Console.WriteLine("Processing event " + action.Type);
         return TestBedAction.BAR_ACTION.Create();

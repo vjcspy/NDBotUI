@@ -13,9 +13,9 @@ namespace NDBotUI.Modules.Shared.EventManager;
 public class RxEventManager
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private static readonly Subject<EventAction<object?>> ActionSubject = new();
+    private static readonly Subject<EventAction> ActionSubject = new();
 
-    public static void Dispatch(EventAction<object?> action)
+    public static void Dispatch(EventAction action)
     {
         Logger.Info("Dispatching event " + action.Type);
         action.CorrelationId ??= Guid.NewGuid();

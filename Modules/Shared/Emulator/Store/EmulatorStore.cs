@@ -9,7 +9,7 @@ public partial class EmulatorStore : ObservableObject
 
     [ObservableProperty] public EmulatorState state = EmulatorState.factory();
 
-    public void Reduce(EventAction<object?> action)
+    public void Reduce(EventAction action)
     {
         State = EmulatorReducer.Reduce(State, action);
     }

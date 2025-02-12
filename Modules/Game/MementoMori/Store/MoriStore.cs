@@ -11,7 +11,7 @@ public partial class MoriStore : ObservableObject
     
     [ObservableProperty] public MoriState state = MoriState.factory();
 
-    public void Reduce(EventAction<object?> action)
+    public void Reduce(EventAction action)
     {
         State = MoriReducer.Reduce(State, action);
     }

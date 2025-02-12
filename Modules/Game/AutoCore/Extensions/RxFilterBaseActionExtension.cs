@@ -12,7 +12,7 @@ public static class RxFilterBaseActionExtension
     {
         return source.Where(action =>
         {
-            if (action is not EventAction<object?> eventAction) return false;
+            if (action is not EventAction eventAction) return false;
 
             if (eventAction.Payload is not BaseActionPayload baseActionPayload) return false;
 

@@ -2,4 +2,4 @@
 
 namespace NDBotUI.Modules.Shared.EventManager;
 
-public delegate IObservable<EventAction<object?>> RxEventHandler(IObservable<EventAction<object?>> upstream);
+public delegate IObservable<EventAction> RxEventHandler(IObservable<EventAction> upstream);

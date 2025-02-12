@@ -9,7 +9,7 @@ public class EffectTemplate
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    private static EventAction<object?> Process(EventAction<object?> action)
+    private static EventAction Process(EventAction action)
     {
         Logger.Info("Processing Mori EffectTemplate");
         if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CorAction.Empty;

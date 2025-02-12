@@ -6,8 +6,8 @@ namespace NDBotUI.Modules.Shared.EventManager;
 
 public static class ObservableExtensions
 {
-    public static IObservable<EventAction<object?>> OfAction(
-        this IObservable<EventAction<object?>> source,
+    public static IObservable<EventAction> OfAction(
+        this IObservable<EventAction> source,
         params IEventActionFactory<object?>[] actions)
     {
         return source.Where(action => actions

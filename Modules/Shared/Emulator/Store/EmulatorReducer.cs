@@ -11,7 +11,7 @@ public class EmulatorReducer
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static EmulatorState Reduce(EmulatorState state, EventAction<object?> action)
+    public static EmulatorState Reduce(EmulatorState state, EventAction action)
     {
         switch (action.Type)
         {

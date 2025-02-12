@@ -4,7 +4,7 @@ namespace NDBotUI.Modules.Core.Store;
 
 public class AppReducer
 {
-    public static AppState Reduce(AppState model, EventAction<object?> action)
+    public static AppState Reduce(AppState model, EventAction action)
     {
         return action.Type switch
         {
