@@ -20,7 +20,6 @@ public partial class MoriConfigContainerViewModel : ObservableObject
     [RelayCommand]
     public void ToggleReRollCommand()
     {
-        Console.WriteLine($"ToggleReRollCommand {AppStore.Instance.EmulatorStore.State.EmulatorConnection?.Id}");
         RxEventManager.Dispatch(MoriAction.StartMoriReRoll.Create());
     }
 
@@ -30,7 +29,7 @@ public partial class MoriConfigContainerViewModel : ObservableObject
         AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State)
             .Subscribe(newVale =>
             {
-                if (newVale.Value.EmulatorConnection?.Id is not null)
+                if (newVale.Value.SelectedEmulatorId is not null)
                 {
                     ToggleButtonText = "Start";
                 }

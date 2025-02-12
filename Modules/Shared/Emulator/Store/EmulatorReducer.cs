@@ -35,7 +35,7 @@ public class EmulatorReducer
                     Logger.Info($"Selected Emulator : {emulatorConnection.Id}");
                     state = state with
                     {
-                        EmulatorConnection = emulatorConnection,
+                        SelectedEmulatorId = emulatorConnection.Id,
                     };
                 }
 

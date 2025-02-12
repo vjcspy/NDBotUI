@@ -11,9 +11,9 @@ public partial class AppStore : ObservableObject
 
     [ObservableProperty] public AppState state = AppState.factory();
 
-    [ObservableProperty] public EmulatorStore emulatorStore = EmulatorStore.Instance;
+    public EmulatorStore EmulatorStore { get; } = EmulatorStore.Instance;
 
-    [ObservableProperty] public MoriStore moriStore = MoriStore.Instance;
+    public MoriStore MoriStore { get; } = MoriStore.Instance;
 
     public void Reduce(EventAction<object?> action)
     {
