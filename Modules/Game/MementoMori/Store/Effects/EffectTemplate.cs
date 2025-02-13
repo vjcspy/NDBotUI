@@ -24,24 +24,24 @@ public class EffectTemplate
         // Logger.Debug($"Screen resolution: {resolution}");
 
         /* Test find template */
-        if (TemplateImageDataHelper.IsLoaded &&
-            TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
-                { } templateMat)
-        {
-            var point = await emulator.GetPointByMatAsync(templateMat);
-            if (point != null)
-            {
-                Logger.Info($"Point is {point.Value.X}, {point.Value.Y}");
-            }
-            else
-            {
-                Logger.Info($"Point is null");
-            }
-        }
-        else
-        {
-            Logger.Info($"TemplateImageDataHelper not loaded");
-        }
+        // if (TemplateImageDataHelper.IsLoaded &&
+        //     TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
+        //         { } templateMat)
+        // {
+        //     var point = await emulator.GetPointByMatAsync(templateMat);
+        //     if (point != null)
+        //     {
+        //         Logger.Info($"Point is {point.Value.X}, {point.Value.Y}");
+        //     }
+        //     else
+        //     {
+        //         Logger.Info($"Point is null");
+        //     }
+        // }
+        // else
+        // {
+        //     Logger.Info($"TemplateImageDataHelper not loaded");
+        // }
 
 
         return CoreAction.Empty;

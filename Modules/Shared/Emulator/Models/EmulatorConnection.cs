@@ -19,6 +19,10 @@ using NDBotUI.Modules.Shared.Emulator.Typing;
 using NLog;
 using NLog.Fluent;
 using SkiaSharp;
+using OpenCvSharp;
+using Mat = Emgu.CV.Mat;
+using OpenCVMat = OpenCvSharp.Mat;
+using Point = System.Drawing.Point;
 
 namespace NDBotUI.Modules.Shared.Emulator.Models;
 
@@ -62,6 +66,27 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
             return EmulatorTypes.LDPlayer;
 
         return "Unknown";
+    }
+
+    public async Task<OpenCVMat?> TakeScreenshotToOpenCVMatAsync()
+    {
+        Logger.Info($"TakeScreenshotToOpenCVMatAsync");
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        var framebuffer = await emulatorScanData.AdbClient.GetFrameBufferAsync(emulatorScanData.DeviceData);
+        try
+        {
+            var mat = framebuffer.ToOpenCVMat();
+            stopwatch.Stop();
+            Logger.Info("TakeScreenshotToOpenCVMatAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
+
+            return mat;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotToOpenCVMatAsync");
+
+            return null;
+        }
     }
 
     public async Task<SKBitmap?> TakeScreenshotAsync(bool isSaveToDir = false)

@@ -8,6 +8,8 @@ using Emgu.CV;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NLog;
+using OpenCvSharp;
+using Mat = OpenCvSharp.Mat;
 
 namespace NDBotUI.Modules.Game.MementoMori.Helper;
 
@@ -66,7 +68,8 @@ public static class TemplateImageDataHelper
             var imagePath = Path.Combine(FileHelper.getFolderPath(TemplateImageData[moriTemplateKey].FilePath));
             try
             {
-                var mat = ImageProcessingHelper.GetMatByPath(imagePath);
+                // var mat = ImageProcessingHelper.GetMatByPath(imagePath);
+                var mat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
                 if (mat == null)
                 {
                     TemplateImageData[moriTemplateKey].IsLoadError = true;

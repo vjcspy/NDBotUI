@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
 using NLog;
-using OpenCvSharp;
 using SkiaSharp;
 using ImreadModes = Emgu.CV.CvEnum.ImreadModes;
 using Mat = Emgu.CV.Mat;
