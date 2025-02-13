@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -65,10 +66,14 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public async Task<SKBitmap?> TakeScreenshotAsync(bool isSaveToDir = false)
     {
+        Logger.Info($"TakeScreenshotAsync {isSaveToDir}");
+        Stopwatch stopwatch = Stopwatch.StartNew();
         var framebuffer = await emulatorScanData.AdbClient.GetFrameBufferAsync(emulatorScanData.DeviceData);
         try
         {
             var bitmap = framebuffer.ToSKBitmap();
+            stopwatch.Stop();
+            Logger.Info("TakeScreenshotAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
             if (!isSaveToDir) return bitmap;
 
@@ -92,9 +97,10 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return null;
     }
 
-    public async Task<Point?> GetPointByMatAsync(Mat templateMat, bool isSaveMarkedImage = false)
+    public async Task<Point?> GetPointByMatAsync(Mat templateMat, bool isSaveMarkedImage = false,
+        SKBitmap? screenShotSkBitmap = null)
     {
-        var screenshot = await TakeScreenshotAsync();
+        var screenshot = screenShotSkBitmap ?? await TakeScreenshotAsync();
 
         if (screenshot == null) return null;
 
