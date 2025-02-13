@@ -3,10 +3,9 @@ using System.Reactive.Linq;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
-using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 
-namespace NDBotUI.Modules.Game.MementoMori.Extension;
+namespace NDBotUI.Modules.Game.AutoCore.Extensions;
 
 public static class RxBaseEligibilityCheckExtension
 {

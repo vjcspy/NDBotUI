@@ -14,7 +14,7 @@ public static class RxFilterBaseActionExtension
         {
             if (action is not EventAction eventAction) return false;
 
-            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return false;
+            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return true;
 
             var emulator = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 

@@ -1,6 +1,6 @@
 ﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
-using NDBotUI.Modules.Game.MementoMori.Extension;
+using NDBotUI.Modules.Game.AutoCore.Extensions;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;

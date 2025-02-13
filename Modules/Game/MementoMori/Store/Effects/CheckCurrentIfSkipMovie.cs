@@ -30,6 +30,8 @@ public class CheckCurrentIfSkipMovie
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction([MoriAction.TriggerManually]).FilterBaseAction().SelectMany(Process);
+        return upstream => upstream.OfAction([MoriAction.TriggerManually])
+            .FilterBaseEligibility()
+            .SelectMany(Process);
     }
 }
