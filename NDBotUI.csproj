@@ -54,7 +54,7 @@
 
     <ItemGroup>
       <AdditionalFiles Include="UI\Base\Views\AutoContainer.axaml" />
-      <AdditionalFiles Include="UI\Emulator\Views\EmulatorsView.axaml" />
+      <AdditionalFiles Include="UI\Emulator\Controls\EmulatorsView.axaml" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:NDBotUI.UI.Emulator.Views"
              xmlns:controls="clr-namespace:NDBotUI.UI.Game.MementoMori.Controls"
              xmlns:views1="clr-namespace:NDBotUI.UI.Base.Views"
+             xmlns:controls1="clr-namespace:NDBotUI.UI.Emulator.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriContainer"
              x:DataType="controls:MoriContainerViewModel">
@@ -21,7 +21,7 @@
             <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
                 <Grid RowDefinitions="*,1,*">
                     <Grid Grid.Row="0">
-                        <views:EmulatorsView />
+                        <controls1:EmulatorsView />
                     </Grid>
 
                     <!-- Thanh chia có thể kéo -->

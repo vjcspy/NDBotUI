@@ -10,18 +10,23 @@ namespace NDBotUI.Modules.Game.MementoMori.Extension;
 
 public static class RxBaseEligibilityCheckExtension
 {
-    public static IObservable<T> FilterBaseEligibility<T>(this IObservable<T> source)
+    public static IObservable<T> FilterBaseEligibility<T>(this IObservable<T> source, bool forceEligible = false)
     {
         return source.Where(action =>
         {
+            if (forceEligible)
+            {
+                return true;
+            }
+
             if (action is not EventAction eventAction) return false;
 
-            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return false;
+            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return true;
 
             /* Chỉ chạy khi state của auto là On */
             var currentGameInstance =
                 AppStore.Instance.MoriStore.State.GameInstances.Find(instance =>
-                    instance.ConnectionId == baseActionPayload.EmulatorId);
+                    instance.EmulatorId == baseActionPayload.EmulatorId);
             if (currentGameInstance is null || currentGameInstance.State != AutoState.On) return false;
 
             /* __ */

@@ -21,6 +21,8 @@ public class EventAction(object type, object? payload = null)
             _correlationId = value;
         }
     }
+
+    public override string ToString() => $"Type: {Type} - Payload: {Payload?.GetType()}";
 }
 
 public class CoreAction

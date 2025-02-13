@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
@@ -30,12 +31,12 @@ public class EmulatorReducer
                 return state;
 
             case EmulatorAction.Type.SelectEmulatorConnection:
-                if (action.Payload is EmulatorConnection emulatorConnection)
+                if (action.Payload is BaseActionPayload baseActionPayload)
                 {
-                    Logger.Info($"Selected Emulator : {emulatorConnection.Id}");
+                    Logger.Info($"Selected Emulator : {baseActionPayload.EmulatorId}");
                     state = state with
                     {
-                        SelectedEmulatorId = emulatorConnection.Id,
+                        SelectedEmulatorId = baseActionPayload.EmulatorId,
                     };
                 }
 

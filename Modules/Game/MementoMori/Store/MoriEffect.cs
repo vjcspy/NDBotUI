@@ -5,5 +5,8 @@ namespace NDBotUI.Modules.Game.MementoMori.Store;
 
 public class MoriEffect
 {
-    public static readonly object[] Effects = [new InitTemplateDataEffect(), new EffectTemplate()];
+    public static readonly object[] Effects =
+    [
+        new InitTemplateDataEffect(), new EffectTemplate(), new InitAutoInstanceWhenSelectEmulator()
+    ];
 }

@@ -1,13 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using NDBotUI.Modules.Core.Store;
+using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
-using NDBotUI.UI.Emulator.ViewModels;
 using NLog;
 
-namespace NDBotUI.UI.Emulator.Views;
+namespace NDBotUI.UI.Emulator.Controls;
 
 public partial class EmulatorsView : ReactiveUserControl<EmulatorsViewModel>
 {
@@ -24,7 +23,9 @@ public partial class EmulatorsView : ReactiveUserControl<EmulatorsViewModel>
         var selectedRows = DataGrid.SelectedItems;
         if (selectedRows.Count == 1 && selectedRows[0] is EmulatorConnection emulatorConnection)
         {
-            RxEventManager.Dispatch(EmulatorAction.SelectEmulatorConnection.Create(emulatorConnection));
+            RxEventManager.Dispatch(
+                EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(emulatorConnection.Id,
+                    emulatorConnection)));
         }
     }
 }

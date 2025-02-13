@@ -2,6 +2,7 @@
 
 public enum ReRollStatus
 {
+    Open, // chưa làm gì hết
     Start,
     Initial,
 
@@ -24,8 +25,8 @@ public enum MoriScreen
 }
 
 public record JobReRollState(
-    ReRollStatus ReRollStatus,
-    MoriScreen MoriCurrentScreen,
-    MoriScreen MoriLastScreen,
-    int DetectScreenTry
+    ReRollStatus ReRollStatus = ReRollStatus.Open,
+    MoriScreen MoriCurrentScreen = MoriScreen.Unknown,
+    MoriScreen MoriLastScreen = MoriScreen.Unknown,
+    int DetectScreenTry = 0
 );
