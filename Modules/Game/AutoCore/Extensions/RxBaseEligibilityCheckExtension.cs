@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
+using LanguageExt;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
@@ -23,12 +25,14 @@ public static class RxBaseEligibilityCheckExtension
             if (eventAction.Payload is not BaseActionPayload baseActionPayload) return true;
 
             /* Chỉ chạy khi state của auto là On */
-            var currentGameInstance =
+            var isHasGameInstance =
                 AppStore.Instance.MoriStore.State.GameInstances.Find(instance =>
-                    instance.EmulatorId == baseActionPayload.EmulatorId);
-            if (currentGameInstance is null || currentGameInstance.State != AutoState.On) return false;
-
-            /* __ */
+                    instance.EmulatorId == baseActionPayload.EmulatorId).Match(
+                    Some: game => game.State == AutoState.On,
+                    None: false
+                );
+            if (!isHasGameInstance) return false;
+            /* __ Another check */
 
             return true;
         });

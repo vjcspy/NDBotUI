@@ -40,6 +40,7 @@
         <PackageReference Include="Emgu.CV" Version="4.10.0.5680" />
         <PackageReference Include="Emgu.CV.Bitmap" Version="4.10.0.5680" />
         <PackageReference Include="Emgu.CV.runtime.windows" Version="4.10.0.5680" />
+        <PackageReference Include="LanguageExt.Core" Version="5.0.0-beta-47" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
         <PackageReference Include="NLog" Version="5.4.0" />
         <PackageReference Include="NLog.Config" Version="4.7.15" />

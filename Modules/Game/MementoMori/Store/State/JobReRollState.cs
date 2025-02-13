@@ -3,8 +3,8 @@
 public enum ReRollStatus
 {
     Open, // chưa làm gì hết
-    Start,
-    Initial,
+    Start, // Bấm start
+    Initialized, // Đã Init thành công
 
     EligibilityCheck,
     Eligible,

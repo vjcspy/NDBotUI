@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using LanguageExt;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
@@ -17,7 +17,7 @@ public record GameInstance(
     JobReRollState JobReRollState
 );
 
-public record MoriState(ImmutableList<GameInstance> GameInstances)
+public record MoriState(Lst<GameInstance> GameInstances)
 {
     public static MoriState Factory()
     {
