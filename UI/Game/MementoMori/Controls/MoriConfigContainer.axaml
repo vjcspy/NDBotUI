@@ -4,7 +4,7 @@
              xmlns:moriConfigTabs="clr-namespace:NDBotUI.UI.Game.MementoMori.Controls.MoriConfigTabs"
              x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriConfigContainer"
              x:DataType="controls:MoriConfigContainerViewModel">
-    <TabControl>
+    <TabControl IsVisible="{Binding IsShowConfig}">
         <TabItem Header="Roll" FontSize="12">
             <moriConfigTabs:TabReRollView />
         </TabItem>

@@ -8,7 +8,7 @@ public class MoriAction
     {
         TriggerManually,
 
-        StartMoriReRoll,
+        ToggleStartStopMoriReRoll,
 
         InitMori,
         InitMoriSuccess,
@@ -18,7 +18,7 @@ public class MoriAction
 
     public static readonly EventActionFactory TriggerManually = new(Type.TriggerManually);
 
-    public static readonly EventActionFactory StartMoriReRoll = new(Type.StartMoriReRoll);
+    public static readonly EventActionFactory ToggleStartStopMoriReRoll = new(Type.ToggleStartStopMoriReRoll);
 
     public static readonly EventActionFactory TriggerScanCurrentScreen = new(Type.TriggerScanCurrentScreen);
     

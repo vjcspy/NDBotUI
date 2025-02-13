@@ -15,12 +15,16 @@ public partial class TabReRollViewModel : ObservableViewModelBase
 {
     public AppStore Store { get; } = AppStore.Instance;
 
-    [ObservableProperty] public string toggleButtonText = "Please select emulator";
+    [ObservableProperty] public string toggleButtonText = "Please select an emulator";
 
     [RelayCommand]
     public void ToggleReRollCommand()
     {
-        // RxEventManager.Dispatch(MoriAction.StartMoriReRoll.Create());
+        if (ToggleButtonText is "Start" or "Stop")
+        {
+            RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create());
+        }
+
         RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 
