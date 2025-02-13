@@ -11,7 +11,7 @@ public class AppAction
         Reset
     }
 
-    public static EventActionFactory<object?> Increment = new(Type.Increment);
-    public static EventActionFactory<object?> Decrement = new(Type.Decrement);
-    public static EventActionFactory<object?> Reset = new(Type.Reset);
+    public static EventActionFactory Increment = new(Type.Increment);
+    public static EventActionFactory Decrement = new(Type.Decrement);
+    public static EventActionFactory Reset = new(Type.Reset);
 }

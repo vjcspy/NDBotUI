@@ -11,11 +11,11 @@ public static class EmulatorAction
         SelectEmulatorConnection,
     }
 
-    public static readonly EventActionFactory<object?> EmulatorInitAction = new(Type.EmulatorInit);
+    public static readonly EventActionFactory EmulatorInitAction = new(Type.EmulatorInit);
 
-    public static readonly EventActionFactory<object?> EmulatorConnectSuccessAction =
+    public static readonly EventActionFactory EmulatorConnectSuccessAction =
         new(Type.EmulatorConnectSuccess);
     
-    public static readonly EventActionFactory<object?> SelectEmulatorConnection =
+    public static readonly EventActionFactory SelectEmulatorConnection =
         new(Type.SelectEmulatorConnection);
 }

@@ -12,7 +12,6 @@ namespace NDBotUI.UI.Emulator.ViewModels;
 
 public class EmulatorsViewModel : ViewModelBase
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public AppStore Store { get; } = AppStore.Instance;
 
     public EmulatorsViewModel()

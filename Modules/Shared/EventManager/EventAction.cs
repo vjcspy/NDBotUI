@@ -23,7 +23,7 @@ public class EventAction(object type, object? payload = null)
     }
 }
 
-public class CorAction
+public class CoreAction
 {
     public static readonly EventAction Empty = new("EMPTY_ACTION");
 }

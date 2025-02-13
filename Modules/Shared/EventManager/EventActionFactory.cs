@@ -1,16 +1,16 @@
 ﻿namespace NDBotUI.Modules.Shared.EventManager;
 
-public interface IEventActionFactory<T>
+public interface IEventActionFactory
 {
     object Type { get; }
-    EventAction Create(T? payload);
+    EventAction Create(object? payload);
 }
 
-public class EventActionFactory<T>(object type) : IEventActionFactory<T>
+public class EventActionFactory(object type) : IEventActionFactory
 {
     public object Type { get; } = type;
 
-    public EventAction Create(T? payload = default)
+    public EventAction Create(object? payload = null)
     {
         return new EventAction(Type, payload);
     }

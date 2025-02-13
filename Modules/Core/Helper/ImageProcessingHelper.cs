@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using NLog;
+using OpenCvSharp;
 using SkiaSharp;
+using ImreadModes = Emgu.CV.CvEnum.ImreadModes;
+using Mat = Emgu.CV.Mat;
+using Point = System.Drawing.Point;
 
 namespace NDBotUI.Modules.Core.Helper;
 
@@ -13,14 +18,6 @@ public static class ImageProcessingHelper
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    /// <summary>
-    /// Tìm kiếm ảnh mẫu trong ảnh chụp màn hình (SKBitmap) và vẽ hình chữ nhật quanh vùng tìm thấy.
-    /// </summary>
-    /// <param name="screenshot">Ảnh screenshot hiện tại (SKBitmap).</param>
-    /// <param name="templatePath">Đường dẫn đến ảnh mẫu (PNG).</param>
-    /// <param name="outputPath">Đường dẫn lưu ảnh có vẽ hình chữ nhật.</param>
-    /// <param name="isSaveMarkedImage">Lưu ảnh có đánh dấu hay không.</param>
-    /// <returns>Trả về tọa độ tìm thấy hoặc null nếu không tìm thấy.</returns>
     public static Point? FindImageInScreenshot(SKBitmap screenshot, string templatePath, string? markedScreenshotPath)
     {
         try
@@ -60,9 +57,9 @@ public static class ImageProcessingHelper
         Logger.Info("FindImageInScreenshot by templateMat");
 
         // Chuyển đổi SKBitmap -> Mat
-        using var screenshotMat = SKBitmapToMat(screenshot);
+        using var screenshotMat = ConvertSKBitmapToMat(screenshot);
 
-        if (screenshotMat.IsEmpty || templateMat.IsEmpty)
+        if (screenshotMat == null || screenshotMat.IsEmpty || templateMat.IsEmpty)
         {
             Logger.Error("Could not convert template mat from screenshot");
             return null;
@@ -94,8 +91,8 @@ public static class ImageProcessingHelper
 
             // ✏️ Vẽ hình chữ nhật quanh vùng tìm thấy
             CvInvoke.Rectangle(screenshotMat,
-                new Rectangle(topLeft, new Size(templateMat.Width, templateMat.Height)),
-                new MCvScalar(0, 255, 0), 3);
+                new(topLeft, new(templateMat.Width, templateMat.Height)),
+                new(0, 255, 0), 3);
 
             // 💾 Lưu ảnh kết quả
             CvInvoke.Imwrite(markedScreenshotPath, screenshotMat);
@@ -107,27 +104,57 @@ public static class ImageProcessingHelper
         return null;
     }
 
-    /// <summary>
-    /// Chuyển đổi SKBitmap sang Emgu.CV Mat.
-    /// </summary>
-    private static Mat SKBitmapToMat(SKBitmap bitmap)
+    // private static Mat SKBitmapToMat(SKBitmap bitmap)
+    // {
+    //     // Convert SKBitmap -> Bitmap
+    //     using var bmp = SKBitmapToBitmap(bitmap);
+    //
+    //     // Convert Bitmap -> Mat (Emgu.CV)
+    //     return bmp.ToMat();
+    // }
+    //
+    // private static Bitmap SKBitmapToBitmap(SKBitmap skBitmap)
+    // {
+    //     using var skImage = SKImage.FromBitmap(skBitmap);
+    //     using var skData = skImage.Encode(SKEncodedImageFormat.Png, 100);
+    //
+    //     using var ms = new MemoryStream(skData.ToArray());
+    //     return new(ms);
+    // }
+
+    private static Mat? ConvertSKBitmapToMat(SKBitmap skBitmap)
     {
-        // Convert SKBitmap -> Bitmap
-        using var bmp = SKBitmapToBitmap(bitmap);
+        try
+        {
+            // Lấy dữ liệu pixel từ SKBitmap dưới dạng mảng SKColor[]
+            int width = skBitmap.Width;
+            int height = skBitmap.Height;
+            SKColor[] pixels = skBitmap.Pixels;
 
-        // Convert Bitmap -> Mat (Emgu.CV)
-        return bmp.ToMat();
-    }
+            // Tạo mảng byte có kích thước đúng (4 bytes cho mỗi pixel)
+            byte[] pixelData = new byte[width * height * 4]; // 4 byte cho mỗi pixel (RGBA)
 
-    /// <summary>
-    /// Chuyển SKBitmap thành Bitmap (.NET)
-    /// </summary>
-    private static Bitmap SKBitmapToBitmap(SKBitmap skBitmap)
-    {
-        using var skImage = SKImage.FromBitmap(skBitmap);
-        using var skData = skImage.Encode(SKEncodedImageFormat.Png, 100);
+            // Chuyển đổi dữ liệu từ SKColor[] sang byte[]
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                SKColor pixel = pixels[i];
+                pixelData[i * 4 + 0] = pixel.Alpha;  // Alpha
+                pixelData[i * 4 + 1] = pixel.Red;    // Red
+                pixelData[i * 4 + 2] = pixel.Green;  // Green
+                pixelData[i * 4 + 3] = pixel.Blue;   // Blue
+            }
 
-        using var ms = new MemoryStream(skData.ToArray());
-        return new Bitmap(ms);
+            // Tạo Mat từ mảng byte
+            Mat mat = new Mat(height, width, Emgu.CV.CvEnum.DepthType.Cv8U, 4); // 4 kênh (RGBA)
+            mat.SetTo(pixelData);
+
+            return mat;
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, $"Could not convert SKBitmap to mat");
+        }
+
+        return null;
     }
 }

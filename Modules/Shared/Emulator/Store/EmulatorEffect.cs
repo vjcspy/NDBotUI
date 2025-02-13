@@ -21,7 +21,7 @@ public class EmulatorEffect
 
         if (AppStore.Instance.EmulatorStore.State.IsLoaded)
         {
-            return CorAction.Empty;
+            return CoreAction.Empty;
         }
 
         // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);

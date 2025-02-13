@@ -27,7 +27,7 @@ public class TemplateImageData(string[] filePath, Mat? templateMat = null, bool 
 public static class TemplateImageDataHelper
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private static bool IsLoaded = false;
+    public static bool IsLoaded = false;
 
     public static Dictionary<MoriTemplateKey, TemplateImageData> TemplateImageData = new()
     {
@@ -61,6 +61,7 @@ public static class TemplateImageDataHelper
                 if (mat == null)
                 {
                     TemplateImageData[moriTemplateKey].IsLoadError = true;
+                    Logger.Error($"Failed to load template image for {moriTemplateKey}");
                 }
                 else
                 {
@@ -74,6 +75,7 @@ public static class TemplateImageDataHelper
             }
         }
 
+        IsLoaded = true;
         Logger.Info($"Loaded template images for Memento Mori");
 
         return Unit.Default;

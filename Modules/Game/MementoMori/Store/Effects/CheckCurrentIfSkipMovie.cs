@@ -14,16 +14,17 @@ public class CheckCurrentIfSkipMovie
 
     private static async Task<EventAction> Process(EventAction action)
     {
+        await Task.Delay(0);
         Logger.Info("Processing Mori EffectTemplate");
 
-        if (action.Payload is not BaseActionPayload baseActionPayload) return CorAction.Empty;
+        if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
         var emulator = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId)!;
 
         var resolution = emulator.GetScreenResolution();
 
         Logger.Debug($"Screen resolution: {resolution}");
 
-        return CorAction.Empty;
+        return CoreAction.Empty;
     }
 
     [Effect]

@@ -14,7 +14,8 @@ public class InitTemplateDataEffect
     private static EventAction Process(EventAction action)
     {
         TemplateImageDataHelper.LoadTemplateImages();
-        return CorAction.Empty;
+
+        return MoriAction.InitMoriSuccess.Create();
     }
 
     [Effect]
