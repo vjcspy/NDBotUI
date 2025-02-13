@@ -17,20 +17,34 @@ public class EmulatorReducer
         switch (action.Type)
         {
             case EmulatorAction.Type.EmulatorConnectSuccess:
+            {
                 if (action.Payload is List<EmulatorConnection> list)
                 {
                     Console.WriteLine($"Emulator Updated List: {list.Count}");
                     state = state with
                     {
                         EmulatorConnections = list,
-                        IsLoaded = true
+                        IsLoaded = true,
+                        Attempts = 0
                     };
                 }
 
 
                 return state;
+            }
+
+            case EmulatorAction.Type.EmulatorConnectError:
+            {
+                state = state with
+                {
+                    Attempts = state.Attempts + 1,
+                };
+
+                return state;
+            }
 
             case EmulatorAction.Type.SelectEmulatorConnection:
+            {
                 if (action.Payload is BaseActionPayload baseActionPayload)
                 {
                     Logger.Info($"Selected Emulator : {baseActionPayload.EmulatorId}");
@@ -42,6 +56,7 @@ public class EmulatorReducer
 
 
                 return state;
+            }
             default:
                 return state;
         }

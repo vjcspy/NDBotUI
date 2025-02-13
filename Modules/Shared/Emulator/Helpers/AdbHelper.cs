@@ -12,9 +12,9 @@ public class AdbHelper(string adbPath)
 {
     private AdbServer? _adbServer;
 
-    public void InitAdbServer()
+    public void InitAdbServer(bool forceRestart = true)
     {
-        if (AdbServer.Instance.GetStatus().IsRunning)
+        if (AdbServer.Instance.GetStatus().IsRunning && forceRestart)
         {
             try
             {

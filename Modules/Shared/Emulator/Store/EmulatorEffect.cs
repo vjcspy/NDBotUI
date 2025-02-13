@@ -26,33 +26,42 @@ public class EmulatorEffect
 
         // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);
         // Console.WriteLine($"Found {results.Count} emulators");
-
-        var emulatorManager = EmulatorManager.Instance;
-        emulatorManager.RefreshDevices();
-
-        Console.WriteLine($"Found {emulatorManager.EmulatorConnections.Count} devices");
-        foreach (var emulator in emulatorManager.EmulatorConnections)
+        try
         {
-            try
-            {
-                Console.WriteLine(
-                    $"Connected to emulator {emulator.DeviceData.Serial} {emulator.DeviceData.Product} {emulator.DeviceData.TransportId}");
-                Console.WriteLine("Send shell command");
-                var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
-                Console.WriteLine($"Shell Output: {output}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+            var emulatorManager = EmulatorManager.Instance;
+            emulatorManager.RefreshDevices();
 
-        return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
+            Console.WriteLine($"Found {emulatorManager.EmulatorConnections.Count} devices");
+            foreach (var emulator in emulatorManager.EmulatorConnections)
+            {
+                try
+                {
+                    Console.WriteLine(
+                        $"Connected to emulator {emulator.DeviceData.Serial} {emulator.DeviceData.Product} {emulator.DeviceData.TransportId}");
+                    Console.WriteLine("Send shell command");
+                    var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
+                    Console.WriteLine($"Shell Output: {output}");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
+            return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, "Error while processing init ADB");
+            return EmulatorAction.EmulatorConnectError.Create();
+        }
     }
 
     [Effect]
     public RxEventHandler HandleUserEvents()
     {
-        return upstream => upstream.OfAction([EmulatorAction.EmulatorInitAction]).Select(Process);
+        return upstream => upstream.OfAction([EmulatorAction.EmulatorInitAction, EmulatorAction.EmulatorConnectError])
+            .Where(_ => AppStore.Instance.EmulatorStore.State.Attempts < 3)
+            .Select(Process);
     }
 }

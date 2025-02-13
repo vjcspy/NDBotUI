@@ -8,7 +8,8 @@ namespace NDBotUI.Modules.Shared.Emulator.Store;
 public record EmulatorState(
     List<EmulatorConnection> EmulatorConnections,
     bool IsLoaded,
-    string? SelectedEmulatorId)
+    string? SelectedEmulatorId,
+    int Attempts = 0)
 {
     public static EmulatorState factory()
     {

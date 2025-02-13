@@ -12,9 +12,9 @@ public class EmulatorManager(AdbHelper adbHelper)
     public static EmulatorManager Instance { get; } = new(new AdbHelper("Resources/platform-tools/adb.exe"));
     public List<EmulatorConnection> EmulatorConnections { get; } = [];
 
-    public void RefreshDevices()
+    public void RefreshDevices(bool forceRestart = true)
     {
-        adbHelper.InitAdbServer();
+        adbHelper.InitAdbServer(forceRestart);
         EmulatorConnections.Clear();
 
         foreach (var emulatorScanData in adbHelper.ConnectByGetDevices())
