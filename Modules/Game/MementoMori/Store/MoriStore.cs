@@ -9,7 +9,7 @@ public partial class MoriStore : ObservableObject
 {
     public static MoriStore Instance = new();
     
-    [ObservableProperty] public MoriState state = MoriState.factory();
+    [ObservableProperty] public MoriState state = MoriState.Factory();
 
     public void Reduce(EventAction action)
     {

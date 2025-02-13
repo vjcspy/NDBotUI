@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
@@ -38,15 +39,18 @@ public class InitAutoInstanceWhenSelectEmulator : EffectBase
         if (gameInstance is null)
         {
             /* init new game instance for emulator connection */
-            AppStore.Instance.MoriStore.State.GameInstances.Add(
-                new GameInstance(
-                    EmulatorId: emulator.Id,
-                    State: AutoState.Off,
-                    Status: "",
-                    JobType: MoriJobType.None,
-                    JobReRollState: new JobReRollState()
+            AppStore.Instance.MoriStore.State = AppStore.Instance.MoriStore.State with
+            {
+                GameInstances = AppStore.Instance.MoriStore.State.GameInstances.Add(
+                    new GameInstance(
+                        EmulatorId: emulator.Id,
+                        State: AutoState.Off,
+                        Status: "",
+                        JobType: MoriJobType.None,
+                        JobReRollState: new JobReRollState()
+                    )
                 )
-            );
+            };
         }
 
 

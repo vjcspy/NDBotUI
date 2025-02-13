@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -13,15 +17,32 @@ public record GameInstance(
     JobReRollState JobReRollState
 );
 
-public record MoriState(List<GameInstance> GameInstances)
+public record MoriState(ImmutableList<GameInstance> GameInstances)
 {
-    public static MoriState factory()
+    public static MoriState Factory()
     {
         return new MoriState([]);
     }
 
     public GameInstance? GetGameInstance(string emulatorId)
     {
-        return GameInstances.Find(g => g.EmulatorId == emulatorId);
+        try
+        {
+            return GameInstances.First(g => g.EmulatorId == emulatorId);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public GameInstance? GetCurrentEmulatorGameInstance()
+    {
+        if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+        {
+            return GetGameInstance(selectedEmulatorId);
+        }
+
+        return null;
     }
 }

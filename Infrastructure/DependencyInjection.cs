@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         // ViewModels
         collection.AddTransient<MainWindowViewModel>();
         
-        // Ví dụ về khai báo factory
+        // Ví dụ về khai báo Factory
         collection.AddTransient<Func<IScreen, AutoContainerViewModel>>(provider =>
         {
             return (screen) => new AutoContainerViewModel(
