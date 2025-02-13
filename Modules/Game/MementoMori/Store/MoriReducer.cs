@@ -1,4 +1,6 @@
-﻿using NDBotUI.Modules.Game.AutoCore.Store;
+﻿using LanguageExt;
+using NDBotUI.Modules.Core.Store;
+using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -27,28 +29,43 @@ public class MoriReducer
                                     State: AutoState.Off,
                                     Status: "",
                                     JobType: MoriJobType.None,
-                                    JobReRollState: new JobReRollState()
+                                    JobReRollState: new JobReRollState(ReRollStatus: ReRollStatus.Open)
                                 )
                             )
                         };
                     }
-
-
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(gi =>
-                            gi.EmulatorId == baseActionPayload.EmulatorId
-                                ? gi with
-                                {
-                                    JobReRollState = gi.JobReRollState with
-                                    {
-                                        ReRollStatus = ReRollStatus.Initialized
-                                    }
-                                }
-                                : gi
-                        )
-                    };
                 }
+
+                return state;
+            }
+
+            /* _____________________________ ReRoll _____________________________*/
+            case MoriAction.Type.ToggleStartStopMoriReRoll:
+            {
+                var emulator = AppStore.Instance.EmulatorStore.State.SelectedEmulatorId;
+                if (emulator is not { } emulatorId) return state;
+
+                var isRunning = state.GameInstances
+                    .Find(instance => instance.EmulatorId == emulatorId)
+                    .Map(gameInstance => gameInstance.State == AutoState.On)
+                    .Match(Some: x => x, None: () => false);
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                State = isRunning ? AutoState.Off : AutoState.On,
+                                JobType = MoriJobType.ReRoll,
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    ReRollStatus = isRunning ? ReRollStatus.Open : ReRollStatus.Start,
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
 
                 return state;
             }

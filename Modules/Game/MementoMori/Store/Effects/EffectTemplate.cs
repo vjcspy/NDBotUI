@@ -25,7 +25,7 @@ public class EffectTemplate
 
         /* Test find template */
         if (TemplateImageDataHelper.IsLoaded &&
-            TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartSettingButton].TemplateMat is
+            TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
                 { } templateMat)
         {
             var point = await emulator.GetPointByMatAsync(templateMat);

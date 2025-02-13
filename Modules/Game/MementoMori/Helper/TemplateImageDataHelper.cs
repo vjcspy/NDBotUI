@@ -14,6 +14,9 @@ namespace NDBotUI.Modules.Game.MementoMori.Helper;
 public enum MoriTemplateKey
 {
     StartSettingButton,
+    StartStartButton,
+    
+    
     SkipMovieButton,
 }
 
@@ -41,6 +44,12 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.SkipMovieButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "skip_movie_button.png"
+            ])
+        },
+        {
+            MoriTemplateKey.StartStartButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "start_start_button.png"
             ])
         }
     };

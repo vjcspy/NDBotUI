@@ -9,6 +9,6 @@ public partial class MoriContainer : ReactiveUserControl<MoriContainerViewModel>
     public MoriContainer()
     {
         InitializeComponent();
-        RxEventManager.Dispatch(MoriAction.Init.Create());
+        RxEventManager.Dispatch(MoriAction.InitMori.Create());
     }
 }

@@ -4,10 +4,8 @@ public enum ReRollStatus
 {
     Open, // chưa làm gì hết
     Start, // Bấm start
-    Initialized, // Đã Init thành công
 
     EligibilityCheck,
-    Eligible,
     Ineligible,
 
     Processing,
@@ -21,7 +19,14 @@ public enum ReRollStatus
 public enum MoriScreen
 {
     Unknown,
+    
+    SigninGooglePlay,
+    TapToStart,
+    TermsOfAgreement,
+    
     SkipMovie,
+    
+    
 }
 
 public record JobReRollState(

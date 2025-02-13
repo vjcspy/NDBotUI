@@ -25,7 +25,7 @@ public partial class TabReRollViewModel : ObservableViewModelBase
             RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create());
         }
 
-        RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
+        // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 
     public TabReRollViewModel()
