@@ -22,13 +22,14 @@
                   GridLinesVisibility="All"
                   AutoGenerateColumns="False"
                   SelectionMode="Single"
+                  FontSize="10"
                   SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Serial}" />
+                <DataGridTextColumn FontSize="10" Header="Name" Binding="{Binding Id}" />
                 <DataGridTemplateColumn Header="State" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding State}"
+                            <TextBlock FontSize="10" Text="{Binding State}"
                                        Foreground="{Binding State, Converter={StaticResource StateToColorConverter}}"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
@@ -38,6 +39,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock
+                                FontSize="10"
                                 Text="{Binding Id, Converter={StaticResource EmulatorConnectionStatusConverter}}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
