@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
+using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -22,7 +23,11 @@ public partial class TabReRollViewModel : ObservableViewModelBase
     {
         if (ToggleButtonText is "Start" or "Stop")
         {
-            RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create());
+            if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+            {
+                RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
+                    new BaseActionPayload(EmulatorId: selectedEmulatorId)));
+            }
         }
 
         // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());

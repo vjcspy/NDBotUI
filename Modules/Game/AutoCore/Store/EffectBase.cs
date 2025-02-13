@@ -22,7 +22,9 @@ public abstract class EffectBase
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction(GetAllowEventActions()).FilterBaseEligibility(GetForceEligible())
+        return upstream => upstream
+            .OfAction(GetAllowEventActions())
+            .FilterBaseEligibility(GetForceEligible())
             .SelectMany(Process);
     }
 }

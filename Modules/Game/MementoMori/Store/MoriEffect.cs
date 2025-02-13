@@ -7,6 +7,10 @@ public class MoriEffect
 {
     public static readonly object[] Effects =
     [
-        new InitTemplateDataEffect(), new EffectTemplate(), new InitAutoInstanceWhenSelectEmulator()
+        new InitTemplateDataEffect(),
+        new EffectTemplate(),
+        new InitAutoInstanceWhenSelectEmulator(),
+        new EligibilityCheckEffect(),
+        new DetectCurrentScreen()
     ];
 }

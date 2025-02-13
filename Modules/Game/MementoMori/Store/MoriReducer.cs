@@ -42,13 +42,10 @@ public class MoriReducer
             /* _____________________________ ReRoll _____________________________*/
             case MoriAction.Type.ToggleStartStopMoriReRoll:
             {
-                var emulator = AppStore.Instance.EmulatorStore.State.SelectedEmulatorId;
-                if (emulator is not { } emulatorId) return state;
+                if (action.Payload is not BaseActionPayload baseActionPayload) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
 
-                var isRunning = state.GameInstances
-                    .Find(instance => instance.EmulatorId == emulatorId)
-                    .Map(gameInstance => gameInstance.State == AutoState.On)
-                    .Match(Some: x => x, None: () => false);
+                var isRunning = state.IsReRollJobRunning(emulatorId);
 
                 state = state with
                 {
@@ -69,7 +66,28 @@ public class MoriReducer
 
                 return state;
             }
+            case MoriAction.Type.EligibilityCheck:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
 
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    ReRollStatus = ReRollStatus.EligibilityCheck,
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
+
+                return state;
+            }
             default:
                 return state;
         }

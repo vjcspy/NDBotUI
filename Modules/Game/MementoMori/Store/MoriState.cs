@@ -45,4 +45,12 @@ public record MoriState(Lst<GameInstance> GameInstances)
 
         return null;
     }
+
+    public bool IsReRollJobRunning(string emulatorId)
+    {
+        return GameInstances
+            .Find(instance => instance.EmulatorId == emulatorId)
+            .Map(gameInstance => gameInstance.State == AutoState.On)
+            .Match(Some: x => x, None: () => false);
+    }
 }
