@@ -78,11 +78,15 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconSpeakBeginningFirst,
                 MoriTemplateKey.ChallengeButton,
+                MoriTemplateKey.SkipMovieButton,
                 
                 MoriTemplateKey.TextSelectFirstCharToTeam,
                 MoriTemplateKey.TextSelectSecondCharToTeam,
+                MoriTemplateKey.TextSelectThirdCharToTeam,
+                MoriTemplateKey.TextSelectFourCharToTeam,
                 
                 MoriTemplateKey.PartyInformation,
+                MoriTemplateKey.TapToClose,
                 
                 // MoriTemplateKey.StartSettingButton
             ];
@@ -123,6 +127,10 @@ public class DetectCurrentScreen : EffectBase
 
                 return MoriAction.DetectedMoriScreen.Create(new BaseActionPayload(emulatorConnection.Id,
                     detectedTemplatePoint));
+            }
+            else
+            {
+                return MoriAction.CouldNotDetectMoriScreen.Create(baseActionPayload);
             }
         }
         catch (Exception e)

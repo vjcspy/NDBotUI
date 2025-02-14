@@ -30,37 +30,52 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.StartStartButton,
             MoriTemplateKey.ChallengeButton,
+            MoriTemplateKey.TapToClose
            
         ];
 
-        if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.IconSpeakBeginningFirst)
+        switch (detectedTemplatePoint.MoriTemplateKey)
         {
-            await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
-            await Task.Delay(250);
-            await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
-            isClicked = true;
-        }
-        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.TextSelectFirstCharToTeam)
-        {
-            await emulatorConnection.ClickPPointAsync(new PPoint(13.7f,56.4f));
-            isClicked = true;
-        }
-        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.TextSelectSecondCharToTeam)
-        {
-            await emulatorConnection.ClickPPointAsync(new PPoint(21.5f,56.7f));
-            isClicked = true;
-        }
-        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.PartyInformation)
-        {
-            // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
-            await emulatorConnection.ClickPPointAsync(new PPoint(85f,88.2f));
-            isClicked = true;
-        }
-        else if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
-        {
-            Logger.Info($"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}");
-            await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
-            isClicked = true;
+            case MoriTemplateKey.IconSpeakBeginningFirst:
+                await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                await Task.Delay(250);
+                await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
+                isClicked = true;
+                break;
+            
+            case MoriTemplateKey.TextSelectFirstCharToTeam:
+                await emulatorConnection.ClickPPointAsync(new PPoint(13.7f,56.4f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.TextSelectSecondCharToTeam:
+                await emulatorConnection.ClickPPointAsync(new PPoint(21.5f,56.7f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.TextSelectThirdCharToTeam:
+                await emulatorConnection.ClickPPointAsync(new PPoint(13.9f,57.4f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.TextSelectFourCharToTeam:
+                await emulatorConnection.ClickPPointAsync(new PPoint(22.3f,57.2f));
+                isClicked = true;
+                break;
+            
+            case MoriTemplateKey.PartyInformation:
+                // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
+                await emulatorConnection.ClickPPointAsync(new PPoint(85f,88.2f));
+                isClicked = true;
+                break;
+            default:
+            {
+                if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
+                {
+                    Logger.Info($"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}");
+                    await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                    isClicked = true;
+                }
+
+                break;
+            }
         }
 
 

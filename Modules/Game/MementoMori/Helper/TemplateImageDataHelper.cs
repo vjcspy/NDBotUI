@@ -23,7 +23,7 @@ public class TemplateImageData(
     public OpenCVMat? OpenCVMat { get; set; } = openCVMat;
     public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
-    
+
     public int Priority { get; } = priority;
 }
 
@@ -44,7 +44,7 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.SkipMovieButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "skip_movie_button.png"
-            ])
+            ], priority: 90)
         },
         {
             MoriTemplateKey.StartStartButton,
@@ -64,6 +64,8 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "challenge_button.png"
             ])
         },
+
+
         {
             MoriTemplateKey.TextSelectFirstCharToTeam,
             new TemplateImageData([
@@ -77,10 +79,30 @@ public static class TemplateImageDataHelper
             ], priority: 10)
         },
         {
+            MoriTemplateKey.TextSelectThirdCharToTeam,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_third_char_to_team.png"
+            ], priority: 10)
+        },
+        {
+            MoriTemplateKey.TextSelectFourCharToTeam,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_four_char_to_team.png"
+            ], priority: 10)
+        },
+
+
+        {
             MoriTemplateKey.PartyInformation,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "party_information.png"
-            ])
+            ], priority: 90)
+        },
+        {
+            MoriTemplateKey.TapToClose,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "tap_to_close.png"
+            ], priority: 90)
         }
     };
 

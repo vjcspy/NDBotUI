@@ -17,10 +17,13 @@ public enum MoriTemplateKey
 
     IconSpeakBeginningFirst,
     ChallengeButton,
-    TextSelectFirstCharToTeam,
-    TextSelectSecondCharToTeam,
+    TextSelectFirstCharToTeam, // Select first char vào party
+    TextSelectSecondCharToTeam, // Select second char vào party
+    TextSelectThirdCharToTeam, // Select third char vào party
+    TextSelectFourCharToTeam, // Select four char vào party
     
     PartyInformation,
+    TapToClose, // sau khi battle kết thúc
 
     SkipMovieButton
 }
