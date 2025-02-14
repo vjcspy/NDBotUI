@@ -53,10 +53,15 @@ public class DetectCurrentScreen : EffectBase
         {
             Logger.Info("Starting detect current screen");
             if (TemplateImageDataHelper.IsLoaded &&
-                TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].EmuCVMat is
+                TemplateImageDataHelper.TemplateImageData[moriTemplateKey].EmuCVMat is
                     { } templateMat)
             {
-                var point = ImageFinderEmguCV.FindTemplateMatPoint(screenshotMat, templateMat);
+                var point = ImageFinderEmguCV.FindTemplateMatPoint(
+                    screenshotMat,
+                    templateMat,
+                    shouldResize: true
+                    // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
+                );
                 if (point is { } bpoint)
                 {
                     Logger.Info($"Found template point for key {moriTemplateKey}");
