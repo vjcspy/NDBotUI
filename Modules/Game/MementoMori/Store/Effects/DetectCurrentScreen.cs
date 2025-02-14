@@ -33,7 +33,7 @@ public class DetectCurrentScreen : EffectBase
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
                     screenshotMat,
                     templateMat,
-                    shouldResize: true
+                    shouldResize: false
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)
@@ -78,8 +78,11 @@ public class DetectCurrentScreen : EffectBase
 
             MoriTemplateKey[] screenToCheck =
             [
+                MoriTemplateKey.TextSelectFirstCharToTeam,
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconSpeakBeginningFirst,
+                MoriTemplateKey.ChallengeButton,
+                
                 // MoriTemplateKey.StartSettingButton
             ];
 
@@ -141,7 +144,7 @@ public class DetectCurrentScreen : EffectBase
         return upstream => upstream
             .OfAction(GetAllowEventActions())
             .FilterBaseEligibility(GetForceEligible())
-            .Throttle(TimeSpan.FromSeconds(1)) 
+            .Throttle(TimeSpan.FromSeconds(2)) 
             .SelectMany(Process);
     }
 }

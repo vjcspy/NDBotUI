@@ -14,10 +14,12 @@ public enum MoriTemplateKey
     Unknown,
     StartSettingButton,
     StartStartButton,
-    
+
     IconSpeakBeginningFirst,
-    
-    SkipMovieButton,
+    ChallengeButton,
+    TextSelectFirstCharToTeam,
+
+    SkipMovieButton
 }
 
 public record GameInstance(

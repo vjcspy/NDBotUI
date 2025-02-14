@@ -54,6 +54,18 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "icon_speak_beginning_first.png"
             ])
+        },
+        {
+            MoriTemplateKey.ChallengeButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "challenge_button.png"
+            ])
+        },
+        {
+            MoriTemplateKey.TextSelectFirstCharToTeam,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_first_char_to_team.png"
+            ])
         }
     };
 

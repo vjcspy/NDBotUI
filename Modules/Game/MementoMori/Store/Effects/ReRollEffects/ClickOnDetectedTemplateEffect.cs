@@ -28,7 +28,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
         MoriTemplateKey[] clickOnMoriTemplateKeys =
         [
             MoriTemplateKey.SkipMovieButton,
-            MoriTemplateKey.StartStartButton
+            MoriTemplateKey.StartStartButton,
+            MoriTemplateKey.ChallengeButton
         ];
 
         if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.IconSpeakBeginningFirst)
@@ -36,6 +37,11 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
             await Task.Delay(250);
             await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
+            isClicked = true;
+        }
+        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.TextSelectFirstCharToTeam)
+        {
+            await emulatorConnection.ClickPPointAsync(new PPoint(13.7f,56.4f));
             isClicked = true;
         }
         else if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
