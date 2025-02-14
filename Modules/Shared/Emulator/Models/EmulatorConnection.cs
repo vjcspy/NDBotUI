@@ -16,7 +16,6 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private int[]? _cacheScreenResolution;
-    private DeviceClient? _deviceClient;
     public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
 
     public string Id => emulatorScanData.DeviceData.Serial;

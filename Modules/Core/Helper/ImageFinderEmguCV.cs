@@ -95,7 +95,7 @@ public static class ImageFinderEmguCV
     }
 
     public static Point? FindTemplateMatPoint(Mat screenshotMat, Mat templateMat,
-        string? markedScreenshotPath = null)
+        string? markedScreenshotFileName = null)
     {
         var stopwatch = Stopwatch.StartNew();
         // Chuyển ảnh về grayscale (CV_8U) để đảm bảo MatchTemplate hoạt động
@@ -108,7 +108,6 @@ public static class ImageFinderEmguCV
 
         // Tạo Mat kết quả
         using var result = new Mat();
-        // CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
         CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
 
         // Tìm điểm có độ tương đồng cao nhất
@@ -124,7 +123,7 @@ public static class ImageFinderEmguCV
         {
             var topLeft = maxLoc;
 
-            if (markedScreenshotPath == null) return topLeft;
+            if (markedScreenshotFileName == null) return topLeft;
 
             // ✏️ Vẽ hình chữ nhật quanh vùng tìm thấy
             CvInvoke.Rectangle(screenshotMat,
@@ -132,9 +131,10 @@ public static class ImageFinderEmguCV
                 new MCvScalar(0, 255, 0), 3);
 
             // 💾 Lưu ảnh kết quả
-            // CvInvoke.Imwrite(markedScreenshotPath, screenshotMat);
-            SaveMatToFile(screenshotMat, markedScreenshotPath);
-            Logger.Info($"Saved marked screenshot at path: {markedScreenshotPath}");
+            var imagePath = ImageHelper.GetImagePath(markedScreenshotFileName);
+            CvInvoke.Imwrite(imagePath, screenshotMat);
+            // SaveMatToFile(screenshotMat, markedScreenshotPath);
+            Logger.Info($"Saved marked screenshot at path: {imagePath}");
 
             return topLeft;
         }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
+using NLog;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
@@ -19,6 +19,8 @@ public record GameInstance(
 
 public record MoriState(Lst<GameInstance> GameInstances)
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     public static MoriState Factory()
     {
         return new MoriState([]);
@@ -30,8 +32,9 @@ public record MoriState(Lst<GameInstance> GameInstances)
         {
             return GameInstances.First(g => g.EmulatorId == emulatorId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
+            Logger.Warn($"Could not find emulator with id {emulatorId}");
             return null;
         }
     }
@@ -39,9 +42,7 @@ public record MoriState(Lst<GameInstance> GameInstances)
     public GameInstance? GetCurrentEmulatorGameInstance()
     {
         if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
-        {
             return GetGameInstance(selectedEmulatorId);
-        }
 
         return null;
     }
@@ -51,6 +52,6 @@ public record MoriState(Lst<GameInstance> GameInstances)
         return GameInstances
             .Find(instance => instance.EmulatorId == emulatorId)
             .Map(gameInstance => gameInstance.State == AutoState.On)
-            .Match(Some: x => x, None: () => false);
+            .Match(x => x, () => false);
     }
 }

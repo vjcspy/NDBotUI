@@ -27,6 +27,7 @@ public class InitAutoInstanceWhenSelectEmulator : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
+        await Task.Delay(0);
         Logger.Info($"[InitAutoInstanceWhenSelectEmulator] Start {action}");
         if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
 
