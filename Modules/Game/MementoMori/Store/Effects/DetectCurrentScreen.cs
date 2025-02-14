@@ -64,8 +64,7 @@ public class DetectCurrentScreen : EffectBase
     {
         return
         [
-            MoriAction.EligibilityCheck,
-            MoriAction.ClickedAfterDetectedMoriScreen,
+            MoriAction.TriggerScanCurrentScreen
         ];
     }
 
@@ -81,8 +80,8 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.TextSelectFirstCharToTeam,
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconSpeakBeginningFirst,
-                MoriTemplateKey.ChallengeButton,
-                
+                MoriTemplateKey.ChallengeButton
+
                 // MoriTemplateKey.StartSettingButton
             ];
 
@@ -137,14 +136,14 @@ public class DetectCurrentScreen : EffectBase
 
         return CoreAction.Empty;
     }
-    
+
     [Effect]
     public override RxEventHandler EffectHandler()
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
             .FilterBaseEligibility(GetForceEligible())
-            .Throttle(TimeSpan.FromSeconds(2)) 
+            .Throttle(TimeSpan.FromSeconds(1))
             .SelectMany(Process);
     }
 }

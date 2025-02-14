@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Avalonia;
-using Avalonia.Logging;
 using Avalonia.ReactiveUI;
 using NDBotUI.Modules.Core.Attributes;
-using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.Modules.Shared.TedBed.RxEvent;
@@ -20,7 +17,7 @@ internal sealed class Program
     public static void Main(string[] args)
     {
         RegisterEffects();
-
+    
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }
@@ -37,8 +34,6 @@ internal sealed class Program
     [SingleCall]
     private static void RegisterEffects()
     {
-        List<object> baseEffects = [new TedBedEffect(), new EmulatorEffect()];
-        baseEffects.AddRange(MoriEffect.Effects);
-        RxEventManager.RegisterEvent(baseEffects.ToArray());
+        RxEventManager.RegisterEvent([new TedBedEffect(), new EmulatorEffect()]);
     }
 }
