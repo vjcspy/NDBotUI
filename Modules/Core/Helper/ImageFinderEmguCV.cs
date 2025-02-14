@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
+using Emgu.CV.Util;
 using NLog;
 using SkiaSharp;
-using EmguCVMat = Emgu.CV.Mat;
+using Mat = Emgu.CV.Mat;
 using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
+using BFMatcher = Emgu.CV.Features2D.BFMatcher;
+using ORB = Emgu.CV.Features2D.ORB;
+using VectorOfKeyPoint = Emgu.CV.Util.VectorOfKeyPoint;
 
 namespace NDBotUI.Modules.Core.Helper;
 
@@ -16,7 +23,7 @@ public static class ImageFinderEmguCV
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static EmguCVMat? GetMatByPath(string imagePath)
+    public static Mat? GetMatByPath(string imagePath)
     {
         // Kiểm tra xem file template có tồn tại không
         if (!File.Exists(imagePath))
@@ -30,7 +37,7 @@ public static class ImageFinderEmguCV
         return templateMat;
     }
 
-    public static void SaveMatToFile(EmguCVMat mat, string fileName = "screenshot.png")
+    public static void SaveMatToFile(Mat mat, string fileName = "screenshot.png")
     {
         var outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
         CvInvoke.Imwrite(outputPath, mat); // Lưu ảnh xuống file PNG
@@ -38,22 +45,71 @@ public static class ImageFinderEmguCV
         Logger.Info($"Saved image to {outputPath}");
     }
 
-    public static Point? FindTemplateMatPoint(EmguCVMat screenshotMat, EmguCVMat templateMat,
+    public static Point? FindTemplateORB(Mat screenshotMat, Mat templateMat)
+    {
+        using var orb = new ORB(1000); // 🔥 Tăng số lượng keypoints
+        using var screenshotGray = new Mat();
+        using var templateGray = new Mat();
+
+        CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
+        CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
+
+
+        // Tìm keypoints và descriptors
+        using var screenshotKeyPoints = new VectorOfKeyPoint();
+        using var templateKeyPoints = new VectorOfKeyPoint();
+        using var screenshotDescriptors = new Mat();
+        using var templateDescriptors = new Mat();
+
+        orb.DetectAndCompute(screenshotGray, null, screenshotKeyPoints, screenshotDescriptors, false);
+        orb.DetectAndCompute(templateGray, null, templateKeyPoints, templateDescriptors, false);
+
+        using var screenshotKeypointImg = new Mat();
+        using var templateKeypointImg = new Mat();
+
+        Features2DToolbox.DrawKeypoints(screenshotGray, screenshotKeyPoints, screenshotKeypointImg, new Bgr(0, 255, 0));
+        Features2DToolbox.DrawKeypoints(templateGray, templateKeyPoints, templateKeypointImg, new Bgr(0, 255, 0));
+
+        CvInvoke.Imwrite("screenshot_keypoints.jpg", screenshotKeypointImg);
+        CvInvoke.Imwrite("template_keypoints.jpg", templateKeypointImg);
+
+        // So khớp descriptor giữa hai ảnh bằng KNN Match
+        using var matcher = new BFMatcher(DistanceType.Hamming);
+        using var matches = new VectorOfVectorOfDMatch(); // 🔥 Dùng KNN Match
+
+        matcher.KnnMatch(templateDescriptors, screenshotDescriptors, matches, 2);
+
+        // Lọc good matches bằng Lowe’s Ratio Test
+        var goodMatches = new List<MKeyPoint>();
+        for (var i = 0; i < matches.Size; i++)
+            if (matches[i][0].Distance < 0.75 * matches[i][1].Distance)
+                goodMatches.Add(templateKeyPoints[matches[i][0].QueryIdx]);
+
+        if (goodMatches.Count >= 4)
+        {
+            var matchedPoint = goodMatches[0].Point;
+            return new Point((int)matchedPoint.X, (int)matchedPoint.Y);
+        }
+
+        return null;
+    }
+
+    public static Point? FindTemplateMatPoint(Mat screenshotMat, Mat templateMat,
         string? markedScreenshotPath = null)
     {
         var stopwatch = Stopwatch.StartNew();
         // Chuyển ảnh về grayscale (CV_8U) để đảm bảo MatchTemplate hoạt động
-        using var screenshotGray = new EmguCVMat();
-        using var templateGray = new EmguCVMat();
+        using var screenshotGray = new Mat();
+        using var templateGray = new Mat();
 
         CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
         CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
         // CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
 
         // Tạo Mat kết quả
-        using var result = new EmguCVMat();
+        using var result = new Mat();
         // CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
-        CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.SqdiffNormed);
+        CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
 
         // Tìm điểm có độ tương đồng cao nhất
         double minVal = 0, maxVal = 0;
@@ -76,7 +132,8 @@ public static class ImageFinderEmguCV
                 new MCvScalar(0, 255, 0), 3);
 
             // 💾 Lưu ảnh kết quả
-            CvInvoke.Imwrite(markedScreenshotPath, screenshotMat);
+            // CvInvoke.Imwrite(markedScreenshotPath, screenshotMat);
+            SaveMatToFile(screenshotMat, markedScreenshotPath);
             Logger.Info($"Saved marked screenshot at path: {markedScreenshotPath}");
 
             return topLeft;
@@ -106,7 +163,7 @@ public static class ImageFinderEmguCV
     /// <summary>
     ///     Tìm kiếm ảnh mẫu trong ảnh chụp màn hình.
     /// </summary>
-    public static Point? FindImageInScreenshot(SKBitmap screenshot, EmguCVMat templateMat, string? markedScreenshotPath)
+    public static Point? FindImageInScreenshot(SKBitmap screenshot, Mat templateMat, string? markedScreenshotPath)
     {
         Logger.Info("FindImageInScreenshot by templateMat");
 
@@ -140,7 +197,7 @@ public static class ImageFinderEmguCV
     //     return new(ms);
     // }
 
-    private static EmguCVMat? ConvertSKBitmapToMat(SKBitmap skBitmap)
+    private static Mat? ConvertSKBitmapToMat(SKBitmap skBitmap)
     {
         try
         {
@@ -163,7 +220,7 @@ public static class ImageFinderEmguCV
             }
 
             // Tạo Mat từ mảng byte
-            var mat = new EmguCVMat(height, width, DepthType.Cv8U, 4); // 4 kênh (RGBA)
+            var mat = new Mat(height, width, DepthType.Cv8U, 4); // 4 kênh (RGBA)
             mat.SetTo(pixelData);
 
             return mat;

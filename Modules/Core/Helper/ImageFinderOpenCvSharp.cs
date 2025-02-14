@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Emgu.CV;
 using NLog;
 using OpenCvSharp;
 using Mat = OpenCvSharp.Mat;
@@ -34,7 +33,7 @@ public static class ImageFinderOpenCvSharp
         }
     }
 
-    public static Point? FindTemplateInScreenshot(Mat screenshot, Mat template, double threshold = 0.8)
+    public static Point? FindTemplateMatPoint(Mat screenshot, Mat template, double threshold = 0.8)
     {
         if (screenshot.Width < template.Width || screenshot.Height < template.Height)
             throw new ArgumentException("Template width and height must be smaller than template");
@@ -44,14 +43,14 @@ public static class ImageFinderOpenCvSharp
         // Đảm bảo ảnh template ở dạng grayscale (nếu chưa)
         // Cv2.CvtColor(template, template, ColorConversionCodes.BGR2GRAY);
 
-        using (Mat result = new Mat())
+        using (var result = new Mat())
         {
             // So sánh template với ảnh lớn
             Cv2.MatchTemplate(screenshot, template, result, TemplateMatchModes.CCoeffNormed);
 
             OpenCvSharp.Point maxLoc;
             // Lấy giá trị khớp tốt nhất và vị trí của nó
-            Cv2.MinMaxLoc(result, out _, out double maxVal, out _, out maxLoc);
+            Cv2.MinMaxLoc(result, out _, out var maxVal, out _, out maxLoc);
             Logger.Info($"MaxLoc {maxVal}");
             // Kiểm tra nếu độ tương đồng lớn hơn ngưỡng threshold
             return maxVal >= threshold ? new Point(maxLoc.X, maxLoc.Y) : null;

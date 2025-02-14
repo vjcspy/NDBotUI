@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
-using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
-using NLog;
-using SkiaSharp;
-using OpenCvSharp;
-using Mat = OpenCvSharp.Mat;
+using EmguCVSharp = Emgu.CV.Mat;
 using Point = System.Drawing.Point;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
@@ -49,32 +45,30 @@ public class DetectCurrentScreen : EffectBase
     //     return null;
     // }
 
-    private async Task<DetectedTemplatePoint?> DetectCurrentScreenAsync(
-        EmulatorConnection emulator,
-        Mat screenshotMat,
+    private DetectedTemplatePoint? DetectCurrentScreenByEmguCV(
+        EmguCVSharp screenshotMat,
         MoriTemplateKey moriTemplateKey)
     {
         try
         {
             Logger.Info("Starting detect current screen");
-            await Task.Delay(0);
             if (TemplateImageDataHelper.IsLoaded &&
-                TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].OpenCVMat is
+                TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].EmuCVMat is
                     { } templateMat)
             {
-                var point = ImageFinderOpenCvSharp.FindTemplateInScreenshot(screenshotMat, templateMat);
+                var point = ImageFinderEmguCV.FindTemplateMatPoint(screenshotMat, templateMat);
                 if (point is { } bpoint)
                 {
                     Logger.Info($"Found template point for key {moriTemplateKey}");
 
-                    return new DetectedTemplatePoint(MoriTemplateKey: moriTemplateKey, Point: bpoint);
+                    return new DetectedTemplatePoint(moriTemplateKey, bpoint);
                 }
 
                 Logger.Info($"Not found template point for {moriTemplateKey}");
             }
             else
             {
-                Logger.Info($"TemplateImageDataHelper not loaded");
+                Logger.Info($"TemplateImageDataHelper not loaded for key {moriTemplateKey}");
             }
 
             return null;
@@ -101,7 +95,7 @@ public class DetectCurrentScreen : EffectBase
         {
             if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
 
-            Logger.Info($"Detect current screen");
+            Logger.Info("Detect current screen");
 
             MoriTemplateKey[] screenToCheck =
             [
@@ -114,14 +108,15 @@ public class DetectCurrentScreen : EffectBase
             if (emulatorConnection == null) return CoreAction.Empty;
 
             // Optimize by use one screen shot
-            var screenShotOpenCvMat = await emulatorConnection.TakeScreenshotToOpenCVMatAsync();
+            var screenshot = await emulatorConnection.TakeScreenshotAsync();
+            if (screenshot is null) return CoreAction.Empty;
 
-            if (screenShotOpenCvMat is null) return CoreAction.Empty;
+            var screenshotEmguMat = screenshot.ToEmguMat();
 
             var tasks = screenToCheck.Select(moriTemplateKey =>
                 Observable.FromAsync(
                         () => Task.Run(() =>
-                            DetectCurrentScreenAsync(emulatorConnection, screenShotOpenCvMat, moriTemplateKey))
+                            DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey))
                     )
                     .ObserveOn(Scheduler.Default)
             );
@@ -133,9 +128,7 @@ public class DetectCurrentScreen : EffectBase
                 .FirstOrDefaultAsync();
 
             if (result is { } detectedTemplatePoint)
-            {
                 Logger.Info($"Detected template point: {detectedTemplatePoint.Point}");
-            }
         }
         catch (Exception e)
         {

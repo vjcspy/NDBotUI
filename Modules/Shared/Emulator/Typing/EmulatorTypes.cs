@@ -6,3 +6,5 @@ public static class EmulatorTypes
     public const string Nox = "Nox";
     public const string LDPlayer = "LDPlayer";
 }
+
+public record PPoint(float X, float Y);

@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reactive;
 using System.Threading.Tasks;
 using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.Models;
 using AdvancedSharpAdbClient.Receivers;
-using NDBotUI.Modules.Core.Extensions;
-using NDBotUI.Modules.Core.Helper;
-using NDBotUI.Modules.Core.Values;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NLog;
-using SkiaSharp;
-using EmuCVMat = Emgu.CV.Mat;
-using OpenCVMat = OpenCvSharp.Mat;
 using Point = System.Drawing.Point;
 
 namespace NDBotUI.Modules.Shared.Emulator.Models;
@@ -39,14 +32,6 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return receiver.ToString();
     }
 
-    public DeviceClient GetDeviceClient()
-    {
-        if (_deviceClient == null)
-            _deviceClient = new DeviceClient(emulatorScanData.AdbClient, emulatorScanData.DeviceData);
-
-        return _deviceClient;
-    }
-
     private string DetectEmulatorType(string model)
     {
         if (model.Contains(EmulatorTypes.Bluestacks, StringComparison.OrdinalIgnoreCase))
@@ -59,28 +44,28 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return "Unknown";
     }
 
-    public async Task<OpenCVMat?> TakeScreenshotToOpenCVMatAsync()
-    {
-        Logger.Info("TakeScreenshotToOpenCVMatAsync");
-        var stopwatch = Stopwatch.StartNew();
-        var framebuffer = await TakeScreenshotAsync();
-
-        if (framebuffer == null) return null;
-        try
-        {
-            var mat = framebuffer.ToOpenCVMat();
-            stopwatch.Stop();
-            Logger.Info("TakeScreenshotToOpenCVMatAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
-
-            return mat;
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotToOpenCVMatAsync");
-
-            return null;
-        }
-    }
+    // public async Task<OpenCVMat?> TakeScreenshotToOpenCVMatAsync()
+    // {
+    //     Logger.Info("TakeScreenshotToOpenCVMatAsync");
+    //     var stopwatch = Stopwatch.StartNew();
+    //     var framebuffer = await TakeScreenshotAsync();
+    //
+    //     if (framebuffer == null) return null;
+    //     try
+    //     {
+    //         var mat = framebuffer.ToOpenCVMat();
+    //         stopwatch.Stop();
+    //         Logger.Info("TakeScreenshotToOpenCVMatAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
+    //
+    //         return mat;
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotToOpenCVMatAsync");
+    //
+    //         return null;
+    //     }
+    // }
 
     public async Task<Framebuffer?> TakeScreenshotAsync()
     {
@@ -100,75 +85,43 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         }
     }
 
-    public async Task<SKBitmap?> TakeScreenshotSKBitmapAsync(bool isSaveToDir = false)
-    {
-        Logger.Info($"TakeScreenshotSKBitmapAsync {isSaveToDir}");
-        var stopwatch = Stopwatch.StartNew();
-        var framebuffer = await TakeScreenshotAsync();
+    // public async Task<SKBitmap?> TakeScreenshotSKBitmapAsync(bool isSaveToDir = false)
+    // {
+    //     Logger.Info($"TakeScreenshotSKBitmapAsync {isSaveToDir}");
+    //     var stopwatch = Stopwatch.StartNew();
+    //     var framebuffer = await TakeScreenshotAsync();
+    //
+    //     if (framebuffer == null) return null;
+    //
+    //     try
+    //     {
+    //         var bitmap = framebuffer.ToSKBitmap();
+    //         stopwatch.Stop();
+    //         Logger.Info("TakeScreenshotSKBitmapAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
+    //
+    //         if (!isSaveToDir) return bitmap;
+    //
+    //         // Thư mục lưu ảnh
+    //         var folderPath = FileHelper.CreateFolderIfNotExist(CoreValue.ScreenShotFolder);
+    //
+    //         // Định dạng tên file theo thời gian hiện tại: yyyyMMdd_HHmmss.jpg
+    //         var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+    //         var jpgPath = Path.Combine(folderPath, $"screenshot_{timestamp}.jpg");
+    //
+    //         bitmap?.SaveAsPng(jpgPath);
+    //         Logger.Info($"Screenshot saved to {jpgPath}");
+    //
+    //         return bitmap;
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotAsync");
+    //     }
+    //
+    //     return null;
+    // }
 
-        if (framebuffer == null) return null;
-
-        try
-        {
-            var bitmap = framebuffer.ToSKBitmap();
-            stopwatch.Stop();
-            Logger.Info("TakeScreenshotSKBitmapAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
-
-            if (!isSaveToDir) return bitmap;
-
-            // Thư mục lưu ảnh
-            var folderPath = FileHelper.CreateFolderIfNotExist(CoreValue.ScreenShotFolder);
-
-            // Định dạng tên file theo thời gian hiện tại: yyyyMMdd_HHmmss.jpg
-            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            var jpgPath = Path.Combine(folderPath, $"screenshot_{timestamp}.jpg");
-
-            bitmap?.SaveAsPng(jpgPath);
-            Logger.Info($"Screenshot saved to {jpgPath}");
-
-            return bitmap;
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotAsync");
-        }
-
-        return null;
-    }
-
-    public async Task<Point?> GetPointByMatAsync(EmuCVMat templateMat, bool isSaveMarkedImage = false,
-        SKBitmap? screenShotSkBitmap = null)
-    {
-        var screenshot = screenShotSkBitmap ?? await TakeScreenshotSKBitmapAsync();
-
-        if (screenshot == null) return null;
-
-        string? markedScreenshotPath = null;
-
-        if (isSaveMarkedImage)
-        {
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), CoreValue.ScreenShotFolder);
-            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            markedScreenshotPath = Path.Combine(folderPath, $"marked_screenshot_{timestamp}.png");
-        }
-
-        // 🔍 Tìm kiếm ảnh trong screenshot
-        var matchPoint =
-            ImageFinderEmguCV.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
-
-        if (matchPoint.HasValue)
-        {
-            Logger.Info($"OpenCV found template image at {matchPoint.Value}");
-
-            return matchPoint;
-        }
-
-        Logger.Info("OpenCV could not found template image");
-
-        return null;
-    }
-
-    public async Task<Unit> clickOnPointAsync(Point point)
+    public async Task<Unit> ClickOnPointAsync(Point point)
     {
         Logger.Info($"Emulator: {Id} - Click on: {point}");
         await emulatorScanData.AdbClient.ClickAsync(emulatorScanData.DeviceData, point);
@@ -176,7 +129,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return Unit.Default;
     }
 
-    public Unit clickOnPoint(Point point)
+    public Unit ClickOnPoint(Point point)
     {
         Logger.Info($"Emulator: {Id} - Click on: {point}");
         emulatorScanData.AdbClient.Click(emulatorScanData.DeviceData, point);
@@ -217,7 +170,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return null; // Trả về null nếu không lấy được độ phân giải
     }
 
-    public Unit ClickPercent(float x, float y)
+    public Unit ClickPPoint(PPoint pPoint)
     {
         var currentResolution = GetScreenResolution();
 
@@ -227,13 +180,13 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
             return Unit.Default;
         }
 
-        var xi = Convert.ToInt32(x);
-        var yi = Convert.ToInt32(x);
+        var xi = Convert.ToInt32(pPoint.X);
+        var yi = Convert.ToInt32(pPoint.Y);
 
-        return clickOnPoint(new Point(xi, yi));
+        return ClickOnPoint(new Point(xi, yi));
     }
 
-    public async Task<Unit> ClickPercentAsync(float x, float y)
+    public async Task<Unit> ClickPPointAsync(PPoint pPoint)
     {
         var currentResolution = GetScreenResolution();
 
@@ -243,9 +196,9 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
             return Unit.Default;
         }
 
-        var xi = Convert.ToInt32(x);
-        var yi = Convert.ToInt32(x);
+        var xi = Convert.ToInt32(pPoint.X);
+        var yi = Convert.ToInt32(pPoint.Y);
 
-        return await clickOnPointAsync(new Point(xi, yi));
+        return await ClickOnPointAsync(new Point(xi, yi));
     }
 }

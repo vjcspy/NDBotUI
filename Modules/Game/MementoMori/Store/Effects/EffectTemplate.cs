@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
@@ -33,10 +34,14 @@ public class EffectTemplate
             var screenshot = await emulator.TakeScreenshotAsync();
             if (screenshot is null) return CoreAction.Empty;
 
+            var stopwatch = Stopwatch.StartNew();
             var screenshotMat = screenshot.ToEmguMat();
+            stopwatch.Stop();
+            Logger.Info($"Screenshot to Emgu Mat took {stopwatch.ElapsedMilliseconds} ms");
             // ImageFinderEmguCV.SaveMatToFile(screenshotMat, "screenshot1.png");
             // ImageFinderEmguCV.SaveMatToFile(templateMat, "template1.png");
-            var point = ImageFinderEmguCV.FindTemplateMatPoint(screenshotMat, templateMat);
+            // var point = ImageFinderEmguCV.FindTemplateORB(screenshotMat, templateMat);
+            var point = ImageFinderEmguCV.FindTemplateMatPoint(screenshotMat, templateMat, "screenshot_marked.png");
             if (point != null)
                 Logger.Info($"Point is {point.Value.X}, {point.Value.Y}");
             else

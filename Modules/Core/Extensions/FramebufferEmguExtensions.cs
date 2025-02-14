@@ -8,7 +8,7 @@ using Mat = Emgu.CV.Mat;
 
 namespace NDBotUI.Modules.Core.Extensions
 {
-    public static class FramebufferExtensions
+    public static class FramebufferEmguExtensions
     {
         public static Mat ToEmguMat(this Framebuffer framebuffer, bool convertToGray = false)
         {
