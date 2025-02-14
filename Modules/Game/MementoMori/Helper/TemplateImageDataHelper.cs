@@ -9,7 +9,8 @@ using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NLog;
 using OpenCvSharp;
-using Mat = OpenCvSharp.Mat;
+using OpenCVMat = OpenCvSharp.Mat;
+using EmuCVMat = Emgu.CV.Mat;
 
 namespace NDBotUI.Modules.Game.MementoMori.Helper;
 
@@ -17,15 +18,20 @@ public enum MoriTemplateKey
 {
     StartSettingButton,
     StartStartButton,
-    
-    
+
+
     SkipMovieButton,
 }
 
-public class TemplateImageData(string[] filePath, Mat? templateMat = null, bool isLoadError = false)
+public class TemplateImageData(
+    string[] filePath,
+    OpenCVMat? openCVMat = null,
+    EmuCVMat? emuCvMat = null,
+    bool isLoadError = false)
 {
     public string[] FilePath { get; } = filePath;
-    public Mat? TemplateMat { get; set; } = templateMat;
+    public OpenCVMat? OpenCVMat { get; set; } = openCVMat;
+    public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
 }
 
@@ -68,17 +74,28 @@ public static class TemplateImageDataHelper
             var imagePath = Path.Combine(FileHelper.getFolderPath(TemplateImageData[moriTemplateKey].FilePath));
             try
             {
-                // var mat = ImageProcessingHelper.GetMatByPath(imagePath);
-                var mat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
-                if (mat == null)
+                
+                var openCVMat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
+                if (openCVMat == null)
                 {
                     TemplateImageData[moriTemplateKey].IsLoadError = true;
                     Logger.Error($"Failed to load template image for {moriTemplateKey}");
                 }
                 else
                 {
-                    TemplateImageData[moriTemplateKey].TemplateMat = mat;
+                    TemplateImageData[moriTemplateKey].OpenCVMat = openCVMat;
                 }
+
+                // var emuCVMat = ImageFinderEmuCV.GetMatByPath(imagePath);
+                // if (emuCVMat == null)
+                // {
+                //     TemplateImageData[moriTemplateKey].IsLoadError = true;
+                //     Logger.Error($"Failed to load template image for {moriTemplateKey}");
+                // }
+                // else
+                // {
+                //     TemplateImageData[moriTemplateKey].EmuCVMat = emuCVMat;
+                // }
             }
             catch (Exception ex)
             {

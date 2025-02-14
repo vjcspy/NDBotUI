@@ -140,7 +140,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
         // 🔍 Tìm kiếm ảnh trong screenshot
         var matchPoint =
-            ImageProcessingHelper.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
+            ImageFinderEmuCV.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
 
         if (matchPoint.HasValue)
         {

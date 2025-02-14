@@ -25,7 +25,7 @@ public class EffectTemplate
 
         /* Test find template */
         // if (TemplateImageDataHelper.IsLoaded &&
-        //     TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
+        //     TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].OpenCVMat is
         //         { } templateMat)
         // {
         //     var point = await emulator.GetPointByMatAsync(templateMat);

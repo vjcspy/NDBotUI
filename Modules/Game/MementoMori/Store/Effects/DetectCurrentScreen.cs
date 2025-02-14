@@ -28,7 +28,7 @@ public class DetectCurrentScreen : EffectBase
     // {
     //     Logger.Info("Starting detect current screen");
     //     if (TemplateImageDataHelper.IsLoaded &&
-    //         TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
+    //         TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].OpenCVMat is
     //             { } templateMat)
     //     {
     //         var point = await emulator.GetPointByMatAsync(templateMat, false, screenShotSkBitmap);
@@ -59,7 +59,7 @@ public class DetectCurrentScreen : EffectBase
             Logger.Info("Starting detect current screen");
             await Task.Delay(0);
             if (TemplateImageDataHelper.IsLoaded &&
-                TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].TemplateMat is
+                TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.StartStartButton].OpenCVMat is
                     { } templateMat)
             {
                 var point = ImageFinderOpenCvSharp.FindTemplateInScreenshot(screenshotMat, templateMat);

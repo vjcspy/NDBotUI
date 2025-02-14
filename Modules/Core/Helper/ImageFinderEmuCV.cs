@@ -10,7 +10,7 @@ using Point = System.Drawing.Point;
 
 namespace NDBotUI.Modules.Core.Helper;
 
-public static class ImageProcessingHelper
+public static class ImageFinderEmuCV
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
