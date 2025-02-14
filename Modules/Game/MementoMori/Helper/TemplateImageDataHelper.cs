@@ -74,28 +74,27 @@ public static class TemplateImageDataHelper
             var imagePath = Path.Combine(FileHelper.getFolderPath(TemplateImageData[moriTemplateKey].FilePath));
             try
             {
-                
-                var openCVMat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
-                if (openCVMat == null)
-                {
-                    TemplateImageData[moriTemplateKey].IsLoadError = true;
-                    Logger.Error($"Failed to load template image for {moriTemplateKey}");
-                }
-                else
-                {
-                    TemplateImageData[moriTemplateKey].OpenCVMat = openCVMat;
-                }
-
-                // var emuCVMat = ImageFinderEmuCV.GetMatByPath(imagePath);
-                // if (emuCVMat == null)
+                // var openCVMat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
+                // if (openCVMat == null)
                 // {
                 //     TemplateImageData[moriTemplateKey].IsLoadError = true;
                 //     Logger.Error($"Failed to load template image for {moriTemplateKey}");
                 // }
                 // else
                 // {
-                //     TemplateImageData[moriTemplateKey].EmuCVMat = emuCVMat;
+                //     TemplateImageData[moriTemplateKey].OpenCVMat = openCVMat;
                 // }
+
+                var emuCVMat = ImageFinderEmguCV.GetMatByPath(imagePath);
+                if (emuCVMat == null)
+                {
+                    TemplateImageData[moriTemplateKey].IsLoadError = true;
+                    Logger.Error($"Failed to load template image for {moriTemplateKey}");
+                }
+                else
+                {
+                    TemplateImageData[moriTemplateKey].EmuCVMat = emuCVMat;
+                }
             }
             catch (Exception ex)
             {

@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.DeviceCommands;
 using AdvancedSharpAdbClient.Models;
 using AdvancedSharpAdbClient.Receivers;
-using Emgu.CV;
-using Microsoft.Extensions.Logging;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NLog;
-using NLog.Fluent;
 using SkiaSharp;
-using OpenCvSharp;
-using Mat = Emgu.CV.Mat;
+using EmuCVMat = Emgu.CV.Mat;
 using OpenCVMat = OpenCvSharp.Mat;
 using Point = System.Drawing.Point;
 
@@ -29,9 +22,9 @@ namespace NDBotUI.Modules.Shared.Emulator.Models;
 public class EmulatorConnection(EmulatorScanData emulatorScanData)
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
+    private int[]? _cacheScreenResolution;
     private DeviceClient? _deviceClient;
-    private int[]? _cacheScreenResolution = null;
+    public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
 
     public string Id => emulatorScanData.DeviceData.Serial;
     public string Serial => emulatorScanData.DeviceData.Serial;
@@ -49,9 +42,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
     public DeviceClient GetDeviceClient()
     {
         if (_deviceClient == null)
-        {
             _deviceClient = new DeviceClient(emulatorScanData.AdbClient, emulatorScanData.DeviceData);
-        }
 
         return _deviceClient;
     }
@@ -70,9 +61,11 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public async Task<OpenCVMat?> TakeScreenshotToOpenCVMatAsync()
     {
-        Logger.Info($"TakeScreenshotToOpenCVMatAsync");
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        var framebuffer = await emulatorScanData.AdbClient.GetFrameBufferAsync(emulatorScanData.DeviceData);
+        Logger.Info("TakeScreenshotToOpenCVMatAsync");
+        var stopwatch = Stopwatch.StartNew();
+        var framebuffer = await TakeScreenshotAsync();
+
+        if (framebuffer == null) return null;
         try
         {
             var mat = framebuffer.ToOpenCVMat();
@@ -89,16 +82,37 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         }
     }
 
-    public async Task<SKBitmap?> TakeScreenshotAsync(bool isSaveToDir = false)
+    public async Task<Framebuffer?> TakeScreenshotAsync()
     {
-        Logger.Info($"TakeScreenshotAsync {isSaveToDir}");
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        var framebuffer = await emulatorScanData.AdbClient.GetFrameBufferAsync(emulatorScanData.DeviceData);
+        Logger.Info("TakeScreenshotAsync");
+        var stopwatch = Stopwatch.StartNew();
+        try
+        {
+            var screenshot = await emulatorScanData.AdbClient.GetFrameBufferAsync(emulatorScanData.DeviceData);
+            stopwatch.Stop();
+            Logger.Info("TakeScreenshotAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
+            return screenshot;
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, $"Emulator {Id} failed to TakeScreenshotAsync");
+            return null;
+        }
+    }
+
+    public async Task<SKBitmap?> TakeScreenshotSKBitmapAsync(bool isSaveToDir = false)
+    {
+        Logger.Info($"TakeScreenshotSKBitmapAsync {isSaveToDir}");
+        var stopwatch = Stopwatch.StartNew();
+        var framebuffer = await TakeScreenshotAsync();
+
+        if (framebuffer == null) return null;
+
         try
         {
             var bitmap = framebuffer.ToSKBitmap();
             stopwatch.Stop();
-            Logger.Info("TakeScreenshotAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
+            Logger.Info("TakeScreenshotSKBitmapAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
             if (!isSaveToDir) return bitmap;
 
@@ -116,16 +130,16 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshot");
+            Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotAsync");
         }
 
         return null;
     }
 
-    public async Task<Point?> GetPointByMatAsync(Mat templateMat, bool isSaveMarkedImage = false,
+    public async Task<Point?> GetPointByMatAsync(EmuCVMat templateMat, bool isSaveMarkedImage = false,
         SKBitmap? screenShotSkBitmap = null)
     {
-        var screenshot = screenShotSkBitmap ?? await TakeScreenshotAsync();
+        var screenshot = screenShotSkBitmap ?? await TakeScreenshotSKBitmapAsync();
 
         if (screenshot == null) return null;
 
@@ -140,7 +154,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
         // 🔍 Tìm kiếm ảnh trong screenshot
         var matchPoint =
-            ImageFinderEmuCV.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
+            ImageFinderEmguCV.FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
 
         if (matchPoint.HasValue)
         {
@@ -189,10 +203,10 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         // Kiểm tra kết quả đầu ra
         if (!string.IsNullOrEmpty(resolutionText) && resolutionText.Contains("Physical size:"))
         {
-            string resolution = resolutionText.Split(':')[1].Trim(); // Lấy phần "1080x1920"
-            string[] parts = resolution.Split('x'); // Tách thành ["1080", "1920"]
+            var resolution = resolutionText.Split(':')[1].Trim(); // Lấy phần "1080x1920"
+            var parts = resolution.Split('x'); // Tách thành ["1080", "1920"]
 
-            if (parts.Length == 2 && int.TryParse(parts[0], out int width) && int.TryParse(parts[1], out int height))
+            if (parts.Length == 2 && int.TryParse(parts[0], out var width) && int.TryParse(parts[1], out var height))
             {
                 _cacheScreenResolution = [width, height];
 

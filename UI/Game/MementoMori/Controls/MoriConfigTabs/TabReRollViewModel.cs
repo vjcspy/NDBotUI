@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
-using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -14,24 +13,7 @@ namespace NDBotUI.UI.Game.MementoMori.Controls.MoriConfigTabs;
 
 public partial class TabReRollViewModel : ObservableViewModelBase
 {
-    public AppStore Store { get; } = AppStore.Instance;
-
     [ObservableProperty] public string toggleButtonText = "Please select an emulator";
-
-    [RelayCommand]
-    public void ToggleReRollCommand()
-    {
-        if (ToggleButtonText is "Start" or "Stop")
-        {
-            if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
-            {
-                RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
-                    new BaseActionPayload(EmulatorId: selectedEmulatorId)));
-            }
-        }
-
-        // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
-    }
 
     public TabReRollViewModel()
     {
@@ -45,13 +27,9 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                     if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
                     {
                         if (gameInstance.State == AutoState.On)
-                        {
                             ToggleButtonText = "Stop";
-                        }
                         else
-                        {
                             ToggleButtonText = "Start";
-                        }
                     }
                     else
                     {
@@ -63,5 +41,22 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                     ToggleButtonText = "Wait";
                 }
             }, Disposables);
+    }
+
+    public AppStore Store { get; } = AppStore.Instance;
+
+    [RelayCommand]
+    public void ToggleReRollCommand()
+    {
+        // if (ToggleButtonText is "Start" or "Stop")
+        // {
+        //     if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+        //     {
+        //         RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
+        //             new BaseActionPayload(EmulatorId: selectedEmulatorId)));
+        //     }
+        // }
+
+        RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 }
