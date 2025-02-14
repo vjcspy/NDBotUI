@@ -154,11 +154,73 @@ public static class TemplateImageDataHelper
         },
         
         {
+            MoriTemplateKey.PartyInformation,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "party_information.png"
+            ], priority: 90)
+        },
+        {
             MoriTemplateKey.TapToClose,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "tap_to_close.png"
             ], priority: 90)
-        }
+        },
+        
+        /* Level up*/
+        {
+            MoriTemplateKey.BeforeChallengeChapterSix,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "before_challenge_chapter_six.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterGrowthTabHeader,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_growth_tab_header.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelOneText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_one_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelTwoText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_two_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelThreeText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_three_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelFourText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_four_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelFiveText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_five_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelSixText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_six_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.CharacterLevelSevenText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_seven_text.png"
+            ], priority: 50)
+        },
     };
 
     public static Unit LoadTemplateImages()

@@ -95,7 +95,7 @@ public static class ImageFinderEmguCV
     }
 
     public static Point? FindTemplateMatPoint(Mat screenshotMat, Mat templateMat,
-        string? markedScreenshotFileName = null, bool shouldResize = false)
+        string? markedScreenshotFileName = null, bool shouldResize = false, string? debugKey=null)
     {
         var stopwatch = Stopwatch.StartNew();
 
@@ -135,9 +135,9 @@ public static class ImageFinderEmguCV
             Point minLoc = default, maxLoc = default;
             CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
 
-            Logger.Info($"MatchTemplate Score: {maxVal}");
+            Logger.Info($"MatchTemplate Score: {debugKey} {maxVal}");
             stopwatch.Stop();
-            Logger.Info("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
+            Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
             // Nếu độ khớp > 0.8 thì coi là tìm thấy
             if (maxVal >= 0.8)
@@ -157,7 +157,7 @@ public static class ImageFinderEmguCV
                 // 💾 Lưu ảnh kết quả (ảnh resize hoặc ảnh gốc)
                 var imagePath = ImageHelper.GetImagePath(markedScreenshotFileName);
                 CvInvoke.Imwrite(imagePath, processedScreenshot);
-                Logger.Info($"Saved marked screenshot at path: {imagePath}");
+                Logger.Debug($"Saved marked screenshot at path: {imagePath}");
 
                 return topLeft;
             }

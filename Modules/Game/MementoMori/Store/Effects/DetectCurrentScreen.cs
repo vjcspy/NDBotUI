@@ -5,13 +5,14 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Extensions;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
+using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
-using NLog;
 using EmguCVSharp = Emgu.CV.Mat;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
@@ -24,7 +25,7 @@ public class DetectCurrentScreen : EffectBase
     {
         try
         {
-            Logger.Info($"Starting detect current screen for {moriTemplateKey}");
+            Logger.Debug($"Starting detect current screen for {moriTemplateKey}");
             if (TemplateImageDataHelper.IsLoaded &&
                 TemplateImageDataHelper.TemplateImageData[moriTemplateKey].EmuCVMat is
                     { } templateMat)
@@ -32,17 +33,18 @@ public class DetectCurrentScreen : EffectBase
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
                     screenshotMat,
                     templateMat,
-                    shouldResize: false
+                    shouldResize: false,
+                    debugKey: moriTemplateKey.ToString()
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)
                 {
-                    Logger.Info($"Found template point for key {moriTemplateKey}");
+                    Logger.Debug($"Found template point for key {moriTemplateKey}");
 
                     return new DetectedTemplatePoint(moriTemplateKey, bpoint);
                 }
 
-                Logger.Info($"Not found template point for {moriTemplateKey}");
+                Logger.Debug($"Not found template point for {moriTemplateKey}");
             }
             else
             {
@@ -100,7 +102,9 @@ public class DetectCurrentScreen : EffectBase
                 
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,
-                
+
+                MoriTemplateKey.BeforeChallengeChapterSix
+
                 // MoriTemplateKey.StartSettingButton
             ];
 
@@ -159,8 +163,23 @@ public class DetectCurrentScreen : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
+            .Throttle(TimeSpan.FromSeconds(4))
             .FilterBaseEligibility(GetForceEligible())
-            .Throttle(TimeSpan.FromSeconds(1))
+            .Where(action =>
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload) return false;
+                var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+
+                if (gameInstance is null or
+                    { JobType: MoriJobType.ReRoll, JobReRollState.ReRollStatus: ReRollStatus.EligibilityLevelCheck })
+                {
+                    // tạm thời disable detect để check level
+                    // Logger.Info("Pause detect current screen for eligibility level check");
+                    return false;
+                }
+
+                return true;
+            })
             .SelectMany(Process);
     }
 }

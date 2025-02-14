@@ -1,4 +1,5 @@
-﻿using NDBotUI.Modules.Game.AutoCore.Store;
+﻿using System.Linq;
+using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -62,7 +63,7 @@ public class MoriReducer
 
                 return state;
             }
-            case MoriAction.Type.EligibilityCheck:
+            case MoriAction.Type.EligibilityChapterCheck:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload) return state;
                 var emulatorId = baseActionPayload.EmulatorId;
@@ -75,7 +76,7 @@ public class MoriReducer
                             {
                                 JobReRollState = gameInstance.JobReRollState with
                                 {
-                                    ReRollStatus = ReRollStatus.EligibilityCheck
+                                    ReRollStatus = ReRollStatus.EligibilityChapterCheck
                                 }
                             }
                             : gameInstance
@@ -107,6 +108,25 @@ public class MoriReducer
                             : gameInstance
                     )
                 };
+
+                MoriTemplateKey[] chapterValidEligibilityCheck = [MoriTemplateKey.BeforeChallengeChapterSix];
+                if (chapterValidEligibilityCheck.Contains(detectedTemplatePoint.MoriTemplateKey))
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.EligibilityLevelCheck,
+                                    }
+                                }
+                                : gameInstance
+                        )
+                    };
+                }
 
                 return state;
             }

@@ -35,10 +35,22 @@ public enum MoriTemplateKey
     SelectButton, // button select ở bottom right (khi chọn town)
     ButtonClaim, // button claim reward
     
+    /*Level up*/
+    BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
+    CharacterGrowthTabHeader,
+    CharacterLevelOneText,
+    CharacterLevelTwoText,
+    CharacterLevelThreeText,
+    CharacterLevelFourText,
+    CharacterLevelFiveText,
+    CharacterLevelSixText,
+    CharacterLevelSevenText,
+    
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
 
     SkipMovieButton
+    
 }
 
 public record GameInstance(

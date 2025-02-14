@@ -5,9 +5,11 @@ public enum ReRollStatus
     Open, // chưa làm gì hết
     Start, // Bấm start
 
-    EligibilityCheck,
-    Ineligible,
-
+    EligibilityChapterCheck, // Check chapter level
+    IneligibleChapterCheck,
+    
+    EligibilityLevelCheck,
+    
     Processing,
     Finished,
 
