@@ -11,6 +11,7 @@ using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
+using NLog;
 using EmguCVSharp = Emgu.CV.Mat;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
@@ -45,7 +46,7 @@ public class DetectCurrentScreen : EffectBase
             }
             else
             {
-                Logger.Info($"TemplateImageDataHelper not loaded for key {moriTemplateKey}");
+                Logger.Error($"TemplateImageDataHelper not loaded for key {moriTemplateKey}");
             }
 
             return null;
@@ -86,6 +87,12 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.TextSelectFourCharToTeam,
                 
                 MoriTemplateKey.PowerLevelUpText,
+                MoriTemplateKey.GuideClickLevelUpText,
+                MoriTemplateKey.GuideClickEquipAllText,
+                MoriTemplateKey.GuideClickQuestText,
+                MoriTemplateKey.GuideClickTheTownText,
+                
+                MoriTemplateKey.BossBattleButton,
                 
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,

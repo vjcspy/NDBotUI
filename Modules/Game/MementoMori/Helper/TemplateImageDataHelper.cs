@@ -90,13 +90,50 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_four_char_to_team.png"
             ], priority: 10)
         },
+        
         {
             MoriTemplateKey.PowerLevelUpText,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "power_level_up_text.png"
             ], priority: 90)
         },
-
+        {
+            MoriTemplateKey.GuideClickLevelUpText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_level_up_text.png"
+            ], priority: 90)
+        },
+        {
+            MoriTemplateKey.GuideClickEquipAllText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_equip_all_text.png"
+            ], priority: 90)
+        },
+        {
+            MoriTemplateKey.GuideClickQuestText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_quest_text.png"
+            ], priority: 90)
+        },
+        {
+            MoriTemplateKey.GuideClickTheTownText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_the_town_text.png"
+            ], priority: 90)
+        },
+        {
+            MoriTemplateKey.GuideSelectTownButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_select_town_button.png"
+            ], priority: 90)
+        },
+        
+        {
+            MoriTemplateKey.BossBattleButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "boss_battle_button.png"
+            ], priority: 90)
+        },
 
         {
             MoriTemplateKey.PartyInformation,

@@ -30,7 +30,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.StartStartButton,
             MoriTemplateKey.ChallengeButton,
-            MoriTemplateKey.TapToClose
+            MoriTemplateKey.TapToClose,
+            MoriTemplateKey.BossBattleButton
            
         ];
 
@@ -61,6 +62,22 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 break;
             case MoriTemplateKey.PowerLevelUpText:
                 await emulatorConnection.ClickPPointAsync(new PPoint(20.8f,94f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickLevelUpText:
+                await emulatorConnection.ClickPPointAsync(new PPoint(75.2f,82.4f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickEquipAllText:
+                await emulatorConnection.ClickPPointAsync(new PPoint(35.8f,82.4f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickQuestText:
+                await emulatorConnection.ClickPPointAsync(new PPoint(44f,95f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickTheTownText:
+                await emulatorConnection.ClickPPointAsync(new PPoint(50f,47.3f));
                 isClicked = true;
                 break;
             

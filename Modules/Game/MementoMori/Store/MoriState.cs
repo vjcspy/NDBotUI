@@ -15,14 +15,22 @@ public enum MoriTemplateKey
     StartSettingButton,
     StartStartButton,
 
-    IconSpeakBeginningFirst,
-    ChallengeButton,
+    IconSpeakBeginningFirst, // TODO: cần chuyển sang text
+    
+    ChallengeButton, // Trước khi vào trận đánh sẽ hỏi
     TextSelectFirstCharToTeam, // Select first char vào party
     TextSelectSecondCharToTeam, // Select second char vào party
     TextSelectThirdCharToTeam, // Select third char vào party
     TextSelectFourCharToTeam, // Select four char vào party
-    PowerLevelUpText, // hướng dẫn level up nhân vật
     
+    PowerLevelUpText, // hướng dẫn level up nhân vật
+    GuideClickLevelUpText, // click level up nhân vật
+    GuideClickEquipAllText, // click level up nhân vật
+    GuideClickQuestText, // click level up nhân vật
+    GuideClickTheTownText, // click level up nhân vật
+    GuideSelectTownButton, // click level up nhân vật
+    
+    BossBattleButton,
     
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
