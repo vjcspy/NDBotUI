@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Core.Attributes;
@@ -22,6 +23,8 @@ public class MoriBoot
         RxEventManager.RegisterEvent(MoriEffect.Effects);
 
         Observable.Interval(TimeSpan.FromSeconds(2))
+            .ObserveOn(Scheduler.Default)
+            .SubscribeOn(Scheduler.Default)
             .Subscribe(
                 _ =>
                 {
@@ -31,7 +34,6 @@ public class MoriBoot
                             RxEventManager.Dispatch(
                                 MoriAction.TriggerScanCurrentScreen.Create(new BaseActionPayload(x.EmulatorId)));
                     });
-                   
                 },
                 ex => Console.WriteLine($"Error: {ex.Message}"),
                 () => Console.WriteLine("Completed"));
