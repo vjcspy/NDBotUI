@@ -16,22 +16,9 @@ public enum ReRollStatus
     StoppedWithError
 }
 
-public enum MoriScreen
-{
-    Unknown,
-    
-    SigninGooglePlay,
-    TapToStart,
-    TermsOfAgreement,
-    
-    SkipMovie,
-    
-    
-}
-
 public record JobReRollState(
     ReRollStatus ReRollStatus = ReRollStatus.Open,
-    MoriScreen MoriCurrentScreen = MoriScreen.Unknown,
-    MoriScreen MoriLastScreen = MoriScreen.Unknown,
+    MoriTemplateKey MoriCurrentScreen = MoriTemplateKey.Unknown,
+    MoriTemplateKey MoriLastScreen = MoriTemplateKey.Unknown,
     int DetectScreenTry = 0
 );

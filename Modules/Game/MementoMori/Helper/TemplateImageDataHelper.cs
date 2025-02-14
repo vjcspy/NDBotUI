@@ -3,25 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive;
-using System.Threading.Tasks;
-using Emgu.CV;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
+using NDBotUI.Modules.Game.MementoMori.Store;
 using NLog;
-using OpenCvSharp;
 using OpenCVMat = OpenCvSharp.Mat;
 using EmuCVMat = Emgu.CV.Mat;
 
 namespace NDBotUI.Modules.Game.MementoMori.Helper;
-
-public enum MoriTemplateKey
-{
-    StartSettingButton,
-    StartStartButton,
-
-
-    SkipMovieButton,
-}
 
 public class TemplateImageData(
     string[] filePath,
@@ -38,7 +27,7 @@ public class TemplateImageData(
 public static class TemplateImageDataHelper
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static bool IsLoaded = false;
+    public static bool IsLoaded;
 
     public static Dictionary<MoriTemplateKey, TemplateImageData> TemplateImageData = new()
     {
@@ -59,6 +48,12 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "start_start_button.png"
             ])
+        },
+        {
+            MoriTemplateKey.IconSpeakBeginningFirst,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "icon_speak_beginning_first.png"
+            ])
         }
     };
 
@@ -68,7 +63,7 @@ public static class TemplateImageDataHelper
 
         if (IsLoaded) return Unit.Default;
 
-        Logger.Info($"Loading template images for Memento Mori");
+        Logger.Info("Loading template images for Memento Mori");
         foreach (var moriTemplateKey in TemplateImageData.Keys.ToList())
         {
             var imagePath = Path.Combine(FileHelper.getFolderPath(TemplateImageData[moriTemplateKey].FilePath));
@@ -104,7 +99,7 @@ public static class TemplateImageDataHelper
         }
 
         IsLoaded = true;
-        Logger.Info($"Loaded template images for Memento Mori");
+        Logger.Info("Loaded template images for Memento Mori");
 
         return Unit.Default;
     }

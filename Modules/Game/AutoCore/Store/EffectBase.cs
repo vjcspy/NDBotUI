@@ -20,7 +20,7 @@ public abstract class EffectBase
 
 
     [Effect]
-    public RxEventHandler EffectHandler()
+    public virtual RxEventHandler EffectHandler()
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())

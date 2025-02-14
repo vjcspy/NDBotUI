@@ -5,35 +5,33 @@ using AdvancedSharpAdbClient;
 using AdvancedSharpAdbClient.Models;
 using NDBotUI.Modules.Shared.Emulator.Errors;
 using NDBotUI.Modules.Shared.Emulator.Typing;
+using NLog;
 
 namespace NDBotUI.Modules.Shared.Emulator.Helpers;
 
 public class AdbHelper(string adbPath)
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     private AdbServer? _adbServer;
 
     public void InitAdbServer(bool forceRestart = true)
     {
         if (AdbServer.Instance.GetStatus().IsRunning && forceRestart)
-        {
             try
             {
                 AdbServer.Instance.StopServer();
             }
-            catch
+            catch (Exception e)
             {
-                // ignored
+                Logger.Error(e, "Failed to stop adb server");
             }
-        }
 
         _adbServer = new AdbServer();
 
-        var result = _adbServer.StartServer(adbPath, restartServerIfNewer: true);
+        var result = _adbServer.StartServer(adbPath, false);
 
-        if (result != StartServerResult.Started)
-        {
-            throw new CouldNotInitAdbServer();
-        }
+        if (result != StartServerResult.Started) throw new CouldNotInitAdbServer();
 
         Console.WriteLine("Adb server started.");
     }
@@ -56,7 +54,6 @@ public class AdbHelper(string adbPath)
         var adbPorts = NetstatScanner.GetAdbPorts();
 
         foreach (var address in from port in adbPorts where port >= 5000 select $"127.0.0.1:{port}")
-        {
             try
             {
                 var adbClient = new AdbClient();
@@ -69,7 +66,6 @@ public class AdbHelper(string adbPath)
             {
                 Console.WriteLine($"Failed to connect to {address}: {ex.Message}");
             }
-        }
 
         return connectedDevices;
     }

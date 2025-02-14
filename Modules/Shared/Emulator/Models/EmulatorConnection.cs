@@ -179,8 +179,8 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
             return Unit.Default;
         }
 
-        var xi = Convert.ToInt32(pPoint.X);
-        var yi = Convert.ToInt32(pPoint.Y);
+        var xi = Convert.ToInt32(pPoint.X * currentResolution[0] / 100);
+        var yi = Convert.ToInt32(pPoint.Y * currentResolution[1] / 100);
 
         return ClickOnPoint(new Point(xi, yi));
     }
@@ -195,8 +195,8 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
             return Unit.Default;
         }
 
-        var xi = Convert.ToInt32(pPoint.X);
-        var yi = Convert.ToInt32(pPoint.Y);
+        var xi = Convert.ToInt32(pPoint.X * currentResolution[0] / 100);
+        var yi = Convert.ToInt32(pPoint.Y * currentResolution[1] / 100);
 
         return await ClickOnPointAsync(new Point(xi, yi));
     }

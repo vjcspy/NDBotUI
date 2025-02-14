@@ -1,6 +1,4 @@
-﻿using LanguageExt;
-using NDBotUI.Modules.Core.Store;
-using NDBotUI.Modules.Game.AutoCore.Store;
+﻿using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -20,20 +18,18 @@ public class MoriReducer
                 {
                     var gameInstance = state.GetGameInstance(baseActionPayload.EmulatorId);
                     if (gameInstance == null)
-                    {
                         state = state with
                         {
                             GameInstances = state.GameInstances.Add(
                                 new GameInstance(
-                                    EmulatorId: baseActionPayload.EmulatorId,
-                                    State: AutoState.Off,
-                                    Status: "",
-                                    JobType: MoriJobType.None,
-                                    JobReRollState: new JobReRollState(ReRollStatus: ReRollStatus.Open)
+                                    baseActionPayload.EmulatorId,
+                                    AutoState.Off,
+                                    "",
+                                    MoriJobType.None,
+                                    new JobReRollState()
                                 )
                             )
                         };
-                    }
                 }
 
                 return state;
@@ -57,7 +53,7 @@ public class MoriReducer
                                 JobType = MoriJobType.ReRoll,
                                 JobReRollState = gameInstance.JobReRollState with
                                 {
-                                    ReRollStatus = isRunning ? ReRollStatus.Open : ReRollStatus.Start,
+                                    ReRollStatus = isRunning ? ReRollStatus.Open : ReRollStatus.Start
                                 }
                             }
                             : gameInstance
@@ -79,7 +75,7 @@ public class MoriReducer
                             {
                                 JobReRollState = gameInstance.JobReRollState with
                                 {
-                                    ReRollStatus = ReRollStatus.EligibilityCheck,
+                                    ReRollStatus = ReRollStatus.EligibilityCheck
                                 }
                             }
                             : gameInstance
@@ -88,6 +84,33 @@ public class MoriReducer
 
                 return state;
             }
+
+            case MoriAction.Type.DetectedMoriScreen:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload ||
+                    baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    DetectScreenTry = 0,
+                                    MoriCurrentScreen = detectedTemplatePoint.MoriTemplateKey,
+                                    MoriLastScreen = gameInstance.JobReRollState.MoriCurrentScreen
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
+
+                return state;
+            }
+
             default:
                 return state;
         }

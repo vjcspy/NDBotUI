@@ -9,6 +9,17 @@ using NLog;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
+public enum MoriTemplateKey
+{
+    Unknown,
+    StartSettingButton,
+    StartStartButton,
+    
+    IconSpeakBeginningFirst,
+    
+    SkipMovieButton,
+}
+
 public record GameInstance(
     string EmulatorId,
     AutoState State, // On/Off Auto
@@ -34,7 +45,6 @@ public record MoriState(Lst<GameInstance> GameInstances)
         }
         catch (Exception)
         {
-            Logger.Warn($"Could not find emulator with id {emulatorId}");
             return null;
         }
     }

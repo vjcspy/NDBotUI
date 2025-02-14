@@ -27,6 +27,7 @@ public class EligibilityCheckEffect : EffectBase
 
             if (isRunning)
             {
+                Logger.Info("App is running, will trigger eligibility check");
                 return MoriAction.EligibilityCheck.Create(baseActionPayload);
             }
         }

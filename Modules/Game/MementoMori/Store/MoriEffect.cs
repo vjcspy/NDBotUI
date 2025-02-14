@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NDBotUI.Modules.Game.MementoMori.Store.Effects;
+using NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
@@ -11,6 +12,9 @@ public class MoriEffect
         new EffectTemplate(),
         new InitAutoInstanceWhenSelectEmulator(),
         new EligibilityCheckEffect(),
-        new DetectCurrentScreen()
+        new DetectCurrentScreen(),
+        
+        /* ReRoll*/
+        new ClickOnDetectedTemplateEffect()
     ];
 }

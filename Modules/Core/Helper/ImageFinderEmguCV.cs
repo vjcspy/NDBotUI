@@ -140,7 +140,7 @@ public static class ImageFinderEmguCV
             Logger.Info("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
             // Nếu độ khớp > 0.8 thì coi là tìm thấy
-            if (maxVal >= 0.75)
+            if (maxVal >= 0.8)
             {
                 var topLeft = shouldResize
                     ? new Point((int)(maxLoc.X / scaleFactor),
