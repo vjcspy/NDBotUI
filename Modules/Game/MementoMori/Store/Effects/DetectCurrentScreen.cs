@@ -85,6 +85,8 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.TextSelectThirdCharToTeam,
                 MoriTemplateKey.TextSelectFourCharToTeam,
                 
+                MoriTemplateKey.PowerLevelUpText,
+                
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,
                 

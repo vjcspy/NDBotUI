@@ -90,6 +90,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_four_char_to_team.png"
             ], priority: 10)
         },
+        {
+            MoriTemplateKey.PowerLevelUpText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "power_level_up_text.png"
+            ], priority: 90)
+        },
 
 
         {

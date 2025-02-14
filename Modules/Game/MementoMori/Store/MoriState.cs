@@ -21,6 +21,8 @@ public enum MoriTemplateKey
     TextSelectSecondCharToTeam, // Select second char vào party
     TextSelectThirdCharToTeam, // Select third char vào party
     TextSelectFourCharToTeam, // Select four char vào party
+    PowerLevelUpText, // hướng dẫn level up nhân vật
+    
     
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
