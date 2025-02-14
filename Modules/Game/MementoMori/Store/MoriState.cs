@@ -29,8 +29,11 @@ public enum MoriTemplateKey
     GuideClickQuestText, // click level up nhân vật
     GuideClickTheTownText, // click level up nhân vật
     GuideSelectTownButton, // click level up nhân vật
+    GuideClickRewardText, // click vào thùng reward
     
     BossBattleButton,
+    SelectButton, // button select ở bottom right (khi chọn town)
+    ButtonClaim, // button claim reward
     
     PartyInformation,
     TapToClose, // sau khi battle kết thúc

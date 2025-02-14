@@ -91,8 +91,12 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.GuideClickEquipAllText,
                 MoriTemplateKey.GuideClickQuestText,
                 MoriTemplateKey.GuideClickTheTownText,
+                MoriTemplateKey.GuideSelectTownButton,
+                MoriTemplateKey.GuideClickRewardText,
                 
                 MoriTemplateKey.BossBattleButton,
+                MoriTemplateKey.SelectButton,
+                MoriTemplateKey.ButtonClaim,
                 
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,

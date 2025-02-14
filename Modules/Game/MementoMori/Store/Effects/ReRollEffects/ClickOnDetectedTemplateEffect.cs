@@ -31,7 +31,10 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.StartStartButton,
             MoriTemplateKey.ChallengeButton,
             MoriTemplateKey.TapToClose,
-            MoriTemplateKey.BossBattleButton
+            MoriTemplateKey.BossBattleButton,
+            MoriTemplateKey.GuideSelectTownButton,
+            MoriTemplateKey.SelectButton,
+            MoriTemplateKey.ButtonClaim,
            
         ];
 
@@ -78,6 +81,10 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 break;
             case MoriTemplateKey.GuideClickTheTownText:
                 await emulatorConnection.ClickPPointAsync(new PPoint(50f,47.3f));
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickRewardText:
+                await emulatorConnection.ClickPPointAsync(new PPoint(51.6f,67.3f));
                 isClicked = true;
                 break;
             

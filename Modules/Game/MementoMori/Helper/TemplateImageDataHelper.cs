@@ -127,6 +127,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "guide_select_town_button.png"
             ], priority: 90)
         },
+        {
+            MoriTemplateKey.GuideClickRewardText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_reward_text.png"
+            ], priority: 90)
+        },
         
         {
             MoriTemplateKey.BossBattleButton,
@@ -134,13 +140,19 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "boss_battle_button.png"
             ], priority: 90)
         },
-
         {
-            MoriTemplateKey.PartyInformation,
+            MoriTemplateKey.SelectButton,
             new TemplateImageData([
-                "Resources", "game", "mementomori", "image-detector", "reroll", "party_information.png"
+                "Resources", "game", "mementomori", "image-detector", "reroll", "select_button.png"
+            ], priority: 80)
+        },
+        {
+            MoriTemplateKey.ButtonClaim,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "button_claim.png"
             ], priority: 90)
         },
+        
         {
             MoriTemplateKey.TapToClose,
             new TemplateImageData([
