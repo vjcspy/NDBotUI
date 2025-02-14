@@ -16,12 +16,15 @@ public class TemplateImageData(
     string[] filePath,
     OpenCVMat? openCVMat = null,
     EmuCVMat? emuCvMat = null,
-    bool isLoadError = false)
+    bool isLoadError = false,
+    int priority = 100)
 {
     public string[] FilePath { get; } = filePath;
     public OpenCVMat? OpenCVMat { get; set; } = openCVMat;
     public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
+    
+    public int Priority { get; } = priority;
 }
 
 public static class TemplateImageDataHelper
@@ -65,6 +68,18 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.TextSelectFirstCharToTeam,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_first_char_to_team.png"
+            ], priority: 10)
+        },
+        {
+            MoriTemplateKey.TextSelectSecondCharToTeam,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_second_char_to_team.png"
+            ], priority: 10)
+        },
+        {
+            MoriTemplateKey.PartyInformation,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "party_information.png"
             ])
         }
     };

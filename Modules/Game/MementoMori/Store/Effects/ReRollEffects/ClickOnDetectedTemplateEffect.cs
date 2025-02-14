@@ -29,7 +29,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
         [
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.StartStartButton,
-            MoriTemplateKey.ChallengeButton
+            MoriTemplateKey.ChallengeButton,
+           
         ];
 
         if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.IconSpeakBeginningFirst)
@@ -42,6 +43,17 @@ public class ClickOnDetectedTemplateEffect : EffectBase
         else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.TextSelectFirstCharToTeam)
         {
             await emulatorConnection.ClickPPointAsync(new PPoint(13.7f,56.4f));
+            isClicked = true;
+        }
+        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.TextSelectSecondCharToTeam)
+        {
+            await emulatorConnection.ClickPPointAsync(new PPoint(21.5f,56.7f));
+            isClicked = true;
+        }
+        else if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.PartyInformation)
+        {
+            // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
+            await emulatorConnection.ClickPPointAsync(new PPoint(85f,88.2f));
             isClicked = true;
         }
         else if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))

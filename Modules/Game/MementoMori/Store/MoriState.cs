@@ -18,6 +18,9 @@ public enum MoriTemplateKey
     IconSpeakBeginningFirst,
     ChallengeButton,
     TextSelectFirstCharToTeam,
+    TextSelectSecondCharToTeam,
+    
+    PartyInformation,
 
     SkipMovieButton
 }

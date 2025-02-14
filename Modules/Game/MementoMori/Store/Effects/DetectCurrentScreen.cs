@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Threading;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
@@ -77,11 +75,15 @@ public class DetectCurrentScreen : EffectBase
 
             MoriTemplateKey[] screenToCheck =
             [
-                MoriTemplateKey.TextSelectFirstCharToTeam,
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconSpeakBeginningFirst,
-                MoriTemplateKey.ChallengeButton
-
+                MoriTemplateKey.ChallengeButton,
+                
+                MoriTemplateKey.TextSelectFirstCharToTeam,
+                MoriTemplateKey.TextSelectSecondCharToTeam,
+                
+                MoriTemplateKey.PartyInformation,
+                
                 // MoriTemplateKey.StartSettingButton
             ];
 
@@ -95,35 +97,29 @@ public class DetectCurrentScreen : EffectBase
 
             var screenshotEmguMat = screenshot.ToEmguMat();
 
-            var cts = new CancellationTokenSource();
-            var cancelSignal = new Subject<DetectedTemplatePoint>(); // Phát tín hiệu khi tìm thấy kết quả đầu tiên
-
             var tasks = screenToCheck
                 .Select(moriTemplateKey =>
                     Observable.FromAsync(
-                            () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey),
-                                cts.Token)
+                            () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey))
                         )
                         .SubscribeOn(Scheduler.Default)
-                        .TakeUntil(cancelSignal)
                 );
 
             var result = await tasks
                 .Merge()
                 .Where(res => res != null)
-                .Take(1)
-                .Do(detected =>
-                {
-                    cts.Cancel(); // Hủy tất cả task chưa hoàn thành
-                    if (detected != null) cancelSignal.OnNext(detected); // Phát tín hiệu để dừng
-                    cancelSignal.OnCompleted(); // Đóng Subject
-                })
-                .FirstOrDefaultAsync();
+                .ToList();
 
-            if (result is { } detectedTemplatePoint)
+            Logger.Info($"Found {result.Count} detected template points");
+
+            var detectedTemplatePoint = result
+                .OrderBy(point => TemplateImageDataHelper.TemplateImageData[point.MoriTemplateKey].Priority)
+                .FirstOrDefault();
+
+            if (detectedTemplatePoint != null)
             {
                 Logger.Info(
-                    $"Detected template {detectedTemplatePoint.MoriTemplateKey} with point: {detectedTemplatePoint.Point}");
+                    $"Detected template priority for key {detectedTemplatePoint.MoriTemplateKey} with point: {detectedTemplatePoint.Point}");
 
                 return MoriAction.DetectedMoriScreen.Create(new BaseActionPayload(emulatorConnection.Id,
                     detectedTemplatePoint));
