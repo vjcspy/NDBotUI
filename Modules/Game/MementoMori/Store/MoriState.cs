@@ -17,9 +17,10 @@ public enum MoriTemplateKey
     BeforeChallengeEnemyPower16 =16, //
     BeforeChallengeEnemyPower17 = 17, //
     BeforeChallengeEnemyPower19 = 19, //
+    BeforeChallengeEnemyPower112 = 112, //
     BeforeChallengeEnemyPower22 = 22, //
     
-    Unknown = 100,
+    Unknown = 500,
     TermOfAgreementPopup,
     StartSettingButton,
     StartStartButton,

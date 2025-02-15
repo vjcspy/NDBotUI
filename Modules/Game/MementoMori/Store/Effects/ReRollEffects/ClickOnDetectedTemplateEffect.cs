@@ -150,6 +150,16 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             {
                 if (AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId) is { } gameInstance)
                 {
+                    if (gameInstance.JobReRollState.CurrentLevel == (int)MoriTemplateKey.BeforeChallengeEnemyPower112)
+                    {
+                        Logger.Info("Current Chapter Lv 1-12 -> Repeat");
+                        // click quest
+                        await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
+                        isClicked = true;
+                        break;
+                    }
+                    
+                    
                     if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
                     {
                         Logger.Info("Current Chapter under Lv17 -> Back to Quest");
