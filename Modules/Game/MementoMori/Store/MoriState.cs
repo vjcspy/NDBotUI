@@ -11,7 +11,15 @@ namespace NDBotUI.Modules.Game.MementoMori.Store;
 
 public enum MoriTemplateKey
 {
-    Unknown,
+    /*Level up*/
+    BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
+    BeforeChallengeEnemyPower15 = 15, // 
+    BeforeChallengeEnemyPower16 =16, //
+    BeforeChallengeEnemyPower17 = 17, //
+    BeforeChallengeEnemyPower22 = 22, //
+    
+    Unknown = 100,
+    TermOfAgreementPopup,
     StartSettingButton,
     StartStartButton,
 
@@ -39,13 +47,6 @@ public enum MoriTemplateKey
     SelectButton, // button select ở bottom right (khi chọn town)
     ButtonClaim, // button claim reward
     NextCountryButton, 
-    
-    /*Level up*/
-    BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
-    BeforeChallengeEnemyPower15, // 
-    BeforeChallengeEnemyPower16, //
-    BeforeChallengeEnemyPower17, //
-    BeforeChallengeEnemyPower22, //
     
     CharacterGrowthTabHeader,
     CharacterLevelOneText,

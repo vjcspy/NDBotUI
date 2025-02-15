@@ -46,7 +46,12 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             //     await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
             //     isClicked = true;
             //     break;
-
+            case MoriTemplateKey.TermOfAgreementPopup:
+                await emulatorConnection.ClickPPointAsync(new PPoint(30.9f, 31.6f));
+                await Task.Delay(1500);
+                await emulatorConnection.ClickPPointAsync(new PPoint(57.6f, 83f));
+                isClicked = true;
+                break;
             case MoriTemplateKey.TextSelectFirstCharToTeam:
                 await emulatorConnection.ClickPPointAsync(new PPoint(13.7f, 56.4f));
                 isClicked = true;

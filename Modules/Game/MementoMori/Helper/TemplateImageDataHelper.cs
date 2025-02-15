@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NDBotUI.Modules.Game.MementoMori.Store;
+using NDBotUI.Modules.Shared.Emulator.Models;
 using NLog;
 using OpenCVMat = OpenCvSharp.Mat;
 using EmuCVMat = Emgu.CV.Mat;
@@ -34,6 +38,12 @@ public static class TemplateImageDataHelper
 
     public static Dictionary<MoriTemplateKey, TemplateImageData> TemplateImageData = new()
     {
+        {
+            MoriTemplateKey.TermOfAgreementPopup,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "term_of_agreement_popup.png"
+            ])
+        },
         {
             MoriTemplateKey.StartSettingButton,
             new TemplateImageData([

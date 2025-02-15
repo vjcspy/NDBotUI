@@ -24,5 +24,6 @@ public record JobReRollState(
     ReRollStatus ReRollStatus = ReRollStatus.Open,
     MoriTemplateKey MoriCurrentScreen = MoriTemplateKey.Unknown,
     MoriTemplateKey MoriLastScreen = MoriTemplateKey.Unknown,
-    int DetectScreenTry = 0
+    int DetectScreenTry = 0,
+    int CurrentLevel = 0
 );

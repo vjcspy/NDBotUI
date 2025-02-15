@@ -79,6 +79,7 @@ public class DetectCurrentScreen : EffectBase
 
             MoriTemplateKey[] screenToCheck =
             [
+                MoriTemplateKey.TermOfAgreementPopup,
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconChar1,
                 MoriTemplateKey.ChallengeButton,
@@ -171,7 +172,7 @@ public class DetectCurrentScreen : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
-            .Throttle(TimeSpan.FromSeconds(4))
+            .Throttle(TimeSpan.FromSeconds(3))
             .FilterBaseEligibility(GetForceEligible())
             .Where(action =>
             {

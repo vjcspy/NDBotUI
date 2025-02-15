@@ -22,7 +22,7 @@ public class MoriBoot
         Logger.Info("Boot Mori...");
         RxEventManager.RegisterEvent(MoriEffect.Effects);
 
-        Observable.Interval(TimeSpan.FromSeconds(7))
+        Observable.Interval(TimeSpan.FromSeconds(2))
             .ObserveOn(Scheduler.Default)
             .SubscribeOn(Scheduler.Default)
             .Subscribe(
