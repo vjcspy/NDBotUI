@@ -312,11 +312,11 @@ public static class TemplateImageDataHelper
         },
     };
 
-    public static Unit LoadTemplateImages()
+    public static void LoadTemplateImages()
     {
         FileHelper.CreateFolderIfNotExist(CoreValue.ScreenShotFolder);
 
-        if (IsLoaded) return Unit.Default;
+        if (IsLoaded) return;
 
         Logger.Info("Loading template images for Memento Mori");
         foreach (var moriTemplateKey in TemplateImageData.Keys.ToList())
@@ -355,7 +355,5 @@ public static class TemplateImageDataHelper
 
         IsLoaded = true;
         Logger.Info("Loaded template images for Memento Mori");
-
-        return Unit.Default;
     }
 }

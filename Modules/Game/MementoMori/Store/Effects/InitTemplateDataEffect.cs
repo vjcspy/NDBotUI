@@ -13,6 +13,7 @@ public class InitTemplateDataEffect
 
     private static EventAction Process(EventAction action)
     {
+        // Init template for scanning image
         TemplateImageDataHelper.LoadTemplateImages();
 
         return MoriAction.InitMoriSuccess.Create();

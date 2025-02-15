@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Reactive.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
@@ -18,10 +19,22 @@ public partial class TabReRollViewModel : ObservableViewModelBase
 
     public TabReRollViewModel()
     {
-        AppStore.Instance.MoriStore.ObservableForProperty(state => state.State)
-            .AutoDispose(moriState =>
+        AppStore.Instance.EmulatorStore.State.ObservableForProperty(state => state.SelectedEmulatorId)
+            .CombineLatest(
+                AppStore.Instance.MoriStore.State.ObservableForProperty(state => state),
+                (selectedEmulatorId, moriState) => new { moriState, selectedEmulatorId })
+            .AutoDispose(combined  =>
             {
-                var gameInstance = moriState.Value.GetCurrentEmulatorGameInstance();
+                Logger.Info("TabReRollViewModel data changed");
+                var moriState = combined.moriState;
+                var selectedEmulatorId = combined.selectedEmulatorId.Value;
+
+                if (selectedEmulatorId is null)
+                {
+                    return;
+                }
+
+                var gameInstance = moriState.Value.GetGameInstance(selectedEmulatorId);
 
                 if (gameInstance != null)
                 {
@@ -37,14 +50,10 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                         ToggleButtonText = "Đang thực hiện Job Khác";
                     }
                 }
-                else
-                {
-                    ToggleButtonText = "Wait";
-                }
+                ToggleButtonText = "Wait";
+                
             }, Disposables);
     }
-
-    public AppStore Store { get; } = AppStore.Instance;
 
     [RelayCommand]
     public void ToggleReRollCommand()

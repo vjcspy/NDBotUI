@@ -7,11 +7,6 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
 public class EligibilityCheckEffect : EffectBase
 {
-    // protected override bool GetForceEligible()
-    // {
-    //     return true;
-    // }
-
     protected override IEventActionFactory[] GetAllowEventActions()
     {
         return [MoriAction.ToggleStartStopMoriReRoll];

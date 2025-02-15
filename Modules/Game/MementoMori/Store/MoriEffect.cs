@@ -9,7 +9,6 @@ public class MoriEffect
     [
         new InitTemplateDataEffect(),
         new EffectTemplate(),
-        new InitAutoInstanceWhenSelectEmulator(),
         new EligibilityCheckEffect(),
         new DetectCurrentScreen(),
 
