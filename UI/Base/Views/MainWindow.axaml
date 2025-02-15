@@ -8,6 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1000"
         x:Class="NDBotUI.UI.Base.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
+        Icon="/Assets/NDBot.ico"
         Title="NDBot" Width="400" Height="700">
 
     <reactiveUi:RoutedViewHost Router="{Binding Router}">

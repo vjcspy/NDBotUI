@@ -18,6 +18,8 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
 public class ClickOnDetectedTemplateEffect : EffectBase
 {
+    private static bool IsSpamLevelUp;
+
     protected override IEventActionFactory[] GetAllowEventActions()
     {
         return [MoriAction.DetectedMoriScreen];
@@ -44,7 +46,7 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.SelectButton,
             MoriTemplateKey.ButtonClaim,
             MoriTemplateKey.NextCountryButton,
-            MoriTemplateKey.SkipSceneShotButton,
+            MoriTemplateKey.SkipSceneShotButton
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
@@ -146,23 +148,28 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                     if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
                     {
                         Logger.Info("Current Chapter under Lv17 -> Back to Quest");
-                        
-                        await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
-                        await Task.Delay(1250);
-                        await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
-                        await Task.Delay(1250);
-                        
+                        if (!IsSpamLevelUp)
+                        {
+                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                            await Task.Delay(2250);
+                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                            await Task.Delay(2250);
+
+                            IsSpamLevelUp = true;
+                        }
+
+
                         // click equip all
                         await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
-                        await Task.Delay(1250);
+                        await Task.Delay(2250);
 
                         // click quest
-                        await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
-                        await Task.Delay(1250);
+                        await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
+                        await Task.Delay(2250);
                         isClicked = true;
                         break;
                     }
-                    
+
                     Logger.Info("Current Chapter from Lv17 -> Check current status");
                     if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
                     {
