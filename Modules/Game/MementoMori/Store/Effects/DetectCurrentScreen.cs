@@ -117,7 +117,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.BeforeChallengeEnemyPower112,
                 MoriTemplateKey.BeforeChallengeEnemyPower22,
 
-                // MoriTemplateKey.StartSettingButton
+                MoriTemplateKey.StartSettingButton, // Mục đích là không làm gì trong lúc load ở start
 
                 MoriTemplateKey.NextCountryButton,
                 MoriTemplateKey.CharacterGrowthTabHeader,

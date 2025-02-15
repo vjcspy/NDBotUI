@@ -75,7 +75,7 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.StartStartButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "start_start_button.png"
-            ])
+            ], priority:50)
         },
         {
             MoriTemplateKey.ChallengeButton,
