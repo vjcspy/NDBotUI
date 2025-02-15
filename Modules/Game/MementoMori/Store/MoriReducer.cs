@@ -109,9 +109,12 @@ public class MoriReducer
                     )
                 };
 
-                MoriTemplateKey[] chapterValidEligibilityCheck = [MoriTemplateKey.BeforeChallengeChapterSix];
+                MoriTemplateKey[] chapterValidEligibilityCheck =
+                [
+                    MoriTemplateKey.BeforeChallengeEnemyPower15,
+                    MoriTemplateKey.BeforeChallengeEnemyPower16
+                ];
                 if (chapterValidEligibilityCheck.Contains(detectedTemplatePoint.MoriTemplateKey))
-                {
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>
@@ -120,13 +123,55 @@ public class MoriReducer
                                 {
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
-                                        ReRollStatus = ReRollStatus.EligibilityLevelCheck,
+                                        ReRollStatus = ReRollStatus.EligibilityChapterPassed
                                     }
                                 }
                                 : gameInstance
                         )
                     };
-                }
+
+                MoriTemplateKey[] checkLv =
+                [
+                    MoriTemplateKey.BeforeChallengeEnemyPower17
+                ];
+                if (checkLv.Contains(detectedTemplatePoint.MoriTemplateKey))
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.EligibilityLevelCheck
+                                    }
+                                }
+                                : gameInstance
+                        )
+                    };
+
+                return state;
+            }
+
+            case MoriAction.Type.EligibilityLevelPass:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    ReRollStatus = ReRollStatus.EligibilityLevelPass
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
 
                 return state;
             }

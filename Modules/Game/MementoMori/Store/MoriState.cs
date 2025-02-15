@@ -15,7 +15,7 @@ public enum MoriTemplateKey
     StartSettingButton,
     StartStartButton,
 
-    IconSpeakBeginningFirst, // TODO: cần chuyển sang text
+    IconChar1, // TODO: cần chuyển sang text
     
     ChallengeButton, // Trước khi vào trận đánh sẽ hỏi
     TextSelectFirstCharToTeam, // Select first char vào party
@@ -30,6 +30,7 @@ public enum MoriTemplateKey
     GuideClickTheTownText, // click level up nhân vật
     GuideSelectTownButton, // click level up nhân vật
     GuideClickRewardText, // click vào thùng reward
+    GuideClickLevelUpImmediatelyText, // click vào thùng reward
     
     BossBattleButton,
     SelectButton, // button select ở bottom right (khi chọn town)
@@ -37,6 +38,10 @@ public enum MoriTemplateKey
     
     /*Level up*/
     BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
+    BeforeChallengeEnemyPower15, // 
+    BeforeChallengeEnemyPower16, //
+    BeforeChallengeEnemyPower17, //
+    
     CharacterGrowthTabHeader,
     CharacterLevelOneText,
     CharacterLevelTwoText,

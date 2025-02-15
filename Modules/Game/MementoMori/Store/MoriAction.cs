@@ -15,6 +15,7 @@ public class MoriAction
 
         EligibilityChapterCheck,
         EligibilityLevelCheckError,
+        EligibilityLevelPass,
 
         TriggerScanCurrentScreen,
         DetectedMoriScreen,
@@ -38,6 +39,7 @@ public class MoriAction
 
     public static readonly EventActionFactory EligibilityChapterCheck = new(Type.EligibilityChapterCheck);
     public static readonly EventActionFactory EligibilityLevelCheckError = new(Type.EligibilityLevelCheckError);
+    public static readonly EventActionFactory EligibilityLevelPass = new(Type.EligibilityLevelPass);
     
     public static readonly EventActionFactory DetectedMoriScreen = new(Type.DetectedMoriScreen);
     public static readonly EventActionFactory CouldNotDetectMoriScreen = new(Type.CouldNotDetectMoriScreen);

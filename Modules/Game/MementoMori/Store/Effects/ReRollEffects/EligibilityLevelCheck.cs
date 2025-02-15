@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Emgu.CV;
@@ -71,7 +70,11 @@ public class EligibilityLevelCheck : EffectBase
             await Task.Delay(1500);
             await LevelUpChar(emulatorConnection);
 
-            return CoreAction.Empty;
+            
+            // Click về quest
+            await emulatorConnection.ClickPPointAsync(new PPoint(44.4f, 95.1f));
+            
+            return MoriAction.EligibilityLevelPass.Create(baseActionPayload);
         }
         catch (Exception e)
         {
@@ -89,8 +92,8 @@ public class EligibilityLevelCheck : EffectBase
             return ImageFinderEmguCV.FindTemplateMatPoint(
                 screenshotEmguMat,
                 templateMat,
-                shouldResize: false,
-                debugKey: templateKey.ToString()
+                debugKey: templateKey.ToString(),
+                matchValue: 0.9
             );
 
         throw new Exception("Template image data is null");
@@ -101,22 +104,10 @@ public class EligibilityLevelCheck : EffectBase
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
         if (screenshot is null) throw new Exception("Screenshot is null");
         var screenshotEmguMat = screenshot.ToEmguMat();
-
         // ensure o trong character growth
         var point = await FindTemplate(MoriTemplateKey.CharacterGrowthTabHeader, screenshotEmguMat);
 
         if (point is null) throw new Exception("Not in Character Growth Tab");
-
-        var lv7Point = await FindTemplate(MoriTemplateKey.CharacterLevelSevenText, screenshotEmguMat);
-
-        // char đã lv7
-        if (lv7Point is not null)
-        {
-            Logger.Info("Character already lv 7");
-            await emulatorConnection.ClickPPointAsync(new PPoint(3.1f, 3.5f));
-            await Task.Delay(500);
-            return;
-        }
 
         MoriTemplateKey[] lvToCheck =
         [
@@ -127,9 +118,27 @@ public class EligibilityLevelCheck : EffectBase
 
         while (true)
         {
+            var lv7Point = await FindTemplate(MoriTemplateKey.CharacterLevelSevenText, screenshotEmguMat);
+
+            // char đã lv7
+            if (lv7Point is not null)
+            {
+                Logger.Info("Character already lv 7");
+
+                // equip all
+                await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
+                await Task.Delay(1500);
+
+                await emulatorConnection.ClickPPointAsync(new PPoint(3.1f, 3.5f));
+                await Task.Delay(500);
+                return;
+            }
+
+            await Task.Delay(500);
+
+            var mat = screenshotEmguMat;
             var tasks = lvToCheck.Select(moriTemplateKey => Observable
-                .FromAsync(() => Task.Run(() => FindTemplate(moriTemplateKey, screenshotEmguMat)))
-                .SubscribeOn(Scheduler.Default));
+                .FromAsync(() => Task.Run(() => FindTemplate(moriTemplateKey, mat))));
 
             var result = await tasks.Merge()
                 .Where(res => res != null)
@@ -140,6 +149,15 @@ public class EligibilityLevelCheck : EffectBase
             // level up
             Logger.Info("Click Level Up");
             await emulatorConnection.ClickPPointAsync(new PPoint(76.7f, 82.9f));
+            await Task.Delay(1500);
+            
+            // refresh level screen
+            screenshot = await emulatorConnection.TakeScreenshotAsync();
+            if (screenshot is null) throw new Exception("Screenshot is null");
+
+            screenshotEmguMat = screenshot.ToEmguMat();
+
+            if (screenshotEmguMat.IsEmpty) throw new Exception("Screenshot Mat is empty");
             await Task.Delay(1500);
         }
     }

@@ -79,7 +79,7 @@ public class DetectCurrentScreen : EffectBase
             MoriTemplateKey[] screenToCheck =
             [
                 MoriTemplateKey.StartStartButton,
-                MoriTemplateKey.IconSpeakBeginningFirst,
+                MoriTemplateKey.IconChar1,
                 MoriTemplateKey.ChallengeButton,
                 MoriTemplateKey.SkipMovieButton,
                 
@@ -95,6 +95,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.GuideClickTheTownText,
                 MoriTemplateKey.GuideSelectTownButton,
                 MoriTemplateKey.GuideClickRewardText,
+                MoriTemplateKey.GuideClickLevelUpImmediatelyText,
                 
                 MoriTemplateKey.BossBattleButton,
                 MoriTemplateKey.SelectButton,
@@ -103,7 +104,10 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,
 
-                MoriTemplateKey.BeforeChallengeChapterSix
+                // MoriTemplateKey.BeforeChallengeChapterSix
+                MoriTemplateKey.BeforeChallengeEnemyPower15,
+                MoriTemplateKey.BeforeChallengeEnemyPower16,
+                MoriTemplateKey.BeforeChallengeEnemyPower17
 
                 // MoriTemplateKey.StartSettingButton
             ];

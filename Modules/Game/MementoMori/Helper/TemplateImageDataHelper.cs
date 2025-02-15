@@ -53,19 +53,18 @@ public static class TemplateImageDataHelper
             ])
         },
         {
-            MoriTemplateKey.IconSpeakBeginningFirst,
-            new TemplateImageData([
-                "Resources", "game", "mementomori", "image-detector", "reroll", "icon_speak_beginning_first.png"
-            ])
-        },
-        {
             MoriTemplateKey.ChallengeButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "challenge_button.png"
             ])
         },
 
-
+        {
+            MoriTemplateKey.IconChar1,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "icon_char_1.png"
+            ])
+        },
         {
             MoriTemplateKey.TextSelectFirstCharToTeam,
             new TemplateImageData([
@@ -125,13 +124,19 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.GuideSelectTownButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "guide_select_town_button.png"
-            ], priority: 90)
+            ], priority: 50)
         },
         {
             MoriTemplateKey.GuideClickRewardText,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_reward_text.png"
             ], priority: 90)
+        },
+        {
+            MoriTemplateKey.GuideClickLevelUpImmediatelyText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_level_up_immediately_text.png"
+            ], priority: 50)
         },
         
         {
@@ -173,6 +178,25 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "before_challenge_chapter_six.png"
             ], priority: 50)
         },
+        {
+            MoriTemplateKey.BeforeChallengeEnemyPower15,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_5.png"
+            ], priority: 100)
+        },
+        {
+            MoriTemplateKey.BeforeChallengeEnemyPower16,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_6.png"
+            ], priority: 100)
+        },
+        {
+            MoriTemplateKey.BeforeChallengeEnemyPower17,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_7.png"
+            ], priority: 50)
+        },
+        
         {
             MoriTemplateKey.CharacterGrowthTabHeader,
             new TemplateImageData([
