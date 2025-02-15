@@ -146,26 +146,33 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                     if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
                     {
                         Logger.Info("Current Chapter under Lv17 -> Back to Quest");
-
+                        
+                        await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                        await Task.Delay(1250);
+                        await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                        await Task.Delay(1250);
+                        
                         // click equip all
                         await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
                         await Task.Delay(1250);
 
-                        // click back
-                        await emulatorConnection.ClickPPointAsync(new PPoint(2.8f, 4.0f));
+                        // click quest
+                        await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
                         await Task.Delay(1250);
                         isClicked = true;
                         break;
                     }
+                    
+                    Logger.Info("Current Chapter from Lv17 -> Check current status");
                     if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
                     {
-                        Logger.Info("Current Chapter from Lv17 -> Check current status");
+                        Logger.Info("Already pass level check");
                         // click equip all
                         await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
                         await Task.Delay(1250);
 
-                        // click back
-                        await emulatorConnection.ClickPPointAsync(new PPoint(2.8f, 4.0f));
+                        // click quest
+                        await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
                         await Task.Delay(1250);
                         isClicked = true;
                         break;
