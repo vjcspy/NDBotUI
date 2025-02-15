@@ -1,23 +1,18 @@
-﻿using System;
-using System.IO;
+﻿// <copyright file="FrameBufferSkiaExtensions.cs" company="The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere">
+// Copyright (c) The Android Open Source Project, Ryan Conrad, Quamotion, yungd1plomat, wherewhere. All rights reserved.
+// </copyright>
+
+using System;
 using System.Runtime.CompilerServices;
 using AdvancedSharpAdbClient.Models;
 using SkiaSharp;
 
-namespace NDBotUI.Modules.Core.Extensions;
-
 /// <summary>
 ///     Provides extension methods of <see cref="SKBitmap" /> for the <see cref="Framebuffer" /> and
 ///     <see cref="FramebufferHeader" /> classes.
-///     https://github.com/SharpAdb/AdvancedSharpAdbClient/wiki/Compatibility
 /// </summary>
 public static class FrameBufferSkiaExtensions
 {
-    /// <summary>
-    ///     Converts the framebuffer data to a <see cref="SKBitmap" />.
-    /// </summary>
-    /// <param name="framebuffer">The framebuffer data.</param>
-    /// <returns>A <see cref="SKBitmap" /> which represents the framebuffer data.</returns>
     public static SKBitmap? ToSKBitmap(this Framebuffer framebuffer)
     {
         framebuffer.EnsureNotDisposed();
@@ -26,58 +21,60 @@ public static class FrameBufferSkiaExtensions
             : framebuffer.Header.ToSKBitmap(framebuffer.Data);
     }
 
-    /// <summary>
-    ///     Converts a <see cref="byte" /> array containing the raw frame buffer data to a <see cref="SKBitmap" />.
-    /// </summary>
-    /// <param name="header">The header containing the image metadata.</param>
-    /// <param name="buffer">The buffer containing the image data.</param>
-    /// <returns>
-    ///     A <see cref="SKBitmap" /> that represents the image contained in the frame buffer, or <see langword="null" />
-    ///     if the framebuffer does not contain any data. This can happen when DRM is enabled on the device.
-    /// </returns>
     public static SKBitmap? ToSKBitmap(this in FramebufferHeader header, byte[] buffer)
     {
-        // Initial parameter validation.
         ArgumentNullException.ThrowIfNull(buffer);
 
-        // This happens, for example, when DRM is enabled. In that scenario, no screenshot is taken on the device and an empty
-        // framebuffer is returned; we'll just return null.
+        // Check for invalid framebuffer data
         if (header.Width == 0 || header.Height == 0 || header.Bpp == 0) return null;
 
-        // The pixel format of the framebuffer may not be one that .NET recognizes, so we need to fix that
         var colorType = header.StandardizePixelFormat(ref buffer, out var alphaType);
 
+        // Directly work with bitmap's pixel buffer for better performance
         SKBitmap bitmap = new((int)header.Width, (int)header.Height, colorType, alphaType);
 
-        var index = 0;
-        for (var col = 0; col < bitmap.Height; col++)
-        for (var row = 0; row < bitmap.Width; row++)
-            bitmap.SetPixel(row, col, new SKColor(ReadUInt32(buffer)));
+        // Access the bitmap's underlying buffer directly and write pixel data in a bulk operation
+        var pixelCount = (int)(header.Width * header.Height);
+        unsafe
+        {
+            var ptr = bitmap.GetPixels();
+
+            // Loop through each pixel and write to bitmap's buffer
+            var index = 0; // Starting index for the buffer
+            for (var i = 0; i < pixelCount; i++)
+            {
+                if (index + 3 >= buffer.Length) break; // Ensure we don't go out of bounds
+                var pixelData = ReadUInt32(buffer, ref index);
+
+                // If the color format is BGRA, swap red and blue bytes
+                *(uint*)(ptr + i * 4) = SwapByteOrderIfNeeded(pixelData);
+            }
+        }
 
         return bitmap;
-
-        uint ReadUInt32(byte[] data)
-        {
-            return (uint)(data[index++] | (data[index++] << 8) | (data[index++] << 16) | (data[index++] << 24));
-        }
     }
 
-    /// <summary>
-    ///     Returns the <see cref="SKColorType" /> that describes pixel format of an image that is stored according to the
-    ///     information
-    ///     present in this <see cref="FramebufferHeader" />. Because the <see cref="SKColorType" /> enumeration does not allow
-    ///     for all
-    ///     formats supported by Android, this method also takes a <paramref name="buffer" /> and reorganizes the bytes in the
-    ///     buffer to
-    ///     match the return value of this function.
-    /// </summary>
-    /// <param name="header">The header containing the image metadata.</param>
-    /// <param name="buffer">A byte array in which the images are stored according to this <see cref="FramebufferHeader" />.</param>
-    /// <param name="alphaType">A <see cref="SKAlphaType" /> which describes how the alpha channel is stored.</param>
-    /// <returns>
-    ///     A <see cref="SKColorType" /> that describes how the image data is represented in this
-    ///     <paramref name="buffer" />.
-    /// </returns>
+// ReadUInt32 helper method to decode pixel data (with ref to avoid index reset every call)
+    private static uint ReadUInt32(byte[] buffer, ref int index)
+    {
+        // Ensure we don't go out of bounds while reading
+        if (index + 3 >= buffer.Length)
+            throw new ArgumentOutOfRangeException("Buffer is too small to read pixel data.");
+        return (uint)(buffer[index++] | (buffer[index++] << 8) | (buffer[index++] << 16) | (buffer[index++] << 24));
+    }
+
+// Swap byte order if needed (for BGRA -> RGBA conversion)
+    private static uint SwapByteOrderIfNeeded(uint pixelData)
+    {
+        // If pixel format is BGRA, swap the red and blue channels
+        // Adjust this condition based on your framebuffer format
+        return ((pixelData & 0xFF0000) >> 16) | // Blue channel -> Red
+               (pixelData & 0x00FF00) | // Green channel stays in place
+               ((pixelData & 0x0000FF) << 16) | // Red channel -> Blue
+               (pixelData & 0xFF000000); // Alpha channel stays in place
+    }
+
+
     private static SKColorType StandardizePixelFormat(this in FramebufferHeader header, ref byte[] buffer,
         out SKAlphaType alphaType)
     {
@@ -185,18 +182,4 @@ public static class FrameBufferSkiaExtensions
 
     [UnsafeAccessor(UnsafeAccessorKind.Method, Name = nameof(EnsureNotDisposed))]
     private static extern void EnsureNotDisposed(this Framebuffer framebuffer);
-
-    public static void SaveAsJpeg(this SKBitmap bitmap, string filePath)
-    {
-        using var image = SKImage.FromBitmap(bitmap);
-        using var data = image.Encode(SKEncodedImageFormat.Jpeg, 100);
-        File.WriteAllBytes(filePath, data.ToArray());
-    }
-
-    public static void SaveAsPng(this SKBitmap bitmap, string filePath)
-    {
-        using var image = SKImage.FromBitmap(bitmap);
-        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-        File.WriteAllBytes(filePath, data.ToArray());
-    }
 }

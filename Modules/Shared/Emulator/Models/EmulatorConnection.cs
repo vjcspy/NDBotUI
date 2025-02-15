@@ -43,29 +43,6 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return "Unknown";
     }
 
-    // public async Task<OpenCVMat?> TakeScreenshotToOpenCVMatAsync()
-    // {
-    //     Logger.Info("TakeScreenshotToOpenCVMatAsync");
-    //     var stopwatch = Stopwatch.StartNew();
-    //     var framebuffer = await TakeScreenshotAsync();
-    //
-    //     if (framebuffer == null) return null;
-    //     try
-    //     {
-    //         var mat = framebuffer.ToOpenCVMat();
-    //         stopwatch.Stop();
-    //         Logger.Info("TakeScreenshotToOpenCVMatAsync finished in {time} ms", stopwatch.ElapsedMilliseconds);
-    //
-    //         return mat;
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Logger.Error(ex, $"Emulator {Id} failed to TakeScreenshotToOpenCVMatAsync");
-    //
-    //         return null;
-    //     }
-    // }
-
     public async Task<Framebuffer?> TakeScreenshotAsync()
     {
         Logger.Info("TakeScreenshotAsync");

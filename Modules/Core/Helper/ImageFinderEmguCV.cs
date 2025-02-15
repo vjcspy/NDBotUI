@@ -36,9 +36,8 @@ public static class ImageFinderEmguCV
         return templateMat;
     }
 
-    public static void SaveMatToFile(Mat mat, string fileName = "screenshot.png")
+    public static void SaveMatToFile(Mat mat, string outputPath)
     {
-        var outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
         CvInvoke.Imwrite(outputPath, mat); // Lưu ảnh xuống file PNG
 
         Logger.Info($"Saved image to {outputPath}");

@@ -1,8 +1,13 @@
-﻿using System.Reactive.Linq;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Extensions;
+using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
+using SkiaSharp;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
@@ -17,7 +22,8 @@ public class EffectTemplate
         if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CoreAction.Empty;
 
         var emulator = EmulatorManager.Instance.EmulatorConnections[0];
-
+        await SkiaHelper.SaveScreenshot(emulator,["screenshots","screenshot.png"]);
+        
         /* Test take resolution */
         // var resolution = emulator.GetScreenResolution();
         // Logger.Debug($"Screen resolution: {resolution}");
