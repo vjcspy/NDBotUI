@@ -2,7 +2,7 @@
 
 public enum ReRollStatus
 {
-    Open, // chưa làm gì hết
+    Open = 0, // chưa làm gì hết
     Start, // Bấm start
 
     EligibilityChapterCheck, // Check chapter level

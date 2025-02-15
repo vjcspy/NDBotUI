@@ -33,7 +33,7 @@ public class DetectCurrentScreen : EffectBase
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
                     screenshotMat,
                     templateMat,
-                    shouldResize: false,
+                    false,
                     debugKey: moriTemplateKey.ToString()
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
@@ -82,12 +82,12 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.IconChar1,
                 MoriTemplateKey.ChallengeButton,
                 MoriTemplateKey.SkipMovieButton,
-                
+
                 MoriTemplateKey.TextSelectFirstCharToTeam,
                 MoriTemplateKey.TextSelectSecondCharToTeam,
                 MoriTemplateKey.TextSelectThirdCharToTeam,
                 MoriTemplateKey.TextSelectFourCharToTeam,
-                
+
                 MoriTemplateKey.PowerLevelUpText,
                 MoriTemplateKey.GuideClickLevelUpText,
                 MoriTemplateKey.GuideClickEquipAllText,
@@ -96,11 +96,11 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.GuideSelectTownButton,
                 MoriTemplateKey.GuideClickRewardText,
                 MoriTemplateKey.GuideClickLevelUpImmediatelyText,
-                
+
                 MoriTemplateKey.BossBattleButton,
                 MoriTemplateKey.SelectButton,
                 MoriTemplateKey.ButtonClaim,
-                
+
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,
 
@@ -149,10 +149,8 @@ public class DetectCurrentScreen : EffectBase
                 return MoriAction.DetectedMoriScreen.Create(new BaseActionPayload(emulatorConnection.Id,
                     detectedTemplatePoint));
             }
-            else
-            {
-                return MoriAction.CouldNotDetectMoriScreen.Create(baseActionPayload);
-            }
+
+            return MoriAction.CouldNotDetectMoriScreen.Create(baseActionPayload);
         }
         catch (Exception e)
         {
@@ -174,13 +172,11 @@ public class DetectCurrentScreen : EffectBase
                 if (action.Payload is not BaseActionPayload baseActionPayload) return false;
                 var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
 
-                if (gameInstance is null or
-                    { JobType: MoriJobType.ReRoll, JobReRollState.ReRollStatus: ReRollStatus.EligibilityLevelCheck })
-                {
+                if (gameInstance == null || (gameInstance.JobType == MoriJobType.ReRoll &&
+                                             gameInstance.JobReRollState.ReRollStatus == ReRollStatus.EligibilityLevelCheck ))
                     // tạm thời disable detect để check level
                     // Logger.Info("Pause detect current screen for eligibility level check");
                     return false;
-                }
 
                 return true;
             })

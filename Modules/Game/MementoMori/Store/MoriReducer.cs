@@ -138,7 +138,8 @@ public class MoriReducer
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>
-                            gameInstance.EmulatorId == emulatorId
+                            gameInstance.EmulatorId == emulatorId && gameInstance.JobReRollState.ReRollStatus <
+                            ReRollStatus.EligibilityLevelCheck
                                 ? gameInstance with
                                 {
                                     JobReRollState = gameInstance.JobReRollState with

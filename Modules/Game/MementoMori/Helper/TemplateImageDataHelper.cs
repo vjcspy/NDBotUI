@@ -24,7 +24,7 @@ public class TemplateImageData(
     public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
 
-    public int Priority { get; } = priority;
+    public int Priority { get; set; } = priority;
 }
 
 public static class TemplateImageDataHelper
@@ -89,7 +89,7 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "text_select_four_char_to_team.png"
             ], priority: 10)
         },
-        
+
         {
             MoriTemplateKey.PowerLevelUpText,
             new TemplateImageData([
@@ -138,7 +138,19 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "guide_level_up_immediately_text.png"
             ], priority: 50)
         },
-        
+        {
+            MoriTemplateKey.GuideClickHomeText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_home_text.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.GuideClickDownButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_down_button.png"
+            ], priority: 40)
+        },
+
         {
             MoriTemplateKey.BossBattleButton,
             new TemplateImageData([
@@ -157,7 +169,7 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "button_claim.png"
             ], priority: 90)
         },
-        
+
         {
             MoriTemplateKey.PartyInformation,
             new TemplateImageData([
@@ -170,7 +182,7 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "tap_to_close.png"
             ], priority: 90)
         },
-        
+
         /* Level up*/
         {
             MoriTemplateKey.BeforeChallengeChapterSix,
@@ -196,7 +208,7 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_7.png"
             ], priority: 50)
         },
-        
+
         {
             MoriTemplateKey.CharacterGrowthTabHeader,
             new TemplateImageData([
@@ -244,7 +256,7 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_seven_text.png"
             ], priority: 50)
-        },
+        }
     };
 
     public static Unit LoadTemplateImages()
