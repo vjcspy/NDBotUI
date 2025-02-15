@@ -131,7 +131,7 @@ public class EligibilityLevelCheck : EffectBase
 
                 // equip all
                 await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
-                await Task.Delay(1000);
+                await Task.Delay(500);
 
                 // back
                 await emulatorConnection.ClickPPointAsync(new PPoint(3.1f, 3.5f));
