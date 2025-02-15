@@ -176,20 +176,20 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                         break;
                     }
 
-                    Logger.Info("Current Chapter from Lv17 -> Check current status");
-                    if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
-                    {
-                        Logger.Info("Already pass level check");
-                        // click equip all
-                        await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
-                        await Task.Delay(1250);
-
-                        // click quest
-                        await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
-                        await Task.Delay(1250);
-                        isClicked = true;
-                        break;
-                    }
+                    // Logger.Info("Current Chapter from Lv17 -> Check current status");
+                    // if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
+                    // {
+                    //     Logger.Info("Already pass level check");
+                    //     // click equip all
+                    //     await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
+                    //     await Task.Delay(1250);
+                    //
+                    //     // click quest
+                    //     await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
+                    //     await Task.Delay(1250);
+                    //     isClicked = true;
+                    //     break;
+                    // }
 
                     return MoriAction.EligibilityLevelCheck.Create(baseActionPayload);
                 }
