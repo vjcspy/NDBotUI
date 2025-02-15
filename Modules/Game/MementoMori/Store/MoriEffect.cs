@@ -15,6 +15,8 @@ public class MoriEffect
         /* ReRoll*/
         new ClickOnDetectedTemplateEffect(),
         new SpamClickWhenCouldNotDetect(),
-        new EligibilityLevelCheck()
+        new EligibilityLevelCheck(),
+        new SaveResultEffect()
+        
     ];
 }

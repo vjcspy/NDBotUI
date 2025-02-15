@@ -330,7 +330,15 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "home_new_player_text.png"
             ], priority: 90)
-        }
+        },
+        
+        // Save result
+        {
+        MoriTemplateKey.CharacterTabHeader,
+        new TemplateImageData([
+            "Resources", "game", "mementomori", "image-detector", "reroll", "character_tab_header.png"
+        ], priority: 100)
+    }
     };
 
     public static void LoadTemplateImages()

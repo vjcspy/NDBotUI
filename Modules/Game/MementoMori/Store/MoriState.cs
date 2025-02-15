@@ -65,7 +65,10 @@ public enum MoriTemplateKey
 
     SkipMovieButton,
     SkipSceneShotButton,
-    HomeNewPlayerText
+    HomeNewPlayerText,
+    
+    /*Save result*/
+    CharacterTabHeader,
 }
 
 public record GameInstance(
