@@ -12,6 +12,7 @@ public enum ReRollStatus
     EligibilityLevelPass,
 
     SaveResult,
+    ResetUserData,
 
     StoppedWithError
 }

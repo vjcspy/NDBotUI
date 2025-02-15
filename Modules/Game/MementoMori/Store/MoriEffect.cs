@@ -16,7 +16,8 @@ public class MoriEffect
         new ClickOnDetectedTemplateEffect(),
         new SpamClickWhenCouldNotDetect(),
         new EligibilityLevelCheck(),
-        new SaveResultEffect()
+        new SaveResultEffect(),
+        new ResetUserDataEffect()
         
     ];
 }

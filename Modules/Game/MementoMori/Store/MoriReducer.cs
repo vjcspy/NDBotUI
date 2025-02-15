@@ -260,6 +260,29 @@ public class MoriReducer
 
                 return state;
             }
+            
+            case MoriAction.Type.ResetUserData:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    ReRollStatus = ReRollStatus.ResetUserData
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
+
+                return state;
+            }
 
             default:
                 return state;

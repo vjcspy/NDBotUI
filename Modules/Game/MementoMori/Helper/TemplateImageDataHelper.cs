@@ -75,7 +75,7 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.StartStartButton,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "start_start_button.png"
-            ], priority:50)
+            ], priority: 50)
         },
         {
             MoriTemplateKey.ChallengeButton,
@@ -331,14 +331,20 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "home_new_player_text.png"
             ], priority: 90)
         },
-        
+
         // Save result
         {
-        MoriTemplateKey.CharacterTabHeader,
-        new TemplateImageData([
-            "Resources", "game", "mementomori", "image-detector", "reroll", "character_tab_header.png"
-        ], priority: 100)
-    }
+            MoriTemplateKey.CharacterTabHeader,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "character_tab_header.png"
+            ], priority: 100)
+        },
+        {
+            MoriTemplateKey.ReturnToTitleButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "return_to_title_button.png"
+            ], priority: 100)
+        }
     };
 
     public static void LoadTemplateImages()
@@ -389,9 +395,7 @@ public static class TemplateImageDataHelper
     public static void ResetTemplateImagesPriority(string emulatorId)
     {
         foreach (var kvp in TemplateImageData)
-        {
             // Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
             kvp.Value.Reset(emulatorId);
-        }
     }
 }

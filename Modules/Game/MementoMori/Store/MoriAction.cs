@@ -21,7 +21,9 @@ public class MoriAction
         TriggerScanCurrentScreen,
         DetectedMoriScreen,
         ClickedAfterDetectedMoriScreen,
-        CouldNotDetectMoriScreen
+        CouldNotDetectMoriScreen,
+        
+        ResetUserData,
     }
 
     public static readonly EventActionFactory TriggerManually = new(Type.TriggerManually);
@@ -46,4 +48,7 @@ public class MoriAction
     public static readonly EventActionFactory DetectedMoriScreen = new(Type.DetectedMoriScreen);
     public static readonly EventActionFactory CouldNotDetectMoriScreen = new(Type.CouldNotDetectMoriScreen);
     public static readonly EventActionFactory ClickedAfterDetectedMoriScreen = new(Type.ClickedAfterDetectedMoriScreen);
+    
+    
+    public static readonly EventActionFactory ResetUserData = new(Type.ResetUserData);
 }

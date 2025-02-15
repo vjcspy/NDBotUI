@@ -20,7 +20,7 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 public class DetectCurrentScreen : EffectBase
 {
     private static readonly ReRollStatus[] _DISABLE_DETECT_BY_STATUS =
-        [ReRollStatus.EligibilityLevelCheck, ReRollStatus.SaveResult];
+        [ReRollStatus.EligibilityLevelCheck, ReRollStatus.SaveResult, ReRollStatus.ResetUserData];
 
     private DetectedTemplatePoint? DetectCurrentScreenByEmguCV(
         EmguCVSharp screenshotMat,

@@ -69,6 +69,7 @@ public enum MoriTemplateKey
     
     /*Save result*/
     CharacterTabHeader,
+    ReturnToTitleButton,
 }
 
 public record GameInstance(
