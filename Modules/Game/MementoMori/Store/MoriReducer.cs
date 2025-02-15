@@ -4,6 +4,7 @@ using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
+using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
 
@@ -17,7 +18,7 @@ public class MoriReducer
     {
         switch (action.Type)
         {
-            case MoriAction.Type.InitMoriSuccess:
+            case EmulatorAction.Type.SelectEmulatorConnection:
             {
                 if (action.Payload is BaseActionPayload baseActionPayload)
                 {

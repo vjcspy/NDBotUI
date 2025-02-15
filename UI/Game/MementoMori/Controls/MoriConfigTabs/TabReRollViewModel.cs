@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System;
+using System.Reactive.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
@@ -19,41 +20,38 @@ public partial class TabReRollViewModel : ObservableViewModelBase
 
     public TabReRollViewModel()
     {
-        AppStore.Instance.EmulatorStore.State.ObservableForProperty(state => state.SelectedEmulatorId)
-            .CombineLatest(
-                AppStore.Instance.MoriStore.State.ObservableForProperty(state => state),
-                (selectedEmulatorId, moriState) => new { moriState, selectedEmulatorId })
-            .AutoDispose(combined  =>
+        AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State.SelectedEmulatorId)
+            .Throttle(TimeSpan.FromMilliseconds(100))
+            .AutoDispose(selectedEmulatorIdValue =>
             {
-                Logger.Info("TabReRollViewModel data changed");
-                var moriState = combined.moriState;
-                var selectedEmulatorId = combined.selectedEmulatorId.Value;
+                var selectedEmulatorId = selectedEmulatorIdValue.Value;
 
-                if (selectedEmulatorId is null)
-                {
-                    return;
-                }
+                if (selectedEmulatorId is null) return;
 
-                var gameInstance = moriState.Value.GetGameInstance(selectedEmulatorId);
+                var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(selectedEmulatorId);
 
                 if (gameInstance != null)
                 {
                     if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
                     {
                         if (gameInstance.State == AutoState.On)
-                            ToggleButtonText = "Stop";
+                            ToggleButtonText = $"Stop {selectedEmulatorId}";
                         else
-                            ToggleButtonText = "Start";
+                            ToggleButtonText = $"Start {selectedEmulatorId}";
                     }
                     else
                     {
                         ToggleButtonText = "Đang thực hiện Job Khác";
                     }
                 }
-                ToggleButtonText = "Wait";
-                
+                else
+                {
+                    ToggleButtonText = "Wait";
+                }
             }, Disposables);
     }
+
+    public AppStore Store { get; } = AppStore.Instance;
 
     [RelayCommand]
     public void ToggleReRollCommand()
