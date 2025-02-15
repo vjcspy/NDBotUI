@@ -200,4 +200,17 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
         return await ClickOnPointAsync(new Point(xi, yi));
     }
+
+    public PPoint? ToPPoint(Point point)
+    {
+        var currentResolution = GetScreenResolution();
+
+        if (currentResolution == null)
+        {
+            Logger.Error($"Emulator: {Id} - ToPPoint could not find resolution");
+            return null;
+        }
+
+        return new PPoint(point.X * 100 / currentResolution[0], point.Y * 100 / currentResolution[1]);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -106,6 +107,15 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 await Task.Delay(500);
                 await emulatorConnection.ClickPPointAsync(new PPoint(49.9f,31.8f));
                 await Task.Delay(500);
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideClickDownButton:
+                var pPoint = emulatorConnection.ToPPoint(detectedTemplatePoint.Point);
+                if (pPoint != null) await emulatorConnection.ClickPPointAsync(pPoint with { Y = pPoint.Y + 12 });
+                isClicked = true;
+                break;
+            case MoriTemplateKey.GuideChapter12Text:
+                await emulatorConnection.ClickPPointAsync(new PPoint(59.6f,88.5f));
                 isClicked = true;
                 break;
             

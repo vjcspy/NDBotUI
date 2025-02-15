@@ -34,7 +34,8 @@ public class DetectCurrentScreen : EffectBase
                     screenshotMat,
                     templateMat,
                     false,
-                    debugKey: moriTemplateKey.ToString()
+                    debugKey: moriTemplateKey.ToString(),
+                    matchValue: 0.85
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)
@@ -96,6 +97,8 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.GuideSelectTownButton,
                 MoriTemplateKey.GuideClickRewardText,
                 MoriTemplateKey.GuideClickLevelUpImmediatelyText,
+                MoriTemplateKey.GuideClickDownButton,
+                MoriTemplateKey.GuideChapter12Text,
 
                 MoriTemplateKey.BossBattleButton,
                 MoriTemplateKey.SelectButton,

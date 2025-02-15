@@ -150,6 +150,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_down_button.png"
             ], priority: 40)
         },
+        {
+            MoriTemplateKey.GuideChapter12Text,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "guide_chapter_12_text.png"
+            ], priority: 90)
+        },
 
         {
             MoriTemplateKey.BossBattleButton,
