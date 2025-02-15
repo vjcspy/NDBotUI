@@ -90,4 +90,10 @@ public partial class TabReRollViewModel : ObservableViewModelBase
 
         // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
+    
+    [RelayCommand]
+    public void TestCommand()
+    {
+        RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
+    }
 }
