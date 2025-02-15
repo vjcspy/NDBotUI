@@ -14,7 +14,7 @@
               IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
             <!-- Header (cố định chiều cao) -->
             <Border Grid.Row="0" Background="#141729">
-                <TextBlock Text="Header" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Text="Memento Mori" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Border>
 
             <!-- Content -->
@@ -38,7 +38,7 @@
 
             <!-- Footer (cố định chiều cao) -->
             <Border Background="#141729" Grid.Row="2">
-                <TextBlock Text="Footer" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Text="NDBot v0.1" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Border>
         </Grid>
     </Grid>
