@@ -66,7 +66,6 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.SkipSceneShotButton,
             MoriTemplateKey.InBattleX1, // change to x2
             MoriTemplateKey.NextChapterButton,
-            MoriTemplateKey.LoginClaimButton,
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
@@ -78,6 +77,12 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
             //     isClicked = true;
             //     break;
             case MoriTemplateKey.StartSettingButton:
+                break;
+            case MoriTemplateKey.LoginClaimButton:
+                await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                await Task.Delay(1000);
+                // click outside
+                await emulatorConnection.ClickPPointAsync(new PPoint(98.4f, 46.3f));
                 break;
             case MoriTemplateKey.TermOfAgreementPopup:
                 await emulatorConnection.ClickPPointAsync(new PPoint(30.9f, 31.6f));
