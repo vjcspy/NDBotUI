@@ -210,13 +210,13 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.BeforeChallengeEnemyPower15,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_5.png"
-            ], priority: 100)
+            ], priority: 50)
         },
         {
             MoriTemplateKey.BeforeChallengeEnemyPower16,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_6.png"
-            ], priority: 100)
+            ], priority: 50)
         },
         {
             MoriTemplateKey.BeforeChallengeEnemyPower17,

@@ -184,7 +184,7 @@ public static class ImageFinderEmguCV
             Point minLoc = default, maxLoc = default;
             CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
 
-            Logger.Info($"MatchTemplate Score: {debugKey} {maxVal}");
+            Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
             stopwatch.Stop();
             Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
 

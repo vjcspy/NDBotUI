@@ -1,14 +1,17 @@
 ﻿using System.Linq;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
+using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.EventManager;
+using NLog;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store;
 
 public class MoriReducer
 {
+    protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static MoriState Reduce(MoriState state, EventAction action)
     {
         switch (action.Type)
@@ -131,9 +134,9 @@ public class MoriReducer
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower15,
                     MoriTemplateKey.BeforeChallengeEnemyPower16,
-                    MoriTemplateKey.BeforeChallengeEnemyPower17,
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
+                {
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>
@@ -148,7 +151,11 @@ public class MoriReducer
                                 : gameInstance
                         )
                     };
-                
+                    // Sau đó không ưu tiên nữa
+                    Logger.Info($"Reduce Priority for template {detectedTemplatePoint.MoriTemplateKey.ToString()}");
+                    TemplateImageDataHelper.TemplateImageData[detectedTemplatePoint.MoriTemplateKey].Priority = 101;
+                }
+
                 MoriTemplateKey[] chapterValidEligibilityCheck =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower15,

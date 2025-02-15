@@ -31,7 +31,7 @@ public class SpamClickWhenCouldNotDetect : EffectBase
 
         if (AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId) is {} gameInstance)
         {
-            if (gameInstance.JobReRollState.CurrentLevel == 16)
+            if (gameInstance.JobReRollState.CurrentLevel < 17)
             {
                 var isInCharacterGrowth = await ScanTemplateImage(emulatorConnection,MoriTemplateKey.CharacterGrowthTabHeader);
 
