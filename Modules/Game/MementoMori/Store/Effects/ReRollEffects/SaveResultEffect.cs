@@ -67,7 +67,7 @@ public class SaveResultEffect : EffectBase
         Logger.Error("Could not find character tab header, toggle auto");
         RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
             new BaseActionPayload(baseActionPayload.EmulatorId)));
-        await Task.Delay(1000);
+        await Task.Delay(3000);
         RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
             new BaseActionPayload(baseActionPayload.EmulatorId)));
 
