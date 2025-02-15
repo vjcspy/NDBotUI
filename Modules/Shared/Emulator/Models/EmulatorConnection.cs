@@ -198,7 +198,9 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         var xi = Convert.ToInt32(pPoint.X * currentResolution[0] / 100);
         var yi = Convert.ToInt32(pPoint.Y * currentResolution[1] / 100);
 
-        return await ClickOnPointAsync(new Point(xi, yi));
+         await ClickOnPointAsync(new Point(xi, yi));
+
+         return Unit.Default;
     }
 
     public PPoint? ToPPoint(Point point)

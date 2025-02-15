@@ -139,8 +139,6 @@ public class EligibilityLevelCheck : EffectBase
                 return;
             }
 
-            await Task.Delay(500);
-
             var mat = screenshotEmguMat;
             var tasks = lvToCheck.Select(moriTemplateKey => Observable
                 .FromAsync(() => Task.Run(() => FindTemplate(moriTemplateKey, mat))));
@@ -153,9 +151,10 @@ public class EligibilityLevelCheck : EffectBase
 
             // level up
             Logger.Info("Click Level Up");
-            await emulatorConnection.ClickPPointAsync(new PPoint(76.7f, 82.9f));
+            emulatorConnection.ClickPPoint(new PPoint(76.7f, 82.9f));
             countLevelUp += 1;
-
+            await Task.Delay(1000);
+            
             // refresh level screen
             screenshot = await emulatorConnection.TakeScreenshotAsync();
             if (screenshot is null) throw new Exception("Screenshot is null");
@@ -163,7 +162,6 @@ public class EligibilityLevelCheck : EffectBase
             screenshotEmguMat = screenshot.ToEmguMat();
 
             if (screenshotEmguMat.IsEmpty) throw new Exception("Screenshot Mat is empty");
-            await Task.Delay(500);
         }
     }
 
