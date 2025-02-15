@@ -13,6 +13,7 @@ public enum ReRollStatus
     EligibilityLevelPass,
 
     Processing,
+    SaveResult,
     Finished,
 
     ErrorCouldNotDetectCurrentScreen,

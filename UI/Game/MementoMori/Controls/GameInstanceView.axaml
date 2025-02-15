@@ -20,8 +20,8 @@
                   FontSize="10"
                   SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn FontSize="10" Header="Name" Binding="{Binding EmulatorId}" />
-                <DataGridTemplateColumn Header="State" Width="Auto">
+                <DataGridTextColumn FontSize="10" Width="Auto" Header="Name" Binding="{Binding EmulatorId}" />
+                <DataGridTemplateColumn Header="Emulator" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock FontSize="10"
@@ -31,7 +31,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Status" Width="*">
+                <DataGridTemplateColumn Header="State" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock
@@ -41,6 +41,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn FontSize="9" Header="Status" Width="*" Binding="{Binding JobReRollState.ReRollStatus}" />
             </DataGrid.Columns>
         </DataGrid>
         <!-- <Button Grid.Row="1" Command="{Binding CheckData}">Check data</Button> -->

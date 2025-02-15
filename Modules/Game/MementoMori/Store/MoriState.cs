@@ -26,7 +26,7 @@ public enum MoriTemplateKey
     StartSettingButton,
     StartStartButton,
 
-    IconChar1, // TODO: cần chuyển sang text
+    IconChar1,
 
     ChallengeButton, // Trước khi vào trận đánh sẽ hỏi
     TextSelectFirstCharToTeam, // Select first char vào party

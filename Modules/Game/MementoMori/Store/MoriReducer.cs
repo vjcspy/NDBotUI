@@ -118,6 +118,7 @@ public class MoriReducer
                 };
 
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
+                {
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>
@@ -125,7 +126,7 @@ public class MoriReducer
                                 ? gameInstance with
                                 {
                                     State = AutoState.Off,
-                                    Status = "Finished",
+                                    Status = "",
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
                                         ReRollStatus = ReRollStatus.Finished
@@ -134,6 +135,7 @@ public class MoriReducer
                                 : gameInstance
                         )
                     };
+                }
 
                 MoriTemplateKey[] currentChapter =
                 [
