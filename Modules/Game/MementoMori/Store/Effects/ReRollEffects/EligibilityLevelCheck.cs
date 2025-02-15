@@ -155,7 +155,6 @@ public class EligibilityLevelCheck : EffectBase
             Logger.Info("Click Level Up");
             await emulatorConnection.ClickPPointAsync(new PPoint(76.7f, 82.9f));
             countLevelUp += 1;
-            await Task.Delay(1500);
 
             // refresh level screen
             screenshot = await emulatorConnection.TakeScreenshotAsync();
@@ -164,7 +163,7 @@ public class EligibilityLevelCheck : EffectBase
             screenshotEmguMat = screenshot.ToEmguMat();
 
             if (screenshotEmguMat.IsEmpty) throw new Exception("Screenshot Mat is empty");
-            await Task.Delay(1500);
+            await Task.Delay(500);
         }
     }
 
