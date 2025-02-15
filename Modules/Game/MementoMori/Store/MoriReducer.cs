@@ -12,6 +12,7 @@ namespace NDBotUI.Modules.Game.MementoMori.Store;
 public class MoriReducer
 {
     protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     public static MoriState Reduce(MoriState state, EventAction action)
     {
         switch (action.Type)
@@ -46,7 +47,7 @@ public class MoriReducer
                 var emulatorId = baseActionPayload.EmulatorId;
 
                 var isRunning = state.IsReRollJobRunning(emulatorId);
-
+                var newJobReRollState = new JobReRollState();
                 state = state with
                 {
                     GameInstances = state.GameInstances.Map(gameInstance =>
@@ -55,7 +56,7 @@ public class MoriReducer
                             {
                                 State = isRunning ? AutoState.Off : AutoState.On,
                                 JobType = MoriJobType.ReRoll,
-                                JobReRollState = gameInstance.JobReRollState with
+                                JobReRollState = newJobReRollState with
                                 {
                                     ReRollStatus = isRunning ? ReRollStatus.Open : ReRollStatus.Start
                                 }
@@ -111,7 +112,7 @@ public class MoriReducer
                             : gameInstance
                     )
                 };
-                
+
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
                     state = state with
                     {
@@ -129,11 +130,11 @@ public class MoriReducer
                                 : gameInstance
                         )
                     };
-                
+
                 MoriTemplateKey[] currentChapter =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower15,
-                    MoriTemplateKey.BeforeChallengeEnemyPower16,
+                    MoriTemplateKey.BeforeChallengeEnemyPower16
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
@@ -197,6 +198,30 @@ public class MoriReducer
                                 : gameInstance
                         )
                     };
+
+                return state;
+            }
+
+            case MoriAction.Type.EligibilityLevelCheck:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload ||
+                    baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint) return state;
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(gameInstance =>
+                        gameInstance.EmulatorId == emulatorId
+                            ? gameInstance with
+                            {
+                                JobReRollState = gameInstance.JobReRollState with
+                                {
+                                    ReRollStatus = ReRollStatus.EligibilityLevelCheck
+                                }
+                            }
+                            : gameInstance
+                    )
+                };
 
                 return state;
             }

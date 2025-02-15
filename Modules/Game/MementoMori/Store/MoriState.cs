@@ -60,7 +60,8 @@ public enum MoriTemplateKey
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
 
-    SkipMovieButton
+    SkipMovieButton,
+    SkipSceneShotButton,
     
 }
 

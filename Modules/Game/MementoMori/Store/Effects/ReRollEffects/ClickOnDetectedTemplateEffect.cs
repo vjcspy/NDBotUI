@@ -1,7 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Extensions;
+using NDBotUI.Modules.Core.Helper;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
+using NDBotUI.Modules.Game.MementoMori.Helper;
+using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
+using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NDBotUI.Modules.Shared.EventManager;
@@ -35,7 +43,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.BossBattleButton,
             MoriTemplateKey.SelectButton,
             MoriTemplateKey.ButtonClaim,
-            MoriTemplateKey.NextCountryButton
+            MoriTemplateKey.NextCountryButton,
+            MoriTemplateKey.SkipSceneShotButton,
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
@@ -129,6 +138,46 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(85f, 88.2f));
                 isClicked = true;
                 break;
+
+            case MoriTemplateKey.CharacterGrowthTabHeader:
+            {
+                if (AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId) is { } gameInstance)
+                {
+                    if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
+                    {
+                        Logger.Info("Current Chapter under Lv17 -> Back to Quest");
+
+                        // click equip all
+                        await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
+                        await Task.Delay(1250);
+
+                        // click back
+                        await emulatorConnection.ClickPPointAsync(new PPoint(2.8f, 4.0f));
+                        await Task.Delay(1250);
+                        isClicked = true;
+                        break;
+                    }
+                    if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
+                    {
+                        Logger.Info("Current Chapter from Lv17 -> Check current status");
+                        // click equip all
+                        await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
+                        await Task.Delay(1250);
+
+                        // click back
+                        await emulatorConnection.ClickPPointAsync(new PPoint(2.8f, 4.0f));
+                        await Task.Delay(1250);
+                        isClicked = true;
+                        break;
+                    }
+
+                    return MoriAction.EligibilityLevelCheck.Create(baseActionPayload);
+                }
+
+                break;
+            }
+
+
             default:
             {
                 if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
@@ -145,5 +194,23 @@ public class ClickOnDetectedTemplateEffect : EffectBase
 
 
         return isClicked ? MoriAction.ClickedAfterDetectedMoriScreen.Create(baseActionPayload) : CoreAction.Empty;
+    }
+
+    private async Task<Point?> ScanTemplateImage(EmulatorConnection emulatorConnection, MoriTemplateKey templateKey)
+    {
+        var screenshot = await emulatorConnection.TakeScreenshotAsync();
+        if (screenshot is null) throw new Exception("Screenshot is null");
+        var screenshotEmguMat = screenshot.ToEmguMat();
+        // ensure o trong character growth
+        if (TemplateImageDataHelper.TemplateImageData[templateKey].EmuCVMat is
+            { } templateMat)
+            return ImageFinderEmguCV.FindTemplateMatPoint(
+                screenshotEmguMat,
+                templateMat,
+                debugKey: templateKey.ToString(),
+                matchValue: 0.9
+            );
+
+        return null;
     }
 }

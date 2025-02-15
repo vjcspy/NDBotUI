@@ -116,7 +116,10 @@ public class DetectCurrentScreen : EffectBase
 
                 // MoriTemplateKey.StartSettingButton
                 
-                MoriTemplateKey.NextCountryButton
+                MoriTemplateKey.NextCountryButton,
+                MoriTemplateKey.CharacterGrowthTabHeader,
+                MoriTemplateKey.SkipSceneShotButton,
+                
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);

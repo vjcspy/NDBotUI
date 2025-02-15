@@ -22,7 +22,7 @@ public class EligibilityLevelCheck : EffectBase
 {
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [MoriAction.DetectedMoriScreen];
+        return [MoriAction.DetectedMoriScreen, MoriAction.EligibilityLevelCheck];
     }
 
     protected override async Task<EventAction> Process(EventAction action)
@@ -38,6 +38,8 @@ public class EligibilityLevelCheck : EffectBase
             // Click outside to close battle
             await Task.Delay(1500);
             Logger.Info("Click outside to close battle");
+            await emulatorConnection.ClickPPointAsync(new PPoint(93.2f, 8.7f));
+            await Task.Delay(1500);
             await emulatorConnection.ClickPPointAsync(new PPoint(81.8f, 26.7f));
             await Task.Delay(2000);
 
@@ -70,13 +72,13 @@ public class EligibilityLevelCheck : EffectBase
             await Task.Delay(1500);
             await LevelUpChar(emulatorConnection);
 
-            
+
             // Click về quest
             await emulatorConnection.ClickPPointAsync(new PPoint(44.4f, 95.1f));
-            
+
             // Để không ưu tiên vào màn hình này nữa
             TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.BeforeChallengeEnemyPower17].Priority = 100;
-            
+
             return MoriAction.EligibilityLevelPass.Create(baseActionPayload);
         }
         catch (Exception e)
@@ -131,7 +133,7 @@ public class EligibilityLevelCheck : EffectBase
                 // equip all
                 await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
                 await Task.Delay(1500);
-                
+
                 // back
                 await emulatorConnection.ClickPPointAsync(new PPoint(3.1f, 3.5f));
                 await Task.Delay(2000);
@@ -154,7 +156,7 @@ public class EligibilityLevelCheck : EffectBase
             Logger.Info("Click Level Up");
             await emulatorConnection.ClickPPointAsync(new PPoint(76.7f, 82.9f));
             await Task.Delay(1500);
-            
+
             // refresh level screen
             screenshot = await emulatorConnection.TakeScreenshotAsync();
             if (screenshot is null) throw new Exception("Screenshot is null");
