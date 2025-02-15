@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
-using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
@@ -48,7 +47,7 @@ public class EffectTemplate
         // {
         //     Logger.Info("TemplateImageDataHelper not loaded");
         // }
-        
+
         /* Dùng API Windows để take screenshot nhưng bị lệch và không hoạt động khi minimized */
         // ScreenCapture.TakeScreenshot("BlueStacks App Player", ImageHelper.GetImagePath("BlueStacks-Screenshot.png"));
 

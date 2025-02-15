@@ -2,14 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels1="clr-namespace:NDBotUI.UI.Emulator.Controls"
+             xmlns:controls="clr-namespace:NDBotUI.UI.Game.MementoMori.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NDBotUI.UI.Emulator.Controls.EmulatorsView"
-             x:DataType="viewModels1:EmulatorsViewModel">
+             x:Class="NDBotUI.UI.Game.MementoMori.Controls.GameInstanceView"
+             x:DataType="controls:GameInstanceViewModel">
     <Grid RowDefinitions="*" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"
                   x:Name="DataGrid"
-                  ItemsSource="{Binding Store.EmulatorStore.State.EmulatorConnections}"
+                  ItemsSource="{Binding Store.MoriStore.State.GameInstances}"
                   IsReadOnly="True"
                   CanUserReorderColumns="True"
                   CanUserResizeColumns="True"
@@ -20,11 +20,13 @@
                   FontSize="10"
                   SelectionChanged="OnSelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn FontSize="10" Header="Name" Binding="{Binding Id}" />
+                <DataGridTextColumn FontSize="10" Header="Name" Binding="{Binding EmulatorId}" />
                 <DataGridTemplateColumn Header="State" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="10" Text="{Binding State}"
+                            <TextBlock FontSize="10"
+                                       Text="{Binding EmulatorId,Converter={StaticResource EmulatorConnectionStateConverter}}"
+                                       Foreground="{Binding EmulatorId, Converter={StaticResource EmulatorStateToColorConverter}}"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -34,11 +36,13 @@
                         <DataTemplate>
                             <TextBlock
                                 FontSize="10"
+                                Text="{Binding State}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <!-- <Button Grid.Row="1" Command="{Binding CheckData}">Check data</Button> -->
     </Grid>
 </UserControl>

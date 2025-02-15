@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reactive;
-using System.Threading.Tasks;
-using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NDBotUI.Modules.Game.MementoMori.Store;
-using NDBotUI.Modules.Shared.Emulator.Models;
 using NLog;
 using OpenCVMat = OpenCvSharp.Mat;
 using EmuCVMat = Emgu.CV.Mat;
@@ -291,7 +286,7 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_seven_text.png"
             ], priority: 50)
         },
-        
+
         {
             MoriTemplateKey.NextCountryButton,
             new TemplateImageData([
@@ -309,7 +304,7 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "home_new_player_text.png"
             ], priority: 90)
-        },
+        }
     };
 
     public static void LoadTemplateImages()

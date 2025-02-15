@@ -14,18 +14,21 @@ namespace NDBotUI;
 
 public class AppViewLocator : IViewLocator
 {
-    public IViewFor ResolveView<T>(T? viewModel, string? contract = null) => viewModel switch
+    public IViewFor ResolveView<T>(T? viewModel, string? contract = null)
     {
-        MainWindowViewModel context => new MainWindow { DataContext = context },
-        AutoContainerViewModel context => new AutoContainer { DataContext = context },
+        return viewModel switch
+        {
+            MainWindowViewModel context => new MainWindow { DataContext = context },
+            AutoContainerViewModel context => new AutoContainer { DataContext = context },
 
-        /*TEDBED*/
-        ProductPageViewModel context => new ProductPage { DataContext = context },
-        ProductListViewModel context => new ProductListView { DataContext = context },
-        ProductDetailViewModel context => new ProductDetailView { DataContext = context },
-        
-        // MORI
-        MoriContainerViewModel context => new MoriContainer { DataContext = context },
-        _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
-    };
+            /*TEDBED*/
+            ProductPageViewModel context => new ProductPage { DataContext = context },
+            ProductListViewModel context => new ProductListView { DataContext = context },
+            ProductDetailViewModel context => new ProductDetailView { DataContext = context },
+
+            // MORI
+            MoriContainerViewModel context => new MoriContainer { DataContext = context },
+            _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
+        };
+    }
 }

@@ -16,6 +16,6 @@ public class TedBedEffect
     [Effect]
     public RxEventHandler HandleUserEvents()
     {
-        return upstream => upstream.OfAction([TestBedAction.FOO_ACTION]).Select(Process);
+        return upstream => upstream.OfAction(TestBedAction.FOO_ACTION).Select(Process);
     }
 }

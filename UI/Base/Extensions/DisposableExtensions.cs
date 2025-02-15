@@ -6,7 +6,7 @@ namespace NDBotUI.UI.Base.Extensions;
 public static class DisposableExtensions
 {
     /// <summary>
-    /// Tự động subscribe vào một observable và thêm vào CompositeDisposable
+    ///     Tự động subscribe vào một observable và thêm vào CompositeDisposable
     /// </summary>
     public static void AutoDispose<T>(
         this IObservable<T> observable,

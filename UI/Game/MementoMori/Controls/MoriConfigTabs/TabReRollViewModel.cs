@@ -35,9 +35,9 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                     if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
                     {
                         if (gameInstance.State == AutoState.On)
-                            ToggleButtonText = $"Stop {selectedEmulatorId}";
+                            ToggleButtonText = "Stop";
                         else
-                            ToggleButtonText = $"Start {selectedEmulatorId}";
+                            ToggleButtonText = "Start";
                     }
                     else
                     {

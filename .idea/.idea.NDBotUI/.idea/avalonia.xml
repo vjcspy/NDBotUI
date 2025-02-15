@@ -12,6 +12,7 @@
         <entry key="UI/Base/Views/MainWindow.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Emulator/Controls/EmulatorsView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Emulator/Views/EmulatorsView.axaml" value="NDBotUI.csproj" />
+        <entry key="UI/Game/MementoMori/Controls/GameInstanceView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/MementoMori/Controls/MoriConfigContainer.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/MementoMori/Controls/MoriConfigTabs/TabReRollView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/MementoMori/Controls/MoriContainer.axaml" value="NDBotUI.csproj" />

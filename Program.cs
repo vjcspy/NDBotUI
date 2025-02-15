@@ -3,8 +3,6 @@ using Avalonia;
 using Avalonia.ReactiveUI;
 using NDBotUI.Modules.Core.Attributes;
 using NDBotUI.Modules.Shared.Emulator;
-using NDBotUI.Modules.Shared.Emulator.Store;
-using NDBotUI.Modules.Shared.Emulator.Store.Effects;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.Modules.Shared.TedBed.RxEvent;
 

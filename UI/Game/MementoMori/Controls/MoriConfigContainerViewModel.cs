@@ -15,10 +15,7 @@ public partial class MoriConfigContainerViewModel : ObservableViewModelBase
         AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State)
             .AutoDispose(newVale =>
             {
-                if (newVale.Value.SelectedEmulatorId is not null)
-                {
-                    IsShowConfig = true;
-                }
+                if (newVale.Value.SelectedEmulatorId is not null) IsShowConfig = true;
             }, Disposables);
     }
 }

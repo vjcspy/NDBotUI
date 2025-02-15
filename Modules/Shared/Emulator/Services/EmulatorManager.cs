@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Shared.Emulator.Helpers;
 using NDBotUI.Modules.Shared.Emulator.Models;
@@ -15,22 +14,19 @@ public class EmulatorManager(AdbHelper adbHelper)
     {
         if (reinit) adbHelper.InitAdbServer(forceRestart);
 
-        Lst<EmulatorConnection> newConnections  = [];
+        Lst<EmulatorConnection> newConnections = [];
 
         foreach (var emulatorScanData in adbHelper.ConnectByGetDevices())
             newConnections = EmulatorConnections.Add(
                 new EmulatorConnection(emulatorScanData)
             );
-        
-        var list1Keys = newConnections.Map(e=> e.Id).ToHashSet();
-        var list2Keys = EmulatorConnections.Map(e=> e.Id).ToHashSet();
-                    
+
+        var list1Keys = newConnections.Map(e => e.Id).ToHashSet();
+        var list2Keys = EmulatorConnections.Map(e => e.Id).ToHashSet();
+
         var isEqual = list1Keys.SetEquals(list2Keys);
 
-        if (!isEqual)
-        {
-            EmulatorConnections = newConnections;
-        }
+        if (!isEqual) EmulatorConnections = newConnections;
     }
 
     public EmulatorConnection? GetConnection(string id)

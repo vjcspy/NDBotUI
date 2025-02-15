@@ -5,12 +5,12 @@ using NDBotUI.UI.Base.ViewModels;
 
 namespace NDBotUI.UI.Emulator.Controls;
 
-public class EmulatorsViewModel : ViewModelBase
+public class EmulatorsViewModel : ObservableViewModelBase
 {
-    public AppStore Store { get; } = AppStore.Instance;
-
     public EmulatorsViewModel()
     {
         RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
     }
+
+    public AppStore Store { get; } = AppStore.Instance;
 }

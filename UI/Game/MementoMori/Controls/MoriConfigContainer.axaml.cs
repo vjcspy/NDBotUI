@@ -1,8 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.ReactiveUI;
-using NDBotUI.Modules.Game.MementoMori.Store;
-using NDBotUI.Modules.Shared.EventManager;
+﻿using Avalonia.ReactiveUI;
 
 namespace NDBotUI.UI.Game.MementoMori.Controls;
 

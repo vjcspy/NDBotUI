@@ -1,7 +1,5 @@
 ﻿using System.Reactive.Linq;
-using System.Threading.Tasks;
 using NDBotUI.Modules.Game.MementoMori.Helper;
-using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
 
@@ -22,6 +20,6 @@ public class InitTemplateDataEffect
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction([MoriAction.InitMori]).Select(Process);
+        return upstream => upstream.OfAction(MoriAction.InitMori).Select(Process);
     }
 }

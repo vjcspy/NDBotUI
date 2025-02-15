@@ -1,8 +1,7 @@
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Infrastructure;
@@ -12,7 +11,7 @@ using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
 
 namespace NDBotUI;
 
-public partial class App : Application
+public class App : Application
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -56,9 +55,6 @@ public partial class App : Application
             BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
 
         // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
+        foreach (var plugin in dataValidationPluginsToRemove) BindingPlugins.DataValidators.Remove(plugin);
     }
 }

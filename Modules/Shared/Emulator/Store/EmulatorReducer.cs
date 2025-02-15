@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Models;
@@ -20,14 +19,14 @@ public class EmulatorReducer
             {
                 if (action.Payload is Lst<EmulatorConnection> list)
                 {
-                    var list1Keys = list.Map(e=> e.Id).ToHashSet();
-                    var list2Keys = state.EmulatorConnections.Map(e=> e.Id).ToHashSet();
-                    
+                    var list1Keys = list.Map(e => e.Id).ToHashSet();
+                    var list2Keys = state.EmulatorConnections.Map(e => e.Id).ToHashSet();
+
                     var isEqual = list1Keys.SetEquals(list2Keys);
 
                     if (!isEqual)
                     {
-                        Console.WriteLine($"Emulator Updated List: {list.Count}");
+                        Logger.Info($"Emulator Updated List: {list.Count}");
                         state = state with
                         {
                             EmulatorConnections = list,
@@ -45,7 +44,7 @@ public class EmulatorReducer
             {
                 state = state with
                 {
-                    Attempts = state.Attempts + 1,
+                    Attempts = state.Attempts + 1
                 };
 
                 return state;
@@ -58,7 +57,7 @@ public class EmulatorReducer
                     Logger.Info($"Selected Emulator : {baseActionPayload.EmulatorId}");
                     state = state with
                     {
-                        SelectedEmulatorId = baseActionPayload.EmulatorId,
+                        SelectedEmulatorId = baseActionPayload.EmulatorId
                     };
                 }
 

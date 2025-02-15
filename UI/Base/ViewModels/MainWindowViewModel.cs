@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Disposables;
-using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.UI.Game.MementoMori.Controls;
 using ReactiveUI;
@@ -10,12 +9,6 @@ namespace NDBotUI.UI.Base.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 {
-    public AppStore Store => AppStore.Instance;
-    public RoutingState Router { get; } = new RoutingState();
-
-    // The command that navigates a user back.
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
-
     public MainWindowViewModel(Func<IScreen, AutoContainerViewModel> autoContainerFactory)
     {
         // Manage the routing state. Use the Router.Navigate.Execute
@@ -37,5 +30,11 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
         });
     }
 
+    public AppStore Store => AppStore.Instance;
+
+    // The command that navigates a user back.
+    public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
+
     public ViewModelActivator Activator { get; } = new();
+    public RoutingState Router { get; } = new();
 }

@@ -4,10 +4,9 @@ namespace NDBotUI.Modules.Shared.EventManager;
 
 public class EventAction(object type, object? payload = null)
 {
+    private Guid? _correlationId;
     public object Type { get; } = type;
     public object? Payload { get; } = payload;
-
-    private Guid? _correlationId;
 
     public Guid? CorrelationId
     {
@@ -22,7 +21,10 @@ public class EventAction(object type, object? payload = null)
         }
     }
 
-    public override string ToString() => $"Type: {Type} - Payload: {Payload?.GetType()}";
+    public override string ToString()
+    {
+        return $"Type: {Type} - Payload: {Payload?.GetType()}";
+    }
 }
 
 public class CoreAction

@@ -4,7 +4,7 @@ namespace NDBotUI.Modules.Core.Helper;
 
 public static class FileHelper
 {
-    static string? CurrentDirectory = null;
+    private static string? CurrentDirectory;
 
     public static string CreateFolderIfNotExist(string path)
     {
@@ -13,10 +13,7 @@ public static class FileHelper
         var folderPath = Path.Combine(CurrentDirectory, path);
 
         // Tạo thư mục nếu chưa có
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
-        }
+        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
         return folderPath;
     }

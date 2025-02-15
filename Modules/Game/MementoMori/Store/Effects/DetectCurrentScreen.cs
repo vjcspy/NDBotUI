@@ -117,12 +117,11 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.BeforeChallengeEnemyPower22,
 
                 // MoriTemplateKey.StartSettingButton
-                
+
                 MoriTemplateKey.NextCountryButton,
                 MoriTemplateKey.CharacterGrowthTabHeader,
                 MoriTemplateKey.SkipSceneShotButton,
-                MoriTemplateKey.HomeNewPlayerText,
-                
+                MoriTemplateKey.HomeNewPlayerText
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
@@ -186,7 +185,8 @@ public class DetectCurrentScreen : EffectBase
                 var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
 
                 if (gameInstance == null || (gameInstance.JobType == MoriJobType.ReRoll &&
-                                             gameInstance.JobReRollState.ReRollStatus == ReRollStatus.EligibilityLevelCheck ))
+                                             gameInstance.JobReRollState.ReRollStatus ==
+                                             ReRollStatus.EligibilityLevelCheck))
                     // tạm thời disable detect để check level
                     // Logger.Info("Pause detect current screen for eligibility level check");
                     return false;

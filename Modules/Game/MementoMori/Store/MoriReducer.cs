@@ -1,9 +1,11 @@
 ﻿using System.Linq;
+using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
+using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
@@ -18,25 +20,26 @@ public class MoriReducer
     {
         switch (action.Type)
         {
-            case EmulatorAction.Type.SelectEmulatorConnection:
+            case EmulatorAction.Type.EmulatorConnectSuccess:
             {
-                if (action.Payload is BaseActionPayload baseActionPayload)
-                {
-                    var gameInstance = state.GetGameInstance(baseActionPayload.EmulatorId);
-                    if (gameInstance == null)
-                        state = state with
-                        {
-                            GameInstances = state.GameInstances.Add(
-                                new GameInstance(
-                                    baseActionPayload.EmulatorId,
-                                    AutoState.Off,
-                                    "",
-                                    MoriJobType.None,
-                                    new JobReRollState()
+                if (action.Payload is Lst<EmulatorConnection> emulatorConnections)
+                    foreach (var emulatorConnection in emulatorConnections)
+                    {
+                        var gameInstance = state.GetGameInstance(emulatorConnection.Id);
+                        if (gameInstance == null)
+                            state = state with
+                            {
+                                GameInstances = state.GameInstances.Add(
+                                    new GameInstance(
+                                        emulatorConnection.Id,
+                                        AutoState.Off,
+                                        "",
+                                        MoriJobType.None,
+                                        new JobReRollState()
+                                    )
                                 )
-                            )
-                        };
-                }
+                            };
+                    }
 
                 return state;
             }
@@ -138,7 +141,7 @@ public class MoriReducer
                     MoriTemplateKey.BeforeChallengeEnemyPower16,
                     MoriTemplateKey.BeforeChallengeEnemyPower17,
                     MoriTemplateKey.BeforeChallengeEnemyPower19,
-                    MoriTemplateKey.BeforeChallengeEnemyPower112,
+                    MoriTemplateKey.BeforeChallengeEnemyPower112
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
@@ -185,7 +188,7 @@ public class MoriReducer
                 MoriTemplateKey[] checkLv =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower17,
-                    MoriTemplateKey.BeforeChallengeEnemyPower19,
+                    MoriTemplateKey.BeforeChallengeEnemyPower19
                 ];
                 if (checkLv.Contains(detectedTemplatePoint.MoriTemplateKey))
                     state = state with

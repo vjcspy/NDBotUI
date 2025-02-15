@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DynamicData;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
@@ -18,6 +17,7 @@ public class RefreshEmulatorEffect : EffectBase
     {
         try
         {
+            await Task.Delay(0);
             var emulatorManager = EmulatorManager.Instance;
             emulatorManager.RefreshDevices(true, false);
             return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);

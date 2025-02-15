@@ -22,10 +22,8 @@ public partial class EmulatorsView : ReactiveUserControl<EmulatorsViewModel>
     {
         var selectedRows = DataGrid.SelectedItems;
         if (selectedRows.Count == 1 && selectedRows[0] is EmulatorConnection emulatorConnection)
-        {
             RxEventManager.Dispatch(
                 EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(emulatorConnection.Id,
                     emulatorConnection)));
-        }
     }
 }

@@ -3,6 +3,7 @@
              x:Class="NDBotUI.App"
              xmlns:local="using:NDBotUI"
              xmlns:converters="clr-namespace:NDBotUI.UI.Base.Converters"
+             xmlns:converters1="clr-namespace:NDBotUI.UI.Emulator.Converters"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
@@ -11,6 +12,8 @@
     </Application.DataTemplates>
 
     <Application.Resources>
+        <converters1:EmulatorConnectionStateConverter x:Key="EmulatorConnectionStateConverter" />
+        <converters1:EmulatorStateToColorConverter x:Key="EmulatorStateToColorConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </Application.Resources>
 

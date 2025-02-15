@@ -9,10 +9,10 @@ public static class EmulatorAction
         EmulatorInit,
         EmulatorConnectSuccess,
         EmulatorConnectError,
-        
+
         EmulatorRefresh,
 
-        SelectEmulatorConnection,
+        SelectEmulatorConnection
     }
 
     public static readonly EventActionFactory EmulatorInitAction = new(Type.EmulatorInit);

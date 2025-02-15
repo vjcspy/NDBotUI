@@ -14,25 +14,25 @@ public enum MoriTemplateKey
     /*Level up*/
     BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
     BeforeChallengeEnemyPower15 = 15, // 
-    BeforeChallengeEnemyPower16 =16, //
+    BeforeChallengeEnemyPower16 = 16, //
     BeforeChallengeEnemyPower17 = 17, //
     BeforeChallengeEnemyPower19 = 19, //
     BeforeChallengeEnemyPower112 = 112, //
     BeforeChallengeEnemyPower22 = 22, //
-    
+
     Unknown = 500,
     TermOfAgreementPopup,
     StartSettingButton,
     StartStartButton,
 
     IconChar1, // TODO: cần chuyển sang text
-    
+
     ChallengeButton, // Trước khi vào trận đánh sẽ hỏi
     TextSelectFirstCharToTeam, // Select first char vào party
     TextSelectSecondCharToTeam, // Select second char vào party
     TextSelectThirdCharToTeam, // Select third char vào party
     TextSelectFourCharToTeam, // Select four char vào party
-    
+
     PowerLevelUpText, // hướng dẫn level up nhân vật
     GuideClickLevelUpText, // click level up nhân vật
     GuideClickEquipAllText, // click level up nhân vật
@@ -40,16 +40,16 @@ public enum MoriTemplateKey
     GuideClickTheTownText, // click level up nhân vật
     GuideSelectTownButton, // click level up nhân vật
     GuideClickRewardText, // click vào thùng reward
-    GuideClickLevelUpImmediatelyText, 
-    GuideClickHomeText, 
-    GuideClickDownButton, 
-    GuideChapter12Text, 
-    
+    GuideClickLevelUpImmediatelyText,
+    GuideClickHomeText,
+    GuideClickDownButton,
+    GuideChapter12Text,
+
     BossBattleButton,
     SelectButton, // button select ở bottom right (khi chọn town)
     ButtonClaim, // button claim reward
-    NextCountryButton, 
-    
+    NextCountryButton,
+
     CharacterGrowthTabHeader,
     CharacterLevelOneText,
     CharacterLevelTwoText,
@@ -58,14 +58,13 @@ public enum MoriTemplateKey
     CharacterLevelFiveText,
     CharacterLevelSixText,
     CharacterLevelSevenText,
-    
+
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
 
     SkipMovieButton,
     SkipSceneShotButton,
-    HomeNewPlayerText,
-    
+    HomeNewPlayerText
 }
 
 public record GameInstance(

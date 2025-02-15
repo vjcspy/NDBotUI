@@ -1,21 +1,20 @@
-﻿namespace NDBotUI.Modules.Shared.Emulator.Helpers;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
+
+namespace NDBotUI.Modules.Shared.Emulator.Helpers;
 
 public class NetstatScanner
 {
     public static List<int> GetAdbPorts()
     {
-        List<int> adbPorts = new List<int>();
+        var adbPorts = new List<int>();
 
         try
         {
             // Chạy lệnh netstat để lấy danh sách các cổng đang mở
-            ProcessStartInfo psi = new ProcessStartInfo
+            var psi = new ProcessStartInfo
             {
                 FileName = "netstat.exe",
                 Arguments = "-a -n -o -p TCP",
@@ -34,12 +33,8 @@ public class NetstatScanner
             var matches = regex.Matches(output);
 
             foreach (Match match in matches)
-            {
-                if (int.TryParse(match.Groups[1].Value, out int port))
-                {
+                if (int.TryParse(match.Groups[1].Value, out var port))
                     adbPorts.Add(port);
-                }
-            }
         }
         catch (Exception ex)
         {

@@ -158,8 +158,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                         isClicked = true;
                         break;
                     }
-                    
-                    
+
+
                     if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
                     {
                         Logger.Info("Current Chapter under Lv17 -> Back to Quest");

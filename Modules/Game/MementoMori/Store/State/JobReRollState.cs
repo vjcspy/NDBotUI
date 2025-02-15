@@ -8,10 +8,10 @@ public enum ReRollStatus
     EligibilityChapterCheck, // Check chapter level
     EligibilityChapterPassed, // Check chapter level
     IneligibleChapterCheck,
-    
+
     EligibilityLevelCheck,
     EligibilityLevelPass,
-    
+
     Processing,
     Finished,
 

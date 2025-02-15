@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Reactive.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Core.Store;
@@ -15,10 +14,7 @@ public static class RxBaseEligibilityCheckExtension
     {
         return source.Where(action =>
         {
-            if (forceEligible)
-            {
-                return true;
-            }
+            if (forceEligible) return true;
 
             if (action is not EventAction eventAction) return false;
 
@@ -28,8 +24,8 @@ public static class RxBaseEligibilityCheckExtension
             var isHasGameInstance =
                 AppStore.Instance.MoriStore.State.GameInstances.Find(instance =>
                     instance.EmulatorId == baseActionPayload.EmulatorId).Match(
-                    Some: game => game.State == AutoState.On,
-                    None: false
+                    game => game.State == AutoState.On,
+                    false
                 );
             if (!isHasGameInstance) return false;
             /* __ Another check */

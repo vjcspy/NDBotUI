@@ -15,11 +15,11 @@ public static class ServiceCollectionExtensions
     {
         // ViewModels
         collection.AddTransient<MainWindowViewModel>();
-        
+
         // Ví dụ về khai báo Factory
         collection.AddTransient<Func<IScreen, AutoContainerViewModel>>(provider =>
         {
-            return (screen) => new AutoContainerViewModel(
+            return screen => new AutoContainerViewModel(
                 screen
                 // provider.GetRequiredService<IMyService>() // Inject service khác vào
             );

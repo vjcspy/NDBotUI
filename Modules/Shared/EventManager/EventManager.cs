@@ -4,7 +4,6 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reflection;
-using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Store;
 using NLog;
 
@@ -41,13 +40,11 @@ public class RxEventManager
                     var handledEvent = events.Handled;
 
                     if (originEvent.CorrelationId != null && handledEvent.CorrelationId == null)
-                    {
                         handledEvent.CorrelationId = originEvent.CorrelationId;
-                    }
 
                     Dispatch(handledEvent);
                 },
-                onError: error =>  Logger.Error($"Error in event stream: {error.Message}")
+                error => Logger.Error($"Error in event stream: {error.Message}")
             );
     }
 
@@ -70,9 +67,6 @@ public class RxEventManager
 
     public static void RegisterEvent(object[] eventEffectInstances)
     {
-        foreach (var eventEffectInstance in eventEffectInstances)
-        {
-            RegisterEvent(eventEffectInstance);
-        }
+        foreach (var eventEffectInstance in eventEffectInstances) RegisterEvent(eventEffectInstance);
     }
 }

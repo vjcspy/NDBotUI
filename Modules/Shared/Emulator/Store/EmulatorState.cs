@@ -13,4 +13,9 @@ public record EmulatorState(
     {
         return new EmulatorState([], false, null);
     }
+
+    public EmulatorConnection? GetEmulatorConnection(string id)
+    {
+        return EmulatorConnections.Find(e => e.Id == id).Match(x => x, () => null!);
+    }
 }

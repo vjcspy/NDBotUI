@@ -4,7 +4,7 @@ namespace NDBotUI.Modules.Shared.Emulator.Errors;
 
 public class EmulatorNotFoundException : Exception
 {
-    public EmulatorNotFoundException() : base($"Emulator not found.")
+    public EmulatorNotFoundException() : base("Emulator not found.")
     {
     }
 
