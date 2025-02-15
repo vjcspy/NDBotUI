@@ -21,7 +21,6 @@ public partial class TabReRollViewModel : ObservableViewModelBase
     public TabReRollViewModel()
     {
         AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State.SelectedEmulatorId)
-            .Throttle(TimeSpan.FromMilliseconds(100))
             .AutoDispose(selectedEmulatorIdValue =>
             {
                 var selectedEmulatorId = selectedEmulatorIdValue.Value;
@@ -47,6 +46,34 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                 else
                 {
                     ToggleButtonText = "Wait";
+                }
+            }, Disposables);
+        
+        AppStore.Instance.MoriStore.ObservableForProperty(state => state.State)
+            .AutoDispose(moriState =>
+            {
+                if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+                {
+                    var gameInstance =
+                        moriState.Value.GetGameInstance(selectedEmulatorId);
+                    if (gameInstance != null)
+                    {
+                        if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
+                        {
+                            if (gameInstance.State == AutoState.On)
+                                ToggleButtonText = "Stop";
+                            else
+                                ToggleButtonText = "Start";
+                        }
+                        else
+                        {
+                            ToggleButtonText = "Đang thực hiện Job Khác";
+                        }
+                    }
+                    else
+                    {
+                        ToggleButtonText = "Wait";
+                    }
                 }
             }, Disposables);
     }

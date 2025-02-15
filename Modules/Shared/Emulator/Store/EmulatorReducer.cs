@@ -26,7 +26,7 @@ public class EmulatorReducer
 
                     if (!isEqual)
                     {
-                        Logger.Info($"Emulator Updated List: {list.Count}");
+                        Logger.Info($"=>>> Updated Emulator Connections: {list.Count}");
                         state = state with
                         {
                             EmulatorConnections = list,

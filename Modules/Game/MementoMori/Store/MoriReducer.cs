@@ -141,6 +141,7 @@ public class MoriReducer
                     MoriTemplateKey.BeforeChallengeEnemyPower16,
                     MoriTemplateKey.BeforeChallengeEnemyPower17,
                     MoriTemplateKey.BeforeChallengeEnemyPower19,
+                    MoriTemplateKey.BeforeChallengeEnemyPower111,
                     MoriTemplateKey.BeforeChallengeEnemyPower112
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
