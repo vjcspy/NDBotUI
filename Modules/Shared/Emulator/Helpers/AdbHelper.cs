@@ -29,7 +29,7 @@ public class AdbHelper(string adbPath)
 
         _adbServer = new AdbServer();
 
-        var result = _adbServer.StartServer(adbPath, false);
+        var result = _adbServer.StartServer(adbPath);
 
         if (result != StartServerResult.Started) throw new CouldNotInitAdbServer();
 

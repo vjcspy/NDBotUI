@@ -37,6 +37,5 @@ public class MoriBoot
                 },
                 ex => Console.WriteLine($"Error: {ex.Message}"),
                 () => Console.WriteLine("Completed"));
-        ;
     }
 }

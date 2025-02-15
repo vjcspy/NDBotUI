@@ -2,7 +2,9 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 using NDBotUI.Modules.Core.Attributes;
+using NDBotUI.Modules.Shared.Emulator;
 using NDBotUI.Modules.Shared.Emulator.Store;
+using NDBotUI.Modules.Shared.Emulator.Store.Effects;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.Modules.Shared.TedBed.RxEvent;
 
@@ -17,7 +19,7 @@ internal sealed class Program
     public static void Main(string[] args)
     {
         RegisterEffects();
-    
+        EmulatorBoot.Boot();
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }
@@ -34,6 +36,6 @@ internal sealed class Program
     [SingleCall]
     private static void RegisterEffects()
     {
-        RxEventManager.RegisterEvent([new TedBedEffect(), new EmulatorEffect()]);
+        RxEventManager.RegisterEvent([new TedBedEffect()]);
     }
 }

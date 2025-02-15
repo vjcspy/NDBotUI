@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using HarfBuzzSharp;
+﻿using LanguageExt;
 using NDBotUI.Modules.Shared.Emulator.Models;
 
 namespace NDBotUI.Modules.Shared.Emulator.Store;
 
 public record EmulatorState(
-    List<EmulatorConnection> EmulatorConnections,
+    Lst<EmulatorConnection> EmulatorConnections,
     bool IsLoaded,
     string? SelectedEmulatorId,
     int Attempts = 0)

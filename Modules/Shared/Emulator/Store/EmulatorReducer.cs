@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.EventManager;
@@ -18,7 +19,7 @@ public class EmulatorReducer
         {
             case EmulatorAction.Type.EmulatorConnectSuccess:
             {
-                if (action.Payload is List<EmulatorConnection> list)
+                if (action.Payload is Lst<EmulatorConnection> list)
                 {
                     Console.WriteLine($"Emulator Updated List: {list.Count}");
                     state = state with
