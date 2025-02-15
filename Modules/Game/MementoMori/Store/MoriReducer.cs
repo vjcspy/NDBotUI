@@ -134,7 +134,9 @@ public class MoriReducer
                 MoriTemplateKey[] currentChapter =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower15,
-                    MoriTemplateKey.BeforeChallengeEnemyPower16
+                    MoriTemplateKey.BeforeChallengeEnemyPower16,
+                    MoriTemplateKey.BeforeChallengeEnemyPower17,
+                    MoriTemplateKey.BeforeChallengeEnemyPower19,
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
@@ -180,7 +182,8 @@ public class MoriReducer
 
                 MoriTemplateKey[] checkLv =
                 [
-                    MoriTemplateKey.BeforeChallengeEnemyPower17
+                    MoriTemplateKey.BeforeChallengeEnemyPower17,
+                    MoriTemplateKey.BeforeChallengeEnemyPower19,
                 ];
                 if (checkLv.Contains(detectedTemplatePoint.MoriTemplateKey))
                     state = state with

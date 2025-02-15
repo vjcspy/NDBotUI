@@ -16,6 +16,7 @@ public enum MoriTemplateKey
     BeforeChallengeEnemyPower15 = 15, // 
     BeforeChallengeEnemyPower16 =16, //
     BeforeChallengeEnemyPower17 = 17, //
+    BeforeChallengeEnemyPower19 = 19, //
     BeforeChallengeEnemyPower22 = 22, //
     
     Unknown = 100,
