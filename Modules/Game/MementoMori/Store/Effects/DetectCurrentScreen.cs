@@ -138,6 +138,7 @@ public class DetectCurrentScreen : EffectBase
 
                 /*Home*/
                 MoriTemplateKey.LoginClaimButton,
+                MoriTemplateKey.HomeIconBpText,
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);

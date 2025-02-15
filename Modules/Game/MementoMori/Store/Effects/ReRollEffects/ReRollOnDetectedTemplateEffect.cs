@@ -84,6 +84,11 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
                 // click outside
                 await emulatorConnection.ClickPPointAsync(new PPoint(98.4f, 46.3f));
                 break;
+            case MoriTemplateKey.HomeIconBpText:
+                await Task.Delay(1000);
+                // click outside
+                await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94f));
+                break;
             case MoriTemplateKey.TermOfAgreementPopup:
                 await emulatorConnection.ClickPPointAsync(new PPoint(30.9f, 31.6f));
                 await Task.Delay(1500);

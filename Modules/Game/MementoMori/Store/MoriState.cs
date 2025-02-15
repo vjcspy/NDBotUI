@@ -78,6 +78,7 @@ public enum MoriTemplateKey
 
     /*Home*/
     LoginClaimButton,
+    HomeIconBpText, // dùng để detect đang ở home
 }
 
 public record GameInstance(

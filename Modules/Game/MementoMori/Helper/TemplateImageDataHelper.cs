@@ -527,6 +527,15 @@ public static class TemplateImageDataHelper
                 priority: 50
             )
         },
+        {
+            MoriTemplateKey.HomeIconBpText,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "home_icon_bp_text.png",
+                ],
+                priority: 100
+            )
+        },
     };
 
     public static void LoadTemplateImages()
