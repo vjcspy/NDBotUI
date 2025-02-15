@@ -119,6 +119,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.NextCountryButton,
                 MoriTemplateKey.CharacterGrowthTabHeader,
                 MoriTemplateKey.SkipSceneShotButton,
+                MoriTemplateKey.HomeNewPlayerText,
                 
             ];
 

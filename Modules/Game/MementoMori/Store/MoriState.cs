@@ -62,6 +62,7 @@ public enum MoriTemplateKey
 
     SkipMovieButton,
     SkipSceneShotButton,
+    HomeNewPlayerText,
     
 }
 

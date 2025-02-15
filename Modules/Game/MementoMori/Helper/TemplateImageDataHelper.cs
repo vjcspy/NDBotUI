@@ -292,6 +292,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "skip_scene_shot_button.png"
             ], priority: 100)
         },
+        {
+            MoriTemplateKey.HomeNewPlayerText,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "home_new_player_text.png"
+            ], priority: 90)
+        },
     };
 
     public static Unit LoadTemplateImages()
