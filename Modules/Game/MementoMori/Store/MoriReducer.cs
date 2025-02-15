@@ -68,7 +68,7 @@ public class MoriReducer
                             : gameInstance
                     )
                 };
-
+                TemplateImageDataHelper.ResetTemplateImagesPriority(emulatorId);
                 return state;
             }
             case MoriAction.Type.EligibilityChapterCheck:

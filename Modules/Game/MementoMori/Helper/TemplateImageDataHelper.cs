@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DynamicData.Kernel;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Values;
 using NDBotUI.Modules.Game.MementoMori.Store;
@@ -37,6 +38,11 @@ public class TemplateImageData(
     public void SetPriority(string emulatorId, int priority)
     {
         PriorityDict[emulatorId] = priority;
+    }
+
+    public void Reset(string emulatorId)
+    {
+        PriorityDict.RemoveIfContained(emulatorId);
     }
 }
 
@@ -370,5 +376,14 @@ public static class TemplateImageDataHelper
 
         IsLoaded = true;
         Logger.Info("Loaded template images for Memento Mori");
+    }
+
+    public static void ResetTemplateImagesPriority(string emulatorId)
+    {
+        foreach (var kvp in TemplateImageData)
+        {
+            // Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
+            kvp.Value.Reset(emulatorId);
+        }
     }
 }
