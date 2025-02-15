@@ -118,7 +118,9 @@ public class EligibilityLevelCheck : EffectBase
             MoriTemplateKey.CharacterLevelFiveText, MoriTemplateKey.CharacterLevelSixText
         ];
 
-        while (true)
+        var countLevelUp = 0;
+
+        while (countLevelUp < 7)
         {
             var lv7Point = await FindTemplate(MoriTemplateKey.CharacterLevelSevenText, screenshotEmguMat);
 
@@ -152,6 +154,7 @@ public class EligibilityLevelCheck : EffectBase
             // level up
             Logger.Info("Click Level Up");
             await emulatorConnection.ClickPPointAsync(new PPoint(76.7f, 82.9f));
+            countLevelUp += 1;
             await Task.Delay(1500);
 
             // refresh level screen

@@ -17,7 +17,7 @@ public class EmulatorBoot
     public static void Boot()
     {
         RxEventManager.RegisterEvent([new EmulatorEffect(), new RefreshEmulatorEffect()]);
-        Observable.Interval(TimeSpan.FromSeconds(10))
+        Observable.Interval(TimeSpan.FromSeconds(30))
             .ObserveOn(Scheduler.Default)
             .SubscribeOn(Scheduler.Default)
             .Subscribe(

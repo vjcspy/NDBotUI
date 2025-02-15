@@ -5,6 +5,8 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Infrastructure;
+using NDBotUI.Modules.Shared.Emulator.Store;
+using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.UI.Base.ViewModels;
 using NLog;
 using MainWindow = NDBotUI.UI.Base.Views.MainWindow;
@@ -41,6 +43,8 @@ public class App : Application
             {
                 DataContext = vm
             };
+            
+            RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
         }
 
         base.OnFrameworkInitializationCompleted();
