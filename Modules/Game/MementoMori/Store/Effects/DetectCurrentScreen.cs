@@ -110,9 +110,12 @@ public class DetectCurrentScreen : EffectBase
                 // MoriTemplateKey.BeforeChallengeChapterSix
                 MoriTemplateKey.BeforeChallengeEnemyPower15,
                 MoriTemplateKey.BeforeChallengeEnemyPower16,
-                MoriTemplateKey.BeforeChallengeEnemyPower17
+                MoriTemplateKey.BeforeChallengeEnemyPower17,
+                MoriTemplateKey.BeforeChallengeEnemyPower22,
 
                 // MoriTemplateKey.StartSettingButton
+                
+                MoriTemplateKey.NextCountryButton
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);

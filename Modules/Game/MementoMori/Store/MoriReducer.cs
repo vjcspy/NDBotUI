@@ -108,6 +108,24 @@ public class MoriReducer
                             : gameInstance
                     )
                 };
+                
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.Off,
+                                    Status = "Finished",
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.Finished
+                                    }
+                                }
+                                : gameInstance
+                        )
+                    };
 
                 MoriTemplateKey[] chapterValidEligibilityCheck =
                 [

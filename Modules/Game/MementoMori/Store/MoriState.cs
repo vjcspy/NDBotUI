@@ -38,12 +38,14 @@ public enum MoriTemplateKey
     BossBattleButton,
     SelectButton, // button select ở bottom right (khi chọn town)
     ButtonClaim, // button claim reward
+    NextCountryButton, 
     
     /*Level up*/
     BeforeChallengeChapterSix, // check chapter nay se nang map lv7 het
     BeforeChallengeEnemyPower15, // 
     BeforeChallengeEnemyPower16, //
     BeforeChallengeEnemyPower17, //
+    BeforeChallengeEnemyPower22, //
     
     CharacterGrowthTabHeader,
     CharacterLevelOneText,

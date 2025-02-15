@@ -214,6 +214,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_1_7.png"
             ], priority: 50)
         },
+        {
+            MoriTemplateKey.BeforeChallengeEnemyPower22,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_2_2.png"
+            ], priority: 50)
+        },
 
         {
             MoriTemplateKey.CharacterGrowthTabHeader,
@@ -262,7 +268,14 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_seven_text.png"
             ], priority: 50)
-        }
+        },
+        
+        {
+            MoriTemplateKey.NextCountryButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "next_country_button.png"
+            ], priority: 50)
+        },
     };
 
     public static Unit LoadTemplateImages()

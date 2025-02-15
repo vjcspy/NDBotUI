@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -36,7 +35,7 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.BossBattleButton,
             MoriTemplateKey.SelectButton,
             MoriTemplateKey.ButtonClaim,
-           
+            MoriTemplateKey.NextCountryButton
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
@@ -47,88 +46,90 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             //     await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
             //     isClicked = true;
             //     break;
-            
+
             case MoriTemplateKey.TextSelectFirstCharToTeam:
-                await emulatorConnection.ClickPPointAsync(new PPoint(13.7f,56.4f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(13.7f, 56.4f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.TextSelectSecondCharToTeam:
-                await emulatorConnection.ClickPPointAsync(new PPoint(21.5f,56.7f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(21.5f, 56.7f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.TextSelectThirdCharToTeam:
-                await emulatorConnection.ClickPPointAsync(new PPoint(13.9f,57.4f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(13.9f, 57.4f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.TextSelectFourCharToTeam:
-                await emulatorConnection.ClickPPointAsync(new PPoint(22.3f,57.2f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(22.3f, 57.2f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.PowerLevelUpText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(20.8f,94f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(20.8f, 94f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickLevelUpText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(75.2f,82.4f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(75.2f, 82.4f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickEquipAllText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(35.8f,82.4f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(35.8f, 82.4f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickQuestText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(44f,95f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(44f, 95f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickTheTownText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(50f,47.3f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(50f, 47.3f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideSelectTownButton:
                 // select town and next
                 await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
                 await Task.Delay(1500);
-                await emulatorConnection.ClickPPointAsync(new PPoint(88.2f,89.6f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(88.2f, 89.6f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickRewardText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(51.6f,67.3f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(51.6f, 67.3f));
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickLevelUpImmediatelyText:
-                await emulatorConnection.ClickPPointAsync(new PPoint(21f,94.7f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(21f, 94.7f));
                 await Task.Delay(1500);
                 // spam click all char
-                await emulatorConnection.ClickPPointAsync(new PPoint(16.9f,31.8f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(16.9f, 31.8f));
                 await Task.Delay(500);
-                await emulatorConnection.ClickPPointAsync(new PPoint(28.5f,31.8f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(28.5f, 31.8f));
                 await Task.Delay(500);
-                await emulatorConnection.ClickPPointAsync(new PPoint(38.9f,31.8f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(38.9f, 31.8f));
                 await Task.Delay(500);
-                await emulatorConnection.ClickPPointAsync(new PPoint(49.9f,31.8f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 31.8f));
                 await Task.Delay(500);
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideClickDownButton:
                 var pPoint = emulatorConnection.ToPPoint(detectedTemplatePoint.Point);
-                if (pPoint != null) await emulatorConnection.ClickPPointAsync(pPoint with { Y = pPoint.Y + 12 });
+                if (pPoint != null)
+                    await emulatorConnection.ClickPPointAsync(pPoint with { X = pPoint.X + 1, Y = pPoint.Y + 15 });
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideChapter12Text:
-                await emulatorConnection.ClickPPointAsync(new PPoint(59.6f,88.5f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(59.6f, 88.5f));
                 isClicked = true;
                 break;
-            
+
             case MoriTemplateKey.PartyInformation:
                 // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
-                await emulatorConnection.ClickPPointAsync(new PPoint(85f,88.2f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(85f, 88.2f));
                 isClicked = true;
                 break;
             default:
             {
                 if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
-                    Logger.Info($"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}");
+                    Logger.Info(
+                        $"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}");
                     await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
                     isClicked = true;
                 }
