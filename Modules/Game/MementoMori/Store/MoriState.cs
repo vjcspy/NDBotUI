@@ -97,14 +97,6 @@ public record MoriState(Lst<GameInstance> GameInstances)
         }
     }
 
-    public GameInstance? GetCurrentEmulatorGameInstance()
-    {
-        if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
-            return GetGameInstance(selectedEmulatorId);
-
-        return null;
-    }
-
     public bool IsReRollJobRunning(string emulatorId)
     {
         return GameInstances
