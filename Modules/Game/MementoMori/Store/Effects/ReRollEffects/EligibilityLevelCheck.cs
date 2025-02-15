@@ -76,9 +76,6 @@ public class EligibilityLevelCheck : EffectBase
             // Click về quest
             await emulatorConnection.ClickPPointAsync(new PPoint(44.4f, 95.1f));
 
-            // Để không ưu tiên vào màn hình này nữa
-            TemplateImageDataHelper.TemplateImageData[MoriTemplateKey.BeforeChallengeEnemyPower17].Priority = 100;
-
             return MoriAction.EligibilityLevelPass.Create(baseActionPayload);
         }
         catch (Exception e)

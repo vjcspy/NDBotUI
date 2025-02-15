@@ -18,12 +18,26 @@ public class TemplateImageData(
     bool isLoadError = false,
     int priority = 100)
 {
+    private readonly int _defaultPriority = priority;
+    private readonly Dictionary<string, int> PriorityDict = new();
     public string[] FilePath { get; } = filePath;
     public OpenCVMat? OpenCVMat { get; set; } = openCVMat;
     public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
 
     public int Priority { get; set; } = priority;
+
+    public int GetPriority(string emulatorId = "default")
+    {
+        return emulatorId == "default"
+            ? _defaultPriority
+            : PriorityDict.GetValueOrDefault(emulatorId, _defaultPriority);
+    }
+
+    public void SetPriority(string emulatorId, int priority)
+    {
+        PriorityDict[emulatorId] = priority;
+    }
 }
 
 public static class TemplateImageDataHelper

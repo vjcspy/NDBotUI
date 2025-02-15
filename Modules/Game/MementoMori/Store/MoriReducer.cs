@@ -161,7 +161,8 @@ public class MoriReducer
                     };
                     // Sau đó không ưu tiên nữa
                     Logger.Info($"Reduce Priority for template {detectedTemplatePoint.MoriTemplateKey.ToString()}");
-                    TemplateImageDataHelper.TemplateImageData[detectedTemplatePoint.MoriTemplateKey].Priority = 101;
+                    TemplateImageDataHelper.TemplateImageData[detectedTemplatePoint.MoriTemplateKey]
+                        .SetPriority(emulatorId, 101);
                 }
 
                 MoriTemplateKey[] chapterValidEligibilityCheck =
@@ -185,12 +186,12 @@ public class MoriReducer
                         )
                     };
 
-                MoriTemplateKey[] checkLv =
+                MoriTemplateKey[] levelUpCheckForChapters =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower17,
                     MoriTemplateKey.BeforeChallengeEnemyPower19
                 ];
-                if (checkLv.Contains(detectedTemplatePoint.MoriTemplateKey))
+                if (levelUpCheckForChapters.Contains(detectedTemplatePoint.MoriTemplateKey))
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>

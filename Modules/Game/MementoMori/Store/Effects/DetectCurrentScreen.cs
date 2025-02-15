@@ -150,7 +150,9 @@ public class DetectCurrentScreen : EffectBase
             Logger.Info($"Found {result.Count} detected template points");
 
             var detectedTemplatePoint = result
-                .OrderBy(point => TemplateImageDataHelper.TemplateImageData[point.MoriTemplateKey].Priority)
+                .OrderBy(point =>
+                    TemplateImageDataHelper.TemplateImageData[point!.MoriTemplateKey]
+                        .GetPriority(baseActionPayload.EmulatorId))
                 .FirstOrDefault();
 
             if (detectedTemplatePoint != null)
