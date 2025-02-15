@@ -180,18 +180,25 @@ public class DetectCurrentScreen : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
-            .Throttle(TimeSpan.FromSeconds(3))
-            .FilterBaseEligibility(GetForceEligible())
+            .GroupBy(action =>
+            {
+                if (action.Payload is BaseActionPayload baseActionPayload)
+                    return baseActionPayload.EmulatorId;
+                
+                return Guid.Empty.ToString(); // Trường hợp không có Id, đảm bảo không lỗi
+            })
+            .SelectMany(groupedStream =>
+                groupedStream
+                    .Throttle(TimeSpan.FromSeconds(3)) // Throttle theo từng EmulatorId
+                    .FilterBaseEligibility(GetForceEligible())
+            )
             .Where(action =>
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload) return false;
                 var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
 
                 if (gameInstance == null || (gameInstance.JobType == MoriJobType.ReRoll &&
-                                             gameInstance.JobReRollState.ReRollStatus ==
-                                             ReRollStatus.EligibilityLevelCheck))
-                    // tạm thời disable detect để check level
-                    // Logger.Info("Pause detect current screen for eligibility level check");
+                                             gameInstance.JobReRollState.ReRollStatus == ReRollStatus.EligibilityLevelCheck))
                     return false;
 
                 return true;

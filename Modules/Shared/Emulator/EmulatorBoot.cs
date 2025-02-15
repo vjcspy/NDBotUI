@@ -17,15 +17,17 @@ public class EmulatorBoot
     public static void Boot()
     {
         RxEventManager.RegisterEvent([new EmulatorEffect(), new RefreshEmulatorEffect()]);
-        Observable.Interval(TimeSpan.FromSeconds(30))
+
+        var firstRun = Observable.Timer(TimeSpan.FromSeconds(15)) // Chạy lần đầu sau 5s
+            .Do(_ => RxEventManager.Dispatch(EmulatorAction.EmulatorRefresh.Create()));
+        var periodicRun = Observable.Interval(TimeSpan.FromSeconds(30)) // Chạy mỗi 30s
+            .Do(_ => RxEventManager.Dispatch(EmulatorAction.EmulatorRefresh.Create()));
+        firstRun
+            .Concat(periodicRun) // Ghép hai luồng lại, đảm bảo chạy tuần tự
             .ObserveOn(Scheduler.Default)
             .SubscribeOn(Scheduler.Default)
             .Subscribe(
-                _ =>
-                {
-                    RxEventManager.Dispatch(
-                        EmulatorAction.EmulatorRefresh.Create());
-                },
+                _ => { }, // Không cần xử lý, vì đã có `.Do` phía trên
                 ex => Console.WriteLine($"Error: {ex.Message}"),
                 () => Console.WriteLine("Completed"));
     }

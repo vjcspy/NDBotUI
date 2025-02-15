@@ -41,35 +41,35 @@ public class EligibilityLevelCheck : EffectBase
             await emulatorConnection.ClickPPointAsync(new PPoint(93.2f, 8.7f));
             await Task.Delay(1500);
             await emulatorConnection.ClickPPointAsync(new PPoint(81.8f, 26.7f));
-            await Task.Delay(2000);
+            await Task.Delay(1000);
 
             // click vao characters
             Logger.Info("Click into character growth tab");
             await emulatorConnection.ClickPPointAsync(new PPoint(20.8f, 93.9f));
-            await Task.Delay(1500);
+            await Task.Delay(1000);
 
             // click char1
             Logger.Info("Click into character 1");
             await emulatorConnection.ClickPPointAsync(new PPoint(16.3f, 33.6f));
-            await Task.Delay(1500);
+            await Task.Delay(1000);
             await LevelUpChar(emulatorConnection);
 
             // click char2
             Logger.Info("Click into character 2");
             await emulatorConnection.ClickPPointAsync(new PPoint(28.1f, 33.6f));
-            await Task.Delay(1500);
+            await Task.Delay(1000);
             await LevelUpChar(emulatorConnection);
 
             // click char3
             Logger.Info("Click into character 3");
             await emulatorConnection.ClickPPointAsync(new PPoint(39.1f, 33.6f));
-            await Task.Delay(1500);
+            await Task.Delay(1000);
             await LevelUpChar(emulatorConnection);
 
             // click char 4
             Logger.Info("Click into character 4");
             await emulatorConnection.ClickPPointAsync(new PPoint(50.1f, 33.6f));
-            await Task.Delay(1500);
+            await Task.Delay(1000);
             await LevelUpChar(emulatorConnection);
 
 
@@ -135,7 +135,7 @@ public class EligibilityLevelCheck : EffectBase
 
                 // back
                 await emulatorConnection.ClickPPointAsync(new PPoint(3.1f, 3.5f));
-                await Task.Delay(1500);
+                await Task.Delay(1000);
                 return;
             }
 
@@ -154,7 +154,7 @@ public class EligibilityLevelCheck : EffectBase
             emulatorConnection.ClickPPoint(new PPoint(76.7f, 82.9f));
             countLevelUp += 1;
             await Task.Delay(1000);
-            
+
             // refresh level screen
             screenshot = await emulatorConnection.TakeScreenshotAsync();
             if (screenshot is null) throw new Exception("Screenshot is null");
@@ -170,8 +170,18 @@ public class EligibilityLevelCheck : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
-            .Throttle(TimeSpan.FromMilliseconds(3000))
-            .FilterBaseEligibility(GetForceEligible())
+            .GroupBy(action =>
+            {
+                if (action.Payload is BaseActionPayload baseActionPayload)
+                    return baseActionPayload.EmulatorId;
+                
+                return Guid.Empty.ToString(); // Tránh lỗi nếu không có EmulatorId
+            })
+            .SelectMany(groupedStream =>
+                groupedStream
+                    .Throttle(TimeSpan.FromMilliseconds(1000)) // Throttle riêng cho từng EmulatorId
+                    .FilterBaseEligibility(GetForceEligible())
+            )
             .Where(action =>
             {
                 var isValid = action.Payload is BaseActionPayload baseActionPayload &&
