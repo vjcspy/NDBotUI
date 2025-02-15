@@ -7,7 +7,6 @@ using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
-using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
@@ -140,7 +139,7 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(85f, 88.2f));
                 isClicked = true;
                 break;
-            
+
             case MoriTemplateKey.HomeNewPlayerText:
                 // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
                 await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 96.0f));
@@ -156,22 +155,20 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                         Logger.Info("Current Chapter under Lv17 -> Back to Quest");
                         if (!IsSpamLevelUp)
                         {
-                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
-                            await Task.Delay(2250);
-                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
-                            await Task.Delay(2250);
-
                             IsSpamLevelUp = true;
+                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                            await Task.Delay(1000);
+                            await emulatorConnection.ClickPPointAsync(new PPoint(74.9f, 82.1f));
+                            await Task.Delay(1000);
                         }
 
 
                         // click equip all
                         await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
-                        await Task.Delay(2250);
+                        await Task.Delay(1000);
 
                         // click quest
                         await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
-                        await Task.Delay(2250);
                         isClicked = true;
                         break;
                     }
