@@ -33,13 +33,13 @@
                 </Style>
             </DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" FontSize="10" Width="Auto" Header="Name"
+                <DataGridTextColumn IsReadOnly="True" FontSize="8" Width="Auto" Header="Name"
                                     Binding="{Binding EmulatorId}" />
 
-                <DataGridTemplateColumn IsReadOnly="True" Header="Emulator" Width="Auto">
+                <DataGridTemplateColumn IsReadOnly="True" Header="" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="10"
+                            <TextBlock FontSize="8"
                                        Text="{Binding EmulatorId,Converter={StaticResource EmulatorConnectionStateConverter}}"
                                        Foreground="{Binding EmulatorId, Converter={StaticResource EmulatorStateToColorConverter}}"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -47,10 +47,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn IsReadOnly="True" Header="State" Width="Auto">
+                <DataGridTemplateColumn IsReadOnly="True" Header="Auto" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="10"
+                            <TextBlock FontSize="8"
                                        Text="{Binding State}"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
@@ -64,7 +64,7 @@
                         <DataTemplate>
                             <TextBlock FontSize="9"
                                        Text="{Binding JobReRollState.MoriCurrentScreen}"
-                                       Foreground="Lime"
+                                       Foreground="Aqua"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
