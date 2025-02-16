@@ -81,6 +81,13 @@ public class OnDetectedTemplateQuestEffect : EffectBase
             //     break;
             
             case MoriTemplateKey.CharacterGrowthPossible:
+                var isBossBattleAvailable = await ScanTemplateImage(emulatorConnection, MoriTemplateKey.BossBattleButton);
+                if (isBossBattleAvailable != null)
+                {
+                    await emulatorConnection.ClickOnPointAsync((Point)isBossBattleAvailable);
+                    isClicked = true;
+                    break;
+                }
                 // Nếu là template này mà không đổi status thì chứng tỏ không valid để growth -> đi ra quest
                 await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.4f));
                 break;
@@ -197,13 +204,6 @@ public class OnDetectedTemplateQuestEffect : EffectBase
 
             case MoriTemplateKey.CharacterGrowthTabHeader:
             {
-                var isBossBattleAvailable = await ScanTemplateImage(emulatorConnection, MoriTemplateKey.BossBattleButton);
-                if (isBossBattleAvailable != null)
-                {
-                    await emulatorConnection.ClickOnPointAsync((Point)isBossBattleAvailable);
-                    isClicked = true;
-                    break;
-                }
                 // dang di quest thi auto back ra
                 await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
                 isClicked = true;
