@@ -164,6 +164,7 @@ public class MoriReducer
                     MoriTemplateKey.BeforeChallengeEnemyPower19,
                     MoriTemplateKey.BeforeChallengeEnemyPower111,
                     MoriTemplateKey.BeforeChallengeEnemyPower112,
+                    MoriTemplateKey.BeforeChallengeEnemyPower21,
                 ];
                 if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
@@ -191,7 +192,7 @@ public class MoriReducer
                 }
 
                 // Nếu là Màn 2-2 thì chuyển ngay đến save result
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower222)
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
                 {
                     state = state with
                     {
