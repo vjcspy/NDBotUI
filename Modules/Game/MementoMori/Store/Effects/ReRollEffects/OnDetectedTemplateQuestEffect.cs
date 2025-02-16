@@ -189,50 +189,9 @@ public class OnDetectedTemplateQuestEffect : EffectBase
 
             case MoriTemplateKey.CharacterGrowthTabHeader:
             {
-                if (AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId) is { } gameInstance)
-                {
-                    if (gameInstance.JobReRollState.CurrentLevel == (int)MoriTemplateKey.BeforeChallengeEnemyPower112)
-                    {
-                        Logger.Info("Current Chapter Lv 1- 11/12 -> Repeat");
-                        // click quest
-                        await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
-                        isClicked = true;
-                        break;
-                    }
-
-
-                    if (gameInstance.JobReRollState.CurrentLevel < 17 && gameInstance.JobReRollState.CurrentLevel != 0)
-                    {
-                        // TODO: "Check if need to click on level up";
-                        Logger.Info("Current Chapter under Lv17 -> Back to Quest");
-                        // click equip all
-                        await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
-                        await Task.Delay(1000);
-
-                        // click quest
-                        await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
-                        isClicked = true;
-                        break;
-                    }
-
-                    // Logger.Info("Current Chapter from Lv17 -> Check current status");
-                    // if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPassed)
-                    // {
-                    //     Logger.Info("Already pass level check");
-                    //     // click equip all
-                    //     await emulatorConnection.ClickPPointAsync(new PPoint(35.7f, 82.8f));
-                    //     await Task.Delay(1250);
-                    //
-                    //     // click quest
-                    //     await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.3f));
-                    //     await Task.Delay(1250);
-                    //     isClicked = true;
-                    //     break;
-                    // }
-
-                    return MoriAction.EligibilityLevelCheck.Create(baseActionPayload);
-                }
-
+                // dang di quest thi auto back ra
+                await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
+                isClicked = true;
                 break;
             }
 

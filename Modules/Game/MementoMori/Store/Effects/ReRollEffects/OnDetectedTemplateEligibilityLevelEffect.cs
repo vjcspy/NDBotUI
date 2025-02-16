@@ -49,6 +49,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
+        Logger.Info("Process on eligibility level check");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
         {
@@ -67,6 +68,8 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
         MoriTemplateKey[] clickOnMoriTemplateKeys =
         [
             MoriTemplateKey.CharacterGrowthPossible,
+            MoriTemplateKey.SkipMovieButton,
+            MoriTemplateKey.SkipSceneShotButton,
         ];
 
         var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
