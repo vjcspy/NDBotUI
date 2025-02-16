@@ -64,6 +64,7 @@
                         <DataTemplate>
                             <TextBlock FontSize="9"
                                        Text="{Binding JobReRollState.MoriCurrentScreen}"
+                                       Foreground="Lime"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
