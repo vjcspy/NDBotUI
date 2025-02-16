@@ -1,5 +1,8 @@
-﻿using System.Reactive.Linq;
+﻿using System.Diagnostics;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Emgu.CV;
+using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
@@ -20,8 +23,13 @@ public class EffectTemplate
             return CoreAction.Empty;
         }
 
-        var emulator = EmulatorManager.Instance.EmulatorConnections[0];
-        await SkiaHelper.SaveScreenshot(emulator, ["screenshots", "screenshot.png",]);
+        var emulatorConnection = EmulatorManager.Instance.EmulatorConnections[0];
+        var screenshot = await emulatorConnection.TakeScreenshotAsync();
+        var stopWatch = Stopwatch.StartNew();
+        var openCVMat = SkiaHelper.SkiaBitmapToMat(screenshot.ToSKBitmap());
+        stopWatch.Stop();
+        Logger.Info($"Convert SKBitmap to Mat took {stopWatch.ElapsedMilliseconds} ms");
+        CvInvoke.Imwrite("1.png", openCVMat); // Lưu ảnh xuống file PNG
 
         /* Test take resolution */
         // var resolution = emulator.GetScreenResolution();
