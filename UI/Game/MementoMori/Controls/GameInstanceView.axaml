@@ -41,7 +41,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn FontSize="9" Header="Status" Width="*" Binding="{Binding JobReRollState.ReRollStatus}" />
+                <DataGridTextColumn FontSize="9" Header="Status" Width="Auto" Binding="{Binding JobReRollState.ReRollStatus}" />
+                <DataGridTextColumn FontSize="9" Header="Screen" Width="*" Binding="{Binding JobReRollState.MoriCurrentScreen}" />
             </DataGrid.Columns>
         </DataGrid>
         <!-- <Button Grid.Row="1" Command="{Binding CheckData}">Check data</Button> -->
