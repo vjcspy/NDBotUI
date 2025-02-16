@@ -14,6 +14,7 @@ public enum ReRollStatus
     EligibilityLevelCheckOnChar, // Đang checking level
     EligibilityLevelPassed,
 
+    NextChapter,
     SaveResult,
     ResetUserData,
 

@@ -131,6 +131,28 @@ public class MoriReducer
                                 : gameInstance
                     ),
                 };
+                
+                // Next chapter
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton)
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.NextChapter,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+
+                    return state;
+                }
 
                 // Chỉ ưu tiên check current chapter duy nhất 1 lần
                 MoriTemplateKey[] currentChapter =

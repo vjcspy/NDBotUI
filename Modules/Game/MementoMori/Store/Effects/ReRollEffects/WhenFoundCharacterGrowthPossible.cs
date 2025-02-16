@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
+using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.EventManager;
 
@@ -23,7 +24,7 @@ public class WhenFoundCharacterGrowthPossible : EffectBase
                 {
                     var gameInstance =
                         AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
-                    if (gameInstance is { } gameInstanceData)
+                    if (gameInstance != null && gameInstance.JobReRollState.ReRollStatus < ReRollStatus.NextChapter)
                     {
                         var currentLevelValid = gameInstance.JobReRollState.CurrentLevel != 0
                                                 && gameInstance.JobReRollState.CurrentLevel >= 15 && gameInstance.JobReRollState.CurrentLevel <= 112;
