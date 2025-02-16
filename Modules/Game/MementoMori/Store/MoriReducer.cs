@@ -155,28 +155,6 @@ public class MoriReducer
 
                     return state;
                 }
-                {
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(
-                            gameInstance =>
-                                gameInstance.EmulatorId == emulatorId
-                                    ? gameInstance with
-                                    {
-                                        State = AutoState.On,
-                                        Status = "",
-                                        JobReRollState = gameInstance.JobReRollState with
-                                        {
-                                            ReRollStatus = ReRollStatus.SaveResult,
-                                            ResultId = Guid.NewGuid(),
-                                        },
-                                    }
-                                    : gameInstance
-                        ),
-                    };
-
-                    return state;
-                }
                 
                 // Next chapter
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton)
@@ -200,42 +178,6 @@ public class MoriReducer
                     return state;
                 }
 
-                // Chỉ ưu tiên check current chapter duy nhất 1 lần
-                MoriTemplateKey[] currentChapter =
-                [
-                    MoriTemplateKey.BeforeChallengeEnemyPower15,
-                    MoriTemplateKey.BeforeChallengeEnemyPower16,
-                    MoriTemplateKey.BeforeChallengeEnemyPower17,
-                    MoriTemplateKey.BeforeChallengeEnemyPower18,
-                    MoriTemplateKey.BeforeChallengeEnemyPower19,
-                    MoriTemplateKey.BeforeChallengeEnemyPower111,
-                    MoriTemplateKey.BeforeChallengeEnemyPower112,
-                    MoriTemplateKey.BeforeChallengeEnemyPower21,
-                ];
-                if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
-                {
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(
-                            gameInstance =>
-                                gameInstance.EmulatorId == emulatorId
-                                    ? gameInstance with
-                                    {
-                                        JobReRollState = gameInstance.JobReRollState with
-                                        {
-                                            CurrentLevel = (int)detectedTemplatePoint.MoriTemplateKey,
-                                            ReRollStatus = ReRollStatus.EligibilityChapterPassed,
-                                        },
-                                    }
-                                    : gameInstance
-                        ),
-                    };
-                    // Sau đó không ưu tiên nữa
-                    Logger.Info($"Reduce Priority for template {detectedTemplatePoint.MoriTemplateKey.ToString()}");
-                    TemplateImageDataHelper
-                        .TemplateImageData[detectedTemplatePoint.MoriTemplateKey]
-                        .SetPriority(emulatorId, 101);
-                }
 
                 return state;
             }

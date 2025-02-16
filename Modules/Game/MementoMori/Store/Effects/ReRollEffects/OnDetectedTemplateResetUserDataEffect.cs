@@ -73,11 +73,19 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
             MoriTemplateKey.StartSettingButton,
             MoriTemplateKey.ResetGameDataButton,
             MoriTemplateKey.DownloadUpdateButton,
+            
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.LoginClaimButton:
+            case MoriTemplateKey.ButtonClaim:
+                await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                await Task.Delay(1000);
+                // click outside
+                await emulatorConnection.ClickPPointAsync(new PPoint(98.4f, 46.3f));
+                break;
             case MoriTemplateKey.HomeIconBpText:
             case MoriTemplateKey.HomeNewPlayerText:
             {

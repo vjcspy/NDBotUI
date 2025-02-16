@@ -615,7 +615,7 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.ConfirmGameDataResetHeader,
             new TemplateImageData(
                 [
-                    "Resources", "game", "mementomori", "image-detector", "reroll", "reset_game_data_header.png",
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "confirm_game_data_reset_header.png",
                 ],
                 priority: 100
             )

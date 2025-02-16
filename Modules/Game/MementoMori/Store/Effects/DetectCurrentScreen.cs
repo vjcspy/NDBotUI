@@ -144,6 +144,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.ReturnToTitleButton,
 
                 // Reset
+                MoriTemplateKey.ReturnToTitleHeader,
                 MoriTemplateKey.ResetGameDataButton,
                 MoriTemplateKey.ResetGameDataHeader,
                 MoriTemplateKey.ConfirmGameDataResetHeader,

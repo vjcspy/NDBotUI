@@ -66,14 +66,57 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
         var isClicked = false;
         MoriTemplateKey[] clickOnMoriTemplateKeys =
         [
-            // MoriTemplateKey.CharacterGrowthPossible,
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
+            MoriTemplateKey.CharacterGrowthPossible,
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.LoginClaimButton:
+            case MoriTemplateKey.ButtonClaim:
+                await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                await Task.Delay(1000);
+                // click outside
+                await emulatorConnection.ClickPPointAsync(new PPoint(98.4f, 46.3f));
+                break;
+            case MoriTemplateKey.BeforeChallengeEnemyPower22:
+            case MoriTemplateKey.BeforeChallengeEnemyPower23:
+            {
+                var screenshot = await emulatorConnection.TakeScreenshotAsync();
+
+                if (screenshot is null)
+                {
+                    Logger.Error("Failed to take screenshot");
+                    break;
+                }
+
+                var characterTabPoint = await ScanTemplateAsync(
+                    [MoriTemplateKey.PartyInformation,],
+                    emulatorConnection,
+                    screenshot
+                );
+
+                if (characterTabPoint.Length > 0)
+                {
+                    // close party information
+                    await emulatorConnection.ClickPPointAsync(new PPoint(93.7f, 7.6f));
+                    await Task.Delay(1000);
+                    isClicked = true;
+                }
+                // spam click 1 lần nữa cho chắc ăn
+                await emulatorConnection.ClickPPointAsync(new PPoint(99.5f, 52.6f));
+
+                break;
+            }
+            
+            case MoriTemplateKey.ChallengeButton:
+                // click ra ngoai
+                await emulatorConnection.ClickPPointAsync(new PPoint(0.8f, 34.9f));
+                isClicked = true;
+                break;
+            
             case MoriTemplateKey.HomeIconBpText:
             case MoriTemplateKey.HomeNewPlayerText:
             {
