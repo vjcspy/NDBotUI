@@ -390,7 +390,7 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.CharacterGrowthPossible,
             new TemplateImageData(
                 [
-                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_growth_posible_button.png",
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_growth_possible_button.png",
                 ],
                 priority: 90
             )
