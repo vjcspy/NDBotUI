@@ -18,7 +18,7 @@
 
             <!-- Content -->
             <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
-                <Grid RowDefinitions="*,1,*">
+                <Grid RowDefinitions="200,1,*">
                     <Grid Grid.Row="0">
                         <controls:GameInstanceView />
                     </Grid>
