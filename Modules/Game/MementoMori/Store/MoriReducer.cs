@@ -241,6 +241,7 @@ public class MoriReducer
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
                                         ReRollStatus = ReRollStatus.EligibilityLevelCheck,
+                                        LevelUpCharPosition = 0,
                                     },
                                 }
                                 : gameInstance

@@ -26,7 +26,7 @@ public class WhenFoundCharacterGrowthPossible : EffectBase
                     if (gameInstance is { } gameInstanceData)
                     {
                         var currentLevelValid = gameInstance.JobReRollState.CurrentLevel != 0
-                                                && gameInstance.JobReRollState.CurrentLevel >= 15;
+                                                && gameInstance.JobReRollState.CurrentLevel >= 15 && gameInstance.JobReRollState.CurrentLevel <= 112;
                         return currentLevelValid;
                     }
                 }

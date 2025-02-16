@@ -70,6 +70,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             MoriTemplateKey.CharacterGrowthPossible,
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
+            MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
         var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
@@ -175,6 +176,10 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             Logger.Warn("Not in character growth tab");
             return false;
         }
+        
+        // equip all
+        await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
+        await Task.Delay(500);
 
         MoriTemplateKey[] lvToCheck =
         [
@@ -197,10 +202,6 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             if (lv7Point.Length > 0)
             {
                 Logger.Info("Character already lv 7");
-
-                // equip all
-                await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
-                await Task.Delay(500);
 
                 // back
                 Logger.Info("Back to Chracter Tab");
