@@ -108,12 +108,12 @@ public static class ImageFinderEmguCV
         using var screenshotGray = new Mat();
         using var templateGray = new Mat();
 
-        // CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
-        // CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
-        CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgra2Bgr);
-        CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgra2Bgr);
-        // SaveMatToFile(templateGray, "templateMat.jpg");
-        // SaveMatToFile(screenshotGray, "screenshotMat.jpg");
+        CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
+        CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
+        // CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgra2Bgr);
+        // CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgra2Bgr);
+        SaveMatToFile(templateMat, $"{debugKey}_template.png");
+        SaveMatToFile(screenshotMat, $"{debugKey}.png");
 
         // Tạo Mat kết quả
         using var result = new Mat();
