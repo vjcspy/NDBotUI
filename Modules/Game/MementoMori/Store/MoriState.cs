@@ -75,6 +75,7 @@ public enum MoriTemplateKey
     /*Save result*/
     CharacterTabHeader,
     ReturnToTitleButton,
+    ReturnToTitleHeader, // cần confirm
 
     /*In battle*/
     InBattleX2,
@@ -83,6 +84,11 @@ public enum MoriTemplateKey
     /*Home*/
     LoginClaimButton,
     HomeIconBpText, // dùng để detect đang ở home
+    
+    /*Reset*/
+    ResetGameDataButton,
+    ResetGameDataHeader, // confirm
+    ConfirmGameDataResetHeader, // confirm
 }
 
 public record GameInstance(

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
@@ -147,6 +148,7 @@ public class MoriReducer
                                         JobReRollState = gameInstance.JobReRollState with
                                         {
                                             ReRollStatus = ReRollStatus.SaveResult,
+                                            ResultId = Guid.NewGuid(),
                                         },
                                     }
                                     : gameInstance

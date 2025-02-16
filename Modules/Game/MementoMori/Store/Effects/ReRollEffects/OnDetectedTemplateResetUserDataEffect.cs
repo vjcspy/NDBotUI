@@ -12,11 +12,11 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
-public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
+public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
 {
     private static readonly ReRollStatus[] VALID_STATUS =
     [
-        ReRollStatus.SaveResult,
+        ReRollStatus.ResetUserData,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
@@ -35,9 +35,9 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
         {
             var gameInstance =
                 AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
-            if (gameInstance is { } gameInstanceData)
+            if (gameInstance != null)
             {
-                var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
+                var currentStatus = gameInstance.JobReRollState.ReRollStatus;
 
                 return VALID_STATUS.Contains(currentStatus);
             }
@@ -48,7 +48,7 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info("Process on save result");
+        Logger.Info("Process on reset user data");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
         {
@@ -69,6 +69,9 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
             // MoriTemplateKey.CharacterGrowthPossible,
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
+            MoriTemplateKey.ReturnToTitleButton,
+            MoriTemplateKey.StartSettingButton,
+            MoriTemplateKey.ResetGameDataButton,
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
@@ -77,22 +80,42 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
             case MoriTemplateKey.HomeIconBpText:
             case MoriTemplateKey.HomeNewPlayerText:
             {
-                // click vào lại character tab
-                await emulatorConnection.ClickPPointAsync(new PPoint(21.1f, 93.6f));
+                // click vào menu
+                await emulatorConnection.ClickPPointAsync(new PPoint(97f, 3.6f));
                 isClicked = true;
                 break;
+            }
+            
+            case MoriTemplateKey.ReturnToTitleHeader:
+            {
+                // click vào ok
+                await emulatorConnection.ClickPPointAsync(new PPoint(58.8f, 61.7f));
+                isClicked = true;
+                break;
+            }
+            
+            case MoriTemplateKey.ResetGameDataHeader:
+            {
+                // click vào reset
+                await emulatorConnection.ClickPPointAsync(new PPoint(59.4f, 68.8f));
+                isClicked = true;
+                break;
+            }
+            
+            case MoriTemplateKey.ConfirmGameDataResetHeader:
+            {
+                // click vào OK
+                await emulatorConnection.ClickPPointAsync(new PPoint(59.0f, 62.2f));
+                return await WhenDone(baseActionPayload);
             }
 
             case MoriTemplateKey.CharacterTabHeader:
             case MoriTemplateKey.PartyInformation:
+            case MoriTemplateKey.BossBattleButton:
             {
-                var isSaved = await SaveResult(emulatorConnection);
-
-                if (isSaved)
-                {
-                    return MoriAction.ResetUserData.Create(baseActionPayload);
-                }
-
+                // click vào home
+                await emulatorConnection.ClickPPointAsync(new PPoint(8.7f, 95.2f));
+                isClicked = true;
                 break;
             }
 
@@ -115,43 +138,22 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
             ? MoriAction.ClickedAfterDetectedMoriScreen.Create(baseActionPayload)
             : CoreAction.Empty;
     }
-
-
-    protected async Task<bool> SaveResult(EmulatorConnection emulatorConnection)
+    
+    
+    private async Task<EventAction> WhenDone(BaseActionPayload baseActionPayload)
     {
-        var screenshot = await emulatorConnection.TakeScreenshotAsync();
-
-        if (screenshot is null)
-        {
-            Logger.Error("Failed to take screenshot");
-            return false;
-        }
-
-        var characterTabPoint = await ScanTemplateAsync(
-            [MoriTemplateKey.CharacterTabHeader,],
-            emulatorConnection,
-            screenshot
+        RxEventManager.Dispatch(
+            MoriAction.ToggleStartStopMoriReRoll.Create(
+                new BaseActionPayload(baseActionPayload.EmulatorId)
+            )
         );
-        var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(emulatorConnection.Id);
+        await Task.Delay(3000);
+        RxEventManager.Dispatch(
+            MoriAction.ToggleStartStopMoriReRoll.Create(
+                new BaseActionPayload(baseActionPayload.EmulatorId)
+            )
+        );
 
-        if (gameInstance?.JobReRollState.ResultId == null)
-        {
-            Logger.Error("Could not get game instance");
-            return false;
-        }
-
-        if (characterTabPoint.Length > 0)
-        {
-            await SkiaHelper.SaveScreenshot(
-                emulatorConnection,
-                ImageHelper.GetImagePath(gameInstance.JobReRollState.ResultId.ToString()!, "results/characters"),
-                screenshot
-            );
-
-            return true;
-        }
-
-        Logger.Error("Could not find character tab header");
-        return false;
+        return CoreAction.Empty;
     }
 }

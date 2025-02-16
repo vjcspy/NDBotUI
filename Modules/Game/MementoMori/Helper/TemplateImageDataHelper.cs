@@ -408,7 +408,8 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.CharacterGrowthPossible,
             new TemplateImageData(
                 [
-                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_growth_possible_button.png",
+                    "Resources", "game", "mementomori", "image-detector", "reroll",
+                    "character_growth_possible_button.png",
                 ],
                 priority: 90
             )
@@ -530,7 +531,16 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "return_to_title_button.png",
                 ],
-                priority: 100
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.ReturnToTitleHeader,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "return_to_title_header.png",
+                ],
+                priority: 50
             )
         },
 
@@ -569,6 +579,34 @@ public static class TemplateImageDataHelper
             new TemplateImageData(
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "home_icon_bp_text.png",
+                ],
+                priority: 100
+            )
+        },
+        /*Reset*/
+        {
+            MoriTemplateKey.ResetGameDataButton,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "reset_game_data_button.png",
+                ],
+                priority: 100
+            )
+        },
+        {
+            MoriTemplateKey.ResetGameDataHeader,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "reset_game_data_header.png",
+                ],
+                priority: 100
+            )
+        },
+        {
+            MoriTemplateKey.ConfirmGameDataResetHeader,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "reset_game_data_header.png",
                 ],
                 priority: 100
             )
