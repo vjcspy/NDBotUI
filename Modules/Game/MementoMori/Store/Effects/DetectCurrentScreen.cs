@@ -131,6 +131,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.BeforeChallengeEnemyPower112,
                 MoriTemplateKey.BeforeChallengeEnemyPower21,
                 MoriTemplateKey.BeforeChallengeEnemyPower22,
+                MoriTemplateKey.BeforeChallengeEnemyPower23,
 
                 MoriTemplateKey.StartSettingButton, // Mục đích là không làm gì trong lúc load ở start
 

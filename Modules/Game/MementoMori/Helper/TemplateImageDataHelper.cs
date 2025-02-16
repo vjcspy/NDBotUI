@@ -399,7 +399,16 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_2_2.png",
                 ],
-                priority: 50
+                priority: 20
+            )
+        }, 
+        {
+            MoriTemplateKey.BeforeChallengeEnemyPower23,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_2_3.png",
+                ],
+                priority: 20
             )
         },
 

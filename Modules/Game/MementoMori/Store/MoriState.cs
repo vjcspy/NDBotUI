@@ -21,6 +21,7 @@ public enum MoriTemplateKey
     BeforeChallengeEnemyPower112 = 112, //
     BeforeChallengeEnemyPower21 = 221, //
     BeforeChallengeEnemyPower22 = 222, //
+    BeforeChallengeEnemyPower23 = 223, //
 
     Unknown = 500,
     TermOfAgreementPopup,

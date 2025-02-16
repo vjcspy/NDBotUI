@@ -134,7 +134,27 @@ public class MoriReducer
                 };
                 
                 // Nếu là Màn 2-2 thì chuyển ngay đến save result
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
+                if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.BeforeChallengeEnemyPower22 or MoriTemplateKey.BeforeChallengeEnemyPower23)
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.SaveResult,
+                                            ResultId = Guid.NewGuid(),
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+
+                    return state;
+                }
                 {
                     state = state with
                     {
