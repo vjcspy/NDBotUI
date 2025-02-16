@@ -23,4 +23,10 @@ public record JobReRollState(
     MoriTemplateKey MoriLastScreen = MoriTemplateKey.Unknown,
     int DetectScreenTry = 0,
     int CurrentLevel = 0
-);
+)
+{
+    public static JobReRollState Factory()
+    {
+        return new JobReRollState();
+    }
+};

@@ -6,12 +6,18 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.UI.Game.MementoMori.Controls.MoriConfigTabs.TabReRollView"
              x:DataType="moriConfigTabs:TabReRollViewModel">
-    <Grid RowDefinitions="*" ColumnDefinitions="*,*">
-        <Button Grid.Column="0" Command="{Binding ToggleReRollCommand}"
-                Content="{Binding ToggleButtonText}"
-                VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button Grid.Column="1" Command="{Binding TestCommand}"
-                Content="Test" 
-                VerticalAlignment="Center" HorizontalAlignment="Center" />
+    <Grid RowDefinitions="40,*" ColumnDefinitions="*">
+        <Grid Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"
+                       Text="{Binding Store.EmulatorStore.State.SelectedEmulatorId}" />
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <Button Grid.Column="0" Command="{Binding ToggleReRollCommand}"
+                    Content="{Binding ToggleButtonText}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Button Grid.Column="1" Command="{Binding TestCommand}"
+                    Content="Test"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
     </Grid>
 </UserControl>

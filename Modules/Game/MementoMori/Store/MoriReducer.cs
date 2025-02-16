@@ -30,13 +30,7 @@ public class MoriReducer
                             state = state with
                             {
                                 GameInstances = state.GameInstances.Add(
-                                    new GameInstance(
-                                        emulatorConnection.Id,
-                                        AutoState.Off,
-                                        "",
-                                        MoriJobType.None,
-                                        new JobReRollState()
-                                    )
+                                    GameInstance.Factory(emulatorConnection.Id)
                                 )
                             };
                     }
@@ -118,7 +112,6 @@ public class MoriReducer
                 };
 
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
-                {
                     state = state with
                     {
                         GameInstances = state.GameInstances.Map(gameInstance =>
@@ -135,7 +128,6 @@ public class MoriReducer
                                 : gameInstance
                         )
                     };
-                }
 
                 MoriTemplateKey[] currentChapter =
                 [
@@ -260,7 +252,7 @@ public class MoriReducer
 
                 return state;
             }
-            
+
             case MoriAction.Type.ResetUserData:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload) return state;

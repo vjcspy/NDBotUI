@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using LanguageExt;
-using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
@@ -66,10 +65,10 @@ public enum MoriTemplateKey
     SkipMovieButton,
     SkipSceneShotButton,
     HomeNewPlayerText,
-    
+
     /*Save result*/
     CharacterTabHeader,
-    ReturnToTitleButton,
+    ReturnToTitleButton
 }
 
 public record GameInstance(
@@ -78,7 +77,19 @@ public record GameInstance(
     string Status, // Text cho user biết đang làm gì
     MoriJobType JobType,
     JobReRollState JobReRollState
-);
+)
+{
+    public static GameInstance Factory(string emulatorId)
+    {
+        return new GameInstance(
+            emulatorId,
+            AutoState.Off,
+            "",
+            MoriJobType.None,
+            JobReRollState.Factory()
+        );
+    }
+}
 
 public record MoriState(Lst<GameInstance> GameInstances)
 {
