@@ -77,6 +77,11 @@ public class OnDetectedTemplateQuestEffect : EffectBase
             //     await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
             //     isClicked = true;
             //     break;
+            
+            case MoriTemplateKey.CharacterGrowthPossible:
+                // Nếu là template này mà không đổi status thì chứng tỏ không valid để growth -> đi ra quest
+                await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.4f));
+                break;
             case MoriTemplateKey.CharacterTabHeader:
                 // Đang đi quest mà vào character tab thì đi ra quest thôi, tr khi là đang level up
                 await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.4f));

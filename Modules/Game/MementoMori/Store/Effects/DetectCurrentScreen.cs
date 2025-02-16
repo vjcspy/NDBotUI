@@ -42,7 +42,7 @@ public class DetectCurrentScreen : EffectBase
                     templateMat,
                     // false,
                     debugKey: moriTemplateKey.ToString(),
-                    matchValue: 0.95
+                    matchValue: 0.935
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)

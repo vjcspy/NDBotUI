@@ -501,7 +501,7 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "home_new_player_text.png",
                 ],
-                priority: 90
+                priority: 80
             )
         },
 
