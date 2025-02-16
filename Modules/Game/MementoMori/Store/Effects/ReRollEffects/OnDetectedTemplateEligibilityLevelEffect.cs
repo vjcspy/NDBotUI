@@ -134,6 +134,14 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
                 var isLevelUpOk = await LevelUpChar(emulatorConnection);
                 return isLevelUpOk ? MoriAction.EligibilityLevelCheckOnCharOk.Create(baseActionPayload) : CoreAction.Empty;
             }
+            
+            case MoriTemplateKey.PartyInformation:
+            {
+                // click vào reset
+                await emulatorConnection.ClickPPointAsync(new PPoint(93.7f, 7.2f));
+                isClicked = true;
+                break;
+            }
 
             default:
             {

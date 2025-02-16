@@ -109,6 +109,13 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(59.4f, 68.8f));
                 isClicked = true;
                 break;
+            }   
+            case MoriTemplateKey.StartStartButton:
+            {
+                // click vào reset
+                await emulatorConnection.ClickPPointAsync(new PPoint(96.6f, 5.2f));
+                isClicked = true;
+                break;
             }
             
             case MoriTemplateKey.ConfirmGameDataResetHeader:

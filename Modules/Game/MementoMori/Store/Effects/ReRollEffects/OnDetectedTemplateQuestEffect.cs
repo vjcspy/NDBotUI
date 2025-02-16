@@ -197,6 +197,13 @@ public class OnDetectedTemplateQuestEffect : EffectBase
 
             case MoriTemplateKey.CharacterGrowthTabHeader:
             {
+                var isBossBattleAvailable = await ScanTemplateImage(emulatorConnection, MoriTemplateKey.BossBattleButton);
+                if (isBossBattleAvailable != null)
+                {
+                    await emulatorConnection.ClickOnPointAsync((Point)isBossBattleAvailable);
+                    isClicked = true;
+                    break;
+                }
                 // dang di quest thi auto back ra
                 await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 94.3f));
                 isClicked = true;

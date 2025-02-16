@@ -28,12 +28,15 @@ public class WhenFoundCharacterGrowthPossible : EffectBase
                     {
                         var currentLevelValid = gameInstance.JobReRollState.CurrentLevel != 0
                                                 && gameInstance.JobReRollState.CurrentLevel >= 15 && gameInstance.JobReRollState.CurrentLevel <= 112;
+                        Logger.Info($"=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Found character growth possible, current level: {gameInstance.JobReRollState.CurrentLevel}");
                         return currentLevelValid;
                     }
+                    Logger.Info("=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Not valid to do character growth");
                 }
+                
             }
         }
-
+        
         return false;
     }
 

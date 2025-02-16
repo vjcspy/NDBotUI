@@ -420,7 +420,7 @@ public static class TemplateImageDataHelper
                     "Resources", "game", "mementomori", "image-detector", "reroll",
                     "character_growth_possible_button.png",
                 ],
-                priority: 90
+                priority: 89
             )
         },
         {

@@ -132,7 +132,27 @@ public class MoriReducer
                                 : gameInstance
                     ),
                 };
-                
+
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.InBattleX2)
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.EligibilityChapterPassed,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+                    return state;
+                }
+
                 // Chỉ ưu tiên check current chapter duy nhất 1 lần
                 MoriTemplateKey[] currentChapter =
                 [
@@ -165,13 +185,15 @@ public class MoriReducer
                     };
                     // Sau đó không ưu tiên nữa
                     Logger.Info($"Reduce Priority for template {detectedTemplatePoint.MoriTemplateKey.ToString()}");
+
                     TemplateImageDataHelper
                         .TemplateImageData[detectedTemplatePoint.MoriTemplateKey]
                         .SetPriority(emulatorId, 101);
                 }
-                
+
                 // Nếu là Màn 2-2 thì chuyển ngay đến save result
-                if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.BeforeChallengeEnemyPower22 or MoriTemplateKey.BeforeChallengeEnemyPower23)
+                if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.BeforeChallengeEnemyPower22
+                    or MoriTemplateKey.BeforeChallengeEnemyPower23)
                 {
                     state = state with
                     {
@@ -192,7 +214,7 @@ public class MoriReducer
 
                     return state;
                 }
-                
+
                 // Next chapter
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton)
                 {
