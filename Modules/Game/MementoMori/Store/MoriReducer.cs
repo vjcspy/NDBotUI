@@ -169,7 +169,7 @@ public class MoriReducer
                 }
 
                 // Nếu là Màn 2-2 thì chuyển ngay đến save result
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower222)
                 {
                     state = state with
                     {

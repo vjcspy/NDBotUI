@@ -385,7 +385,7 @@ public static class TemplateImageDataHelper
             )
         },
         {
-            MoriTemplateKey.BeforeChallengeEnemyPower22,
+            MoriTemplateKey.BeforeChallengeEnemyPower222,
             new TemplateImageData(
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_2_2.png",

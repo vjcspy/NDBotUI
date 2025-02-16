@@ -113,7 +113,7 @@ public class SaveResultEffect : EffectBase
                         return false;
                     }
 
-                    return detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22;
+                    return detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower222;
                 }
             )
             .SelectMany(Process);
