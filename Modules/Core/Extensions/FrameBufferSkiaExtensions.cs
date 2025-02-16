@@ -26,7 +26,10 @@ public static class FrameBufferSkiaExtensions
         ArgumentNullException.ThrowIfNull(buffer);
 
         // Check for invalid framebuffer data
-        if (header.Width == 0 || header.Height == 0 || header.Bpp == 0) return null;
+        if (header.Width == 0 || header.Height == 0 || header.Bpp == 0)
+        {
+            return null;
+        }
 
         var colorType = header.StandardizePixelFormat(ref buffer, out var alphaType);
 
@@ -43,7 +46,11 @@ public static class FrameBufferSkiaExtensions
             var index = 0; // Starting index for the buffer
             for (var i = 0; i < pixelCount; i++)
             {
-                if (index + 3 >= buffer.Length) break; // Ensure we don't go out of bounds
+                if (index + 3 >= buffer.Length)
+                {
+                    break; // Ensure we don't go out of bounds
+                }
+
                 var pixelData = ReadUInt32(buffer, ref index);
 
                 // If the color format is BGRA, swap red and blue bytes
@@ -59,7 +66,10 @@ public static class FrameBufferSkiaExtensions
     {
         // Ensure we don't go out of bounds while reading
         if (index + 3 >= buffer.Length)
+        {
             throw new ArgumentOutOfRangeException("Buffer is too small to read pixel data.");
+        }
+
         return (uint)(buffer[index++] | (buffer[index++] << 8) | (buffer[index++] << 16) | (buffer[index++] << 24));
     }
 
@@ -68,26 +78,38 @@ public static class FrameBufferSkiaExtensions
     {
         // If pixel format is BGRA, swap the red and blue channels
         // Adjust this condition based on your framebuffer format
-        return ((pixelData & 0xFF0000) >> 16) | // Blue channel -> Red
-               (pixelData & 0x00FF00) | // Green channel stays in place
-               ((pixelData & 0x0000FF) << 16) | // Red channel -> Blue
+        return ((pixelData & 0xFF0000) >> 16)
+               | // Blue channel -> Red
+               (pixelData & 0x00FF00)
+               | // Green channel stays in place
+               ((pixelData & 0x0000FF) << 16)
+               | // Red channel -> Blue
                (pixelData & 0xFF000000); // Alpha channel stays in place
     }
 
 
-    private static SKColorType StandardizePixelFormat(this in FramebufferHeader header, ref byte[] buffer,
-        out SKAlphaType alphaType)
+    private static SKColorType StandardizePixelFormat(
+        this in FramebufferHeader header,
+        ref byte[] buffer,
+        out SKAlphaType alphaType
+    )
     {
         // Initial parameter validation.
         ArgumentNullException.ThrowIfNull(buffer);
 
         if (buffer.Length < header.Width * header.Height * (header.Bpp / 8))
-            throw new ArgumentOutOfRangeException(nameof(buffer),
-                $"The buffer length {buffer.Length} is less than expected buffer " +
-                $"length ({header.Width * header.Height * (header.Bpp / 8)}) for a picture of width {header.Width}, height {header.Height} and pixel depth {header.Bpp}");
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(buffer),
+                $"The buffer length {buffer.Length} is less than expected buffer "
+                + $"length ({header.Width * header.Height * (header.Bpp / 8)}) for a picture of width {header.Width}, height {header.Height} and pixel depth {header.Bpp}"
+            );
+        }
 
         if (header.Width == 0 || header.Height == 0 || header.Bpp == 0)
+        {
             throw new InvalidOperationException("Cannot cannulate the pixel format of an empty framebuffer");
+        }
 
         // By far, the most common format is a 32-bit pixel format, which is either
         // RGB or RGBA, where each color has 1 byte.
@@ -95,15 +117,18 @@ public static class FrameBufferSkiaExtensions
         {
             // Require at least RGB to be present; and require them to be exactly one byte (8 bits) long.
             if (header.Red.Length != 8 || header.Blue.Length != 8 || header.Green.Length != 8)
+            {
                 throw new ArgumentOutOfRangeException(
-                    $"The pixel format with with RGB lengths of {header.Red.Length}:{header.Blue.Length}:{header.Green.Length} is not supported");
+                    $"The pixel format with with RGB lengths of {header.Red.Length}:{header.Blue.Length}:{header.Green.Length} is not supported"
+                );
+            }
 
             // Alpha can be present or absent, but must be 8 bytes long
             alphaType = header.Alpha.Length switch
             {
                 0 => SKAlphaType.Opaque,
                 8 => SKAlphaType.Unpremul,
-                _ => throw new ArgumentOutOfRangeException($"The alpha length {header.Alpha.Length} is not supported")
+                _ => throw new ArgumentOutOfRangeException($"The alpha length {header.Alpha.Length} is not supported"),
             };
 
             // Gets the index at which the red, bue, green and alpha values are stored.

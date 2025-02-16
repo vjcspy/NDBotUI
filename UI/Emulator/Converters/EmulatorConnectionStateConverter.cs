@@ -13,7 +13,10 @@ public class EmulatorConnectionStateConverter : IValueConverter
         {
             var emulatorConnection = AppStore.Instance.EmulatorStore.State.GetEmulatorConnection(emulatorId);
 
-            if (emulatorConnection is { } g) return emulatorConnection.State.ToString();
+            if (emulatorConnection is { } g)
+            {
+                return emulatorConnection.State.ToString();
+            }
         }
 
         return "Unknown";

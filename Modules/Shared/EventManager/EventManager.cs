@@ -28,19 +28,23 @@ public class RxEventManager
     {
         ActionSubject
             .Where(action => eventTypes.Length == 0 || eventTypes.Contains(action.Type))
-            .SelectMany(originalEvent =>
-                eventHandler(Observable.Return(originalEvent))
-                    .SubscribeOn(TaskPoolScheduler.Default)
-                    .Select(handledEvent => new { Original = originalEvent, Handled = handledEvent })
+            .SelectMany(
+                originalEvent =>
+                    eventHandler(Observable.Return(originalEvent))
+                        .SubscribeOn(TaskPoolScheduler.Default)
+                        .Select(handledEvent => new { Original = originalEvent, Handled = handledEvent, })
             )
             .ObserveOn(Scheduler.Default)
-            .Subscribe(events =>
+            .Subscribe(
+                events =>
                 {
                     var originEvent = events.Original;
                     var handledEvent = events.Handled;
 
                     if (originEvent.CorrelationId != null && handledEvent.CorrelationId == null)
+                    {
                         handledEvent.CorrelationId = originEvent.CorrelationId;
+                    }
 
                     Dispatch(handledEvent);
                 },
@@ -50,7 +54,9 @@ public class RxEventManager
 
     public static void RegisterEvent(object eventEffectInstance)
     {
-        var methods = eventEffectInstance.GetType().GetMethods()
+        var methods = eventEffectInstance
+            .GetType()
+            .GetMethods()
             .Where(m => m.GetCustomAttribute<EffectAttribute>() != null && m.ReturnType == typeof(RxEventHandler))
             .ToList();
 
@@ -67,6 +73,9 @@ public class RxEventManager
 
     public static void RegisterEvent(object[] eventEffectInstances)
     {
-        foreach (var eventEffectInstance in eventEffectInstances) RegisterEvent(eventEffectInstance);
+        foreach (var eventEffectInstance in eventEffectInstances)
+        {
+            RegisterEvent(eventEffectInstance);
+        }
     }
 }

@@ -17,7 +17,10 @@ public class AdbHelper(string adbPath)
 
     public void InitAdbServer(bool forceRestart = true)
     {
-        if (AdbServer.Instance.GetStatus().IsRunning && forceRestart)
+        if (AdbServer.Instance.GetStatus()
+                .IsRunning
+            && forceRestart)
+        {
             try
             {
                 AdbServer.Instance.StopServer();
@@ -26,12 +29,16 @@ public class AdbHelper(string adbPath)
             {
                 Logger.Error(e, "Failed to stop adb server");
             }
+        }
 
         _adbServer = new AdbServer();
 
         var result = _adbServer.StartServer(adbPath);
 
-        if (result != StartServerResult.Started) throw new CouldNotInitAdbServer();
+        if (result != StartServerResult.Started)
+        {
+            throw new CouldNotInitAdbServer();
+        }
 
         Console.WriteLine("Adb server started.");
     }
@@ -44,7 +51,9 @@ public class AdbHelper(string adbPath)
         // adbClient.Connect("127.0.0.1");
         var devices = adbClient.GetDevices();
 
-        return devices.Select(deviceData => new EmulatorScanData(deviceData.Serial, adbClient, deviceData)).ToList();
+        return devices
+            .Select(deviceData => new EmulatorScanData(deviceData.Serial, adbClient, deviceData))
+            .ToList();
     }
 
     public List<EmulatorScanData> ConnectToAllEmulators()
@@ -54,6 +63,7 @@ public class AdbHelper(string adbPath)
         var adbPorts = NetstatScanner.GetAdbPorts();
 
         foreach (var address in from port in adbPorts where port >= 5000 select $"127.0.0.1:{port}")
+        {
             try
             {
                 var adbClient = new AdbClient();
@@ -66,6 +76,7 @@ public class AdbHelper(string adbPath)
             {
                 Console.WriteLine($"Failed to connect to {address}: {ex.Message}");
             }
+        }
 
         return connectedDevices;
     }

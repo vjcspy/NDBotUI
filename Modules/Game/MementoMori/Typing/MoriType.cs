@@ -6,7 +6,7 @@ namespace NDBotUI.Modules.Game.MementoMori.Typing;
 public enum MoriJobType
 {
     None,
-    ReRoll
+    ReRoll,
 }
 
 public record DetectedTemplatePoint(MoriTemplateKey MoriTemplateKey, Point Point);

@@ -12,11 +12,20 @@ public class MoriContainerViewModel : ViewModelBase, IRoutableViewModel
     public MoriContainerViewModel(IScreen screen)
     {
         HostScreen = screen;
-        AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State)
-            .AutoDispose(newVale =>
-            {
-                if (newVale.Value.IsLoaded) IsLoading = false;
-            }, Disposables);
+        AppStore
+            .Instance
+            .EmulatorStore
+            .ObservableForProperty(state => state.State)
+            .AutoDispose(
+                newVale =>
+                {
+                    if (newVale.Value.IsLoaded)
+                    {
+                        IsLoading = false;
+                    }
+                },
+                Disposables
+            );
     }
 
     public bool IsLoading

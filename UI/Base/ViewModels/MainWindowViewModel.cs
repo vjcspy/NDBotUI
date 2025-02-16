@@ -19,21 +19,29 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
         // your view models, or to reuse existing view models.
         //
 
-        this.WhenActivated(disposables =>
-        {
-            Router.Navigate.Execute(new MoriContainerViewModel(this));
-            // Router.Navigate.Execute(new ProductPageViewModel(this));
+        this.WhenActivated(
+            disposables =>
+            {
+                Router.Navigate.Execute(new MoriContainerViewModel(this));
+                // Router.Navigate.Execute(new ProductPageViewModel(this));
 
-            Disposable
-                .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))
-                .DisposeWith(disposables);
-        });
+                Disposable
+                    .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))
+                    .DisposeWith(disposables);
+            }
+        );
     }
 
-    public AppStore Store => AppStore.Instance;
+    public AppStore Store
+    {
+        get => AppStore.Instance;
+    }
 
     // The command that navigates a user back.
-    public ReactiveCommand<Unit, IRoutableViewModel> GoBack => Router.NavigateBack;
+    public ReactiveCommand<Unit, IRoutableViewModel> GoBack
+    {
+        get => Router.NavigateBack;
+    }
 
     public ViewModelActivator Activator { get; } = new();
     public RoutingState Router { get; } = new();

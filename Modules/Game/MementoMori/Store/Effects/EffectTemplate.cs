@@ -1,13 +1,9 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
-using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
-using SkiaSharp;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
@@ -19,11 +15,14 @@ public class EffectTemplate
     {
         await Task.Delay(0);
         Logger.Info("Processing Trigger Manually Effect");
-        if (EmulatorManager.Instance.EmulatorConnections.Count != 1) return CoreAction.Empty;
+        if (EmulatorManager.Instance.EmulatorConnections.Count != 1)
+        {
+            return CoreAction.Empty;
+        }
 
         var emulator = EmulatorManager.Instance.EmulatorConnections[0];
-        await SkiaHelper.SaveScreenshot(emulator,["screenshots","screenshot.png"]);
-        
+        await SkiaHelper.SaveScreenshot(emulator, ["screenshots", "screenshot.png",]);
+
         /* Test take resolution */
         // var resolution = emulator.GetScreenResolution();
         // Logger.Debug($"Screen resolution: {resolution}");
@@ -64,6 +63,8 @@ public class EffectTemplate
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction(MoriAction.TriggerManually).SelectMany(Process);
+        return upstream => upstream
+            .OfAction(MoriAction.TriggerManually)
+            .SelectMany(Process);
     }
 }

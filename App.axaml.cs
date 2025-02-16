@@ -41,9 +41,9 @@ public class App : Application
 
             desktop.MainWindow = new MainWindow
             {
-                DataContext = vm
+                DataContext = vm,
             };
-            
+
             RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
         }
 
@@ -56,9 +56,15 @@ public class App : Application
     {
         // Get an array of plugins to remove
         var dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
+            BindingPlugins
+                .DataValidators
+                .OfType<DataAnnotationsValidationPlugin>()
+                .ToArray();
 
         // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove) BindingPlugins.DataValidators.Remove(plugin);
+        foreach (var plugin in dataValidationPluginsToRemove)
+        {
+            BindingPlugins.DataValidators.Remove(plugin);
+        }
     }
 }

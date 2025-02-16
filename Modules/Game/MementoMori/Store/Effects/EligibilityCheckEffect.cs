@@ -9,7 +9,7 @@ public class EligibilityCheckEffect : EffectBase
 {
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [MoriAction.ToggleStartStopMoriReRoll];
+        return [MoriAction.ToggleStartStopMoriReRoll,];
     }
 
     protected override async Task<EventAction> Process(EventAction action)

@@ -17,12 +17,14 @@ public static class ServiceCollectionExtensions
         collection.AddTransient<MainWindowViewModel>();
 
         // Ví dụ về khai báo Factory
-        collection.AddTransient<Func<IScreen, AutoContainerViewModel>>(provider =>
-        {
-            return screen => new AutoContainerViewModel(
-                screen
-                // provider.GetRequiredService<IMyService>() // Inject service khác vào
-            );
-        });
+        collection.AddTransient<Func<IScreen, AutoContainerViewModel>>(
+            provider =>
+            {
+                return screen => new AutoContainerViewModel(
+                    screen
+                    // provider.GetRequiredService<IMyService>() // Inject service khác vào
+                );
+            }
+        );
     }
 }

@@ -20,13 +20,16 @@ public class SaveResultEffect : EffectBase
 {
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [MoriAction.DetectedMoriScreen];
+        return [MoriAction.DetectedMoriScreen,];
     }
 
     protected override async Task<EventAction> Process(EventAction action)
     {
         Logger.Info("Process save result");
-        if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
+        if (action.Payload is not BaseActionPayload baseActionPayload)
+        {
+            return CoreAction.Empty;
+        }
 
         var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
         if (emulatorConnection == null)
@@ -45,18 +48,29 @@ public class SaveResultEffect : EffectBase
 
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
 
-        if (screenshot is null) return await WhenError(baseActionPayload);
+        if (screenshot is null)
+        {
+            return await WhenError(baseActionPayload);
+        }
 
         var characterTabPoint = await ScanTemplateImage(
             emulatorConnection,
             MoriTemplateKey.CharacterTabHeader,
-            screenshot);
+            screenshot
+        );
 
         if (characterTabPoint != null)
-            await SkiaHelper.SaveScreenshot(emulatorConnection, ImageHelper.GetImagePath("character", "results/characters"),
-                screenshot);
+        {
+            await SkiaHelper.SaveScreenshot(
+                emulatorConnection,
+                ImageHelper.GetImagePath("character", "results/characters"),
+                screenshot
+            );
+        }
         else
+        {
             return await WhenError(baseActionPayload);
+        }
 
 
         return MoriAction.ResetUserData.Create(baseActionPayload);
@@ -65,11 +79,17 @@ public class SaveResultEffect : EffectBase
     private async Task<EventAction> WhenError(BaseActionPayload baseActionPayload)
     {
         Logger.Error("Could not find character tab header, toggle auto");
-        RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
-            new BaseActionPayload(baseActionPayload.EmulatorId)));
+        RxEventManager.Dispatch(
+            MoriAction.ToggleStartStopMoriReRoll.Create(
+                new BaseActionPayload(baseActionPayload.EmulatorId)
+            )
+        );
         await Task.Delay(3000);
-        RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
-            new BaseActionPayload(baseActionPayload.EmulatorId)));
+        RxEventManager.Dispatch(
+            MoriAction.ToggleStartStopMoriReRoll.Create(
+                new BaseActionPayload(baseActionPayload.EmulatorId)
+            )
+        );
 
         return CoreAction.Empty;
     }
@@ -80,33 +100,53 @@ public class SaveResultEffect : EffectBase
         return upstream => upstream
             .OfAction(GetAllowEventActions())
             .FilterBaseEligibility(GetForceEligible())
-            .Where(action =>
-            {
-                if (action.Payload is not BaseActionPayload baseActionPayload) return false;
+            .Where(
+                action =>
+                {
+                    if (action.Payload is not BaseActionPayload baseActionPayload)
+                    {
+                        return false;
+                    }
 
-                if (baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint) return false;
+                    if (baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
+                    {
+                        return false;
+                    }
 
-                return detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22;
-            })
+                    return detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22;
+                }
+            )
             .SelectMany(Process);
     }
 
-    private async Task<Point?> ScanTemplateImage(EmulatorConnection emulatorConnection, MoriTemplateKey templateKey,
-        Framebuffer? screenshot = null)
+    private async Task<Point?> ScanTemplateImage(
+        EmulatorConnection emulatorConnection,
+        MoriTemplateKey templateKey,
+        Framebuffer? screenshot = null
+    )
     {
-        if (screenshot == null) screenshot = await emulatorConnection.TakeScreenshotAsync();
+        if (screenshot == null)
+        {
+            screenshot = await emulatorConnection.TakeScreenshotAsync();
+        }
 
-        if (screenshot is null) throw new Exception("Screenshot is null");
+        if (screenshot is null)
+        {
+            throw new Exception("Screenshot is null");
+        }
+
         var screenshotEmguMat = screenshot.ToEmguMat();
         // ensure o trong character growth
         if (TemplateImageDataHelper.TemplateImageData[templateKey].EmuCVMat is
             { } templateMat)
+        {
             return ImageFinderEmguCV.FindTemplateMatPoint(
                 screenshotEmguMat,
                 templateMat,
                 debugKey: templateKey.ToString(),
                 matchValue: 0.9
             );
+        }
 
         return null;
     }

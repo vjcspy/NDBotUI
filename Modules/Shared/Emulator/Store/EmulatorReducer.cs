@@ -19,8 +19,13 @@ public class EmulatorReducer
             {
                 if (action.Payload is Lst<EmulatorConnection> list)
                 {
-                    var list1Keys = list.Map(e => e.Id).ToHashSet();
-                    var list2Keys = state.EmulatorConnections.Map(e => e.Id).ToHashSet();
+                    var list1Keys = list
+                        .Map(e => e.Id)
+                        .ToHashSet();
+                    var list2Keys = state
+                        .EmulatorConnections
+                        .Map(e => e.Id)
+                        .ToHashSet();
 
                     var isEqual = list1Keys.SetEquals(list2Keys);
 
@@ -31,7 +36,7 @@ public class EmulatorReducer
                         {
                             EmulatorConnections = list,
                             IsLoaded = true,
-                            Attempts = 0
+                            Attempts = 0,
                         };
                     }
                 }
@@ -44,7 +49,7 @@ public class EmulatorReducer
             {
                 state = state with
                 {
-                    Attempts = state.Attempts + 1
+                    Attempts = state.Attempts + 1,
                 };
 
                 return state;
@@ -57,7 +62,7 @@ public class EmulatorReducer
                     Logger.Info($"Selected Emulator : {baseActionPayload.EmulatorId}");
                     state = state with
                     {
-                        SelectedEmulatorId = baseActionPayload.EmulatorId
+                        SelectedEmulatorId = baseActionPayload.EmulatorId,
                     };
                 }
 

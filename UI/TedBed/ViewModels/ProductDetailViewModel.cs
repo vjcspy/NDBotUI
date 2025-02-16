@@ -9,12 +9,19 @@ public class ProductDetailViewModel : ReactiveObject, IRoutableViewModel, IScree
     {
         HostScreen = screen;
 
-        NavigateBack = ReactiveCommand.CreateFromObservable(() =>
-            HostScreen.Router.NavigateBack.Execute(Unit.Default));
+        NavigateBack = ReactiveCommand.CreateFromObservable(
+            () =>
+                HostScreen.Router.NavigateBack.Execute(Unit.Default)
+        );
     }
 
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateBack { get; }
-    public string UrlPathSegment => "detail";
+
+    public string UrlPathSegment
+    {
+        get => "detail";
+    }
+
     public IScreen HostScreen { get; }
     public RoutingState Router { get; } = new();
 }

@@ -14,17 +14,29 @@ public partial class ProductPageViewModel : ReactiveObject, IRoutableViewModel, 
         // Mặc định hiển thị danh sách sản phẩm
         Router.Navigate.Execute(new ProductListViewModel(this));
 
-        NavigateToDetail = ReactiveCommand.CreateFromObservable(() =>
-            Router.Navigate.Execute(new ProductDetailViewModel(this)));
-        NavigateToList = ReactiveCommand.CreateFromObservable(() =>
-            Router.Navigate.Execute(new ProductListViewModel(this)));
+        NavigateToDetail = ReactiveCommand.CreateFromObservable(
+            () =>
+                Router.Navigate.Execute(new ProductDetailViewModel(this))
+        );
+        NavigateToList = ReactiveCommand.CreateFromObservable(
+            () =>
+                Router.Navigate.Execute(new ProductListViewModel(this))
+        );
     }
 
-    public AppStore Store => AppStore.Instance;
+    public AppStore Store
+    {
+        get => AppStore.Instance;
+    }
 
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToDetail { get; }
     public ReactiveCommand<Unit, IRoutableViewModel> NavigateToList { get; }
-    public string UrlPathSegment => "product";
+
+    public string UrlPathSegment
+    {
+        get => "product";
+    }
+
     public IScreen HostScreen { get; }
 
     // Router con để điều hướng giữa danh sách & chi tiết sản phẩm

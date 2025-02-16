@@ -21,18 +21,25 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
 
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [MoriAction.DetectedMoriScreen];
+        return [MoriAction.DetectedMoriScreen,];
     }
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        if (action.Payload is not BaseActionPayload baseActionPayload ||
-            baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint) return CoreAction.Empty;
+        if (action.Payload is not BaseActionPayload baseActionPayload
+            || baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
+        {
+            return CoreAction.Empty;
+        }
 
         // Click
         var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
-        if (emulatorConnection is null) return CoreAction.Empty;
+        if (emulatorConnection is null)
+        {
+            return CoreAction.Empty;
+        }
+
         var isClicked = false;
         MoriTemplateKey[] clickOnMoriTemplateKeys =
         [
@@ -131,7 +138,10 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
             case MoriTemplateKey.GuideClickDownButton:
                 var pPoint = emulatorConnection.ToPPoint(detectedTemplatePoint.Point);
                 if (pPoint != null)
-                    await emulatorConnection.ClickPPointAsync(pPoint with { X = pPoint.X + 1, Y = pPoint.Y + 15 });
+                {
+                    await emulatorConnection.ClickPPointAsync(pPoint with { X = pPoint.X + 1, Y = pPoint.Y + 15, });
+                }
+
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideChapter12Text:
@@ -208,7 +218,7 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
 
                 break;
             }
-            
+
             /* In battle*/
             case MoriTemplateKey.InBattleX2:
                 // do nothing
@@ -219,7 +229,8 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
                 if (clickOnMoriTemplateKeys.Contains(detectedTemplatePoint.MoriTemplateKey))
                 {
                     Logger.Info(
-                        $"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}");
+                        $"Click template {detectedTemplatePoint.MoriTemplateKey} on {detectedTemplatePoint.Point}"
+                    );
                     await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
                     isClicked = true;
                 }
@@ -235,17 +246,23 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
     private async Task<Point?> ScanTemplateImage(EmulatorConnection emulatorConnection, MoriTemplateKey templateKey)
     {
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
-        if (screenshot is null) throw new Exception("Screenshot is null");
+        if (screenshot is null)
+        {
+            throw new Exception("Screenshot is null");
+        }
+
         var screenshotEmguMat = screenshot.ToEmguMat();
         // ensure o trong character growth
         if (TemplateImageDataHelper.TemplateImageData[templateKey].EmuCVMat is
             { } templateMat)
+        {
             return ImageFinderEmguCV.FindTemplateMatPoint(
                 screenshotEmguMat,
                 templateMat,
                 debugKey: templateKey.ToString(),
                 matchValue: 0.9
             );
+        }
 
         return null;
     }

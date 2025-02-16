@@ -36,7 +36,9 @@ public static class ImageFinderOpenCvSharp
     public static Point? FindTemplateMatPoint(Mat screenshot, Mat template, double threshold = 0.8)
     {
         if (screenshot.Width < template.Width || screenshot.Height < template.Height)
+        {
             throw new ArgumentException("Template width and height must be smaller than template");
+        }
 
         // Cv2.CvtColor(screenshot, screenshot, ColorConversionCodes.BGR2GRAY);
 

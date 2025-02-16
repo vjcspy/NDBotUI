@@ -11,7 +11,8 @@ public static class DisposableExtensions
     public static void AutoDispose<T>(
         this IObservable<T> observable,
         Action<T> onNext,
-        CompositeDisposable disposables)
+        CompositeDisposable disposables
+    )
     {
         disposables.Add(observable.Subscribe(onNext));
     }

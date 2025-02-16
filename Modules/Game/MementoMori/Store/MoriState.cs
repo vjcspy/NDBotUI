@@ -71,11 +71,11 @@ public enum MoriTemplateKey
     /*Save result*/
     CharacterTabHeader,
     ReturnToTitleButton,
-    
+
     /*In battle*/
     InBattleX2,
     InBattleX1,
-    
+
     /*Home*/
     LoginClaimButton,
 }

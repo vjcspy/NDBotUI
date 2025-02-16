@@ -3,5 +3,5 @@
 public enum AutoState
 {
     On,
-    Off
+    Off,
 }

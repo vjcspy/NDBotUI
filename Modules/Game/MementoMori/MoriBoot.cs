@@ -22,20 +22,27 @@ public class MoriBoot
         Logger.Info("Boot Mori...");
         RxEventManager.RegisterEvent(MoriEffect.Effects);
 
-        Observable.Interval(TimeSpan.FromSeconds(2))
+        Observable
+            .Interval(TimeSpan.FromSeconds(2))
             .ObserveOn(Scheduler.Default)
             .SubscribeOn(Scheduler.Default)
             .Subscribe(
                 _ =>
                 {
-                    AppStore.Instance.MoriStore.State.GameInstances.Iter(x =>
-                    {
-                        if (x.State == AutoState.On)
-                            RxEventManager.Dispatch(
-                                MoriAction.TriggerScanCurrentScreen.Create(new BaseActionPayload(x.EmulatorId)));
-                    });
+                    AppStore.Instance.MoriStore.State.GameInstances.Iter(
+                        x =>
+                        {
+                            if (x.State == AutoState.On)
+                            {
+                                RxEventManager.Dispatch(
+                                    MoriAction.TriggerScanCurrentScreen.Create(new BaseActionPayload(x.EmulatorId))
+                                );
+                            }
+                        }
+                    );
                 },
                 ex => Console.WriteLine($"Error: {ex.Message}"),
-                () => Console.WriteLine("Completed"));
+                () => Console.WriteLine("Completed")
+            );
     }
 }

@@ -22,18 +22,25 @@ public class EligibilityLevelCheck : EffectBase
 {
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [MoriAction.DetectedMoriScreen, MoriAction.EligibilityLevelCheck];
+        return [MoriAction.DetectedMoriScreen, MoriAction.EligibilityLevelCheck,];
     }
 
     protected override async Task<EventAction> Process(EventAction action)
     {
         Logger.Info("Eligibility level check started");
-        if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
+        if (action.Payload is not BaseActionPayload baseActionPayload)
+        {
+            return CoreAction.Empty;
+        }
+
         try
         {
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
-            if (emulatorConnection == null) return CoreAction.Empty;
+            if (emulatorConnection == null)
+            {
+                return CoreAction.Empty;
+            }
 
             // Click outside to close battle
             await Task.Delay(1500);
@@ -91,12 +98,14 @@ public class EligibilityLevelCheck : EffectBase
         // ensure o trong character growth
         if (TemplateImageDataHelper.TemplateImageData[templateKey].EmuCVMat is
             { } templateMat)
+        {
             return ImageFinderEmguCV.FindTemplateMatPoint(
                 screenshotEmguMat,
                 templateMat,
                 debugKey: templateKey.ToString(),
                 matchValue: 0.9
             );
+        }
 
         throw new Exception("Template image data is null");
     }
@@ -104,18 +113,25 @@ public class EligibilityLevelCheck : EffectBase
     private async Task LevelUpChar(EmulatorConnection emulatorConnection)
     {
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
-        if (screenshot is null) throw new Exception("Screenshot is null");
+        if (screenshot is null)
+        {
+            throw new Exception("Screenshot is null");
+        }
+
         var screenshotEmguMat = screenshot.ToEmguMat();
         // ensure o trong character growth
         var point = await FindTemplate(MoriTemplateKey.CharacterGrowthTabHeader, screenshotEmguMat);
 
-        if (point is null) throw new Exception("Not in Character Growth Tab");
+        if (point is null)
+        {
+            throw new Exception("Not in Character Growth Tab");
+        }
 
         MoriTemplateKey[] lvToCheck =
         [
             MoriTemplateKey.CharacterLevelOneText, MoriTemplateKey.CharacterLevelTwoText,
             MoriTemplateKey.CharacterLevelThreeText, MoriTemplateKey.CharacterLevelFourText,
-            MoriTemplateKey.CharacterLevelFiveText, MoriTemplateKey.CharacterLevelSixText
+            MoriTemplateKey.CharacterLevelFiveText, MoriTemplateKey.CharacterLevelSixText,
         ];
 
         var countLevelUp = 0;
@@ -140,14 +156,20 @@ public class EligibilityLevelCheck : EffectBase
             }
 
             var mat = screenshotEmguMat;
-            var tasks = lvToCheck.Select(moriTemplateKey => Observable
-                .FromAsync(() => Task.Run(() => FindTemplate(moriTemplateKey, mat))));
+            var tasks = lvToCheck.Select(
+                moriTemplateKey => Observable
+                    .FromAsync(() => Task.Run(() => FindTemplate(moriTemplateKey, mat)))
+            );
 
-            var result = await tasks.Merge()
+            var result = await tasks
+                .Merge()
                 .Where(res => res != null)
                 .ToList();
 
-            if (result.Count == 0) throw new Exception("Unknown current level");
+            if (result.Count == 0)
+            {
+                throw new Exception("Unknown current level");
+            }
 
             // level up
             Logger.Info("Click Level Up");
@@ -157,11 +179,17 @@ public class EligibilityLevelCheck : EffectBase
 
             // refresh level screen
             screenshot = await emulatorConnection.TakeScreenshotAsync();
-            if (screenshot is null) throw new Exception("Screenshot is null");
+            if (screenshot is null)
+            {
+                throw new Exception("Screenshot is null");
+            }
 
             screenshotEmguMat = screenshot.ToEmguMat();
 
-            if (screenshotEmguMat.IsEmpty) throw new Exception("Screenshot Mat is empty");
+            if (screenshotEmguMat.IsEmpty)
+            {
+                throw new Exception("Screenshot Mat is empty");
+            }
         }
     }
 
@@ -170,26 +198,33 @@ public class EligibilityLevelCheck : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
-            .GroupBy(action =>
-            {
-                if (action.Payload is BaseActionPayload baseActionPayload)
-                    return baseActionPayload.EmulatorId;
-                
-                return Guid.Empty.ToString(); // Tránh lỗi nếu không có EmulatorId
-            })
-            .SelectMany(groupedStream =>
-                groupedStream
-                    .Throttle(TimeSpan.FromMilliseconds(1000)) // Throttle riêng cho từng EmulatorId
-                    .FilterBaseEligibility(GetForceEligible())
-            )
-            .Where(action =>
-            {
-                var isValid = action.Payload is BaseActionPayload baseActionPayload &&
-                              AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId)
-                                  is { JobReRollState.ReRollStatus: ReRollStatus.EligibilityLevelCheck };
+            .GroupBy(
+                action =>
+                {
+                    if (action.Payload is BaseActionPayload baseActionPayload)
+                    {
+                        return baseActionPayload.EmulatorId;
+                    }
 
-                return isValid;
-            })
+                    return Guid.Empty.ToString(); // Tránh lỗi nếu không có EmulatorId
+                }
+            )
+            .SelectMany(
+                groupedStream =>
+                    groupedStream
+                        .Throttle(TimeSpan.FromMilliseconds(1000)) // Throttle riêng cho từng EmulatorId
+                        .FilterBaseEligibility(GetForceEligible())
+            )
+            .Where(
+                action =>
+                {
+                    var isValid = action.Payload is BaseActionPayload baseActionPayload
+                                  && AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId)
+                                      is { JobReRollState.ReRollStatus: ReRollStatus.EligibilityLevelCheck, };
+
+                    return isValid;
+                }
+            )
             .SelectMany(Process);
     }
 }

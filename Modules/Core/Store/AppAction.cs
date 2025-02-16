@@ -8,7 +8,7 @@ public class AppAction
     {
         Increment,
         Decrement,
-        Reset
+        Reset,
     }
 
     public static EventActionFactory Increment = new(Type.Increment);

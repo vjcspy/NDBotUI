@@ -14,28 +14,42 @@ public class EmulatorManager(AdbHelper adbHelper)
 
     public void RefreshDevices(bool forceRestart = true, bool reinit = true)
     {
-        if (reinit) adbHelper.InitAdbServer(forceRestart);
+        if (reinit)
+        {
+            adbHelper.InitAdbServer(forceRestart);
+        }
 
         Lst<EmulatorConnection> newConnections = [];
 
         var devices = adbHelper.ConnectByGetDevices();
         Logger.Info("Found {0} devices", devices.Count());
-        
+
         foreach (var emulatorScanData in devices)
+        {
             newConnections = newConnections.Add(
                 new EmulatorConnection(emulatorScanData)
             );
+        }
 
-        var list1Keys = newConnections.Map(e => e.Id).ToHashSet();
-        var list2Keys = EmulatorConnections.Map(e => e.Id).ToHashSet();
+        var list1Keys = newConnections
+            .Map(e => e.Id)
+            .ToHashSet();
+        var list2Keys = EmulatorConnections
+            .Map(e => e.Id)
+            .ToHashSet();
 
         var isEqual = list1Keys.SetEquals(list2Keys);
 
-        if (!isEqual) EmulatorConnections = newConnections;
+        if (!isEqual)
+        {
+            EmulatorConnections = newConnections;
+        }
     }
 
     public EmulatorConnection? GetConnection(string id)
     {
-        return EmulatorConnections.Find(connection => connection.Id == id).Match(x => x, () => null!);
+        return EmulatorConnections
+            .Find(connection => connection.Id == id)
+            .Match(x => x, () => null!);
     }
 }

@@ -10,15 +10,23 @@ public static class RxFilterBaseActionExtension
 {
     public static IObservable<T> FilterBaseAction<T>(this IObservable<T> source)
     {
-        return source.Where(action =>
-        {
-            if (action is not EventAction eventAction) return false;
+        return source.Where(
+            action =>
+            {
+                if (action is not EventAction eventAction)
+                {
+                    return false;
+                }
 
-            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return true;
+                if (eventAction.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return true;
+                }
 
-            var emulator = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
+                var emulator = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
-            return emulator is not null;
-        });
+                return emulator is not null;
+            }
+        );
     }
 }

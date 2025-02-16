@@ -16,11 +16,13 @@ public class EmulatorBoot
     [SingleCall]
     public static void Boot()
     {
-        RxEventManager.RegisterEvent([new EmulatorEffect(), new RefreshEmulatorEffect()]);
+        RxEventManager.RegisterEvent([new EmulatorEffect(), new RefreshEmulatorEffect(),]);
 
-        var firstRun = Observable.Timer(TimeSpan.FromSeconds(15)) // Chạy lần đầu sau 5s
+        var firstRun = Observable
+            .Timer(TimeSpan.FromSeconds(15)) // Chạy lần đầu sau 5s
             .Do(_ => RxEventManager.Dispatch(EmulatorAction.EmulatorRefresh.Create()));
-        var periodicRun = Observable.Interval(TimeSpan.FromSeconds(30)) // Chạy mỗi 30s
+        var periodicRun = Observable
+            .Interval(TimeSpan.FromSeconds(30)) // Chạy mỗi 30s
             .Do(_ => RxEventManager.Dispatch(EmulatorAction.EmulatorRefresh.Create()));
         firstRun
             .Concat(periodicRun) // Ghép hai luồng lại, đảm bảo chạy tuần tự
@@ -29,6 +31,7 @@ public class EmulatorBoot
             .Subscribe(
                 _ => { }, // Không cần xử lý, vì đã có `.Do` phía trên
                 ex => Console.WriteLine($"Error: {ex.Message}"),
-                () => Console.WriteLine("Completed"));
+                () => Console.WriteLine("Completed")
+            );
     }
 }

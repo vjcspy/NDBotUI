@@ -8,10 +8,13 @@ public static class ObservableExtensions
 {
     public static IObservable<EventAction> OfAction(
         this IObservable<EventAction> source,
-        params IEventActionFactory[] actions)
+        params IEventActionFactory[] actions
+    )
     {
-        return source.Where(action => actions
-            .Select(f => f.Type)
-            .Contains(action.Type));
+        return source.Where(
+            action => actions
+                .Select(f => f.Type)
+                .Contains(action.Type)
+        );
     }
 }

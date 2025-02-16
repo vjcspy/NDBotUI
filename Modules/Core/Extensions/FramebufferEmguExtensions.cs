@@ -13,7 +13,11 @@ public static class FramebufferEmguExtensions
     public static Mat ToEmguMat(this Framebuffer framebuffer, bool convertToGray = false)
     {
         framebuffer.EnsureNotDisposed();
-        if (framebuffer.Data == null) throw new InvalidOperationException($"Call {nameof(framebuffer.Refresh)} first");
+        if (framebuffer.Data == null)
+        {
+            throw new InvalidOperationException($"Call {nameof(framebuffer.Refresh)} first");
+        }
+
         return framebuffer.Header.ToEmguMat(framebuffer.Data, convertToGray);
     }
 
@@ -22,7 +26,9 @@ public static class FramebufferEmguExtensions
         ArgumentNullException.ThrowIfNull(buffer);
 
         if (header.Width == 0 || header.Height == 0 || header.Bpp == 0)
+        {
             throw new InvalidOperationException("Framebuffer không hợp lệ.");
+        }
 
         var width = (int)header.Width;
         var height = (int)header.Height;
@@ -30,7 +36,9 @@ public static class FramebufferEmguExtensions
         var bufferSize = width * height * channels;
 
         if (buffer.Length < bufferSize)
+        {
             throw new ArgumentOutOfRangeException(nameof(buffer), "Buffer quá nhỏ so với kích thước ảnh.");
+        }
 
         Mat mat;
         if (header.Bpp == 8) // Nếu đã là ảnh grayscale
@@ -55,8 +63,14 @@ public static class FramebufferEmguExtensions
             var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {
-                colorMat = new Mat(height, width, DepthType.Cv8U, channels, handle.AddrOfPinnedObject(),
-                    width * channels);
+                colorMat = new Mat(
+                    height,
+                    width,
+                    DepthType.Cv8U,
+                    channels,
+                    handle.AddrOfPinnedObject(),
+                    width * channels
+                );
             }
             finally
             {

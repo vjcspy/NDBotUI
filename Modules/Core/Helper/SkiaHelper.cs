@@ -13,13 +13,19 @@ public class SkiaHelper
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static async Task<Unit> SaveScreenshot(EmulatorConnection emulatorConnection, string[] filePaths,
-        Framebuffer? screenshot = null)
+    public static async Task<Unit> SaveScreenshot(
+        EmulatorConnection emulatorConnection,
+        string[] filePaths,
+        Framebuffer? screenshot = null
+    )
     {
         try
         {
             screenshot ??= await emulatorConnection.TakeScreenshotAsync();
-            if (screenshot == null) throw new ArgumentNullException(nameof(screenshot));
+            if (screenshot == null)
+            {
+                throw new ArgumentNullException(nameof(screenshot));
+            }
 
             var imagePath = Path.Combine(FileHelper.getFolderPath(filePaths));
             var emguMat = screenshot.ToSKBitmap();
@@ -38,13 +44,19 @@ public class SkiaHelper
         return Unit.Default;
     }
 
-    public static async Task<Unit> SaveScreenshot(EmulatorConnection emulatorConnection, string imagePath,
-        Framebuffer? screenshot = null)
+    public static async Task<Unit> SaveScreenshot(
+        EmulatorConnection emulatorConnection,
+        string imagePath,
+        Framebuffer? screenshot = null
+    )
     {
         try
         {
             screenshot ??= await emulatorConnection.TakeScreenshotAsync();
-            if (screenshot == null) throw new ArgumentNullException(nameof(screenshot));
+            if (screenshot == null)
+            {
+                throw new ArgumentNullException(nameof(screenshot));
+            }
 
             var emguMat = screenshot.ToSKBitmap();
             await using var stream = new FileStream(imagePath, FileMode.Create);

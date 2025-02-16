@@ -10,7 +10,7 @@ public class RefreshEmulatorEffect : EffectBase
 {
     protected override IEventActionFactory[] GetAllowEventActions()
     {
-        return [EmulatorAction.EmulatorRefresh];
+        return [EmulatorAction.EmulatorRefresh,];
     }
 
     protected override async Task<EventAction> Process(EventAction action)

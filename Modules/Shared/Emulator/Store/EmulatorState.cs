@@ -7,7 +7,8 @@ public record EmulatorState(
     Lst<EmulatorConnection> EmulatorConnections,
     bool IsLoaded,
     string? SelectedEmulatorId,
-    int Attempts = 0)
+    int Attempts = 0
+)
 {
     public static EmulatorState factory()
     {
@@ -16,6 +17,8 @@ public record EmulatorState(
 
     public EmulatorConnection? GetEmulatorConnection(string id)
     {
-        return EmulatorConnections.Find(e => e.Id == id).Match(x => x, () => null!);
+        return EmulatorConnections
+            .Find(e => e.Id == id)
+            .Match(x => x, () => null!);
     }
 }

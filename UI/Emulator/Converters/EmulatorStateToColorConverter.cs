@@ -16,12 +16,14 @@ public class EmulatorStateToColorConverter : IValueConverter
             var emulatorConnection = AppStore.Instance.EmulatorStore.State.GetEmulatorConnection(emulatorId);
 
             if (emulatorConnection is { } g)
+            {
                 return g.State switch
                 {
                     DeviceState.Offline => Brushes.Red,
                     DeviceState.Online => Brushes.Green,
-                    _ => Brushes.Gray
+                    _ => Brushes.Gray,
                 };
+            }
         }
 
         return Brushes.Gray;

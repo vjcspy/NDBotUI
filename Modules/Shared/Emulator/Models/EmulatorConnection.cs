@@ -18,10 +18,25 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
     private int[]? _cacheScreenResolution;
     public DeviceData DeviceData { get; } = emulatorScanData.DeviceData;
 
-    public string Id => emulatorScanData.DeviceData.Serial;
-    public string Serial => emulatorScanData.DeviceData.Serial;
-    public DeviceState State => emulatorScanData.DeviceData.State;
-    public string DeviceType => DetectEmulatorType(emulatorScanData.DeviceData.Model);
+    public string Id
+    {
+        get => emulatorScanData.DeviceData.Serial;
+    }
+
+    public string Serial
+    {
+        get => emulatorScanData.DeviceData.Serial;
+    }
+
+    public DeviceState State
+    {
+        get => emulatorScanData.DeviceData.State;
+    }
+
+    public string DeviceType
+    {
+        get => DetectEmulatorType(emulatorScanData.DeviceData.Model);
+    }
 
     public string SendShellCommand(string command)
     {
@@ -34,11 +49,19 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
     private string DetectEmulatorType(string model)
     {
         if (model.Contains(EmulatorTypes.Bluestacks, StringComparison.OrdinalIgnoreCase))
+        {
             return EmulatorTypes.Bluestacks;
+        }
+
         if (model.Contains(EmulatorTypes.Nox, StringComparison.OrdinalIgnoreCase))
+        {
             return EmulatorTypes.Nox;
+        }
+
         if (model.Contains(EmulatorTypes.LDPlayer, StringComparison.OrdinalIgnoreCase))
+        {
             return EmulatorTypes.LDPlayer;
+        }
 
         return "Unknown";
     }
@@ -126,18 +149,23 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public int[]? GetScreenResolution()
     {
-        if (_cacheScreenResolution != null) return _cacheScreenResolution;
+        if (_cacheScreenResolution != null)
+        {
+            return _cacheScreenResolution;
+        }
 
         var resolutionText = ExecuteRemoteCommand("wm size");
         // Kiểm tra kết quả đầu ra
         if (!string.IsNullOrEmpty(resolutionText) && resolutionText.Contains("Physical size:"))
         {
-            var resolution = resolutionText.Split(':')[1].Trim(); // Lấy phần "1080x1920"
+            var resolution = resolutionText
+                .Split(':')[1]
+                .Trim(); // Lấy phần "1080x1920"
             var parts = resolution.Split('x'); // Tách thành ["1080", "1920"]
 
             if (parts.Length == 2 && int.TryParse(parts[0], out var width) && int.TryParse(parts[1], out var height))
             {
-                _cacheScreenResolution = [width, height];
+                _cacheScreenResolution = [width, height,];
 
                 return _cacheScreenResolution;
             }
@@ -175,9 +203,9 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         var xi = Convert.ToInt32(pPoint.X * currentResolution[0] / 100);
         var yi = Convert.ToInt32(pPoint.Y * currentResolution[1] / 100);
 
-         await ClickOnPointAsync(new Point(xi, yi));
+        await ClickOnPointAsync(new Point(xi, yi));
 
-         return Unit.Default;
+        return Unit.Default;
     }
 
     public PPoint? ToPPoint(Point point)

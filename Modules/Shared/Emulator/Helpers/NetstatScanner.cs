@@ -20,7 +20,7 @@ public class NetstatScanner
                 Arguments = "-a -n -o -p TCP",
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
             };
 
             using var process = new Process();
@@ -33,8 +33,12 @@ public class NetstatScanner
             var matches = regex.Matches(output);
 
             foreach (Match match in matches)
+            {
                 if (int.TryParse(match.Groups[1].Value, out var port))
+                {
                     adbPorts.Add(port);
+                }
+            }
         }
         catch (Exception ex)
         {

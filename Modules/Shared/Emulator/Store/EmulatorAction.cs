@@ -12,7 +12,7 @@ public static class EmulatorAction
 
         EmulatorRefresh,
 
-        SelectEmulatorConnection
+        SelectEmulatorConnection,
     }
 
     public static readonly EventActionFactory EmulatorInitAction = new(Type.EmulatorInit);

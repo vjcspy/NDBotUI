@@ -20,6 +20,8 @@ public class InitTemplateDataEffect
     [Effect]
     public RxEventHandler EffectHandler()
     {
-        return upstream => upstream.OfAction(MoriAction.InitMori).Select(Process);
+        return upstream => upstream
+            .OfAction(MoriAction.InitMori)
+            .Select(Process);
     }
 }

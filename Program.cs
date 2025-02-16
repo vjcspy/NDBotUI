@@ -25,7 +25,8 @@ internal sealed class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
     {
-        return AppBuilder.Configure<App>()
+        return AppBuilder
+            .Configure<App>()
             .UsePlatformDetect()
             .LogToTrace()
             .UseReactiveUI();
@@ -34,6 +35,6 @@ internal sealed class Program
     [SingleCall]
     private static void RegisterEffects()
     {
-        RxEventManager.RegisterEvent([new TedBedEffect()]);
+        RxEventManager.RegisterEvent([new TedBedEffect(),]);
     }
 }

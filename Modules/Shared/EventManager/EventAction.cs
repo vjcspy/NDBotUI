@@ -13,9 +13,15 @@ public class EventAction(object type, object? payload = null)
         get => _correlationId;
         set
         {
-            if (value == null) throw new ArgumentException("Correlation ID cannot be null");
+            if (value == null)
+            {
+                throw new ArgumentException("Correlation ID cannot be null");
+            }
+
             if (_correlationId != null)
+            {
                 throw new InvalidOperationException("Attempted to set correlationId when it already exists");
+            }
 
             _correlationId = value;
         }

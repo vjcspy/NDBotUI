@@ -16,7 +16,7 @@ public enum ReRollStatus
     SaveResult,
     ResetUserData,
 
-    StoppedWithError
+    StoppedWithError,
 }
 
 public record JobReRollState(
@@ -33,6 +33,10 @@ public record JobReRollState(
         return new JobReRollState(
             ReRollStatus.Open,
             MoriTemplateKey.Unknown,
-            MoriTemplateKey.Unknown, 0, 0, null);
+            MoriTemplateKey.Unknown,
+            0,
+            0,
+            null
+        );
     }
 }

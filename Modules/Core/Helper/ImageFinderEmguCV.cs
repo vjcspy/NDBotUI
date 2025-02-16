@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -80,8 +79,12 @@ public static class ImageFinderEmguCV
         // Lọc good matches bằng Lowe’s Ratio Test
         var goodMatches = new List<MKeyPoint>();
         for (var i = 0; i < matches.Size; i++)
+        {
             if (matches[i][0].Distance < 0.75 * matches[i][1].Distance)
+            {
                 goodMatches.Add(templateKeyPoints[matches[i][0].QueryIdx]);
+            }
+        }
 
         if (goodMatches.Count >= 4)
         {
@@ -92,8 +95,13 @@ public static class ImageFinderEmguCV
         return null;
     }
 
-    public static Point? FindTemplateMatPoint(Mat screenshotMat, Mat templateMat,
-        string? markedScreenshotFileName = null, string? debugKey = null, double? matchValue = 0.8)
+    public static Point? FindTemplateMatPoint(
+        Mat screenshotMat,
+        Mat templateMat,
+        string? markedScreenshotFileName = null,
+        string? debugKey = null,
+        double? matchValue = 0.8
+    )
     {
         var stopwatch = Stopwatch.StartNew();
         // Chuyển ảnh về grayscale (CV_8U) để đảm bảo MatchTemplate hoạt động
@@ -121,12 +129,18 @@ public static class ImageFinderEmguCV
         {
             var topLeft = maxLoc;
 
-            if (markedScreenshotFileName == null) return topLeft;
+            if (markedScreenshotFileName == null)
+            {
+                return topLeft;
+            }
 
             // ✏️ Vẽ hình chữ nhật quanh vùng tìm thấy
-            CvInvoke.Rectangle(screenshotMat,
+            CvInvoke.Rectangle(
+                screenshotMat,
                 new Rectangle(topLeft, new Size(templateMat.Width, templateMat.Height)),
-                new MCvScalar(0, 255, 0), 3);
+                new MCvScalar(0, 255, 0),
+                3
+            );
 
             // 💾 Lưu ảnh kết quả
             var imagePath = ImageHelper.GetImagePath(markedScreenshotFileName);
@@ -141,8 +155,14 @@ public static class ImageFinderEmguCV
     }
 
 
-    public static Point? FindTemplateMatPoint(Mat screenshotMat, Mat templateMat, bool shouldResize,
-        string? markedScreenshotFileName = null, string? debugKey = null, double? matchValue = 0.8)
+    public static Point? FindTemplateMatPoint(
+        Mat screenshotMat,
+        Mat templateMat,
+        bool shouldResize,
+        string? markedScreenshotFileName = null,
+        string? debugKey = null,
+        double? matchValue = 0.8
+    )
     {
         var stopwatch = Stopwatch.StartNew();
 
@@ -158,56 +178,70 @@ public static class ImageFinderEmguCV
             var targetHeight = (int)(screenshotMat.Height * scaleFactor); // Giữ nguyên tỷ lệ
 
             processedScreenshot = new Mat();
-            CvInvoke.Resize(screenshotMat, processedScreenshot, new Size(targetWidth, targetHeight),
-                (double)Inter.Linear);
+            CvInvoke.Resize(
+                screenshotMat,
+                processedScreenshot,
+                new Size(targetWidth, targetHeight),
+                (double)Inter.Linear
+            );
 
             processedTemplate = new Mat();
             CvInvoke.Resize(templateMat, processedTemplate, Size.Empty, scaleFactor, scaleFactor);
         }
 
         using (processedScreenshot)
-        using (processedTemplate)
         {
-            // Chuyển về ảnh grayscale
-            using var screenshotGray = new Mat();
-            using var templateGray = new Mat();
-            CvInvoke.CvtColor(processedScreenshot, screenshotGray, ColorConversion.Bgr2Gray);
-            CvInvoke.CvtColor(processedTemplate, templateGray, ColorConversion.Bgr2Gray);
-
-            // Tạo Mat kết quả
-            using var result = new Mat();
-            CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
-
-            // Tìm điểm có độ tương đồng cao nhất
-            double minVal = 0, maxVal = 0;
-            Point minLoc = default, maxLoc = default;
-            CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
-
-            Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
-            stopwatch.Stop();
-            Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
-
-            // Nếu độ khớp > 0.8 thì coi là tìm thấy
-            if (maxVal >= matchValue)
+            using (processedTemplate)
             {
-                var topLeft = shouldResize
-                    ? new Point((int)(maxLoc.X / scaleFactor),
-                        (int)(maxLoc.Y / scaleFactor)) // Chuyển tọa độ về ảnh gốc
-                    : maxLoc;
+                // Chuyển về ảnh grayscale
+                using var screenshotGray = new Mat();
+                using var templateGray = new Mat();
+                CvInvoke.CvtColor(processedScreenshot, screenshotGray, ColorConversion.Bgr2Gray);
+                CvInvoke.CvtColor(processedTemplate, templateGray, ColorConversion.Bgr2Gray);
 
-                if (markedScreenshotFileName == null) return topLeft;
+                // Tạo Mat kết quả
+                using var result = new Mat();
+                CvInvoke.MatchTemplate(screenshotGray, templateGray, result, TemplateMatchingType.CcoeffNormed);
 
-                // ✏️ Vẽ hình chữ nhật quanh vùng tìm thấy trên ảnh đã resize hoặc gốc
-                CvInvoke.Rectangle(processedScreenshot,
-                    new Rectangle(maxLoc, new Size(processedTemplate.Width, processedTemplate.Height)),
-                    new MCvScalar(0, 255, 0), 3);
+                // Tìm điểm có độ tương đồng cao nhất
+                double minVal = 0, maxVal = 0;
+                Point minLoc = default, maxLoc = default;
+                CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
 
-                // 💾 Lưu ảnh kết quả (ảnh resize hoặc ảnh gốc)
-                var imagePath = ImageHelper.GetImagePath(markedScreenshotFileName);
-                CvInvoke.Imwrite(imagePath, processedScreenshot);
-                Logger.Debug($"Saved marked screenshot at path: {imagePath}");
+                Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
+                stopwatch.Stop();
+                Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
-                return topLeft;
+                // Nếu độ khớp > 0.8 thì coi là tìm thấy
+                if (maxVal >= matchValue)
+                {
+                    var topLeft = shouldResize
+                        ? new Point(
+                            (int)(maxLoc.X / scaleFactor),
+                            (int)(maxLoc.Y / scaleFactor)
+                        ) // Chuyển tọa độ về ảnh gốc
+                        : maxLoc;
+
+                    if (markedScreenshotFileName == null)
+                    {
+                        return topLeft;
+                    }
+
+                    // ✏️ Vẽ hình chữ nhật quanh vùng tìm thấy trên ảnh đã resize hoặc gốc
+                    CvInvoke.Rectangle(
+                        processedScreenshot,
+                        new Rectangle(maxLoc, new Size(processedTemplate.Width, processedTemplate.Height)),
+                        new MCvScalar(0, 255, 0),
+                        3
+                    );
+
+                    // 💾 Lưu ảnh kết quả (ảnh resize hoặc ảnh gốc)
+                    var imagePath = ImageHelper.GetImagePath(markedScreenshotFileName);
+                    CvInvoke.Imwrite(imagePath, processedScreenshot);
+                    Logger.Debug($"Saved marked screenshot at path: {imagePath}");
+
+                    return topLeft;
+                }
             }
         }
 

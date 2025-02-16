@@ -22,7 +22,7 @@ public class MoriAction
         DetectedMoriScreen,
         ClickedAfterDetectedMoriScreen,
         CouldNotDetectMoriScreen,
-        
+
         ResetUserData,
     }
 
@@ -48,7 +48,7 @@ public class MoriAction
     public static readonly EventActionFactory DetectedMoriScreen = new(Type.DetectedMoriScreen);
     public static readonly EventActionFactory CouldNotDetectMoriScreen = new(Type.CouldNotDetectMoriScreen);
     public static readonly EventActionFactory ClickedAfterDetectedMoriScreen = new(Type.ClickedAfterDetectedMoriScreen);
-    
-    
+
+
     public static readonly EventActionFactory ResetUserData = new(Type.ResetUserData);
 }

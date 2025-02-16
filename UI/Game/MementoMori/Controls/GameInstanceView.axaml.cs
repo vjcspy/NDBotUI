@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Shared.Emulator.Store;
@@ -12,6 +11,7 @@ namespace NDBotUI.UI.Game.MementoMori.Controls;
 public partial class GameInstanceView : ReactiveUserControl<GameInstanceViewModel>
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     public GameInstanceView()
     {
         InitializeComponent();
@@ -22,14 +22,18 @@ public partial class GameInstanceView : ReactiveUserControl<GameInstanceViewMode
     {
         var selectedRows = DataGrid.SelectedItems;
         if (selectedRows.Count == 1 && selectedRows[0] is GameInstance gameInstance)
+        {
             RxEventManager.Dispatch(
-                EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(gameInstance.EmulatorId)));
+                EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(gameInstance.EmulatorId))
+            );
+        }
     }
 
     public void ConfigGameInstance(string emulatorId)
     {
         Logger.Info($"Game Instance Config: {emulatorId}");
         RxEventManager.Dispatch(
-            EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(emulatorId)));
+            EmulatorAction.SelectEmulatorConnection.Create(new BaseActionPayload(emulatorId))
+        );
     }
 }

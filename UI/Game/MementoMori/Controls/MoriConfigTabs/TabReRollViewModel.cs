@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reactive.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
@@ -20,50 +18,34 @@ public partial class TabReRollViewModel : ObservableViewModelBase
 
     public TabReRollViewModel()
     {
-        AppStore.Instance.EmulatorStore.ObservableForProperty(state => state.State.SelectedEmulatorId)
-            .AutoDispose(selectedEmulatorIdValue =>
-            {
-                var selectedEmulatorId = selectedEmulatorIdValue.Value;
-
-                if (selectedEmulatorId is null) return;
-
-                var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(selectedEmulatorId);
-
-                if (gameInstance != null)
+        AppStore
+            .Instance
+            .EmulatorStore
+            .ObservableForProperty(state => state.State.SelectedEmulatorId)
+            .AutoDispose(
+                selectedEmulatorIdValue =>
                 {
-                    if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
+                    var selectedEmulatorId = selectedEmulatorIdValue.Value;
+
+                    if (selectedEmulatorId is null)
                     {
-                        if (gameInstance.State == AutoState.On)
-                            ToggleButtonText = "Stop";
-                        else
-                            ToggleButtonText = "Start";
+                        return;
                     }
-                    else
-                    {
-                        ToggleButtonText = "Đang thực hiện Job Khác";
-                    }
-                }
-                else
-                {
-                    ToggleButtonText = "Wait";
-                }
-            }, Disposables);
-        
-        AppStore.Instance.MoriStore.ObservableForProperty(state => state.State)
-            .AutoDispose(moriState =>
-            {
-                if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
-                {
-                    var gameInstance =
-                        moriState.Value.GetGameInstance(selectedEmulatorId);
+
+                    var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(selectedEmulatorId);
+
                     if (gameInstance != null)
                     {
                         if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
                         {
                             if (gameInstance.State == AutoState.On)
+                            {
                                 ToggleButtonText = "Stop";
+                            }
                             else
+                            {
                                 ToggleButtonText = "Start";
+                            }
                         }
                         else
                         {
@@ -74,8 +56,47 @@ public partial class TabReRollViewModel : ObservableViewModelBase
                     {
                         ToggleButtonText = "Wait";
                     }
-                }
-            }, Disposables);
+                },
+                Disposables
+            );
+
+        AppStore
+            .Instance
+            .MoriStore
+            .ObservableForProperty(state => state.State)
+            .AutoDispose(
+                moriState =>
+                {
+                    if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+                    {
+                        var gameInstance =
+                            moriState.Value.GetGameInstance(selectedEmulatorId);
+                        if (gameInstance != null)
+                        {
+                            if (gameInstance.JobType == MoriJobType.None || gameInstance.JobType == MoriJobType.ReRoll)
+                            {
+                                if (gameInstance.State == AutoState.On)
+                                {
+                                    ToggleButtonText = "Stop";
+                                }
+                                else
+                                {
+                                    ToggleButtonText = "Start";
+                                }
+                            }
+                            else
+                            {
+                                ToggleButtonText = "Đang thực hiện Job Khác";
+                            }
+                        }
+                        else
+                        {
+                            ToggleButtonText = "Wait";
+                        }
+                    }
+                },
+                Disposables
+            );
     }
 
     public AppStore Store { get; } = AppStore.Instance;
@@ -84,13 +105,20 @@ public partial class TabReRollViewModel : ObservableViewModelBase
     public void ToggleReRollCommand()
     {
         if (ToggleButtonText is "Start" or "Stop")
+        {
             if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
-                RxEventManager.Dispatch(MoriAction.ToggleStartStopMoriReRoll.Create(
-                    new BaseActionPayload(selectedEmulatorId)));
+            {
+                RxEventManager.Dispatch(
+                    MoriAction.ToggleStartStopMoriReRoll.Create(
+                        new BaseActionPayload(selectedEmulatorId)
+                    )
+                );
+            }
+        }
 
         // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
-    
+
     [RelayCommand]
     public void TestCommand()
     {

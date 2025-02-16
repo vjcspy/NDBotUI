@@ -15,7 +15,10 @@ public class EmulatorEffect
     {
         Logger.Info("Processing event " + action.Type);
 
-        if (AppStore.Instance.EmulatorStore.State.IsLoaded) return CoreAction.Empty;
+        if (AppStore.Instance.EmulatorStore.State.IsLoaded)
+        {
+            return CoreAction.Empty;
+        }
 
         // var results = EmulatorScanner.ScanEmulators("Resources/platform-tools/adb.exe", true);
         // Console.WriteLine($"Found {results.Count} emulators");
@@ -26,10 +29,12 @@ public class EmulatorEffect
 
             Console.WriteLine($"Found {emulatorManager.EmulatorConnections.Count} devices");
             foreach (var emulator in emulatorManager.EmulatorConnections)
+            {
                 try
                 {
                     Console.WriteLine(
-                        $"Connected to emulator {emulator.DeviceData.Serial} {emulator.DeviceData.Product} {emulator.DeviceData.TransportId}");
+                        $"Connected to emulator {emulator.DeviceData.Serial} {emulator.DeviceData.Product} {emulator.DeviceData.TransportId}"
+                    );
                     Console.WriteLine("Send shell command");
                     var output = emulator.SendShellCommand("getprop ro.product.cpu.abi");
                     Console.WriteLine($"Shell Output: {output}");
@@ -38,6 +43,7 @@ public class EmulatorEffect
                 {
                     Console.WriteLine(e);
                 }
+            }
 
             return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
         }
@@ -51,7 +57,8 @@ public class EmulatorEffect
     [Effect]
     public RxEventHandler HandleUserEvents()
     {
-        return upstream => upstream.OfAction(EmulatorAction.EmulatorInitAction, EmulatorAction.EmulatorConnectError)
+        return upstream => upstream
+            .OfAction(EmulatorAction.EmulatorInitAction, EmulatorAction.EmulatorConnectError)
             .Where(_ => AppStore.Instance.EmulatorStore.State.Attempts < 3)
             .Select(Process);
     }

@@ -12,25 +12,47 @@ public static class RxBaseEligibilityCheckExtension
 {
     public static IObservable<T> FilterBaseEligibility<T>(this IObservable<T> source, bool forceEligible = false)
     {
-        return source.Where(action =>
-        {
-            if (forceEligible) return true;
+        return source.Where(
+            action =>
+            {
+                if (forceEligible)
+                {
+                    return true;
+                }
 
-            if (action is not EventAction eventAction) return false;
+                if (action is not EventAction eventAction)
+                {
+                    return false;
+                }
 
-            if (eventAction.Payload is not BaseActionPayload baseActionPayload) return true;
+                if (eventAction.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return true;
+                }
 
-            /* Chỉ chạy khi state của auto là On */
-            var isHasGameInstance =
-                AppStore.Instance.MoriStore.State.GameInstances.Find(instance =>
-                    instance.EmulatorId == baseActionPayload.EmulatorId).Match(
-                    game => game.State == AutoState.On,
-                    false
-                );
-            if (!isHasGameInstance) return false;
-            /* __ Another check */
+                /* Chỉ chạy khi state của auto là On */
+                var isHasGameInstance =
+                    AppStore
+                        .Instance
+                        .MoriStore
+                        .State
+                        .GameInstances
+                        .Find(
+                            instance =>
+                                instance.EmulatorId == baseActionPayload.EmulatorId
+                        )
+                        .Match(
+                            game => game.State == AutoState.On,
+                            false
+                        );
+                if (!isHasGameInstance)
+                {
+                    return false;
+                }
+                /* __ Another check */
 
-            return true;
-        });
+                return true;
+            }
+        );
     }
 }

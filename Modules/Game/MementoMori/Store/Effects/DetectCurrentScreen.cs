@@ -20,17 +20,18 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 public class DetectCurrentScreen : EffectBase
 {
     private static readonly ReRollStatus[] _DISABLE_DETECT_BY_STATUS =
-        [ReRollStatus.EligibilityLevelCheck, ReRollStatus.SaveResult, ReRollStatus.ResetUserData];
+        [ReRollStatus.EligibilityLevelCheck, ReRollStatus.SaveResult, ReRollStatus.ResetUserData,];
 
     private DetectedTemplatePoint? DetectCurrentScreenByEmguCV(
         EmguCVSharp screenshotMat,
-        MoriTemplateKey moriTemplateKey)
+        MoriTemplateKey moriTemplateKey
+    )
     {
         try
         {
             Logger.Debug($"Starting detect current screen for {moriTemplateKey}");
-            if (TemplateImageDataHelper.IsLoaded &&
-                TemplateImageDataHelper.TemplateImageData[moriTemplateKey].EmuCVMat is
+            if (TemplateImageDataHelper.IsLoaded
+                && TemplateImageDataHelper.TemplateImageData[moriTemplateKey].EmuCVMat is
                     { } templateMat)
             {
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
@@ -69,7 +70,7 @@ public class DetectCurrentScreen : EffectBase
     {
         return
         [
-            MoriAction.TriggerScanCurrentScreen
+            MoriAction.TriggerScanCurrentScreen,
         ];
     }
 
@@ -78,7 +79,10 @@ public class DetectCurrentScreen : EffectBase
         Logger.Info("Processing detect current screen effect");
         try
         {
-            if (action.Payload is not BaseActionPayload baseActionPayload) return CoreAction.Empty;
+            if (action.Payload is not BaseActionPayload baseActionPayload)
+            {
+                return CoreAction.Empty;
+            }
 
             MoriTemplateKey[] screenToCheck =
             [
@@ -127,31 +131,39 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.CharacterGrowthTabHeader,
                 MoriTemplateKey.SkipSceneShotButton,
                 MoriTemplateKey.HomeNewPlayerText,
-                
+
                 /*In battle*/
                 MoriTemplateKey.InBattleX1,
                 MoriTemplateKey.InBattleX2,
-                
+
                 /*Home*/
                 MoriTemplateKey.LoginClaimButton,
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
-            if (emulatorConnection == null) return CoreAction.Empty;
+            if (emulatorConnection == null)
+            {
+                return CoreAction.Empty;
+            }
 
             // Optimize by use one screenshot
             var screenshot = await emulatorConnection.TakeScreenshotAsync();
-            if (screenshot is null) return CoreAction.Empty;
+            if (screenshot is null)
+            {
+                return CoreAction.Empty;
+            }
 
             var screenshotEmguMat = screenshot.ToEmguMat();
 
             var tasks = screenToCheck
-                .Select(moriTemplateKey =>
-                    Observable.FromAsync(
-                            () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey))
-                        )
-                        .SubscribeOn(Scheduler.Default)
+                .Select(
+                    moriTemplateKey =>
+                        Observable
+                            .FromAsync(
+                                () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey))
+                            )
+                            .SubscribeOn(Scheduler.Default)
                 );
 
             var result = await tasks
@@ -162,18 +174,26 @@ public class DetectCurrentScreen : EffectBase
             Logger.Info($"Found {result.Count} detected template points");
 
             var detectedTemplatePoint = result
-                .OrderBy(point =>
-                    TemplateImageDataHelper.TemplateImageData[point!.MoriTemplateKey]
-                        .GetPriority(baseActionPayload.EmulatorId))
+                .OrderBy(
+                    point =>
+                        TemplateImageDataHelper
+                            .TemplateImageData[point!.MoriTemplateKey]
+                            .GetPriority(baseActionPayload.EmulatorId)
+                )
                 .FirstOrDefault();
 
             if (detectedTemplatePoint != null)
             {
                 Logger.Info(
-                    $"Detected template priority for key {detectedTemplatePoint.MoriTemplateKey} with point: {detectedTemplatePoint.Point}");
+                    $"Detected template priority for key {detectedTemplatePoint.MoriTemplateKey} with point: {detectedTemplatePoint.Point}"
+                );
 
-                return MoriAction.DetectedMoriScreen.Create(new BaseActionPayload(emulatorConnection.Id,
-                    detectedTemplatePoint));
+                return MoriAction.DetectedMoriScreen.Create(
+                    new BaseActionPayload(
+                        emulatorConnection.Id,
+                        detectedTemplatePoint
+                    )
+                );
             }
 
             return MoriAction.CouldNotDetectMoriScreen.Create(baseActionPayload);
@@ -191,34 +211,47 @@ public class DetectCurrentScreen : EffectBase
     {
         return upstream => upstream
             .OfAction(GetAllowEventActions())
-            .GroupBy(action =>
-            {
-                if (action.Payload is BaseActionPayload baseActionPayload)
-                    return baseActionPayload.EmulatorId;
+            .GroupBy(
+                action =>
+                {
+                    if (action.Payload is BaseActionPayload baseActionPayload)
+                    {
+                        return baseActionPayload.EmulatorId;
+                    }
 
-                return Guid.Empty.ToString(); // Trường hợp không có Id, đảm bảo không lỗi
-            })
-            .SelectMany(groupedStream =>
-                groupedStream
-                    .Throttle(TimeSpan.FromSeconds(3)) // Throttle theo từng EmulatorId
-                    .FilterBaseEligibility(GetForceEligible())
+                    return Guid.Empty.ToString(); // Trường hợp không có Id, đảm bảo không lỗi
+                }
             )
-            .Where(action =>
-            {
-                if (action.Payload is not BaseActionPayload baseActionPayload) return false;
-                var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+            .SelectMany(
+                groupedStream =>
+                    groupedStream
+                        .Throttle(TimeSpan.FromSeconds(3)) // Throttle theo từng EmulatorId
+                        .FilterBaseEligibility(GetForceEligible())
+            )
+            .Where(
+                action =>
+                {
+                    if (action.Payload is not BaseActionPayload baseActionPayload)
+                    {
+                        return false;
+                    }
 
-                if (
-                    gameInstance == null ||
-                    (
-                        gameInstance.JobType == MoriJobType.ReRoll &&
-                        _DISABLE_DETECT_BY_STATUS.Contains(gameInstance.JobReRollState.ReRollStatus)
+                    var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+
+                    if (
+                        gameInstance == null
+                        || (
+                            gameInstance.JobType == MoriJobType.ReRoll
+                            && _DISABLE_DETECT_BY_STATUS.Contains(gameInstance.JobReRollState.ReRollStatus)
+                        )
                     )
-                )
-                    return false;
+                    {
+                        return false;
+                    }
 
-                return true;
-            })
+                    return true;
+                }
+            )
             .SelectMany(Process);
     }
 }

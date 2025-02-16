@@ -8,10 +8,10 @@ public class AppReducer
     {
         return action.Type switch
         {
-            AppAction.Type.Increment => model with { Count = model.Count + 1 },
-            AppAction.Type.Decrement => model with { Count = model.Count - 1 },
+            AppAction.Type.Increment => model with { Count = model.Count + 1, },
+            AppAction.Type.Decrement => model with { Count = model.Count - 1, },
             AppAction.Type.Reset => AppState.factory(),
-            _ => model
+            _ => model,
         };
     }
 }

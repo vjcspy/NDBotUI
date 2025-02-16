@@ -13,7 +13,10 @@ public static class FileHelper
         var folderPath = Path.Combine(CurrentDirectory, path);
 
         // Tạo thư mục nếu chưa có
-        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
 
         return folderPath;
     }
