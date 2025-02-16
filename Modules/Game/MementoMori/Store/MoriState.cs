@@ -42,14 +42,16 @@ public enum MoriTemplateKey
     GuideClickRewardText, // click vào thùng reward
     GuideClickLevelUpImmediatelyText,
     GuideClickHomeText,
-    GuideClickDownButton,
+    GuideClickDownButton, // Button Hướng dẫn Click Down
     GuideChapter12Text,
 
     BossBattleButton,
     SelectButton, // button select ở bottom right (khi chọn town)
     ButtonClaim, // button claim reward
     NextCountryButton,
+    NextChapterButton,
 
+    /* Level UP*/
     CharacterGrowthTabHeader,
     CharacterLevelOneText,
     CharacterLevelTwoText,
@@ -73,6 +75,9 @@ public enum MoriTemplateKey
     /*In battle*/
     InBattleX2,
     InBattleX1,
+    
+    /*Home*/
+    LoginClaimButton,
 }
 
 public record GameInstance(

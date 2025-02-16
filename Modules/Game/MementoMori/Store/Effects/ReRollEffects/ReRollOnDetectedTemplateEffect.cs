@@ -47,6 +47,8 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.NextCountryButton,
             MoriTemplateKey.SkipSceneShotButton,
             MoriTemplateKey.InBattleX1, // change to x2
+            MoriTemplateKey.NextChapterButton,
+            MoriTemplateKey.LoginClaimButton,
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)

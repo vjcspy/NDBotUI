@@ -110,6 +110,7 @@ public class DetectCurrentScreen : EffectBase
 
                 MoriTemplateKey.PartyInformation,
                 MoriTemplateKey.TapToClose,
+                MoriTemplateKey.NextChapterButton,
 
                 // MoriTemplateKey.BeforeChallengeChapterSix
                 MoriTemplateKey.BeforeChallengeEnemyPower15,
@@ -130,6 +131,9 @@ public class DetectCurrentScreen : EffectBase
                 /*In battle*/
                 MoriTemplateKey.InBattleX1,
                 MoriTemplateKey.InBattleX2,
+                
+                /*Home*/
+                MoriTemplateKey.LoginClaimButton,
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);

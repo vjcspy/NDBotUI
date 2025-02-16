@@ -213,6 +213,12 @@ public static class TemplateImageDataHelper
                 "Resources", "game", "mementomori", "image-detector", "reroll", "tap_to_close.png"
             ], priority: 90)
         },
+        {
+            MoriTemplateKey.NextChapterButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "next_chapter_button.png"
+            ], priority: 90)
+        },
 
         /* Level up*/
         {
@@ -357,6 +363,14 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.InBattleX2,
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "in_battle_x2.png"
+            ], priority: 50)
+        },
+        
+        /*Home*/
+        {
+            MoriTemplateKey.LoginClaimButton,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "login_claim_button.png"
             ], priority: 50)
         },
     };
