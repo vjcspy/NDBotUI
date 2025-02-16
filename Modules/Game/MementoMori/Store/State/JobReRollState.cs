@@ -1,4 +1,6 @@
-﻿namespace NDBotUI.Modules.Game.MementoMori.Store.State;
+﻿using System;
+
+namespace NDBotUI.Modules.Game.MementoMori.Store.State;
 
 public enum ReRollStatus
 {
@@ -18,15 +20,19 @@ public enum ReRollStatus
 }
 
 public record JobReRollState(
-    ReRollStatus ReRollStatus = ReRollStatus.Open,
-    MoriTemplateKey MoriCurrentScreen = MoriTemplateKey.Unknown,
-    MoriTemplateKey MoriLastScreen = MoriTemplateKey.Unknown,
-    int DetectScreenTry = 0,
-    int CurrentLevel = 0
+    ReRollStatus ReRollStatus,
+    MoriTemplateKey MoriCurrentScreen,
+    MoriTemplateKey MoriLastScreen,
+    int DetectScreenTry,
+    int CurrentLevel,
+    Guid? ResultId
 )
 {
     public static JobReRollState Factory()
     {
-        return new JobReRollState();
+        return new JobReRollState(
+            ReRollStatus.Open,
+            MoriTemplateKey.Unknown,
+            MoriTemplateKey.Unknown, 0, 0, null);
     }
-};
+}

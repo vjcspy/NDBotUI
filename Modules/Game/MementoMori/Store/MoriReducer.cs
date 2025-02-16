@@ -45,7 +45,7 @@ public class MoriReducer
                 var emulatorId = baseActionPayload.EmulatorId;
 
                 var isRunning = state.IsReRollJobRunning(emulatorId);
-                var newJobReRollState = new JobReRollState();
+                var newJobReRollState =  JobReRollState.Factory();
                 state = state with
                 {
                     GameInstances = state.GameInstances.Map(gameInstance =>
