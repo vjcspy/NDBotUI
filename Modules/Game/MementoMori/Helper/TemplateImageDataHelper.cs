@@ -390,7 +390,7 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "enemy_power_2_1.png",
                 ],
-                priority: 50
+                priority: 39
             )
         },
         {
