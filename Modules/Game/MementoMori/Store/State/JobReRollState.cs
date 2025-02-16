@@ -10,8 +10,8 @@ public enum ReRollStatus
     EligibilityChapterCheck, // Check chapter level
     EligibilityChapterPassed, // Check chapter level
 
-    EligibilityLevelCheck,
-    EligibilityLevelPass,
+    EligibilityLevelCheck, // Đang checking level
+    EligibilityLevelPassed,
 
     SaveResult,
     ResetUserData,
@@ -21,8 +21,8 @@ public enum ReRollStatus
 
 public record JobReRollState(
     ReRollStatus ReRollStatus,
-    MoriTemplateKey MoriCurrentScreen,
-    MoriTemplateKey MoriLastScreen,
+    MoriTemplateKey CurrentScreenTemplate,
+    MoriTemplateKey LastScreenTemplate,
     int DetectScreenTry,
     int CurrentLevel,
     Guid? ResultId

@@ -112,6 +112,8 @@ public class MoriReducer
 
                 var emulatorId = baseActionPayload.EmulatorId;
 
+
+                // Save current Screen Template
                 state = state with
                 {
                     GameInstances = state.GameInstances.Map(
@@ -122,35 +124,15 @@ public class MoriReducer
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
                                         DetectScreenTry = 0,
-                                        MoriCurrentScreen = detectedTemplatePoint.MoriTemplateKey,
-                                        MoriLastScreen = gameInstance.JobReRollState.MoriCurrentScreen,
+                                        CurrentScreenTemplate = detectedTemplatePoint.MoriTemplateKey,
+                                        LastScreenTemplate = gameInstance.JobReRollState.CurrentScreenTemplate,
                                     },
                                 }
                                 : gameInstance
                     ),
                 };
 
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
-                {
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(
-                            gameInstance =>
-                                gameInstance.EmulatorId == emulatorId
-                                    ? gameInstance with
-                                    {
-                                        State = AutoState.On,
-                                        Status = "",
-                                        JobReRollState = gameInstance.JobReRollState with
-                                        {
-                                            ReRollStatus = ReRollStatus.SaveResult,
-                                        },
-                                    }
-                                    : gameInstance
-                        ),
-                    };
-                }
-
+                // Chỉ ưu tiên check current chapter duy nhất 1 lần
                 MoriTemplateKey[] currentChapter =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower15,
@@ -172,6 +154,7 @@ public class MoriReducer
                                         JobReRollState = gameInstance.JobReRollState with
                                         {
                                             CurrentLevel = (int)detectedTemplatePoint.MoriTemplateKey,
+                                            ReRollStatus = ReRollStatus.EligibilityChapterPassed,
                                         },
                                     }
                                     : gameInstance
@@ -184,12 +167,8 @@ public class MoriReducer
                         .SetPriority(emulatorId, 101);
                 }
 
-                MoriTemplateKey[] chapterValidEligibilityCheck =
-                [
-                    MoriTemplateKey.BeforeChallengeEnemyPower15,
-                    MoriTemplateKey.BeforeChallengeEnemyPower16,
-                ];
-                if (chapterValidEligibilityCheck.Contains(detectedTemplatePoint.MoriTemplateKey))
+                // Nếu là Màn 2-2 thì chuyển ngay đến save result
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
                 {
                     state = state with
                     {
@@ -198,16 +177,21 @@ public class MoriReducer
                                 gameInstance.EmulatorId == emulatorId
                                     ? gameInstance with
                                     {
+                                        State = AutoState.On,
+                                        Status = "",
                                         JobReRollState = gameInstance.JobReRollState with
                                         {
-                                            ReRollStatus = ReRollStatus.EligibilityChapterPassed,
+                                            ReRollStatus = ReRollStatus.SaveResult,
                                         },
                                     }
                                     : gameInstance
                         ),
                     };
+
+                    return state;
                 }
 
+                // Lần đầu tiên vào các chapter này sẽ check level up
                 MoriTemplateKey[] levelUpCheckForChapters =
                 [
                     MoriTemplateKey.BeforeChallengeEnemyPower17,
@@ -238,8 +222,7 @@ public class MoriReducer
 
             case MoriAction.Type.EligibilityLevelCheck:
             {
-                if (action.Payload is not BaseActionPayload baseActionPayload
-                    || baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
+                if (action.Payload is not BaseActionPayload baseActionPayload)
                 {
                     return state;
                 }
@@ -265,7 +248,7 @@ public class MoriReducer
                 return state;
             }
 
-            case MoriAction.Type.EligibilityLevelPass:
+            case MoriAction.Type.EligibilityLevelPassed:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload)
                 {
@@ -283,7 +266,7 @@ public class MoriReducer
                                 {
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
-                                        ReRollStatus = ReRollStatus.EligibilityLevelPass,
+                                        ReRollStatus = ReRollStatus.EligibilityLevelPassed,
                                     },
                                 }
                                 : gameInstance

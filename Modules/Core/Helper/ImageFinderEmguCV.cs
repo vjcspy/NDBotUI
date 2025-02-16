@@ -164,7 +164,7 @@ public static class ImageFinderEmguCV
         double? matchValue = 0.8
     )
     {
-        var stopwatch = Stopwatch.StartNew();
+        // var stopwatch = Stopwatch.StartNew();
 
         var processedScreenshot = screenshotMat.Clone();
         var processedTemplate = templateMat.Clone();
@@ -208,13 +208,13 @@ public static class ImageFinderEmguCV
                 Point minLoc = default, maxLoc = default;
                 CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
 
-                Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
-                stopwatch.Stop();
-                Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
+                // stopwatch.Stop();
+                // Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
 
                 // Nếu độ khớp > 0.8 thì coi là tìm thấy
                 if (maxVal >= matchValue)
                 {
+                    Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
                     var topLeft = shouldResize
                         ? new Point(
                             (int)(maxLoc.X / scaleFactor),

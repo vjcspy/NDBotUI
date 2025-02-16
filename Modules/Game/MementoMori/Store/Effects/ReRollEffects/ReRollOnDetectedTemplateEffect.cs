@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
+using NDBotUI.Modules.Game.AutoCore.Extensions;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
+using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
@@ -17,6 +20,14 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
 public class ReRollOnDetectedTemplateEffect : EffectBase
 {
+    private static readonly ReRollStatus[] VALID_STATUS =
+    [
+        ReRollStatus.Start,
+        ReRollStatus.EligibilityChapterCheck,
+        ReRollStatus.EligibilityChapterPassed,
+        ReRollStatus.EligibilityLevelPassed,
+    ];
+
     private static bool IsSpamLevelUp;
 
     protected override IEventActionFactory[] GetAllowEventActions()
@@ -199,7 +210,7 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
                     }
 
                     // Logger.Info("Current Chapter from Lv17 -> Check current status");
-                    // if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPass)
+                    // if (gameInstance.JobReRollState.ReRollStatus >= ReRollStatus.EligibilityLevelPassed)
                     // {
                     //     Logger.Info("Already pass level check");
                     //     // click equip all
@@ -265,5 +276,32 @@ public class ReRollOnDetectedTemplateEffect : EffectBase
         }
 
         return null;
+    }
+
+    [Effect]
+    public override RxEventHandler EffectHandler()
+    {
+        return upstream => upstream
+            .OfAction(GetAllowEventActions())
+            .FilterBaseEligibility(GetForceEligible())
+            .Where(
+                action =>
+                {
+                    if (action.Payload is BaseActionPayload baseActionPayload)
+                    {
+                        var gameInstance =
+                            AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+                        if (gameInstance is { } gameInstanceData)
+                        {
+                            var currentStatus = gameInstance.JobReRollState.ReRollStatus;
+
+                            return VALID_STATUS.Contains(currentStatus);
+                        }
+                    }
+
+                    return false;
+                }
+            )
+            .SelectMany(Process);
     }
 }

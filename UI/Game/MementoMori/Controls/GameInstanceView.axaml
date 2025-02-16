@@ -62,7 +62,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock FontSize="9"
-                                       Text="{Binding JobReRollState.MoriCurrentScreen}"
+                                       Text="{Binding JobReRollState.CurrentScreenTemplate}"
                                        Foreground="Aqua"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
