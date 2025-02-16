@@ -15,7 +15,7 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
-public class ClickOnDetectedTemplateEffect : EffectBase
+public class ReRollOnDetectedTemplateEffect : EffectBase
 {
     private static bool IsSpamLevelUp;
 
@@ -45,7 +45,8 @@ public class ClickOnDetectedTemplateEffect : EffectBase
             MoriTemplateKey.SelectButton,
             MoriTemplateKey.ButtonClaim,
             MoriTemplateKey.NextCountryButton,
-            MoriTemplateKey.SkipSceneShotButton
+            MoriTemplateKey.SkipSceneShotButton,
+            MoriTemplateKey.InBattleX1, // change to x2
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
@@ -205,7 +206,11 @@ public class ClickOnDetectedTemplateEffect : EffectBase
 
                 break;
             }
-
+            
+            /* In battle*/
+            case MoriTemplateKey.InBattleX2:
+                // do nothing
+                break;
 
             default:
             {

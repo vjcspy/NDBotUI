@@ -125,7 +125,11 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.NextCountryButton,
                 MoriTemplateKey.CharacterGrowthTabHeader,
                 MoriTemplateKey.SkipSceneShotButton,
-                MoriTemplateKey.HomeNewPlayerText
+                MoriTemplateKey.HomeNewPlayerText,
+                
+                /*In battle*/
+                MoriTemplateKey.InBattleX1,
+                MoriTemplateKey.InBattleX2,
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);

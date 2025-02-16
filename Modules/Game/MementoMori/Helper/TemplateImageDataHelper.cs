@@ -344,7 +344,21 @@ public static class TemplateImageDataHelper
             new TemplateImageData([
                 "Resources", "game", "mementomori", "image-detector", "reroll", "return_to_title_button.png"
             ], priority: 100)
-        }
+        },
+        
+        /* In battle*/
+        {
+            MoriTemplateKey.InBattleX1,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "in_battle_x1.png"
+            ], priority: 50)
+        },
+        {
+            MoriTemplateKey.InBattleX2,
+            new TemplateImageData([
+                "Resources", "game", "mementomori", "image-detector", "reroll", "in_battle_x2.png"
+            ], priority: 50)
+        },
     };
 
     public static void LoadTemplateImages()

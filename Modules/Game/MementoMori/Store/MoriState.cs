@@ -68,7 +68,11 @@ public enum MoriTemplateKey
 
     /*Save result*/
     CharacterTabHeader,
-    ReturnToTitleButton
+    ReturnToTitleButton,
+    
+    /*In battle*/
+    InBattleX2,
+    InBattleX1,
 }
 
 public record GameInstance(

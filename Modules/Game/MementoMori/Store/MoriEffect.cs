@@ -13,7 +13,7 @@ public class MoriEffect
         new DetectCurrentScreen(),
 
         /* ReRoll*/
-        new ClickOnDetectedTemplateEffect(),
+        new ReRollOnDetectedTemplateEffect(),
         new SpamClickWhenCouldNotDetect(),
         new EligibilityLevelCheck(),
         new SaveResultEffect(),
