@@ -9,7 +9,6 @@ using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Extensions;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
-using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
@@ -19,11 +18,6 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
 public class DetectCurrentScreen : EffectBase
 {
-    private static readonly ReRollStatus[] _DISABLE_DETECT_BY_STATUS =
-        [
-            ReRollStatus.ResetUserData,
-        ];
-
     private DetectedTemplatePoint? DetectCurrentScreenByEmguCV(
         EmguCVSharp screenshotMat,
         MoriTemplateKey moriTemplateKey
@@ -148,7 +142,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.LoginClaimButton,
                 MoriTemplateKey.HomeIconBpText,
                 MoriTemplateKey.ReturnToTitleButton,
-                
+
                 // Reset
                 MoriTemplateKey.ResetGameDataButton,
                 MoriTemplateKey.ResetGameDataHeader,
@@ -254,13 +248,7 @@ public class DetectCurrentScreen : EffectBase
 
                     var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
 
-                    if (
-                        gameInstance == null
-                        || (
-                            gameInstance.JobType == MoriJobType.ReRoll
-                            && _DISABLE_DETECT_BY_STATUS.Contains(gameInstance.JobReRollState.ReRollStatus)
-                        )
-                    )
+                    if (gameInstance == null)
                     {
                         return false;
                     }
