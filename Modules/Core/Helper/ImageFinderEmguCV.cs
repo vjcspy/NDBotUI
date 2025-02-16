@@ -210,11 +210,14 @@ public static class ImageFinderEmguCV
 
                 // stopwatch.Stop();
                 // Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
-
+                if (maxVal > 0.7)
+                {
+                    Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
+                }
                 // Nếu độ khớp > 0.8 thì coi là tìm thấy
                 if (maxVal >= matchValue)
                 {
-                    Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
+                    
                     var topLeft = shouldResize
                         ? new Point(
                             (int)(maxLoc.X / scaleFactor),

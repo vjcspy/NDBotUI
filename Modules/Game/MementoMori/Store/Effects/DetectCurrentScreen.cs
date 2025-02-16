@@ -253,6 +253,6 @@ public class DetectCurrentScreen : EffectBase
                     return true;
                 }
             )
-            .SelectMany(Process);
+            .SelectMany(ProcessWrapper);
     }
 }

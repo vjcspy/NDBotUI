@@ -68,7 +68,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public async Task<Framebuffer?> TakeScreenshotAsync()
     {
-        Logger.Info("TakeScreenshotAsync");
+        Logger.Debug("TakeScreenshotAsync");
         var stopwatch = Stopwatch.StartNew();
         try
         {

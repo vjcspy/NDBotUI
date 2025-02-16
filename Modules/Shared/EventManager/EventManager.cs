@@ -35,6 +35,7 @@ public class RxEventManager
                         .Select(handledEvent => new { Original = originalEvent, Handled = handledEvent, })
             )
             .ObserveOn(Scheduler.Default)
+            .Where(events => events.Handled != CoreAction.Empty)
             .Subscribe(
                 events =>
                 {
