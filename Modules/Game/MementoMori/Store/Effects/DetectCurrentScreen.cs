@@ -125,6 +125,7 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.BeforeChallengeEnemyPower15,
                 MoriTemplateKey.BeforeChallengeEnemyPower16,
                 MoriTemplateKey.BeforeChallengeEnemyPower17,
+                MoriTemplateKey.BeforeChallengeEnemyPower18,
                 MoriTemplateKey.BeforeChallengeEnemyPower19,
                 MoriTemplateKey.BeforeChallengeEnemyPower111,
                 MoriTemplateKey.BeforeChallengeEnemyPower112,

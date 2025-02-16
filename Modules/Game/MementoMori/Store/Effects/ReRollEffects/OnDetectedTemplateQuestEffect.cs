@@ -25,7 +25,7 @@ public class OnDetectedTemplateQuestEffect : EffectBase
         ReRollStatus.EligibilityChapterPassed,
         ReRollStatus.EligibilityLevelPassed,
     ];
-    
+
     protected override bool IsParallel()
     {
         return false;
@@ -283,7 +283,7 @@ public class OnDetectedTemplateQuestEffect : EffectBase
 
         return null;
     }
-    
+
     protected override bool Filter(EventAction action)
     {
         if (action.Payload is BaseActionPayload baseActionPayload)

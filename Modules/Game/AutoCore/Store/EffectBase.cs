@@ -43,6 +43,7 @@ public abstract class EffectBase
         if (_isProcessingByEmulator.TryGetValue(emulatorId, out var isProcessing) && isProcessing)
         {
             // Nếu đang xử lý thì trả về Empty Action
+            Logger.Info("EmulatorId {0} is processing, skip this action", emulatorId);
             return CoreAction.Empty;
         }
 

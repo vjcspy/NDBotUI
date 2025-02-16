@@ -103,14 +103,17 @@ public static class ImageFinderEmguCV
         double? matchValue = 0.8
     )
     {
-        var stopwatch = Stopwatch.StartNew();
+        // var stopwatch = Stopwatch.StartNew();
         // Chuyển ảnh về grayscale (CV_8U) để đảm bảo MatchTemplate hoạt động
         using var screenshotGray = new Mat();
         using var templateGray = new Mat();
 
-        CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
-        CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
         // CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgr2Gray);
+        // CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgr2Gray);
+        CvInvoke.CvtColor(templateMat, templateGray, ColorConversion.Bgra2Bgr);
+        CvInvoke.CvtColor(screenshotMat, screenshotGray, ColorConversion.Bgra2Bgr);
+        // SaveMatToFile(templateGray, "templateMat.jpg");
+        // SaveMatToFile(screenshotGray, "screenshotMat.jpg");
 
         // Tạo Mat kết quả
         using var result = new Mat();
@@ -121,10 +124,13 @@ public static class ImageFinderEmguCV
         Point minLoc = default, maxLoc = default;
         CvInvoke.MinMaxLoc(result, ref minVal, ref maxVal, ref minLoc, ref maxLoc);
 
-        Logger.Info($"MatchTemplate Score: {debugKey} {maxVal}");
-        stopwatch.Stop();
-        Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
-
+        // Logger.Info($"MatchTemplate Score: {debugKey} {maxVal}");
+        // stopwatch.Stop();
+        // Logger.Debug("FindTemplateMatPoint finished in {time} ms", stopwatch.ElapsedMilliseconds);
+        if (maxVal > 0.7)
+        {
+            Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
+        }
         if (maxVal >= matchValue)
         {
             var topLeft = maxLoc;
@@ -251,92 +257,4 @@ public static class ImageFinderEmguCV
         return null;
     }
 
-
-    // public static Point? FindImageInScreenshot(SKBitmap screenshot, string templatePath, string? markedScreenshotPath)
-    // {
-    //     try
-    //     {
-    //         Logger.Info($"FindImageInScreenshot: {templatePath}");
-    //         var templateMat = GetMatByPath(templatePath);
-    //
-    //         return templateMat == null ? null : FindImageInScreenshot(screenshot, templateMat, markedScreenshotPath);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Logger.Error(ex, $"Could not load template image from path {templatePath}");
-    //     }
-    //
-    //     return null;
-    // }
-
-
-    // public static Point? FindImageInScreenshot(SKBitmap screenshot, Mat templateMat, string? markedScreenshotPath)
-    // {
-    //     Logger.Info("FindImageInScreenshot by templateMat");
-    //
-    //     // Chuyển đổi SKBitmap -> Mat
-    //     using var screenshotMat = ConvertSKBitmapToMat(screenshot);
-    //
-    //     if (screenshotMat == null || screenshotMat.IsEmpty || templateMat.IsEmpty)
-    //     {
-    //         Logger.Error("Could not convert template mat from screenshot");
-    //         return null;
-    //     }
-    //
-    //     return FindTemplateMatPoint(screenshotMat, templateMat, markedScreenshotPath);
-    // }
-
-    // private static Mat SKBitmapToMat(SKBitmap bitmap)
-    // {
-    //     // Convert SKBitmap -> Bitmap
-    //     using var bmp = SKBitmapToBitmap(bitmap);
-    //
-    //     // Convert Bitmap -> Mat (Emgu.CV)
-    //     return bmp.ToEmguMat();
-    // }
-    //
-    // private static Bitmap SKBitmapToBitmap(SKBitmap skBitmap)
-    // {
-    //     using var skImage = SKImage.FromBitmap(skBitmap);
-    //     using var skData = skImage.Encode(SKEncodedImageFormat.Png, 100);
-    //
-    //     using var ms = new MemoryStream(skData.ToArray());
-    //     return new(ms);
-    // }
-
-    // private static Mat? ConvertSKBitmapToMat(SKBitmap skBitmap)
-    // {
-    //     try
-    //     {
-    //         // Lấy dữ liệu pixel từ SKBitmap dưới dạng mảng SKColor[]
-    //         var width = skBitmap.Width;
-    //         var height = skBitmap.Height;
-    //         var pixels = skBitmap.Pixels;
-    //
-    //         // Tạo mảng byte có kích thước đúng (4 bytes cho mỗi pixel)
-    //         var pixelData = new byte[width * height * 4]; // 4 byte cho mỗi pixel (RGBA)
-    //
-    //         // Chuyển đổi dữ liệu từ SKColor[] sang byte[]
-    //         for (var i = 0; i < pixels.Length; i++)
-    //         {
-    //             var pixel = pixels[i];
-    //             pixelData[i * 4 + 0] = pixel.Alpha; // Alpha
-    //             pixelData[i * 4 + 1] = pixel.Red; // Red
-    //             pixelData[i * 4 + 2] = pixel.Green; // Green
-    //             pixelData[i * 4 + 3] = pixel.Blue; // Blue
-    //         }
-    //
-    //         // Tạo Mat từ mảng byte
-    //         var mat = new Mat(height, width, DepthType.Cv8U, 4); // 4 kênh (RGBA)
-    //         mat.SetTo(pixelData);
-    //
-    //         return mat;
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Logger.Error(e, "Could not convert SKBitmap to mat");
-    //     }
-    //
-    //     return null;
-    // }
 }

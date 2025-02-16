@@ -1,18 +1,14 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Emgu.CV;
-using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
-using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NDBotUI.Modules.Shared.EventManager;
+using NLog;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
@@ -82,40 +78,57 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.GuideClickDownButton:
+            {
+                var pPoint = emulatorConnection.ToPPoint(detectedTemplatePoint.Point);
+                if (pPoint != null)
+                {
+                    await emulatorConnection.ClickPPointAsync(pPoint with { X = pPoint.X + 1, Y = pPoint.Y + 15, });
+                }
+
+                isClicked = true;
+                break;
+            }
             case MoriTemplateKey.CharacterTabHeader:
             {
                 switch (gameInstance.JobReRollState.LevelUpCharPosition)
                 {
                     case 0:
+                        Logger.Info("Click to level up char 1");
                         await emulatorConnection.ClickPPointAsync(new PPoint(16.6f, 33.1f));
                         return MoriAction.EligibilityLevelCheckOnChar.Create(
                             baseActionPayload with { Data = 0, }
                         );
                     case 1:
+                        Logger.Info("Click to level up char 2");
                         await emulatorConnection.ClickPPointAsync(new PPoint(28.1f, 33.1f));
                         return MoriAction.EligibilityLevelCheckOnChar.Create(
                             baseActionPayload with { Data = 1, }
                         );
                     case 2:
+                        Logger.Info("Click to level up char 3");
                         await emulatorConnection.ClickPPointAsync(new PPoint(39.1f, 33.1f));
                         return MoriAction.EligibilityLevelCheckOnChar.Create(
                             baseActionPayload with { Data = 2, }
                         );
                     case 3:
+                        Logger.Info("Click to level up char 4");
                         await emulatorConnection.ClickPPointAsync(new PPoint(49.1f, 33.1f));
                         return MoriAction.EligibilityLevelCheckOnChar.Create(
                             baseActionPayload with { Data = 3, }
                         );
+                    default:
+                        Logger.Error($"Invalid level up char position {gameInstance.JobReRollState.LevelUpCharPosition}" );
+                        break;
                 }
-
                 break;
             }
 
             case MoriTemplateKey.CharacterGrowthTabHeader:
             {
                 // scan and level up
-                await LevelUpChar(emulatorConnection);
-                return MoriAction.EligibilityLevelCheckOnCharOk.Create(baseActionPayload);
+                var isLevelUpOk = await LevelUpChar(emulatorConnection);
+                return isLevelUpOk ? MoriAction.EligibilityLevelCheckOnCharOk.Create(baseActionPayload) : CoreAction.Empty;
             }
 
             default:
@@ -136,23 +149,29 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
         return isClicked ? MoriAction.ClickedAfterDetectedMoriScreen.Create(baseActionPayload) : CoreAction.Empty;
     }
 
-    private async Task LevelUpChar(EmulatorConnection emulatorConnection)
+    private async Task<bool> LevelUpChar(EmulatorConnection emulatorConnection)
     {
+        Logger.Info("Start level up char");
         MatchValue = 0.9f;
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
         if (screenshot is null)
         {
-            throw new Exception("Could not take screenshot");
+            Logger.Error("Could not take screen shot");
+            return false;
         }
 
-        // var screenshotEmguMat = screenshot.ToEmguMat();
-        // // ensure o trong character growth
-        // var point = await FindTemplate(MoriTemplateKey.CharacterGrowthTabHeader, screenshotEmguMat);
-        //
-        // if (point is null)
-        // {
-        //     throw new Exception("Not in Character Growth Tab");
-        // }
+        // ensure o trong character growth
+        var characterGrowthTab = await ScanTemplateAsync(
+            [MoriTemplateKey.CharacterGrowthTabHeader,],
+            emulatorConnection,
+            screenshot
+        );
+
+        if (characterGrowthTab.Length == 0)
+        {
+            Logger.Warn("Not in character growth tab");
+            return false;
+        }
 
         MoriTemplateKey[] lvToCheck =
         [
@@ -181,8 +200,9 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
                 await Task.Delay(500);
 
                 // back
+                Logger.Info("Back to Chracter Tab");
                 await emulatorConnection.ClickPPointAsync(new PPoint(21.3f, 94.5f));
-                return;
+                return true;
             }
 
             var isBellowLv7 = await ScanTemplateAsync(
@@ -193,7 +213,8 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
             if (isBellowLv7.Length == 0)
             {
-                throw new Exception("Unknown current level");
+                Logger.Error("Unknown current level");
+                return false;
             }
 
             // level up
@@ -206,8 +227,12 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             screenshot = await emulatorConnection.TakeScreenshotAsync();
             if (screenshot is null)
             {
-                throw new Exception("Could not take screen shot");
+                Logger.Error("Could not take screen shot");
+                return false;
             }
         }
+        
+        // Vì có thể hết resource
+        return true;
     }
 }
