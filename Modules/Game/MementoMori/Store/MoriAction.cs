@@ -19,6 +19,8 @@ public class MoriAction
         EligibilityChapterCheck,
         
         EligibilityLevelCheck,
+        EligibilityLevelCheckOnChar, // Bắn sự kiện này khi đi vào từng character
+        EligibilityLevelCheckOnCharOk,
         EligibilityLevelCheckError,
         EligibilityLevelPassed,
         
@@ -50,6 +52,8 @@ public class MoriAction
 
     public static readonly EventActionFactory EligibilityChapterCheck = new(Type.EligibilityChapterCheck);
     public static readonly EventActionFactory EligibilityLevelCheck = new(Type.EligibilityLevelCheck);
+    public static readonly EventActionFactory EligibilityLevelCheckOnChar = new(Type.EligibilityLevelCheckOnChar);
+    public static readonly EventActionFactory EligibilityLevelCheckOnCharOk = new(Type.EligibilityLevelCheckOnCharOk);
     public static readonly EventActionFactory EligibilityLevelCheckError = new(Type.EligibilityLevelCheckError);
     public static readonly EventActionFactory EligibilityLevelPass = new(Type.EligibilityLevelPassed);
 

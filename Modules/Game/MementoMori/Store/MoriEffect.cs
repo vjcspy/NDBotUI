@@ -19,7 +19,5 @@ public class MoriEffect
         new SpamClickWhenCouldNotDetect(),
         
         /* After roll*/
-        new SaveResultEffect(),
-        new ResetUserDataEffect(),
     ];
 }

@@ -305,6 +305,85 @@ public class MoriReducer
                 return state;
             }
 
+            case MoriAction.Type.EligibilityLevelCheckOnChar:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.EligibilityLevelCheckOnChar,
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+
+                return state;
+            }
+
+            case MoriAction.Type.EligibilityLevelCheckOnCharOk:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var currentGameInstance = state.GetGameInstance(emulatorId);
+                if (currentGameInstance is not null && currentGameInstance.JobReRollState.LevelUpCharPosition == 3)
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.EligibilityLevelPassed,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+                }
+                else
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.EligibilityLevelCheckOnChar,
+                                            LevelUpCharPosition = gameInstance.JobReRollState.LevelUpCharPosition + 1,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+                }
+
+                return state;
+            }
+
             default:
                 return state;
         }

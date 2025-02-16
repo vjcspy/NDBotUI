@@ -40,7 +40,7 @@ public class DetectCurrentScreen : EffectBase
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
                     screenshotMat,
                     templateMat,
-                    false,
+                    // false,
                     debugKey: moriTemplateKey.ToString(),
                     matchValue: 0.87
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"

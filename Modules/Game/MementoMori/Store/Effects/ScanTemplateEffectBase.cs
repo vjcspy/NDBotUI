@@ -16,10 +16,11 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
 public abstract class ScanTemplateEffectBase : EffectBase
 {
+    protected float MatchValue { get; set; } = 0.85f;
     protected async Task<DetectedTemplatePoint[]> ScanTemplateAsync(
         MoriTemplateKey[] templateKeys,
         EmulatorConnection emulatorConnection,
-        Framebuffer? screenshot
+        Framebuffer? screenshot = null
     )
     {
         // Optimize by use one screenshot
@@ -73,9 +74,9 @@ public abstract class ScanTemplateEffectBase : EffectBase
                 var point = ImageFinderEmguCV.FindTemplateMatPoint(
                     screenshotMat,
                     templateMat,
-                    false,
+                    // false,
                     debugKey: moriTemplateKey.ToString(),
-                    matchValue: 0.85
+                    matchValue: MatchValue
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)
