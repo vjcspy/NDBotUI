@@ -171,6 +171,7 @@ public class OnDetectedTemplateQuestEffect : EffectBase
                 isClicked = true;
                 break;
             case MoriTemplateKey.GuideChapter12Text:
+            case MoriTemplateKey.GuideChapter12Text1:
                 await emulatorConnection.ClickPPointAsync(new PPoint(59.6f, 88.5f));
                 isClicked = true;
                 break;

@@ -45,6 +45,7 @@ public enum MoriTemplateKey
     GuideClickHomeText,
     GuideClickDownButton, // Button Hướng dẫn Click Down
     GuideChapter12Text,
+    GuideChapter12Text1, // do cai này khó nên cần 1 vài ảnh khác nhau
 
     BossBattleButton,
     SelectButton, // button select ở bottom right (khi chọn town)

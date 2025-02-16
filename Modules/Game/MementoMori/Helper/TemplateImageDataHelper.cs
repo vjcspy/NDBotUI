@@ -242,7 +242,16 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "guide_chapter_12_text.png",
                 ],
-                priority: 90
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.GuideChapter12Text1,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "guide_chapter_12_text_1.png",
+                ],
+                priority: 50
             )
         },
 
