@@ -14,7 +14,7 @@ using NDBotUI.Modules.Shared.Emulator.Models;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
-public abstract class ScanTemplateEffect : EffectBase
+public abstract class ScanTemplateEffectBase : EffectBase
 {
     protected async Task<DetectedTemplatePoint[]> ScanTemplateAsync(
         MoriTemplateKey[] templateKeys,

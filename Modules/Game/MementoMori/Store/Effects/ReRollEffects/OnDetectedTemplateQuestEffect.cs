@@ -18,7 +18,7 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
-public class OnDetectedTemplateEffectReRoll : EffectBase
+public class OnDetectedTemplateQuestEffect : EffectBase
 {
     private static readonly ReRollStatus[] VALID_STATUS =
     [
@@ -79,6 +79,10 @@ public class OnDetectedTemplateEffectReRoll : EffectBase
             //     await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
             //     isClicked = true;
             //     break;
+            case MoriTemplateKey.CharacterTabHeader:
+                // Đang đi quest mà vào character tab thì đi ra quest thôi, tr khi là đang level up
+                await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.4f));
+                break;
             case MoriTemplateKey.StartSettingButton:
                 break;
             case MoriTemplateKey.LoginClaimButton:
@@ -290,7 +294,7 @@ public class OnDetectedTemplateEffectReRoll : EffectBase
                 AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
             if (gameInstance is { } gameInstanceData)
             {
-                var currentStatus = gameInstance.JobReRollState.ReRollStatus;
+                var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
                 return VALID_STATUS.Contains(currentStatus);
             }

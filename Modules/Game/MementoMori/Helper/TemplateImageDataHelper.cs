@@ -187,7 +187,7 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "guide_click_the_town_text.png",
                 ],
-                priority: 90
+                priority: 50
             )
         },
         {
@@ -494,7 +494,7 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "character_tab_header.png",
                 ],
-                priority: 100
+                priority: 80
             )
         },
         {

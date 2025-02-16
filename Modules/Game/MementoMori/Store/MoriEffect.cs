@@ -13,8 +13,9 @@ public class MoriEffect
         new DetectCurrentScreen(),
 
         /* ReRoll*/
-        new OnDetectedTemplateEffectReRoll(),
+        new OnDetectedTemplateQuestEffect(),
         new WhenFoundCharacterGrowthPossible(),
+        new OnDetectedTemplateEligibilityLevelEffect(),
         new SpamClickWhenCouldNotDetect(),
         
         /* After roll*/
