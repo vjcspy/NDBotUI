@@ -133,6 +133,43 @@ public class MoriReducer
                     ),
                 };
                 
+                // Chỉ ưu tiên check current chapter duy nhất 1 lần
+                MoriTemplateKey[] currentChapter =
+                [
+                    MoriTemplateKey.BeforeChallengeEnemyPower15,
+                    MoriTemplateKey.BeforeChallengeEnemyPower16,
+                    MoriTemplateKey.BeforeChallengeEnemyPower17,
+                    MoriTemplateKey.BeforeChallengeEnemyPower18,
+                    MoriTemplateKey.BeforeChallengeEnemyPower19,
+                    MoriTemplateKey.BeforeChallengeEnemyPower111,
+                    MoriTemplateKey.BeforeChallengeEnemyPower112,
+                    MoriTemplateKey.BeforeChallengeEnemyPower21,
+                ];
+                if (currentChapter.Contains(detectedTemplatePoint.MoriTemplateKey))
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            CurrentLevel = (int)detectedTemplatePoint.MoriTemplateKey,
+                                            ReRollStatus = ReRollStatus.EligibilityChapterPassed,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+                    // Sau đó không ưu tiên nữa
+                    Logger.Info($"Reduce Priority for template {detectedTemplatePoint.MoriTemplateKey.ToString()}");
+                    TemplateImageDataHelper
+                        .TemplateImageData[detectedTemplatePoint.MoriTemplateKey]
+                        .SetPriority(emulatorId, 101);
+                }
+                
                 // Nếu là Màn 2-2 thì chuyển ngay đến save result
                 if (detectedTemplatePoint.MoriTemplateKey is MoriTemplateKey.BeforeChallengeEnemyPower22 or MoriTemplateKey.BeforeChallengeEnemyPower23)
                 {
