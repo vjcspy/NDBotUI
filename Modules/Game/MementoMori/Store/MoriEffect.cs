@@ -13,9 +13,11 @@ public class MoriEffect
         new DetectCurrentScreen(),
 
         /* ReRoll*/
-        new ReRollOnDetectedTemplateEffect(),
+        new OnDetectedTemplateEffectReRoll(),
+        new WhenFoundCharacterGrowthPossible(),
         new SpamClickWhenCouldNotDetect(),
-        new EligibilityLevelCheck(),
+        
+        /* After roll*/
         new SaveResultEffect(),
         new ResetUserDataEffect(),
     ];

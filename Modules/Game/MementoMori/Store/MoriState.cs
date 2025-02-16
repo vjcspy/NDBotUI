@@ -52,6 +52,7 @@ public enum MoriTemplateKey
     NextChapterButton,
 
     /* Level UP*/
+    CharacterGrowthPossible,
     CharacterGrowthTabHeader,
     CharacterLevelOneText,
     CharacterLevelTwoText,

@@ -192,30 +192,31 @@ public class MoriReducer
                 }
 
                 // Lần đầu tiên vào các chapter này sẽ check level up
-                MoriTemplateKey[] levelUpCheckForChapters =
-                [
-                    MoriTemplateKey.BeforeChallengeEnemyPower17,
-                    MoriTemplateKey.BeforeChallengeEnemyPower19,
-                ];
-                if (levelUpCheckForChapters.Contains(detectedTemplatePoint.MoriTemplateKey))
-                {
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(
-                            gameInstance =>
-                                gameInstance.EmulatorId == emulatorId
-                                && gameInstance.JobReRollState.ReRollStatus < ReRollStatus.EligibilityLevelCheck
-                                    ? gameInstance with
-                                    {
-                                        JobReRollState = gameInstance.JobReRollState with
-                                        {
-                                            ReRollStatus = ReRollStatus.EligibilityLevelCheck,
-                                        },
-                                    }
-                                    : gameInstance
-                        ),
-                    };
-                }
+                // Thử nghiệm cơ chế mới sẽ bỏ hard code vào màn để check.
+                // MoriTemplateKey[] levelUpCheckForChapters =
+                // [
+                //     MoriTemplateKey.BeforeChallengeEnemyPower17,
+                //     MoriTemplateKey.BeforeChallengeEnemyPower19,
+                // ];
+                // if (levelUpCheckForChapters.Contains(detectedTemplatePoint.MoriTemplateKey))
+                // {
+                //     state = state with
+                //     {
+                //         GameInstances = state.GameInstances.Map(
+                //             gameInstance =>
+                //                 gameInstance.EmulatorId == emulatorId
+                //                 && gameInstance.JobReRollState.ReRollStatus < ReRollStatus.EligibilityLevelCheck
+                //                     ? gameInstance with
+                //                     {
+                //                         JobReRollState = gameInstance.JobReRollState with
+                //                         {
+                //                             ReRollStatus = ReRollStatus.EligibilityLevelCheck,
+                //                         },
+                //                     }
+                //                     : gameInstance
+                //         ),
+                //     };
+                // }
 
                 return state;
             }

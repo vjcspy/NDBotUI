@@ -61,9 +61,9 @@
                 <DataGridTemplateColumn IsReadOnly="True" Header="Screen" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock FontSize="9"
+                            <TextBlock FontSize="12"
                                        Text="{Binding JobReRollState.CurrentScreenTemplate}"
-                                       Foreground="Aqua"
+                                       Foreground="LightBlue"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

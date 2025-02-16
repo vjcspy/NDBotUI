@@ -39,7 +39,7 @@ public class DetectCurrentScreen : EffectBase
                     templateMat,
                     false,
                     debugKey: moriTemplateKey.ToString(),
-                    matchValue: 0.85
+                    matchValue: 0.87
                     // markedScreenshotFileName: $"{moriTemplateKey.ToString()}.png"
                 );
                 if (point is { } bpoint)
@@ -97,7 +97,8 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.TextSelectThirdCharToTeam,
                 MoriTemplateKey.TextSelectFourCharToTeam,
 
-                MoriTemplateKey.PowerLevelUpText,
+                /* Character growth*/
+                MoriTemplateKey.CharacterGrowthPossible,
                 MoriTemplateKey.GuideClickLevelUpText,
                 MoriTemplateKey.GuideClickEquipAllText,
                 MoriTemplateKey.GuideClickQuestText,

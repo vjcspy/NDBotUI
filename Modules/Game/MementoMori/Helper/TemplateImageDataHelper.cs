@@ -376,6 +376,16 @@ public static class TemplateImageDataHelper
             )
         },
 
+        /* Character Growth*/
+        {
+            MoriTemplateKey.CharacterGrowthPossible,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_growth_posible_button.png",
+                ],
+                priority: 90
+            )
+        },
         {
             MoriTemplateKey.CharacterGrowthTabHeader,
             new TemplateImageData(

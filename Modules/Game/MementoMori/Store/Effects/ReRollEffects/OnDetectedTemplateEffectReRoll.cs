@@ -18,7 +18,7 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
-public class ReRollOnDetectedTemplateEffect : EffectBase
+public class OnDetectedTemplateEffectReRoll : EffectBase
 {
     private static readonly ReRollStatus[] VALID_STATUS =
     [
