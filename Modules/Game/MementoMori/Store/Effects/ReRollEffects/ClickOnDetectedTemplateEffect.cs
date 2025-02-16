@@ -143,7 +143,7 @@ public class ClickOnDetectedTemplateEffect : EffectBase
                 break;
 
             case MoriTemplateKey.HomeNewPlayerText:
-                // Khi không còn action gì mà hiện lên bảng Party Info thì nhấn begin battle
+                // click quest
                 await emulatorConnection.ClickPPointAsync(new PPoint(44.3f, 96.0f));
                 isClicked = true;
                 break;
