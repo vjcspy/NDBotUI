@@ -9,7 +9,7 @@
         x:Class="NDBotUI.UI.Base.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
         Icon="/Assets/ndbot-logo.ico"
-        Title="NDBot" Width="600" Height="700">
+        Title="NDBot" Width="500" Height="700">
 
     <reactiveUi:RoutedViewHost Router="{Binding Router}">
         <reactiveUi:RoutedViewHost.ViewLocator>

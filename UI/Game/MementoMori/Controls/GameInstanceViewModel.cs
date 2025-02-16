@@ -1,4 +1,5 @@
-﻿using NDBotUI.Modules.Core.Store;
+﻿using Avalonia.Collections;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.UI.Base.ViewModels;
 using NLog;
 
