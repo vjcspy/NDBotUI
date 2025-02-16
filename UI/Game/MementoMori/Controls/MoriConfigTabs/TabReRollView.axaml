@@ -8,7 +8,7 @@
              x:DataType="moriConfigTabs:TabReRollViewModel">
     <Grid RowDefinitions="40,*" ColumnDefinitions="*">
         <Grid Grid.Row="0">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold"
                        Text="{Binding Store.EmulatorStore.State.SelectedEmulatorId}" />
         </Grid>
         <Grid Grid.Row="1" ColumnDefinitions="*,*">

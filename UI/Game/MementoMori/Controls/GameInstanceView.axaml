@@ -24,10 +24,15 @@
                   GridLinesVisibility="All"
                   AutoGenerateColumns="False"
                   FontSize="10"
-                  Focusable="False"
-                  >
+                  Focusable="False">
+            <DataGrid.Styles>
+                <Style Selector="DataGrid:focus DataGridRow:current /template/ Grid#FocusVisual">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+            </DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" FontSize="10" Width="Auto" Header="Name" Binding="{Binding EmulatorId}" />
+                <DataGridTextColumn IsReadOnly="True" FontSize="10" Width="Auto" Header="Name"
+                                    Binding="{Binding EmulatorId}" />
 
                 <DataGridTemplateColumn IsReadOnly="True" Header="Emulator" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
