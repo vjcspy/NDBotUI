@@ -132,6 +132,30 @@ public class MoriReducer
                     ),
                 };
                 
+                // Nếu là Màn 2-2 thì chuyển ngay đến save result
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
+                {
+                    state = state with
+                    {
+                        GameInstances = state.GameInstances.Map(
+                            gameInstance =>
+                                gameInstance.EmulatorId == emulatorId
+                                    ? gameInstance with
+                                    {
+                                        State = AutoState.On,
+                                        Status = "",
+                                        JobReRollState = gameInstance.JobReRollState with
+                                        {
+                                            ReRollStatus = ReRollStatus.SaveResult,
+                                        },
+                                    }
+                                    : gameInstance
+                        ),
+                    };
+
+                    return state;
+                }
+                
                 // Next chapter
                 if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton)
                 {
@@ -189,30 +213,6 @@ public class MoriReducer
                     TemplateImageDataHelper
                         .TemplateImageData[detectedTemplatePoint.MoriTemplateKey]
                         .SetPriority(emulatorId, 101);
-                }
-
-                // Nếu là Màn 2-2 thì chuyển ngay đến save result
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.BeforeChallengeEnemyPower22)
-                {
-                    state = state with
-                    {
-                        GameInstances = state.GameInstances.Map(
-                            gameInstance =>
-                                gameInstance.EmulatorId == emulatorId
-                                    ? gameInstance with
-                                    {
-                                        State = AutoState.On,
-                                        Status = "",
-                                        JobReRollState = gameInstance.JobReRollState with
-                                        {
-                                            ReRollStatus = ReRollStatus.SaveResult,
-                                        },
-                                    }
-                                    : gameInstance
-                        ),
-                    };
-
-                    return state;
                 }
 
                 return state;

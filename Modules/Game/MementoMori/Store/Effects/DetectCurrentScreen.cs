@@ -21,7 +21,6 @@ public class DetectCurrentScreen : EffectBase
 {
     private static readonly ReRollStatus[] _DISABLE_DETECT_BY_STATUS =
         [
-            ReRollStatus.SaveResult,
             ReRollStatus.ResetUserData,
         ];
 

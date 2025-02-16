@@ -19,5 +19,6 @@ public class MoriEffect
         new SpamClickWhenCouldNotDetect(),
         
         /* After roll*/
+        new OnDetectedTemplateSaveResultEffect()
     ];
 }

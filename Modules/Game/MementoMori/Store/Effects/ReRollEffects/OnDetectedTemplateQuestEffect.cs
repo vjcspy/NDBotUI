@@ -24,6 +24,7 @@ public class OnDetectedTemplateQuestEffect : EffectBase
         ReRollStatus.EligibilityChapterCheck,
         ReRollStatus.EligibilityChapterPassed,
         ReRollStatus.EligibilityLevelPassed,
+        ReRollStatus.NextChapter,
     ];
 
     protected override bool IsParallel()
