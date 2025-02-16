@@ -68,6 +68,7 @@ public class OnDetectedTemplateQuestEffect : EffectBase
             MoriTemplateKey.SkipSceneShotButton,
             MoriTemplateKey.InBattleX1, // change to x2
             MoriTemplateKey.NextChapterButton,
+            MoriTemplateKey.DownloadUpdateButton,
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)

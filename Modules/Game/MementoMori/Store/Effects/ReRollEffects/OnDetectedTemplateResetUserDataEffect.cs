@@ -72,6 +72,7 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
             MoriTemplateKey.ReturnToTitleButton,
             MoriTemplateKey.StartSettingButton,
             MoriTemplateKey.ResetGameDataButton,
+            MoriTemplateKey.DownloadUpdateButton,
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 

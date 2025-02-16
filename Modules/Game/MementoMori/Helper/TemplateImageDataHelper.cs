@@ -610,6 +610,15 @@ public static class TemplateImageDataHelper
                 ],
                 priority: 100
             )
+        }, 
+        {
+            MoriTemplateKey.DownloadUpdateButton,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "download_update_button.png",
+                ],
+                priority: 30
+            )
         },
     };
 
