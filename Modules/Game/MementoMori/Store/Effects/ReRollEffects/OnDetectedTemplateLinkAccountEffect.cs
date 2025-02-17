@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
@@ -140,16 +141,37 @@ public class OnDetectedTemplateLinkAccountEffect : ScanTemplateEffectBase
                 await Task.Delay(500);
 
                 emulatorConnection.ClearInput();
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 emulatorConnection.SendText("123456aA");
                 // spam 1 click ra ngoai
                 await emulatorConnection.ClickPPointAsync(new PPoint(51.1f, 53.4f));
 
-                await Task.Delay(500);
+                await Task.Delay(1500);
 
-                var isFillPassSuccess = await ScanTemplateAsync([MoriTemplateKey.SavePassSuccess,], emulatorConnection);
+                var screenshot = await emulatorConnection.TakeScreenshotAsync();
+
+                if (screenshot is null)
+                {
+                    Logger.Error("Failed to take screenshot");
+                    return CoreAction.Empty;
+                }
+
+                var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(emulatorConnection.Id);
+
+                if (gameInstance?.JobReRollState.ResultId == null)
+                {
+                    Logger.Error("Could not get game instance");
+                    return CoreAction.Empty;
+                }
+
+                var isFillPassSuccess = await ScanTemplateAsync([MoriTemplateKey.SavePassSuccess,], emulatorConnection,screenshot);
                 if (isFillPassSuccess.Length > 0)
                 {
+                    await SkiaHelper.SaveScreenshot(
+                        emulatorConnection,
+                        ImageHelper.GetImagePath(gameInstance.JobReRollState.ResultId.ToString()!, "results/accounts"),
+                        screenshot
+                    );
                     // click finished
                     await emulatorConnection.ClickPPointAsync(new PPoint(58.3f, 81.9f));
                     return MoriAction.ResetUserData.Create(baseActionPayload);
