@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using LanguageExt;
 using NDBotUI.Modules.Core.Attributes;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
@@ -24,25 +22,24 @@ public class MoriBoot
 
         Observable
             .Interval(TimeSpan.FromSeconds(2))
-            .ObserveOn(Scheduler.Default)
-            .SubscribeOn(Scheduler.Default)
+            .SelectMany(
+                _ => AppStore.Instance.MoriStore.State.GameInstances.ToObservable()
+            ) // Chuyển danh sách thành Observable
+            .Where(x => x.State == AutoState.On) // Lọc các instance cần xử lý
+            .SelectMany(
+                x =>
+                    Observable
+                        .Return(x) // Đảm bảo xử lý tuần tự từng phần tử
+                        .Delay(TimeSpan.FromSeconds(2)) // Chờ trước khi gửi tiếp sự kiện tiếp theo
+            )
             .Subscribe(
-                _ =>
+                x =>
                 {
-                    AppStore.Instance.MoriStore.State.GameInstances.Iter(
-                        x =>
-                        {
-                            if (x.State == AutoState.On)
-                            {
-                                RxEventManager.Dispatch(
-                                    MoriAction.TriggerScanCurrentScreen.Create(new BaseActionPayload(x.EmulatorId))
-                                );
-                            }
-                        }
+                    RxEventManager.Dispatch(
+                        MoriAction.TriggerScanCurrentScreen.Create(new BaseActionPayload(x.EmulatorId))
                     );
                 },
-                ex => Console.WriteLine($"Error: {ex.Message}"),
-                () => Console.WriteLine("Completed")
+                ex => Logger.Error(ex, $"Error: {ex.Message}")
             );
     }
 }

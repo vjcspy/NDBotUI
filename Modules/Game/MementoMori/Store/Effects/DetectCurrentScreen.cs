@@ -224,46 +224,30 @@ public class DetectCurrentScreen : EffectBase
         return CoreAction.Empty;
     }
 
-    [Effect]
-    public override RxEventHandler EffectHandler()
+    protected override bool IsParallel()
     {
-        return upstream => upstream
-            .OfAction(GetAllowEventActions())
-            .GroupBy(
-                action =>
-                {
-                    if (action.Payload is BaseActionPayload baseActionPayload)
-                    {
-                        return baseActionPayload.EmulatorId;
-                    }
+        return false;
+    }
 
-                    return Guid.Empty.ToString(); // Trường hợp không có Id, đảm bảo không lỗi
-                }
-            )
-            .SelectMany(
-                groupedStream =>
-                    groupedStream
-                        .Throttle(TimeSpan.FromSeconds(3)) // Throttle theo từng EmulatorId
-                        .FilterBaseEligibility(GetForceEligible())
-            )
-            .Where(
-                action =>
-                {
-                    if (action.Payload is not BaseActionPayload baseActionPayload)
-                    {
-                        return false;
-                    }
+    protected override bool Filter(EventAction action)
+    {
+        if (action.Payload is not BaseActionPayload baseActionPayload)
+        {
+            return false;
+        }
 
-                    var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+        var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
 
-                    if (gameInstance == null)
-                    {
-                        return false;
-                    }
+        if (gameInstance == null)
+        {
+            return false;
+        }
 
-                    return true;
-                }
-            )
-            .SelectMany(ProcessWrapper);
+        return true;
+    }
+
+    protected override int GetThrottleTime()
+    {
+        return 3;
     }
 }

@@ -495,6 +495,24 @@ public static class TemplateImageDataHelper
                 priority: 50
             )
         },
+        {
+            MoriTemplateKey.CharacterLevelEightText,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_8_text.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.CharacterLevelNineText,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "character_level_9_text.png",
+                ],
+                priority: 50
+            )
+        },
 
         {
             MoriTemplateKey.NextCountryButton,

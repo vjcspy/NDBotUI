@@ -65,6 +65,8 @@ public enum MoriTemplateKey
     CharacterLevelFiveText,
     CharacterLevelSixText,
     CharacterLevelSevenText,
+    CharacterLevelEightText,
+    CharacterLevelNineText,
 
     PartyInformation,
     TapToClose, // sau khi battle kết thúc
