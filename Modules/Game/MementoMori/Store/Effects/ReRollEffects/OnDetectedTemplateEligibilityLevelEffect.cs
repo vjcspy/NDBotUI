@@ -82,6 +82,13 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.ChallengeButton:
+            {
+                Logger.Info("Click Close");
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 45.8f));
+                isClicked = true;
+                break;
+            } 
             case MoriTemplateKey.ErrorHeaderPopup:
             {
                 Logger.Info("Click Close Error");
