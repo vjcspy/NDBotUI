@@ -217,7 +217,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
         var countLevelUp = 0;
 
-        while (countLevelUp < 8)
+        while (countLevelUp < 7)
         {
             var lv7Point = await ScanTemplateAsync(
                 [MoriTemplateKey.CharacterLevelEightText,MoriTemplateKey.CharacterLevelNineText,],
