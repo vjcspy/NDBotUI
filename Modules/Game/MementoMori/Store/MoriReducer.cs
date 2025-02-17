@@ -216,7 +216,8 @@ public class MoriReducer
                 }
 
                 // Next chapter
-                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton)
+                if (detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextChapterButton
+                    || detectedTemplatePoint.MoriTemplateKey == MoriTemplateKey.NextCountryButton)
                 {
                     state = state with
                     {
