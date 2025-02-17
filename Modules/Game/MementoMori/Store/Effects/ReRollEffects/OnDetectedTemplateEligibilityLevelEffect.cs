@@ -70,6 +70,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
             MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
+            MoriTemplateKey.StartStartButton, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
         var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
@@ -81,6 +82,13 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.BossBattleButton:
+            {
+                Logger.Info("Click Character");
+                await emulatorConnection.ClickPPointAsync(new PPoint(21.3f, 94.6f));
+                isClicked = true;
+                break;
+            }
             case MoriTemplateKey.ChallengeButton:
             {
                 Logger.Info("Click Close");
@@ -263,6 +271,9 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             }
         }
 
+        // back
+        Logger.Info("Back to Chracter Tab");
+        await emulatorConnection.ClickPPointAsync(new PPoint(21.3f, 94.5f));
         // Vì có thể hết resource
         return true;
     }
