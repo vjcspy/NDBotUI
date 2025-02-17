@@ -82,6 +82,7 @@ public class DetectCurrentScreen : EffectBase
 
             MoriTemplateKey[] screenToCheck =
             [
+                MoriTemplateKey.ErrorHeaderPopup,
                 MoriTemplateKey.TermOfAgreementPopup,
                 MoriTemplateKey.StartStartButton,
                 MoriTemplateKey.IconChar1,

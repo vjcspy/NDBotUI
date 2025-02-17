@@ -79,7 +79,13 @@ public class OnDetectedTemplateQuestEffect : EffectBase
             //     await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.4f));
             //     isClicked = true;
             //     break;
-            
+            case MoriTemplateKey.ErrorHeaderPopup:
+            {
+                Logger.Info("Click Close Error");
+                await emulatorConnection.ClickPPointAsync(new PPoint(50.4f, 61.5f));
+                isClicked = true;
+                break;
+            }
             case MoriTemplateKey.CharacterGrowthPossible:
                 var isBossBattleAvailable = await ScanTemplateImage(emulatorConnection, MoriTemplateKey.BossBattleButton);
                 if (isBossBattleAvailable != null)

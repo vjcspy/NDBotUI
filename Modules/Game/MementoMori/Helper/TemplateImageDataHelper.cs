@@ -629,6 +629,15 @@ public static class TemplateImageDataHelper
                 priority: 30
             )
         },
+        {
+            MoriTemplateKey.ErrorHeaderPopup,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "error_header_popup.png",
+                ],
+                priority: 10
+            )
+        },
     };
 
     public static void LoadTemplateImages()

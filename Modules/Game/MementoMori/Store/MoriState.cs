@@ -91,6 +91,7 @@ public enum MoriTemplateKey
     ResetGameDataButton,
     ResetGameDataHeader, // confirm
     ConfirmGameDataResetHeader, // confirm
+    ErrorHeaderPopup,
 }
 
 public record GameInstance(
