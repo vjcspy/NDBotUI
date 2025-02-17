@@ -82,6 +82,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.HomeNewPlayerText:
             case MoriTemplateKey.BossBattleButton:
             {
                 Logger.Info("Click Character");
