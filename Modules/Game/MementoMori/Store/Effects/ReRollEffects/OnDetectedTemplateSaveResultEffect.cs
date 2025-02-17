@@ -74,6 +74,13 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
+            case MoriTemplateKey.BossBattleButton:
+            {
+                Logger.Info("Click Character");
+                await emulatorConnection.ClickPPointAsync(new PPoint(21.3f, 94.6f));
+                isClicked = true;
+                break;
+            }
             case MoriTemplateKey.ErrorHeaderPopup:
             {
                 Logger.Info("Click Close Error");
