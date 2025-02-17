@@ -401,7 +401,7 @@ public static class TemplateImageDataHelper
                 ],
                 priority: 20
             )
-        }, 
+        },
         {
             MoriTemplateKey.BeforeChallengeEnemyPower23,
             new TemplateImageData(
@@ -615,11 +615,12 @@ public static class TemplateImageDataHelper
             MoriTemplateKey.ConfirmGameDataResetHeader,
             new TemplateImageData(
                 [
-                    "Resources", "game", "mementomori", "image-detector", "reroll", "confirm_game_data_reset_header.png",
+                    "Resources", "game", "mementomori", "image-detector", "reroll",
+                    "confirm_game_data_reset_header.png",
                 ],
                 priority: 100
             )
-        }, 
+        },
         {
             MoriTemplateKey.DownloadUpdateButton,
             new TemplateImageData(

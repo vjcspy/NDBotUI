@@ -8,7 +8,6 @@ using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NDBotUI.Modules.Shared.EventManager;
-using NLog;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
@@ -88,7 +87,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 45.8f));
                 isClicked = true;
                 break;
-            } 
+            }
             case MoriTemplateKey.ErrorHeaderPopup:
             {
                 Logger.Info("Click Close Error");
@@ -136,9 +135,12 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
                             baseActionPayload with { Data = 3, }
                         );
                     default:
-                        Logger.Error($"Invalid level up char position {gameInstance.JobReRollState.LevelUpCharPosition}" );
+                        Logger.Error(
+                            $"Invalid level up char position {gameInstance.JobReRollState.LevelUpCharPosition}"
+                        );
                         break;
                 }
+
                 break;
             }
 
@@ -146,9 +148,11 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             {
                 // scan and level up
                 var isLevelUpOk = await LevelUpChar(emulatorConnection);
-                return isLevelUpOk ? MoriAction.EligibilityLevelCheckOnCharOk.Create(baseActionPayload) : CoreAction.Empty;
+                return isLevelUpOk
+                    ? MoriAction.EligibilityLevelCheckOnCharOk.Create(baseActionPayload)
+                    : CoreAction.Empty;
             }
-            
+
             case MoriTemplateKey.PartyInformation:
             {
                 // click vào reset
@@ -198,7 +202,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             Logger.Warn("Not in character growth tab");
             return false;
         }
-        
+
         // equip all
         await emulatorConnection.ClickPPointAsync(new PPoint(36.3f, 82.4f));
         await Task.Delay(500);
@@ -257,7 +261,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
                 return false;
             }
         }
-        
+
         // Vì có thể hết resource
         return true;
     }

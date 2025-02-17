@@ -1,10 +1,5 @@
-﻿using System.Diagnostics;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Emgu.CV;
-using NDBotUI.Modules.Core.Extensions;
-using NDBotUI.Modules.Core.Helper;
-using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
 
@@ -18,18 +13,18 @@ public class EffectTemplate
     {
         await Task.Delay(0);
         Logger.Info("Processing Trigger Manually Effect");
-        if (EmulatorManager.Instance.EmulatorConnections.Count != 1)
-        {
-            return CoreAction.Empty;
-        }
-
-        var emulatorConnection = EmulatorManager.Instance.EmulatorConnections[0];
-        var screenshot = await emulatorConnection.TakeScreenshotAsync();
-        var stopWatch = Stopwatch.StartNew();
-        var openCVMat = SkiaHelper.SkiaBitmapToMat(screenshot.ToSKBitmap());
-        stopWatch.Stop();
-        Logger.Info($"Convert SKBitmap to Mat took {stopWatch.ElapsedMilliseconds} ms");
-        CvInvoke.Imwrite("1.png", openCVMat); // Lưu ảnh xuống file PNG
+        // if (EmulatorManager.Instance.EmulatorConnections.Count != 1)
+        // {
+        //     return CoreAction.Empty;
+        // }
+        //
+        // var emulatorConnection = EmulatorManager.Instance.EmulatorConnections[0];
+        // var screenshot = await emulatorConnection.TakeScreenshotAsync();
+        // var stopWatch = Stopwatch.StartNew();
+        // var openCVMat = SkiaHelper.SkiaBitmapToMat(screenshot.ToSKBitmap());
+        // stopWatch.Stop();
+        // Logger.Info($"Convert SKBitmap to Mat took {stopWatch.ElapsedMilliseconds} ms");
+        // CvInvoke.Imwrite("1.png", openCVMat); // Lưu ảnh xuống file PNG
 
         /* Test take resolution */
         // var resolution = emulator.GetScreenResolution();

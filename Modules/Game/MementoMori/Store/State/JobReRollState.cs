@@ -39,8 +39,8 @@ public record JobReRollState(
             MoriTemplateKey.Unknown,
             0,
             0,
-            LevelUpCharPosition:0,
-            ResultId:null
+            0,
+            null
         );
     }
 }

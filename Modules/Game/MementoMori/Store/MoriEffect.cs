@@ -17,9 +17,9 @@ public class MoriEffect
         new WhenFoundCharacterGrowthPossible(),
         new OnDetectedTemplateEligibilityLevelEffect(),
         new SpamClickWhenCouldNotDetect(),
-        
+
         /* After roll*/
         new OnDetectedTemplateSaveResultEffect(),
-        new OnDetectedTemplateResetUserDataEffect()
+        new OnDetectedTemplateResetUserDataEffect(),
     ];
 }

@@ -12,18 +12,18 @@ public class MoriAction
         ToggleStartStopMoriReRoll,
 
         /* Init các dữ liệu cần thiết để run Mori */
-        InitMori, 
+        InitMori,
         InitMoriSuccess,
 
         /* Eligibility check*/
         EligibilityChapterCheck,
-        
+
         EligibilityLevelCheck,
         EligibilityLevelCheckOnChar, // Bắn sự kiện này khi đi vào từng character
         EligibilityLevelCheckOnCharOk,
         EligibilityLevelCheckError,
         EligibilityLevelPassed,
-        
+
         /* Detect current screen template*/
         TriggerScanCurrentScreen,
         DetectedMoriScreen,

@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
-using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NDBotUI.Modules.Shared.EventManager;
@@ -73,7 +71,7 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
             MoriTemplateKey.StartSettingButton,
             MoriTemplateKey.ResetGameDataButton,
             MoriTemplateKey.DownloadUpdateButton,
-            
+
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
@@ -101,7 +99,7 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
                 isClicked = true;
                 break;
             }
-            
+
             case MoriTemplateKey.ReturnToTitleHeader:
             {
                 // click vào ok
@@ -109,14 +107,14 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
                 isClicked = true;
                 break;
             }
-            
+
             case MoriTemplateKey.ResetGameDataHeader:
             {
                 // click vào reset
                 await emulatorConnection.ClickPPointAsync(new PPoint(59.4f, 68.8f));
                 isClicked = true;
                 break;
-            }   
+            }
             case MoriTemplateKey.StartStartButton:
             {
                 // click vào reset
@@ -124,7 +122,7 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
                 isClicked = true;
                 break;
             }
-            
+
             case MoriTemplateKey.ConfirmGameDataResetHeader:
             {
                 // click vào OK
@@ -161,8 +159,8 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
             ? MoriAction.ClickedAfterDetectedMoriScreen.Create(baseActionPayload)
             : CoreAction.Empty;
     }
-    
-    
+
+
     private async Task<EventAction> WhenDone(BaseActionPayload baseActionPayload)
     {
         RxEventManager.Dispatch(

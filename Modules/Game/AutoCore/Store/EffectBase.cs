@@ -12,13 +12,13 @@ public abstract class EffectBase
 {
     protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+    // Dictionary để lưu trạng thái xử lý của từng EmulatorId
+    private readonly ConcurrentDictionary<string, bool> _isProcessingByEmulator = new();
+
     protected virtual bool GetForceEligible()
     {
         return false;
     }
-
-    // Dictionary để lưu trạng thái xử lý của từng EmulatorId
-    private readonly ConcurrentDictionary<string, bool> _isProcessingByEmulator = new();
 
     protected virtual bool IsParallel()
     {
@@ -37,7 +37,7 @@ public abstract class EffectBase
         }
 
         // Lấy EmulatorId từ action
-        string emulatorId = GetEmulatorIdFromAction(action);
+        var emulatorId = GetEmulatorIdFromAction(action);
 
         // Kiểm tra xem EmulatorId này có đang được xử lý hay không
         if (_isProcessingByEmulator.TryGetValue(emulatorId, out var isProcessing) && isProcessing)

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using Emgu.CV;
@@ -133,6 +132,7 @@ public static class ImageFinderEmguCV
         {
             Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
         }
+
         if (maxVal >= matchValue)
         {
             var topLeft = maxLoc;
@@ -222,10 +222,10 @@ public static class ImageFinderEmguCV
                 {
                     Logger.Info($"MatchTemplate Score: {debugKey} {(float)maxVal}");
                 }
+
                 // Nếu độ khớp > 0.8 thì coi là tìm thấy
                 if (maxVal >= matchValue)
                 {
-                    
                     var topLeft = shouldResize
                         ? new Point(
                             (int)(maxLoc.X / scaleFactor),
@@ -258,5 +258,4 @@ public static class ImageFinderEmguCV
 
         return null;
     }
-
 }

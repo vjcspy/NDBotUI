@@ -112,18 +112,19 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
                     await Task.Delay(1000);
                     isClicked = true;
                 }
+
                 // spam click 1 lần nữa cho chắc ăn
                 await emulatorConnection.ClickPPointAsync(new PPoint(99.5f, 52.6f));
 
                 break;
             }
-            
+
             case MoriTemplateKey.ChallengeButton:
                 // click ra ngoai
                 await emulatorConnection.ClickPPointAsync(new PPoint(0.8f, 34.9f));
                 isClicked = true;
                 break;
-            
+
             case MoriTemplateKey.HomeIconBpText:
             case MoriTemplateKey.HomeNewPlayerText:
             {

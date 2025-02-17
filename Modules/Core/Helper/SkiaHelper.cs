@@ -73,21 +73,21 @@ public class SkiaHelper
 
         return Unit.Default;
     }
-    
+
     public static Mat SkiaBitmapToMat(SKBitmap bitmap)
     {
-        int width = bitmap.Width;
-        int height = bitmap.Height;
+        var width = bitmap.Width;
+        var height = bitmap.Height;
 
         // Tạo Mat có 4 kênh (RGBA)
-        Mat mat = new Mat(height, width, DepthType.Cv8U, 4);
-        
+        var mat = new Mat(height, width, DepthType.Cv8U, 4);
+
         // Lấy mảng pixel từ SkiaBitmap
-        SKColor[] pixels = bitmap.Pixels;
+        var pixels = bitmap.Pixels;
 
         // Chuyển SKColor[] thành byte[]
-        byte[] byteData = new byte[width * height * 4];
-        for (int i = 0; i < pixels.Length; i++)
+        var byteData = new byte[width * height * 4];
+        for (var i = 0; i < pixels.Length; i++)
         {
             byteData[i * 4 + 0] = pixels[i].Blue;
             byteData[i * 4 + 1] = pixels[i].Green;

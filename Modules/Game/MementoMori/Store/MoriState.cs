@@ -86,7 +86,7 @@ public enum MoriTemplateKey
     LoginClaimButton,
     HomeIconBpText, // dùng để detect đang ở home
     DownloadUpdateButton,
-    
+
     /*Reset*/
     ResetGameDataButton,
     ResetGameDataHeader, // confirm
