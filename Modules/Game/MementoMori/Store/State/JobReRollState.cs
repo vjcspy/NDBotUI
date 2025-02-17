@@ -16,6 +16,7 @@ public enum ReRollStatus
 
     NextChapter,
     SaveResult,
+    LinkAccount,
     ResetUserData,
 
     StoppedWithError,

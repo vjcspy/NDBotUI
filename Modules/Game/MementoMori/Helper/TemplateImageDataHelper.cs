@@ -544,6 +544,61 @@ public static class TemplateImageDataHelper
             )
         },
         {
+            MoriTemplateKey.EnterYourLinkAccountText,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "enter_your_link_text.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.PerformAccountLink,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "perform_account_link.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.SetLinkPassword,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "set_link_password.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.EnterLinkInfo,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "enter_link_info.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.SavePassSuccess,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "save_pass_success.png",
+                ],
+                priority: 50
+            )
+        },
+        {
+            MoriTemplateKey.PrivacySettingsHeader,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "privacy_settings_header.png",
+                ],
+                priority: 50
+            )
+        },
+
+        {
             MoriTemplateKey.ReturnToTitleHeader,
             new TemplateImageData(
                 [

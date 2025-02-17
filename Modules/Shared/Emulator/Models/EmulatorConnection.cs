@@ -220,4 +220,19 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
         return new PPoint(point.X * 100 / currentResolution[0], point.Y * 100 / currentResolution[1]);
     }
+
+    public void SendText(string text)
+    {
+        emulatorScanData.AdbClient.SendText(emulatorScanData.DeviceData, text);
+    }
+
+    public void ClearInput()
+    {
+        emulatorScanData.AdbClient.ClearInput(emulatorScanData.DeviceData, 25);
+    }
+
+    public async Task SendTextAsync(string text)
+    {
+        await emulatorScanData.AdbClient.SendTextAsync(emulatorScanData.DeviceData, text);
+    }
 }

@@ -10,11 +10,11 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.MementoMori.Store.Effects.ReRollEffects;
 
-public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
+public class OnDetectedTemplateLinkAccountEffect : ScanTemplateEffectBase
 {
     private static readonly ReRollStatus[] VALID_STATUS =
     [
-        ReRollStatus.ResetUserData,
+        ReRollStatus.LinkAccount,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
@@ -46,7 +46,7 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info("Process on reset user data");
+        Logger.Info("Process on link account");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectedTemplatePoint detectedTemplatePoint)
         {
@@ -67,30 +67,18 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
             // MoriTemplateKey.CharacterGrowthPossible,
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
-            MoriTemplateKey.ReturnToTitleButton,
-            MoriTemplateKey.StartSettingButton,
-            MoriTemplateKey.ResetGameDataButton,
+            // MoriTemplateKey.ReturnToTitleButton,
+            // MoriTemplateKey.StartSettingButton,
+            // MoriTemplateKey.ResetGameDataButton,
             MoriTemplateKey.DownloadUpdateButton,
+            MoriTemplateKey.StartStartButton,
+            MoriTemplateKey.GuideClickDownButton,
 
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
         switch (detectedTemplatePoint.MoriTemplateKey)
         {
-            case MoriTemplateKey.PrivacySettingsHeader:
-            {
-                Logger.Info("Click Close");
-                await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 68.4f));
-                isClicked = true;
-                break;
-            }
-            case MoriTemplateKey.EnterLinkInfo:
-            {
-                Logger.Info("Click Close");
-                await emulatorConnection.ClickPPointAsync(new PPoint(49.6f, 81.6f));
-                isClicked = true;
-                break;
-            }
             case MoriTemplateKey.ErrorHeaderPopup:
             {
                 Logger.Info("Click Close Error");
@@ -114,34 +102,61 @@ public class OnDetectedTemplateResetUserDataEffect : ScanTemplateEffectBase
                 break;
             }
 
-            case MoriTemplateKey.ReturnToTitleHeader:
+            case MoriTemplateKey.ReturnToTitleButton:
             {
-                // click vào ok
-                await emulatorConnection.ClickPPointAsync(new PPoint(58.8f, 61.7f));
+                // click vào account link
+                await emulatorConnection.ClickPPointAsync(new PPoint(80.5f, 46.8f));
                 isClicked = true;
                 break;
             }
 
-            case MoriTemplateKey.ResetGameDataHeader:
+            case MoriTemplateKey.EnterYourLinkAccountText:
             {
-                // click vào reset
-                await emulatorConnection.ClickPPointAsync(new PPoint(59.4f, 68.8f));
+                // click vào link button
+                await emulatorConnection.ClickPPointAsync(new PPoint(65.8f, 28.2f));
                 isClicked = true;
                 break;
             }
-            case MoriTemplateKey.StartStartButton:
+            case MoriTemplateKey.PerformAccountLink:
             {
-                // click vào reset
-                await emulatorConnection.ClickPPointAsync(new PPoint(96.6f, 5.2f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(58.7f, 83.1f));
+                isClicked = true;
+                break;
+            }
+            case MoriTemplateKey.SetLinkPassword:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(64.9f, 59.1f));
                 isClicked = true;
                 break;
             }
 
-            case MoriTemplateKey.ConfirmGameDataResetHeader:
+            case MoriTemplateKey.EnterLinkInfo:
             {
-                // click vào OK
-                await emulatorConnection.ClickPPointAsync(new PPoint(59.0f, 62.2f));
-                return await WhenDone(baseActionPayload);
+                // spam 1 click truoc
+                await emulatorConnection.ClickPPointAsync(new PPoint(51.1f, 53.4f));
+                await Task.Delay(500);
+                // click nhap pass
+                await emulatorConnection.ClickPPointAsync(new PPoint(48.8f, 62.1f));
+                await Task.Delay(500);
+
+                emulatorConnection.ClearInput();
+                await Task.Delay(500);
+                emulatorConnection.SendText("123456aA");
+                // spam 1 click ra ngoai
+                await emulatorConnection.ClickPPointAsync(new PPoint(51.1f, 53.4f));
+
+                await Task.Delay(500);
+
+                var isFillPassSuccess = await ScanTemplateAsync([MoriTemplateKey.SavePassSuccess,], emulatorConnection);
+                if (isFillPassSuccess.Length > 0)
+                {
+                    // click finished
+                    await emulatorConnection.ClickPPointAsync(new PPoint(58.3f, 81.9f));
+                    return MoriAction.ResetUserData.Create(baseActionPayload);
+                }
+
+                Logger.Error("Failed to fill pass");
+                break;
             }
 
             case MoriTemplateKey.CharacterTabHeader:

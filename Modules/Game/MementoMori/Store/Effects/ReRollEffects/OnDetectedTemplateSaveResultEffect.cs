@@ -87,6 +87,7 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
                 await Task.Delay(1000);
                 // click outside
                 await emulatorConnection.ClickPPointAsync(new PPoint(98.4f, 46.3f));
+                isClicked = true;
                 break;
             case MoriTemplateKey.BeforeChallengeEnemyPower22:
             case MoriTemplateKey.BeforeChallengeEnemyPower23:
@@ -141,7 +142,7 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
 
                 if (isSaved)
                 {
-                    return MoriAction.ResetUserData.Create(baseActionPayload);
+                    return MoriAction.LinkAccount.Create(baseActionPayload);
                 }
 
                 break;

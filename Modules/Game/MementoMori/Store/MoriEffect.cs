@@ -20,6 +20,7 @@ public class MoriEffect
 
         /* After roll*/
         new OnDetectedTemplateSaveResultEffect(),
+        new OnDetectedTemplateLinkAccountEffect(),
         new OnDetectedTemplateResetUserDataEffect(),
     ];
 }

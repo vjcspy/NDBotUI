@@ -92,6 +92,14 @@ public enum MoriTemplateKey
     ResetGameDataHeader, // confirm
     ConfirmGameDataResetHeader, // confirm
     ErrorHeaderPopup,
+
+    /*Link account*/
+    EnterYourLinkAccountText,
+    PerformAccountLink,
+    SetLinkPassword,
+    EnterLinkInfo,
+    SavePassSuccess,
+    PrivacySettingsHeader,
 }
 
 public record GameInstance(

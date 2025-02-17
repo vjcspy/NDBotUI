@@ -150,6 +150,12 @@ public class DetectCurrentScreen : EffectBase
                 MoriTemplateKey.ResetGameDataHeader,
                 MoriTemplateKey.ConfirmGameDataResetHeader,
                 MoriTemplateKey.DownloadUpdateButton,
+
+                // Link
+                MoriTemplateKey.EnterYourLinkAccountText,
+                MoriTemplateKey.PerformAccountLink,
+                MoriTemplateKey.SetLinkPassword,
+                MoriTemplateKey.EnterLinkInfo,
             ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
