@@ -237,7 +237,11 @@ public class MoriReducer
                     return state;
                 }
 
-
+                // không quan tâm up level nữa
+                Logger.Info("=>>>>>>>>>> Reduce Priority for template CharacterGrowthPossible _______________");
+                TemplateImageDataHelper
+                    .TemplateImageData[MoriTemplateKey.CharacterGrowthPossible]
+                    .SetPriority(emulatorId, 101);
                 return state;
             }
 
