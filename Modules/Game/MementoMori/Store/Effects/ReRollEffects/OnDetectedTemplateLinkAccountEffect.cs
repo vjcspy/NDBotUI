@@ -164,7 +164,11 @@ public class OnDetectedTemplateLinkAccountEffect : ScanTemplateEffectBase
                     return CoreAction.Empty;
                 }
 
-                var isFillPassSuccess = await ScanTemplateAsync([MoriTemplateKey.SavePassSuccess,], emulatorConnection,screenshot);
+                var isFillPassSuccess = await ScanTemplateAsync(
+                    [MoriTemplateKey.SavePassSuccess,],
+                    emulatorConnection,
+                    screenshot
+                );
                 if (isFillPassSuccess.Length > 0)
                 {
                     await SkiaHelper.SaveScreenshot(

@@ -221,7 +221,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
             MoriTemplateKey.CharacterLevelOneText, MoriTemplateKey.CharacterLevelTwoText,
             MoriTemplateKey.CharacterLevelThreeText, MoriTemplateKey.CharacterLevelFourText,
             MoriTemplateKey.CharacterLevelFiveText, MoriTemplateKey.CharacterLevelSixText,
-            MoriTemplateKey.CharacterLevelSevenText
+            MoriTemplateKey.CharacterLevelSevenText,
         ];
 
         var countLevelUp = 0;
@@ -229,7 +229,7 @@ public class OnDetectedTemplateEligibilityLevelEffect : ScanTemplateEffectBase
         while (countLevelUp < 7)
         {
             var lv7Point = await ScanTemplateAsync(
-                [MoriTemplateKey.CharacterLevelEightText,MoriTemplateKey.CharacterLevelNineText,],
+                [MoriTemplateKey.CharacterLevelEightText, MoriTemplateKey.CharacterLevelNineText,],
                 emulatorConnection,
                 screenshot
             );

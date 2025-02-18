@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
-using NDBotUI.Modules.Game.AutoCore.Extensions;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
 using NDBotUI.Modules.Game.MementoMori.Typing;
