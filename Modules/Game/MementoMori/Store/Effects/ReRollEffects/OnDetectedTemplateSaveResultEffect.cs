@@ -69,6 +69,8 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
             MoriTemplateKey.SkipMovieButton,
             MoriTemplateKey.SkipSceneShotButton,
             MoriTemplateKey.CharacterGrowthPossible,
+            MoriTemplateKey.StartStartButton,
+            MoriTemplateKey.GuideClickDownButton,
             // MoriTemplateKey.IconChar1, // cho vào hơi vô lý nhưng để đảm bảo không bị lỗi khi không detect được
         ];
 
