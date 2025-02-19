@@ -247,6 +247,6 @@ public class DetectCurrentScreen : EffectBase
 
     protected override int GetThrottleTime()
     {
-        return 3;
+        return 4;
     }
 }
