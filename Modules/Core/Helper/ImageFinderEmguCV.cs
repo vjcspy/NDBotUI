@@ -189,8 +189,7 @@ public static class ImageFinderEmguCV
             CvInvoke.Resize(
                 screenshotMat,
                 processedScreenshot,
-                new Size(targetWidth, targetHeight),
-                (double)Inter.Linear
+                new Size(targetWidth, targetHeight)
             );
 
             processedTemplate = new Mat();
@@ -204,8 +203,8 @@ public static class ImageFinderEmguCV
                 // Chuyển về ảnh grayscale
                 using var screenshotGray = new Mat();
                 using var templateGray = new Mat();
-                CvInvoke.CvtColor(processedScreenshot, screenshotGray, ColorConversion.Bgr2Gray);
-                CvInvoke.CvtColor(processedTemplate, templateGray, ColorConversion.Bgr2Gray);
+                CvInvoke.CvtColor(processedScreenshot, screenshotGray, ColorConversion.Bgra2Gray);
+                CvInvoke.CvtColor(processedTemplate, templateGray, ColorConversion.Bgra2Gray);
 
                 // Tạo Mat kết quả
                 using var result = new Mat();
