@@ -10,5 +10,6 @@ public partial class R1999ConfigViewModel:ObservableViewModelBase
     [RelayCommand]
     public void TestCommand()
     {
+        ScreenHelper.TakeScreenshot("Reverse: 1999", "1.png");
     }
 }
