@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.UI.Game.MementoMori.Controls;
+using NDBotUI.UI.Game.R1999.Controls;
 using ReactiveUI;
 
 namespace NDBotUI.UI.Base.ViewModels;
@@ -22,7 +23,7 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
         this.WhenActivated(
             disposables =>
             {
-                Router.Navigate.Execute(new MoriContainerViewModel(this));
+                Router.Navigate.Execute(new R1999ContainerViewModel(this));
                 // Router.Navigate.Execute(new ProductPageViewModel(this));
 
                 Disposable
