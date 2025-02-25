@@ -33,12 +33,12 @@ public class ApplicationDbContext : DbContext
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedAt = DateTime.UtcNow;  // Set CreatedAt khi thêm mới
-                entry.Entity.UpdatedAt = DateTime.UtcNow;  // Set UpdatedAt khi thêm mới
+                entry.Entity.CreatedAt = DateTime.UtcNow; // Set CreatedAt khi thêm mới
+                entry.Entity.UpdatedAt = DateTime.UtcNow; // Set UpdatedAt khi thêm mới
             }
             else if (entry.State == EntityState.Modified)
             {
-                entry.Entity.UpdatedAt = DateTime.UtcNow;  // Cập nhật UpdatedAt khi sửa đổi
+                entry.Entity.UpdatedAt = DateTime.UtcNow; // Cập nhật UpdatedAt khi sửa đổi
             }
         }
 

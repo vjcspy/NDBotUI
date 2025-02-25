@@ -3,25 +3,20 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-class ScreenHelper
+internal class ScreenHelper
 {
     [DllImport("user32.dll")]
-    static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
     [DllImport("user32.dll")]
-    static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-    private struct RECT
-    {
-        public int Left, Top, Right, Bottom;
-    }
+    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
     public static bool TakeScreenshot(string windowTitle, string savePath)
     {
         try
         {
             // 1️⃣ Find the game window by title
-            IntPtr hwnd = FindWindow(null, windowTitle);
+            var hwnd = FindWindow(null, windowTitle);
             if (hwnd == IntPtr.Zero)
             {
                 Console.WriteLine("Window not found: " + windowTitle);
@@ -29,9 +24,9 @@ class ScreenHelper
             }
 
             // 2️⃣ Get window size
-            GetWindowRect(hwnd, out RECT rect);
-            int width = rect.Right - rect.Left;
-            int height = rect.Bottom - rect.Top;
+            GetWindowRect(hwnd, out var rect);
+            var width = rect.Right - rect.Left;
+            var height = rect.Bottom - rect.Top;
 
             if (width <= 0 || height <= 0)
             {
@@ -40,9 +35,9 @@ class ScreenHelper
             }
 
             // 3️⃣ Capture only the game window area
-            using (Bitmap bitmap = new Bitmap(width, height))
+            using (var bitmap = new Bitmap(width, height))
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
+                using (var g = Graphics.FromImage(bitmap))
                 {
                     g.CopyFromScreen(new Point(rect.Left, rect.Top), Point.Empty, new Size(width, height));
                 }
@@ -59,5 +54,10 @@ class ScreenHelper
             Console.WriteLine("Error capturing screenshot: " + ex.Message);
             return false;
         }
+    }
+
+    private struct RECT
+    {
+        public int Left, Top, Right, Bottom;
     }
 }

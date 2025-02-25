@@ -2,7 +2,6 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using NDBotUI.Modules.Core.Store;
-using NDBotUI.UI.Game.MementoMori.Controls;
 using NDBotUI.UI.Game.R1999.Controls;
 using ReactiveUI;
 

@@ -112,7 +112,7 @@ public class GmailAPIHelper
             // Duyệt qua tất cả các phần để tìm nội dung thực sự
             foreach (var part in message.Payload.Parts)
             {
-                string body = GetBodyFromPart(part);
+                var body = GetBodyFromPart(part);
                 if (!string.IsNullOrEmpty(body))
                 {
                     return body;
@@ -124,7 +124,7 @@ public class GmailAPIHelper
     }
 
     /// <summary>
-    /// Đệ quy tìm nội dung email trong tất cả các phần
+    ///     Đệ quy tìm nội dung email trong tất cả các phần
     /// </summary>
     private string GetBodyFromPart(MessagePart part)
     {
@@ -137,7 +137,7 @@ public class GmailAPIHelper
         {
             foreach (var subPart in part.Parts)
             {
-                string body = GetBodyFromPart(subPart);
+                var body = GetBodyFromPart(subPart);
                 if (!string.IsNullOrEmpty(body))
                 {
                     return body;
@@ -149,17 +149,24 @@ public class GmailAPIHelper
     }
 
     /// <summary>
-    /// Giải mã Base64URL thành văn bản đọc được
+    ///     Giải mã Base64URL thành văn bản đọc được
     /// </summary>
     private string Base64UrlDecode(string input)
     {
-        input = input.Replace("-", "+").Replace("_", "/");
+        input = input
+            .Replace("-", "+")
+            .Replace("_", "/");
         switch (input.Length % 4)
         {
-            case 2: input += "=="; break;
-            case 3: input += "="; break;
+            case 2:
+                input += "==";
+                break;
+            case 3:
+                input += "=";
+                break;
         }
-        byte[] bytes = Convert.FromBase64String(input);
+
+        var bytes = Convert.FromBase64String(input);
         return Encoding.UTF8.GetString(bytes);
     }
 
@@ -174,7 +181,6 @@ public class GmailAPIHelper
                    ?.Value
                ?? "Unknown";
     }
-
 }
 
 /// <summary>

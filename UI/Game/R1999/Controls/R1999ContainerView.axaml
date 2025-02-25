@@ -3,9 +3,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:NDBotUI.UI.Game.R1999.Controls"
+             xmlns:views="clr-namespace:NDBotUI.UI.Base.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NDBotUI.UI.Game.R1999.Controls.R1999ContainerView">
+             x:Class="NDBotUI.UI.Game.R1999.Controls.R1999ContainerView"
+             x:DataType="controls:R1999ContainerViewModel">
     <Grid>
-        <controls:R1999ConfigView />
+        <views:LoadingView IsVisible="{Binding IsLoading}" />
+        <Grid RowDefinitions="50,*,50"
+              IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+            <!-- Header (cố định chiều cao) -->
+            <Border Grid.Row="0" Background="#141729">
+                <TextBlock Text="Reserve: 1999" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+
+            <!-- Content -->
+            <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
+                <Grid RowDefinitions="200,1,*">
+                    <Grid Grid.Row="0">
+                        <controls:R1999GameInstanceView />
+                    </Grid>
+
+                    <!-- Thanh chia có thể kéo -->
+                    <GridSplitter Height="1" Background="Gray" Grid.Row="1"
+                                  VerticalAlignment="Stretch"
+                                  ShowsPreview="True" />
+
+                    <Grid Grid.Row="2">
+                        <controls:R1999ConfigView Grid.Column="0" HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Footer (cố định chiều cao) -->
+            <Border Background="#141729" Grid.Row="2">
+                <TextBlock Text="NDBot v0.1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

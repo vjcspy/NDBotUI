@@ -4,14 +4,12 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Db;
 using NDBotUI.Modules.Core.Helper;
-using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Game.R1999.Db;
-using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.UI.Base.ViewModels;
 
 namespace NDBotUI.UI.Game.R1999.Controls;
 
-public partial class R1999ConfigViewModel:ObservableViewModelBase
+public partial class R1999ConfigViewModel : ObservableViewModelBase
 {
     [RelayCommand]
     public void TestCommand()
@@ -26,7 +24,7 @@ public partial class R1999ConfigViewModel:ObservableViewModelBase
         var listemail = await gmailAPIHelper.GetEmailListAsync();
         if (listemail.Count > 0)
         {
-            var message =await gmailAPIHelper.GetEmailByIdAsync(listemail[0].Id);
+            var message = await gmailAPIHelper.GetEmailByIdAsync(listemail[0].Id);
             Logger.Info($"Content message: {message.Body}");
         }
 
@@ -42,7 +40,7 @@ public partial class R1999ConfigViewModel:ObservableViewModelBase
             {
                 Email = "test@example.com",
                 Ordinal = 1,
-                AccountStatus = AccountStatus.Open
+                AccountStatus = AccountStatus.Open,
             };
 
             context.R1999Accounts.Add(newAccount);
