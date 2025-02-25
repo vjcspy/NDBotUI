@@ -1,8 +1,11 @@
-﻿using System.Reactive;
+﻿using System;
+using System.Reactive;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using NDBotUI.Modules.Core.Db;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Game.MementoMori.Store;
+using NDBotUI.Modules.Game.R1999.Db;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.UI.Base.ViewModels;
 
@@ -14,10 +17,10 @@ public partial class R1999ConfigViewModel:ObservableViewModelBase
     public void TestCommand()
     {
         ScreenHelper.TakeScreenshot("Reverse: 1999", "1.png");
-        Test();
+        TestDb();
     }
 
-    private async Task<Unit> Test()
+    private async Task<Unit> TestEmail()
     {
         GmailAPIHelper gmailAPIHelper = new();
         var listemail = await gmailAPIHelper.GetEmailListAsync();
@@ -29,5 +32,24 @@ public partial class R1999ConfigViewModel:ObservableViewModelBase
 
 
         return Unit.Default;
+    }
+
+    private void TestDb()
+    {
+        using (var context = new ApplicationDbContext())
+        {
+            var newAccount = new R1999Account
+            {
+                Email = "test@example.com",
+                Ordinal = 1,
+                AccountStatus = AccountStatus.Open
+            };
+
+            context.R1999Accounts.Add(newAccount);
+            context.SaveChanges();
+
+            // Kiểm tra các giá trị CreatedAt và UpdatedAt
+            Console.WriteLine($"CreatedAt: {newAccount.CreatedAt}, UpdatedAt: {newAccount.UpdatedAt}");
+        }
     }
 }
