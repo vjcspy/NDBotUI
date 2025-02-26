@@ -6,12 +6,28 @@ using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Helper;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
+using NLog;
 
 namespace NDBotUI.Modules.Game.R1999.Store.Effects;
 
 public class DetectCurrentScreenEffect : DetectScreenEffectBase
 {
-    private readonly Enum[] CheckTemplates = [R1999TemplateKey.SkipMovieBtn1,R1999TemplateKey.ConfirmBtn];
+    private readonly Enum[] CheckTemplates = [
+        R1999TemplateKey.SkipMovieBtn1,
+        R1999TemplateKey.ConfirmBtn,
+        R1999TemplateKey.SignHere,
+        R1999TemplateKey.SelectSkill1Text,
+        R1999TemplateKey.HoldSkill2Text,
+        R1999TemplateKey.LinkSkillNeighboring,
+        R1999TemplateKey.SkillTimekeeperText,
+        R1999TemplateKey.GuideMeUltimate,
+        R1999TemplateKey.SkillUltimateText,
+        R1999TemplateKey.ReturnStoryText,
+        R1999TemplateKey.Story1Text,
+        R1999TemplateKey.Chapter1Button,
+        R1999TemplateKey.StartLoss8Button,
+        R1999TemplateKey.StartLoss8Button2,
+    ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
     {
@@ -71,8 +87,16 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
                 )
             );
         }
+        else
+        {
+            Logger.Info("No template detected");
+        }
 
-        return CoreAction.Empty;
+        return R1999Action.CouldNotDetectScreen.Create(
+            new BaseActionPayload(
+                emulatorConnection.Id
+            )
+        );
     }
 
     protected override ScreenDetectorDataBase GetScreenDetectorDataHelper()

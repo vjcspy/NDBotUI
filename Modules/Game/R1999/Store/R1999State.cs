@@ -13,7 +13,18 @@ public enum R1999TemplateKey
     Unknown,
     SkipMovieBtn1,
     ConfirmBtn,
-    TapAnywhereToClose,
+    SignHere,
+    SelectSkill1Text,
+    HoldSkill2Text,
+    LinkSkillNeighboring,
+    SkillTimekeeperText,
+    GuideMeUltimate,
+    SkillUltimateText,
+    ReturnStoryText,
+    Story1Text,
+    Chapter1Button,
+    StartLoss8Button,
+    StartLoss8Button2,
 }
 
 public enum R1999ReRollStatus
@@ -46,7 +57,7 @@ public record R1999JobReRollState(
     R1999ReRollStatus ReRollStatus,
     CurrentScreen CurrentScreen,
     int DetectScreenTry,
-    Guid? ResultId
+    int Ordinal
 )
 {
     public static R1999JobReRollState Factory()
@@ -55,7 +66,7 @@ public record R1999JobReRollState(
             R1999ReRollStatus.Open,
             new CurrentScreen(),
             0,
-            null
+            5
         );
     }
 }

@@ -25,7 +25,6 @@ public class DetectTemplateImageData(
     int priority = 100
 )
 {
-    private readonly int _defaultPriority = priority;
     private readonly Dictionary<string, int> PriorityDict = new();
     public EmuCVMat? EmuCVMat { get; set; } = emuCvMat;
     public bool IsLoadError { get; set; } = isLoadError;
@@ -35,8 +34,8 @@ public class DetectTemplateImageData(
     public int GetPriority(string emulatorId = "default")
     {
         return emulatorId == "default"
-            ? _defaultPriority
-            : PriorityDict.GetValueOrDefault(emulatorId, _defaultPriority);
+            ? Priority
+            : PriorityDict.GetValueOrDefault(emulatorId, Priority);
     }
 
     public void SetPriority(string emulatorId, int priority)
@@ -61,7 +60,10 @@ public abstract class ScreenDetectorDataBase
     public bool IsLoaded { get; set; }
     protected virtual string FolderPath { get => @"Resources\r1999\screen-detector"; }
 
-    public virtual Dictionary<string, OverrideScreenData> OverrideScreen { get; set; } = new();
+    public virtual Dictionary<Enum, OverrideScreenData> OverrideScreen
+    {
+        get => new();
+    }
 
     public virtual Enum[] TemplateKeys { get; set; } = [];
     public virtual Enum[] PixelColorKeys { get; set; } = [];
@@ -102,6 +104,13 @@ public abstract class ScreenDetectorDataBase
 
                 var emuCVMat = ImageFinderEmguCV.GetMatByPath(imagePath);
                 TemplateImageData[templateKey] = new DetectTemplateImageData();
+                if (OverrideScreen.ContainsKey(templateKey))
+                {
+                    if(OverrideScreen[templateKey].Priority != null)
+                    {
+                        TemplateImageData[templateKey].Priority = OverrideScreen[templateKey].Priority!.Value; ;
+                    }
+                }
                 if (emuCVMat == null)
                 {
                     TemplateImageData[templateKey].IsLoadError = true;

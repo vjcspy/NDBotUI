@@ -128,6 +128,32 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
         return Unit.Default;
     }
 
+    public async Task<Unit> SwipeAsync(Point from, Point to, int speed = 1000)
+    {
+        Logger.Info($"Emulator: {Id} - Swipe from: {from} to: {to}");
+        await emulatorScanData.AdbClient.SwipeAsync(emulatorScanData.DeviceData, from, to, speed);
+
+        return Unit.Default;
+    }
+
+    public async Task<Unit> SwipePPointAsync(PPoint from, PPoint to, int speed = 1000)
+    {
+        var currentResolution = GetScreenResolution();
+
+        if (currentResolution == null)
+        {
+            Logger.Error($"Emulator: {Id} - SwipePPointAsync could not find resolution");
+            return Unit.Default;
+        }
+
+        var xi = Convert.ToInt32(from.X * currentResolution[0] / 100);
+        var yi = Convert.ToInt32(from.Y * currentResolution[1] / 100);
+        var xf = Convert.ToInt32(to.X * currentResolution[0] / 100);
+        var yf = Convert.ToInt32(to.Y * currentResolution[1] / 100);
+
+        return await SwipeAsync(new Point(xi, yi), new Point(xf, yf), speed);
+    }
+
     public Unit ClickOnPoint(Point point)
     {
         Logger.Info($"Emulator: {Id} - Click on: {point}");
@@ -207,7 +233,6 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
         return Unit.Default;
     }
-
     public PPoint? ToPPoint(Point point)
     {
         var currentResolution = GetScreenResolution();
