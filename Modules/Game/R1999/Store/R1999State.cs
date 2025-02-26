@@ -13,6 +13,26 @@ public enum R1999TemplateKey
     Unknown,
 }
 
+public enum R1999ReRollStatus
+{
+    Open = 0, // chưa làm gì hết
+    Start, // Bấm start
+
+    EligibilityChapterCheck, // Check chapter level
+    EligibilityChapterPassed, // Check chapter level
+
+    EligibilityLevelCheck, // Đang checking level
+    EligibilityLevelCheckOnChar, // Đang checking level
+    EligibilityLevelPassed,
+
+    NextChapter,
+    SaveResult,
+    LinkAccount,
+    ResetUserData,
+
+    StoppedWithError,
+}
+
 public record R1999GameInstance(
     string EmulatorId,
     AutoState State, // On/Off Auto
@@ -34,7 +54,7 @@ public record R1999GameInstance(
 }
 
 public record R1999JobReRollState(
-    ReRollStatus ReRollStatus,
+    R1999ReRollStatus ReRollStatus,
     R1999TemplateKey CurrentScreenTemplate,
     R1999TemplateKey LastScreenTemplate,
     int DetectScreenTry,
@@ -44,7 +64,7 @@ public record R1999JobReRollState(
     public static R1999JobReRollState Factory()
     {
         return new R1999JobReRollState(
-            ReRollStatus.Open,
+            R1999ReRollStatus.Open,
             R1999TemplateKey.Unknown,
             R1999TemplateKey.Unknown,
             0,
@@ -53,7 +73,7 @@ public record R1999JobReRollState(
     }
 }
 
-public class R1999State(Lst<R1999GameInstance> gameInstances)
+public record R1999State(Lst<R1999GameInstance> GameInstances)
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -66,7 +86,7 @@ public class R1999State(Lst<R1999GameInstance> gameInstances)
     {
         try
         {
-            return gameInstances.First(g => g.EmulatorId == emulatorId);
+            return GameInstances.First(g => g.EmulatorId == emulatorId);
         }
         catch (Exception)
         {
@@ -76,7 +96,7 @@ public class R1999State(Lst<R1999GameInstance> gameInstances)
 
     public bool IsReRollJobRunning(string emulatorId)
     {
-        return gameInstances
+        return GameInstances
             .Find(instance => instance.EmulatorId == emulatorId)
             .Map(gameInstance => gameInstance.State == AutoState.On)
             .Match(x => x, () => false);
