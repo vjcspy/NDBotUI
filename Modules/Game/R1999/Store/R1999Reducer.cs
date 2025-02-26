@@ -1,4 +1,5 @@
-﻿using LanguageExt;
+﻿using System;
+using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Helper;
@@ -73,6 +74,53 @@ public class R1999Reducer
                     ),
                 };
                 TemplateImageDataHelper.ResetTemplateImagesPriority(emulatorId);
+                return state;
+            }
+
+            case R1999Action.Type.DetectScreen:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                var detectedTemplatePoint = baseActionPayload.Data as DetectTemplatePoint;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null || detectedTemplatePoint == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    CurrentScreen = new CurrentScreen(detectedTemplatePoint.TemplateKey.ToString()),
+                    DetectScreenTry = 0,
+                };
+
+
+                if (Equals(detectedTemplatePoint.TemplateKey, R1999TemplateKey.Chapter5Text))
+                {
+                    newJobReRollState = newJobReRollState with
+                    {
+                        ReRollStatus = R1999ReRollStatus.FinishQuest,
+                    };
+                }
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
                 return state;
             }
         }

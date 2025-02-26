@@ -16,6 +16,9 @@ public class WhenDetectedScreenQuestEffect : EffectBase
         R1999TemplateKey.SkipMovieBtn1,
         R1999TemplateKey.ConfirmBtn,
         R1999TemplateKey.Story1Text,
+        R1999TemplateKey.StartChapter,
+        R1999TemplateKey.Chapter3Text,
+        R1999TemplateKey.AttackCard,
     ];
 
     protected override bool IsParallel()
@@ -30,6 +33,7 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
+        Logger.Info(">>Process WhenDetectedScreenQuestEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {
@@ -161,8 +165,93 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
                 break;
             }
-                ;
+            case R1999TemplateKey.AccelerateBattleText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(97.2f, 5.7f));
+                isClicked = true;
+                break;
+            }
+            case R1999TemplateKey.ChooseEnemyText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(15.2f, 54.7f));
+                await Task.Delay(1000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 85.1f));
+                await Task.Delay(7000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 85.1f));
+                await Task.Delay(7000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 85.1f));
+                isClicked = true;
+                break;
+            }
 
+            case R1999TemplateKey.SummonText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(81.0f, 68.9f));
+                await Task.Delay(1000);
+                isClicked = true;
+                break;
+            }
+            case R1999TemplateKey.SummonWheel:
+            {
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(100);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(100);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(100);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(100);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 73.9f));
+                await Task.Delay(10000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(4f, 5.3f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.CheckCrewText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(88.7f, 54.7f));
+                await Task.Delay(1500);
+
+                // select sonetto
+                await emulatorConnection.ClickPPointAsync(new PPoint(15.1f, 35.1f));
+                await Task.Delay(1500);
+
+                //click level
+                await emulatorConnection.ClickPPointAsync(new PPoint(68.4f, 20.2f));
+                await Task.Delay(1500);
+                //select lv3
+                await emulatorConnection.ClickPPointAsync(new PPoint(88.5f, 51.3f));
+                await Task.Delay(1000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(80.2f, 70.0f));
+                await Task.Delay(1000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(80.8f, 82.0f));
+                await Task.Delay(1000);
+                // return story
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.0f, 6.0f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.HomeMail:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(83.9f, 40.3f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.SelectTargetChapter4:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(12.7f, 64.7f));
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(65.3f, 84.3f));
+                await Task.Delay(1500);
+                await emulatorConnection.ClickPPointAsync(new PPoint(95.0f, 84.3f));
+                isClicked = true;
+                break;
+            }
             default:
             {
                 if (_clickOnTemplateKeys.Contains(detectTemplatePoint.TemplateKey))
@@ -179,5 +268,22 @@ public class WhenDetectedScreenQuestEffect : EffectBase
         }
 
         return isClicked ? R1999Action.ClickedAfterDetectedScreen.Create(baseActionPayload) : CoreAction.Empty;
+    }
+
+    protected override bool Filter(EventAction action)
+    {
+        if (action.Payload is BaseActionPayload baseActionPayload)
+        {
+            var gameInstance =
+                AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
+            if (gameInstance is { } gameInstanceData)
+            {
+                var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
+
+                return currentStatus < R1999ReRollStatus.FinishQuest;
+            }
+        }
+
+        return false;
     }
 }

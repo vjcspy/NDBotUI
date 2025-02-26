@@ -25,12 +25,25 @@ public enum R1999TemplateKey
     Chapter1Button,
     StartLoss8Button,
     StartLoss8Button2,
+    AccelerateBattleText,
+    ChooseEnemyText,
+    SummonText,
+    SummonWheel,
+    CheckCrewText,
+    HomeMail,
+    StartChapter,
+    Chapter3Text,
+    SelectTargetChapter4,
+    AttackCard,
+    Chapter5Text,
 }
 
 public enum R1999ReRollStatus
 {
     Open = 0, // chưa làm gì hết
     Start, // Bấm start
+
+    FinishQuest,
 }
 
 public record R1999GameInstance(
