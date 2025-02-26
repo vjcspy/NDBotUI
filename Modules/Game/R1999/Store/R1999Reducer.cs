@@ -123,6 +123,149 @@ public class R1999Reducer
 
                 return state;
             }
+
+            case R1999Action.Type.GotDailyReward:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.Got1UniCurrentDay,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case R1999Action.Type.GotChapterReward:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.GotChapterReward,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+            case R1999Action.Type.GotEmailReward:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.GotEmailReward,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case R1999Action.Type.RollFinished:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.RollFinished,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
         }
 
         return state;

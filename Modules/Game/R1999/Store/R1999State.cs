@@ -36,6 +36,11 @@ public enum R1999TemplateKey
     SelectTargetChapter4,
     AttackCard,
     Chapter5Text,
+    ExitButton,
+    ClaimChapter14Button,
+    SummonX1Text,
+    LackUnilogText,
+    DontHaveEnoughText,
 }
 
 public enum R1999ReRollStatus
@@ -44,6 +49,10 @@ public enum R1999ReRollStatus
     Start, // Bấm start
 
     FinishQuest,
+    Got1UniCurrentDay,
+    GotChapterReward,
+    GotEmailReward,
+    RollFinished,
 }
 
 public record R1999GameInstance(

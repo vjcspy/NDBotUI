@@ -38,6 +38,10 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.SelectTargetChapter4,
         R1999TemplateKey.AttackCard,
         R1999TemplateKey.Chapter5Text,
+        R1999TemplateKey.ExitButton,
+        R1999TemplateKey.SummonX1Text,
+        R1999TemplateKey.LackUnilogText,
+        R1999TemplateKey.DontHaveEnoughText,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
