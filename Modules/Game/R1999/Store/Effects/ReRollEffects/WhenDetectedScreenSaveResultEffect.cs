@@ -63,6 +63,7 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
                 {
                     return R1999Action.SaveResultOk.Create(baseActionPayload);
                 }
+
                 break;
             case R1999TemplateKey.SummonX1Text:
             {
@@ -124,7 +125,7 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
 
         var gameInstance = AppStore.Instance.R1999Store.State.GetGameInstance(emulatorConnection.Id);
 
-        if (gameInstance?.JobReRollState.Ordinal == null)
+        if (gameInstance == null || gameInstance.JobReRollState.Ordinal == "")
         {
             Logger.Error("Not yet detected ordinal");
             return false;
@@ -132,7 +133,7 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
 
         await SkiaHelper.SaveScreenshot(
             emulatorConnection,
-            ImageHelper.GetImagePath(gameInstance.JobReRollState.Ordinal.ToString()!, "r1999/results/characters"),
+            ImageHelper.GetImagePath(gameInstance.JobReRollState.Ordinal, "r1999/results/characters"),
             screenshot
         );
 

@@ -81,7 +81,7 @@ public record R1999JobReRollState(
     R1999ReRollStatus ReRollStatus,
     CurrentScreen CurrentScreen,
     int DetectScreenTry,
-    int Ordinal
+    string Ordinal
 )
 {
     public static R1999JobReRollState Factory()
@@ -90,7 +90,7 @@ public record R1999JobReRollState(
             R1999ReRollStatus.Open,
             new CurrentScreen(),
             0,
-            5
+            ""
         );
     }
 }

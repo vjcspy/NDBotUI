@@ -3,9 +3,6 @@ using LanguageExt;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Helper;
-using NDBotUI.Modules.Game.MementoMori.Store;
-using NDBotUI.Modules.Game.MementoMori.Store.State;
-using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Game.R1999.Typing;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Store;
@@ -20,7 +17,6 @@ public class R1999Reducer
 
     public static R1999State Reduce(R1999State state, EventAction action)
     {
-
         switch (action.Type)
         {
             case EmulatorAction.Type.EmulatorConnectSuccess:
@@ -105,6 +101,11 @@ public class R1999Reducer
                     newJobReRollState = newJobReRollState with
                     {
                         ReRollStatus = R1999ReRollStatus.FinishQuest,
+                        Ordinal = gameInstance.JobReRollState.Ordinal == ""
+                            ? Guid
+                                .NewGuid()
+                                .ToString()
+                            : gameInstance.JobReRollState.Ordinal,
                     };
                 }
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Helper;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Helper;
+using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
 using NDBotUI.Modules.Shared.EventManager;
@@ -67,6 +69,13 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
                 if (gameInstance.JobReRollState.ReRollStatus < R1999ReRollStatus.Got1UniCurrentDay)
                 {
+                    // always save name
+                    var isSaveOk = await SaveResult(emulatorConnection);
+                    if (!isSaveOk)
+                    {
+                        break;
+                    }
+
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.8f, 9.2f));
                     await Task.Delay(2000);
 
@@ -81,7 +90,9 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(90.5f, 87.1f));
 
                     return R1999Action.GotDailyReward.Create(baseActionPayload);
-                }else if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.Got1UniCurrentDay)
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.Got1UniCurrentDay)
                 {
                     // lay qua chapter
                     await emulatorConnection.ClickPPointAsync(new PPoint(28.8f, 10.4f));
@@ -91,11 +102,12 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.4f, 22.3f));
                     await Task.Delay(1000);
 
-                    var points = await ScanTemplateAsync([R1999TemplateKey.ClaimChapter14Button], emulatorConnection);
+                    var points = await ScanTemplateAsync([R1999TemplateKey.ClaimChapter14Button,], emulatorConnection);
                     if (points.Length > 0)
                     {
                         await emulatorConnection.ClickPPointAsync(new PPoint(46.5f, 81.9f));
                     }
+
                     await Task.Delay(2000);
                     // tab2
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.3f, 35.6f));
@@ -103,7 +115,9 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.2f, 83.3f));
 
                     return R1999Action.GotChapterReward.Create(baseActionPayload);
-                }else if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotChapterReward)
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotChapterReward)
                 {
                     // lay qua email
                     await emulatorConnection.ClickPPointAsync(new PPoint(5.8f, 25.9f));
@@ -114,7 +128,9 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await Task.Delay(1000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(3.8f, 6.5f));
                     return R1999Action.GotEmailReward.Create(baseActionPayload);
-                }else if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotEmailReward)
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotEmailReward)
                 {
                     // click summon
                     await emulatorConnection.ClickPPointAsync(new PPoint(81.7f, 70.3f));
@@ -135,19 +151,19 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
             case R1999TemplateKey.SummonWheel:
             {
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(6000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(92.3f, 7.1f));
                 isClicked = true;
@@ -203,5 +219,32 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
     protected override ScreenDetectorDataBase GetScreenDetectorDataHelper()
     {
         return R1999ScreenDetectorDataHelper.GetInstance();
+    }
+
+    private async Task<bool> SaveResult(EmulatorConnection emulatorConnection)
+    {
+        var screenshot = await emulatorConnection.TakeScreenshotAsync();
+
+        if (screenshot is null)
+        {
+            Logger.Error("Failed to take screenshot");
+            return false;
+        }
+
+        var gameInstance = AppStore.Instance.R1999Store.State.GetGameInstance(emulatorConnection.Id);
+
+        if (gameInstance == null || gameInstance.JobReRollState.Ordinal == "")
+        {
+            Logger.Error("Not yet detected ordinal");
+            return false;
+        }
+
+        await SkiaHelper.SaveScreenshot(
+            emulatorConnection,
+            ImageHelper.GetImagePath(gameInstance.JobReRollState.Ordinal, "r1999/results/characters"),
+            screenshot
+        );
+
+        return true;
     }
 }
