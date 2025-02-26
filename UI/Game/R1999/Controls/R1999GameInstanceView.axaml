@@ -59,7 +59,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock FontSize="12"
-                                       Text="{Binding JobReRollState.CurrentScreenTemplate}"
+                                       Text="{Binding JobReRollState.CurrentScreen.ScreenName}"
                                        Foreground="LightBlue"
                                        VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </DataTemplate>

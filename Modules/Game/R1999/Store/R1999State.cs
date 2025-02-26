@@ -38,7 +38,7 @@ public record R1999GameInstance(
     AutoState State, // On/Off Auto
     string Status, // Text cho user biết đang làm gì
     R1999JobType JobType,
-    JobReRollState JobReRollState
+    R1999JobReRollState JobReRollState
 )
 {
     public static R1999GameInstance Factory(string emulatorId)
@@ -48,15 +48,14 @@ public record R1999GameInstance(
             AutoState.Off,
             "",
             R1999JobType.None,
-            JobReRollState.Factory()
+            R1999JobReRollState.Factory()
         );
     }
 }
 
 public record R1999JobReRollState(
     R1999ReRollStatus ReRollStatus,
-    R1999TemplateKey CurrentScreenTemplate,
-    R1999TemplateKey LastScreenTemplate,
+    CurrentScreen CurrentScreen,
     int DetectScreenTry,
     Guid? ResultId
 )
@@ -65,8 +64,7 @@ public record R1999JobReRollState(
     {
         return new R1999JobReRollState(
             R1999ReRollStatus.Open,
-            R1999TemplateKey.Unknown,
-            R1999TemplateKey.Unknown,
+            new CurrentScreen(),
             0,
             null
         );
