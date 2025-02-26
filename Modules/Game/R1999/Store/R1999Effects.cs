@@ -13,5 +13,6 @@ public class R1999Effects
         new WhenDetectedScreenQuestEffect(),
         new WhenCouldNotDetectScreenEffect(),
         new WhenDetectedScreenSummonEffect(),
+        new WhenDetectedScreenSaveResultEffect(),
     ];
 }

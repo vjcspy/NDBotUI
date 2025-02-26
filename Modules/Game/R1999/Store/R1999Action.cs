@@ -19,6 +19,7 @@ public class R1999Action
         GotChapterReward,
         GotEmailReward,
         RollFinished,
+        SaveResultOk,
     }
 
     public static readonly EventActionFactory InitR1999 = new(Type.InitR1999);
@@ -33,4 +34,5 @@ public class R1999Action
     public static readonly EventActionFactory GotChapterReward = new(Type.GotChapterReward);
     public static readonly EventActionFactory GotEmailReward = new(Type.GotEmailReward);
     public static readonly EventActionFactory RollFinished = new(Type.RollFinished);
+    public static readonly EventActionFactory SaveResultOk = new(Type.SaveResultOk);
 }

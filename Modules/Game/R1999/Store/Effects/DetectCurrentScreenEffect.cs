@@ -42,6 +42,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.SummonX1Text,
         R1999TemplateKey.LackUnilogText,
         R1999TemplateKey.DontHaveEnoughText,
+        R1999TemplateKey.CharacterLevelText,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()

@@ -41,6 +41,7 @@ public enum R1999TemplateKey
     SummonX1Text,
     LackUnilogText,
     DontHaveEnoughText,
+    CharacterLevelText,
 }
 
 public enum R1999ReRollStatus
@@ -53,6 +54,7 @@ public enum R1999ReRollStatus
     GotChapterReward,
     GotEmailReward,
     RollFinished,
+    SaveResultOk,
 }
 
 public record R1999GameInstance(
