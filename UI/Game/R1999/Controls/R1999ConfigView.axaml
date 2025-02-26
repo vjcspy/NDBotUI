@@ -6,7 +6,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="NDBotUI.UI.Game.R1999.Controls.R1999ConfigView"
              x:DataType="controls:R1999ConfigViewModel">
-    <Button Command="{Binding TestCommand}"
-            Content="Test"
-            VerticalAlignment="Center" HorizontalAlignment="Center" />
+    <TabControl IsVisible="{Binding IsShowConfig}">
+        <TabItem Header="Roll" FontSize="12">
+            <controls:R1999TabConfigView />
+        </TabItem>
+        <TabItem Header="Hướng Dẫn" FontSize="12">
+            <TextBlock Margin="5">This is tab 2 content</TextBlock>
+        </TabItem>
+    </TabControl>
 </UserControl>

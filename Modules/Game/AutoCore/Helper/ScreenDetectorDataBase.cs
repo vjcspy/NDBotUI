@@ -55,10 +55,10 @@ public record OverrideScreenData(
     int? Priority = 100
 );
 
-public class ScreenDetectorDataBase
+public abstract class ScreenDetectorDataBase
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public bool IsLoaded;
+    public bool IsLoaded { get; set; }
     protected virtual string FolderPath { get => @"Resources\r1999\screen-detector"; }
 
     public virtual Dictionary<string, OverrideScreenData> OverrideScreen { get; set; } = new();
@@ -69,14 +69,10 @@ public class ScreenDetectorDataBase
     public Dictionary<Enum, DetectTemplateImageData> TemplateImageData { get; set; } = new();
     protected Dictionary<Enum, DetectPixelColorData> PixelColorData { get; set; } = new();
 
-    public static ScreenDetectorDataBase GetInstance()
-    {
-        return new ScreenDetectorDataBase();
-    }
-
     public void LoadData()
     {
         LoadTemplateImages();
+        IsLoaded = true;
     }
 
     private void LoadTemplateImages()
@@ -86,10 +82,11 @@ public class ScreenDetectorDataBase
             return;
         }
 
+        var currentDirectory = Directory.GetCurrentDirectory();
         Logger.Info("Loading template images for screen detector");
         foreach (var templateKey in TemplateKeys)
         {
-            var imagePath = Path.Combine(FolderPath, "template", $"{templateKey}.png");
+            var imagePath = Path.Combine(currentDirectory, FolderPath, "template", $"{templateKey}.png");
             try
             {
                 // var openCVMat = ImageFinderOpenCvSharp.GetMatByPath(imagePath);
@@ -104,6 +101,7 @@ public class ScreenDetectorDataBase
                 // }
 
                 var emuCVMat = ImageFinderEmguCV.GetMatByPath(imagePath);
+                TemplateImageData[templateKey] = new DetectTemplateImageData();
                 if (emuCVMat == null)
                 {
                     TemplateImageData[templateKey].IsLoadError = true;
@@ -112,6 +110,7 @@ public class ScreenDetectorDataBase
                 else
                 {
                     TemplateImageData[templateKey].EmuCVMat = emuCVMat;
+                    TemplateImageData[templateKey].IsLoadError = false;
                 }
             }
             catch (Exception ex)
@@ -121,7 +120,6 @@ public class ScreenDetectorDataBase
             }
         }
 
-        IsLoaded = true;
         Logger.Info("Loaded template images for screen detector");
     }
 

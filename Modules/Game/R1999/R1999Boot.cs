@@ -4,7 +4,6 @@ using NDBotUI.Modules.Core.Attributes;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
-using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Game.R1999.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NLog;
@@ -24,7 +23,7 @@ public class R1999Boot
         Observable
             .Interval(TimeSpan.FromSeconds(2))
             .SelectMany(
-                _ => AppStore.Instance.MoriStore.State.GameInstances.ToObservable()
+                _ => AppStore.Instance.R1999Store.State.GameInstances.ToObservable()
             ) // Chuyển danh sách thành Observable
             .Where(x => x.State == AutoState.On) // Lọc các instance cần xử lý
             .SelectMany(

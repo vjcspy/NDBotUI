@@ -12,26 +12,13 @@ public enum R1999TemplateKey
 {
     Unknown,
     SkipMovieBtn1,
+    ConfirmBtn,
 }
 
 public enum R1999ReRollStatus
 {
     Open = 0, // chưa làm gì hết
     Start, // Bấm start
-
-    EligibilityChapterCheck, // Check chapter level
-    EligibilityChapterPassed, // Check chapter level
-
-    EligibilityLevelCheck, // Đang checking level
-    EligibilityLevelCheckOnChar, // Đang checking level
-    EligibilityLevelPassed,
-
-    NextChapter,
-    SaveResult,
-    LinkAccount,
-    ResetUserData,
-
-    StoppedWithError,
 }
 
 public record R1999GameInstance(

@@ -24,6 +24,7 @@
         <entry key="UI/Game/R1999/Controls/R1999ConfigView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/R1999/Controls/R1999ContainerView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/R1999/Controls/R1999GameInstanceView.axaml" value="NDBotUI.csproj" />
+        <entry key="UI/Game/R1999/Controls/R1999TabConfigView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/Game/R1999/Controls/R1Container.axaml" value="NDBotUI.csproj" />
         <entry key="UI/TedBed/Views/ProductDetailView.axaml" value="NDBotUI.csproj" />
         <entry key="UI/TedBed/Views/ProductListView.axaml" value="NDBotUI.csproj" />

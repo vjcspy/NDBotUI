@@ -1,9 +1,15 @@
 ﻿namespace NDBotUI.Modules.Core.Store;
 
-public record AppState(string AppName, int Count)
+public enum Game
+{
+    R1999,
+    MementoMori,
+}
+
+public record AppState(string AppName, Game Game, int Count)
 {
     public static AppState factory()
     {
-        return new AppState("NDBot", 0);
+        return new AppState("NDBot", Game.R1999, 0);
     }
 }

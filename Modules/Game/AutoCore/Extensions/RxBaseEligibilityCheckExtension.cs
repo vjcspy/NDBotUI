@@ -30,11 +30,30 @@ public static class RxBaseEligibilityCheckExtension
                     return true;
                 }
 
-                /* Chỉ chạy khi state của auto là On */
-                var isHasGameInstance =
-                    AppStore
+                var isHasGameInstance = false;
+                if (AppStore.Instance.State.Game == Core.Store.Game.MementoMori)
+                {
+                    /* Chỉ chạy khi state của auto là On */
+                    isHasGameInstance =
+                        AppStore
+                            .Instance
+                            .MoriStore
+                            .State
+                            .GameInstances
+                            .Find(
+                                instance =>
+                                    instance.EmulatorId == baseActionPayload.EmulatorId
+                            )
+                            .Match(
+                                game => game.State == AutoState.On,
+                                false
+                            );
+                }
+                else if (AppStore.Instance.State.Game == Core.Store.Game.R1999)
+                {
+                    isHasGameInstance = AppStore
                         .Instance
-                        .MoriStore
+                        .R1999Store
                         .State
                         .GameInstances
                         .Find(
@@ -45,6 +64,8 @@ public static class RxBaseEligibilityCheckExtension
                             game => game.State == AutoState.On,
                             false
                         );
+                }
+
                 if (!isHasGameInstance)
                 {
                     return false;

@@ -1,0 +1,23 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:NDBotUI.UI.Game.R1999.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.UI.Game.R1999.Controls.R1999TabConfigView"
+             x:DataType="local:R1999TabConfigViewModel">
+    <Grid RowDefinitions="40,*" ColumnDefinitions="*">
+        <Grid Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontWeight="Bold"
+                       Text="{Binding Store.EmulatorStore.State.SelectedEmulatorId}" />
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <Button Grid.Column="0" Command="{Binding ToggleReRollCommand}"
+                    Content="{Binding ToggleButtonText}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Button Grid.Column="1" Command="{Binding TestCommand}"
+                    Content="Test"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
+    </Grid>
+</UserControl>
