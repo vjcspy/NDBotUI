@@ -16,7 +16,6 @@
         <Folder Include="Modules\Core\Services\"/>
         <Folder Include="Modules\Game\MementoMori\Extension\"/>
         <Folder Include="Modules\Game\MementoMori\Services\"/>
-        <Folder Include="Modules\Game\R1999\Store\Effects\" />
         <Folder Include="Resources\game\r1999\screen-detector\pixel\" />
         <Folder Include="Resources\game\r1999\screen-detector\template\" />
     </ItemGroup>

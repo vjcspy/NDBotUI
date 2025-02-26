@@ -58,7 +58,7 @@ public record OverrideScreenData(
 public class ScreenDetectorDataBase
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static bool IsLoaded;
+    public bool IsLoaded;
     protected virtual string FolderPath { get => @"Resources\r1999\screen-detector"; }
 
     public virtual Dictionary<string, OverrideScreenData> OverrideScreen { get; set; } = new();
@@ -66,8 +66,8 @@ public class ScreenDetectorDataBase
     public virtual Enum[] TemplateKeys { get; set; } = [];
     public virtual Enum[] PixelColorKeys { get; set; } = [];
 
-    protected Dictionary<string, DetectTemplateImageData> TemplateImageData { get; set; } = new();
-    protected Dictionary<string, DetectPixelColorData> PixelColorData { get; set; } = new();
+    public Dictionary<Enum, DetectTemplateImageData> TemplateImageData { get; set; } = new();
+    protected Dictionary<Enum, DetectPixelColorData> PixelColorData { get; set; } = new();
 
     public static ScreenDetectorDataBase GetInstance()
     {
@@ -106,18 +106,18 @@ public class ScreenDetectorDataBase
                 var emuCVMat = ImageFinderEmguCV.GetMatByPath(imagePath);
                 if (emuCVMat == null)
                 {
-                    TemplateImageData[templateKey.ToString()].IsLoadError = true;
+                    TemplateImageData[templateKey].IsLoadError = true;
                     Logger.Error($"Failed to load template image for {templateKey}");
                 }
                 else
                 {
-                    TemplateImageData[templateKey.ToString()].EmuCVMat = emuCVMat;
+                    TemplateImageData[templateKey].EmuCVMat = emuCVMat;
                 }
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, $"Failed to load template image with key {templateKey}");
-                TemplateImageData[templateKey.ToString()].IsLoadError = true;
+                TemplateImageData[templateKey].IsLoadError = true;
             }
         }
 

@@ -11,6 +11,7 @@ namespace NDBotUI.Modules.Game.R1999.Store;
 public enum R1999TemplateKey
 {
     Unknown,
+    SkipMovieBtn1,
 }
 
 public enum R1999ReRollStatus
