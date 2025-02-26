@@ -19,7 +19,7 @@ public class GmailAPIHelper
     private static readonly string ApplicationName = "Gmail API C# Helper";
     private static readonly string CredentialPath = "credentials.json";
     private static readonly string TokenPath = "token.json";
-    private GmailService _service;
+    private GmailService? _service;
 
     public GmailAPIHelper()
     {
@@ -36,7 +36,7 @@ public class GmailAPIHelper
         using (var stream = new FileStream(CredentialPath, FileMode.Open, FileAccess.Read))
         {
             credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.Load(stream)
+                GoogleClientSecrets.FromStream(stream)
                     .Secrets,
                 Scopes,
                 "user",
@@ -60,6 +60,11 @@ public class GmailAPIHelper
     /// </summary>
     public async Task<List<Message>> GetEmailListAsync(int maxResults = 10, string query = "")
     {
+        if (_service == null)
+        {
+            return [];
+        }
+
         var request = _service.Users.Messages.List("me");
         request.MaxResults = maxResults;
         request.Q = query; // Nếu muốn tìm kiếm email theo tiêu chí
@@ -73,7 +78,7 @@ public class GmailAPIHelper
     /// </summary>
     public async Task<EmailContent> GetEmailByIdAsync(string messageId)
     {
-        var message = await _service
+        var message = await _service!
             .Users
             .Messages
             .Get("me", messageId)
@@ -126,7 +131,7 @@ public class GmailAPIHelper
     /// <summary>
     ///     Đệ quy tìm nội dung email trong tất cả các phần
     /// </summary>
-    private string GetBodyFromPart(MessagePart part)
+    private string? GetBodyFromPart(MessagePart part)
     {
         if (part.Body?.Data != null)
         {
@@ -188,8 +193,8 @@ public class GmailAPIHelper
 /// </summary>
 public class EmailContent
 {
-    public string Id { get; set; }
-    public string From { get; set; }
-    public string Subject { get; set; }
-    public string Body { get; set; }
+    public required string Id { get; set; }
+    public required string From { get; set; }
+    public required string Subject { get; set; }
+    public required string Body { get; set; }
 }

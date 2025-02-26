@@ -12,7 +12,7 @@ public enum AccountStatus
 public class R1999Account
 {
     public int Id { get; set; }
-    public string Email { get; set; }
+    public required string Email { get; set; }
     public int Ordinal { get; set; }
     public AccountStatus AccountStatus { get; set; }
 

@@ -13,6 +13,7 @@ public enum R1999TemplateKey
     Unknown,
     SkipMovieBtn1,
     ConfirmBtn,
+    TapAnywhereToClose,
 }
 
 public enum R1999ReRollStatus

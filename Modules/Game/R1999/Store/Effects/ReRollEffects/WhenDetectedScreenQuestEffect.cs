@@ -37,6 +37,8 @@ public class WhenDetectedScreenQuestEffect: EffectBase
         Enum[] clickOnTemplateKeys =
         [
             R1999TemplateKey.SkipMovieBtn1,
+            R1999TemplateKey.ConfirmBtn,
+            R1999TemplateKey.TapAnywhereToClose,
         ];
 
         switch (detectTemplatePoint.TemplateKey)
