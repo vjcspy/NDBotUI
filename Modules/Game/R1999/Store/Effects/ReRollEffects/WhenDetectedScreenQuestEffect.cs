@@ -57,16 +57,16 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             case R1999TemplateKey.SignHere:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(55.7f, 36.5f));
-                await Task.Delay(200);
+                await Task.Delay(1200);
                 var gameInstance = AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
                 await emulatorConnection.SendTextAsync($"chichi{gameInstance?.JobReRollState?.Ordinal}");
-                await Task.Delay(200);
+                await Task.Delay(2000);
                 //confirm
                 await emulatorConnection.ClickPPointAsync(new PPoint(56.6f, 67.2f));
-                await Task.Delay(200);
+                await Task.Delay(1500);
                 await emulatorConnection.ClickPPointAsync(new PPoint(56.6f, 67.2f));
 
-                await Task.Delay(200);
+                await Task.Delay(1500);
                 await emulatorConnection.ClickPPointAsync(new PPoint(63.3f, 74.4f));
                 isClicked = true;
                 break;
@@ -135,6 +135,8 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             case R1999TemplateKey.FullyPreparedText:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(94.1f, 86.5f));
+                await Task.Delay(500);
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.7f, 85.3f));
                 isClicked = true;
                 break;
             }
@@ -232,6 +234,8 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(300);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(300);
+                await emulatorConnection.SwipePPointAsync(new PPoint(63.6f, 49.2f), new PPoint(63.5f, 78.1f),300);
                 await Task.Delay(2000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 73.9f));
                 await Task.Delay(10000);

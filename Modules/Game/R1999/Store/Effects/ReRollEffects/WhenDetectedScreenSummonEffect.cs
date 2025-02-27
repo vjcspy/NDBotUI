@@ -81,7 +81,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
                     // get 1 uni
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 34.2f));
-                    await Task.Delay(1500);
+                    await Task.Delay(3000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
                     await Task.Delay(1500);
                     //  bind account
