@@ -93,12 +93,14 @@ public class GmailAPIHelper
     {
         var subject = GetHeaderValue(message, "Subject");
         var from = GetHeaderValue(message, "From");
+        var to = GetHeaderValue(message, "To");
         var body = ExtractEmailBody(message);
 
         return new EmailContent
         {
             Id = message.Id,
             From = from,
+            To = to,
             Subject = subject,
             Body = body,
         };
@@ -195,6 +197,7 @@ public class EmailContent
 {
     public required string Id { get; set; }
     public required string From { get; set; }
+    public required string To { get; set; }
     public required string Subject { get; set; }
     public required string Body { get; set; }
 }

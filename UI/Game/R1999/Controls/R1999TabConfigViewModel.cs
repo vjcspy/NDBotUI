@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -129,6 +131,7 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
     [RelayCommand]
     public void TestCommand()
     {
+        TestEmail();
     }
 
     private async Task<Unit> TestEmail()
@@ -137,8 +140,26 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
         var listemail = await gmailAPIHelper.GetEmailListAsync();
         if (listemail.Count > 0)
         {
-            var message = await gmailAPIHelper.GetEmailByIdAsync(listemail[0].Id);
-            Logger.Info($"Content message: {message.Body}");
+           var  getEmailTasks =  listemail.Select(email => gmailAPIHelper.GetEmailByIdAsync(email.Id));
+           var results = await Task.WhenAll(getEmailTasks);
+           var verificationCode = results.Where(content => content.To == "dinhkhoi.le.game+6@gmail.com").Select(
+               result =>
+               {
+                   var body = result.Body;
+
+                   // Regex để tìm mã xác minh
+                   string pattern = @"verification code:\s*(\d+)";
+
+                   Match match = Regex.Match(body, pattern);
+
+                   if (match.Success)
+                   {
+                       return match.Groups[1].Value;
+                   }
+                   return "";
+               }).ToList().FirstOrDefault();
+
+            Logger.Info($"verificationCode: {verificationCode}");
         }
 
 
@@ -147,20 +168,18 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
 
     private void TestDb()
     {
-        using (var context = new ApplicationDbContext())
+        using var context = new ApplicationDbContext();
+        var newAccount = new R1999Account
         {
-            var newAccount = new R1999Account
-            {
-                Email = "test@example.com",
-                Ordinal = 1,
-                AccountStatus = AccountStatus.Open,
-            };
+            Email = "test@example.com",
+            Ordinal = 1,
+            AccountStatus = AccountStatus.Open,
+        };
 
-            context.R1999Accounts.Add(newAccount);
-            context.SaveChanges();
+        context.R1999Accounts.Add(newAccount);
+        context.SaveChanges();
 
-            // Kiểm tra các giá trị CreatedAt và UpdatedAt
-            Console.WriteLine($"CreatedAt: {newAccount.CreatedAt}, UpdatedAt: {newAccount.UpdatedAt}");
-        }
+        // Kiểm tra các giá trị CreatedAt và UpdatedAt
+        Console.WriteLine($"CreatedAt: {newAccount.CreatedAt}, UpdatedAt: {newAccount.UpdatedAt}");
     }
 }

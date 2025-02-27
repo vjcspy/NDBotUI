@@ -42,6 +42,16 @@ public enum R1999TemplateKey
     LackUnilogText,
     DontHaveEnoughText,
     CharacterLevelText,
+    SettingButton,
+    LogOutExitBtn,
+    LoginLogoutBtn,
+    LoginAnotherAccBtn,
+    LoginWithEmailBtn,
+    RegisterBtn,
+    SendCodeBtn,
+    RegisterAccHeader,
+    SentCodeBtn,
+    RegisterAccPassBtn,
 }
 
 public enum R1999ReRollStatus
@@ -55,6 +65,10 @@ public enum R1999ReRollStatus
     GotEmailReward,
     RollFinished,
     SaveResultOk,
+
+    // registrer new account,
+    ClickedSendCode,
+    SentCode,
 }
 
 public record R1999GameInstance(

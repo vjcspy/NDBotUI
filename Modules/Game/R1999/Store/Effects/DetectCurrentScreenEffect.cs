@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Helper;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Helper;
@@ -12,7 +13,7 @@ namespace NDBotUI.Modules.Game.R1999.Store.Effects;
 
 public class DetectCurrentScreenEffect : DetectScreenEffectBase
 {
-    private readonly Enum[] CheckTemplates = [
+    private readonly Enum[] CheckTemplatesAll = [
         R1999TemplateKey.SkipMovieBtn1,
         R1999TemplateKey.ConfirmBtn,
         R1999TemplateKey.SignHere,
@@ -45,6 +46,18 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.CharacterLevelText,
     ];
 
+    private readonly Enum[] RenewAccountTemplates = [
+        R1999TemplateKey.SummonX1Text,
+        R1999TemplateKey.HomeMail,
+        R1999TemplateKey.SettingButton,
+        R1999TemplateKey.LogOutExitBtn,
+        R1999TemplateKey.ConfirmBtn,
+        R1999TemplateKey.LoginAnotherAccBtn,
+        // R1999TemplateKey.RegisterBtn,
+        R1999TemplateKey.RegisterAccHeader,
+        R1999TemplateKey.SentCodeBtn,
+    ];
+
     protected override IEventActionFactory[] GetAllowEventActions()
     {
         return [R1999Action.TriggerScanCurrentScreen,];
@@ -75,6 +88,18 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
             return CoreAction.Empty;
         }
 
+        var gameInstance = AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
+        var checkTemplates = CheckTemplatesAll;
+        if (gameInstance == null)
+        {
+            return CoreAction.Empty;
+        }
+
+        if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.SaveResultOk)
+        {
+            checkTemplates = RenewAccountTemplates;
+        }
+
         // Optimize by use one screenshot
         var screenshot = await emulatorConnection.TakeScreenshotAsync();
         if (screenshot is null)
@@ -83,7 +108,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         }
 
         var results = await ScanTemplateAsync(
-            CheckTemplates,
+            checkTemplates,
             emulatorConnection,
             screenshot
         );

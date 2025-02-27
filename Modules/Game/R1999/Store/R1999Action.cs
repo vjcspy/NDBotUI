@@ -20,6 +20,11 @@ public class R1999Action
         GotEmailReward,
         RollFinished,
         SaveResultOk,
+
+        // register account
+        ClickedSendCode,
+        SentCode,
+        RegisteredAccount,
     }
 
     public static readonly EventActionFactory InitR1999 = new(Type.InitR1999);
@@ -35,4 +40,8 @@ public class R1999Action
     public static readonly EventActionFactory GotEmailReward = new(Type.GotEmailReward);
     public static readonly EventActionFactory RollFinished = new(Type.RollFinished);
     public static readonly EventActionFactory SaveResultOk = new(Type.SaveResultOk);
+
+    public static readonly EventActionFactory ClickedSendCode = new(Type.ClickedSendCode);
+    public static readonly EventActionFactory SentCode = new(Type.SentCode);
+    public static readonly EventActionFactory RegisteredAccount = new(Type.RegisteredAccount);
 }

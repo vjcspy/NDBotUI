@@ -1,8 +1,11 @@
 ﻿using System;
 using LanguageExt;
+using NDBotUI.Modules.Core.Db;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
 using NDBotUI.Modules.Game.MementoMori.Helper;
+using NDBotUI.Modules.Game.R1999.Helper;
+using NDBotUI.Modules.Game.R1999.Service;
 using NDBotUI.Modules.Game.R1999.Typing;
 using NDBotUI.Modules.Shared.Emulator.Models;
 using NDBotUI.Modules.Shared.Emulator.Store;
@@ -283,9 +286,123 @@ public class R1999Reducer
                     return state;
                 }
 
+                using var context = new ApplicationDbContext();
+                var accountService = new R1999AccountService(context);
+                var nextAccount = accountService.CreateNewAccount(R1999DataHelper.GetAccountEmail());
+
+
                 var newJobReRollState = gameInstance.JobReRollState with
                 {
                     ReRollStatus = R1999ReRollStatus.SaveResultOk,
+                    Ordinal = nextAccount.Ordinal.ToString(),
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case R1999Action.Type.ClickedSendCode:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.ClickedSendCode,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case R1999Action.Type.SentCode:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.SentCode,
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case R1999Action.Type.RegisteredAccount:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    ReRollStatus = R1999ReRollStatus.Start,
                 };
 
                 state = state with
@@ -304,6 +421,8 @@ public class R1999Reducer
                 return state;
             }
         }
+
+
 
         return state;
     }

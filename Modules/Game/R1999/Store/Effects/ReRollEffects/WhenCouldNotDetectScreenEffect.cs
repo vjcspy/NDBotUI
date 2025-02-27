@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.Emulator.Typing;
@@ -11,6 +12,23 @@ public class WhenCouldNotDetectScreenEffect : EffectBase
     protected override IEventActionFactory[] GetAllowEventActions()
     {
         return [R1999Action.CouldNotDetectScreen,];
+    }
+
+    protected override bool Filter(EventAction action)
+    {
+        if (action.Payload is BaseActionPayload baseActionPayload)
+        {
+            var gameInstance =
+                AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
+            if (gameInstance is { } gameInstanceData)
+            {
+                var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
+
+                return currentStatus < R1999ReRollStatus.SaveResultOk;
+            }
+        }
+
+        return false;
     }
 
     protected override async Task<EventAction> Process(EventAction action)
