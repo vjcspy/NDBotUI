@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
+using NDBotUI.Modules.Game.AutoCore.Helper;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Helper;
 using NDBotUI.Modules.Shared.Emulator.Models;
@@ -80,7 +81,15 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 break;
             }
 
+            case R1999TemplateKey.UntickButton:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(35f, 62.2f));
+                isClicked = true;
+                break;
+            }
+
             case R1999TemplateKey.RegisterAccHeader:
+            case R1999TemplateKey.RegisterAccHeader1:
             {
                 var gameInstance = AppStore.Instance.R1999Store.State.GetGameInstance(emulatorConnection.Id);
 
@@ -94,7 +103,7 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                     var isClickSendCode = await SendCodeNewAccount(emulatorConnection);
                     if (isClickSendCode)
                     {
-                        return R1999Action.ClickedSendCode.Create(baseActionPayload);
+                        return R1999Action.SentCode.Create(baseActionPayload);
                     }
 
                     return CoreAction.Empty;
@@ -116,8 +125,8 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                         return CoreAction.Empty;
                     }
 
-                    Logger.Info("Verification code not found");
-
+                    Logger.Info("!!!! Verification code not found");
+                    await Task.Delay(5000);
                     return CoreAction.Empty;
                 }
 
@@ -130,16 +139,21 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 var isSetPassword = await SetPassword(emulatorConnection);
                 if (isSetPassword)
                 {
-                    return R1999Action.RegisteredAccount.Create(baseActionPayload);
+                    await Task.Delay(5000);
+                    var isStillRegister = await ScanTemplateAsync(
+                        [R1999TemplateKey.RegisterAccPassBtn,],
+                        emulatorConnection
+                    );
+                    if (isStillRegister.Length == 0)
+                    {
+                        return R1999Action.RegisteredAccount.Create(baseActionPayload);
+                    }
+
+                    return CoreAction.Empty;
                 }
 
                 return CoreAction.Empty;
             }
-
-            // case R1999TemplateKey.SentCodeBtn:
-            // {
-            //     return R1999Action.SentCode.Create(baseActionPayload);
-            // }
 
             case R1999TemplateKey.ProfileTextMotto:
             {
@@ -166,6 +180,11 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
         }
 
         return isClicked ? R1999Action.ClickedAfterDetectedScreen.Create(baseActionPayload) : CoreAction.Empty;
+    }
+
+    protected override ScreenDetectorDataBase GetScreenDetectorDataHelper()
+    {
+        return R1999ScreenDetectorDataHelper.GetInstance();
     }
 
     protected override bool Filter(EventAction action)
@@ -214,16 +233,22 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
 
     private async Task<bool> SetPassword(EmulatorConnection emulatorConnection)
     {
-        await emulatorConnection.ClickPPointAsync(new PPoint(39.5f, 38.9f));
-        await Task.Delay(250);
+        Logger.Info(">>>>>>> SetPassword");
+        await Task.Delay(1250);
+        await emulatorConnection.ClickPPointAsync(new PPoint(39.5f, 38.8f));
+        await Task.Delay(550);
+        emulatorConnection.ClearInput();
+        await Task.Delay(550);
         await emulatorConnection.SendTextAsync("123456aA");
-        await Task.Delay(250);
+        await Task.Delay(550);
         await emulatorConnection.ClickPPointAsync(new PPoint(39.5f, 54.9f));
-        await Task.Delay(250);
+        await Task.Delay(1250);
+        emulatorConnection.ClearInput();
+        await Task.Delay(550);
         await emulatorConnection.SendTextAsync("123456aA");
-        await Task.Delay(250);
+        await Task.Delay(1250);
         await emulatorConnection.ClickPPointAsync(new PPoint(39.5f, 62.0f));
-
+        await Task.Delay(1250);
         //click register
         await emulatorConnection.ClickPPointAsync(new PPoint(50.4f, 70.4f));
         return true;

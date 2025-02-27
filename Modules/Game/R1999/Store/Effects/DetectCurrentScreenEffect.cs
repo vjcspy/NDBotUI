@@ -63,10 +63,10 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.LoginAnotherAccBtn,
         R1999TemplateKey.RegisterBtn,
         R1999TemplateKey.RegisterAccHeader,
-        // R1999TemplateKey.SentCodeBtn,
         R1999TemplateKey.ProfileTextMotto,
         R1999TemplateKey.LoginWithEmailBtn,
-
+        R1999TemplateKey.RegisterAccPassBtn,
+        R1999TemplateKey.UntickButton,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
@@ -106,7 +106,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
             return CoreAction.Empty;
         }
 
-        if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.SaveResultOk)
+        if (gameInstance.JobReRollState.ReRollStatus >= R1999ReRollStatus.SaveResultOk)
         {
             Logger.Info("Change to RenewAccountTemplates");
             checkTemplates = RenewAccountTemplates;

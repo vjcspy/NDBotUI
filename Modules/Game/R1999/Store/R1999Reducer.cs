@@ -342,6 +342,7 @@ public class R1999Reducer
                                 ? instance with
                                 {
                                     JobReRollState = newJobReRollState,
+                                    State = AutoState.On
                                 }
                                 : instance
                     ),

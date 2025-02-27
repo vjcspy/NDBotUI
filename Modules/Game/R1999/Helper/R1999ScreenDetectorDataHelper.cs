@@ -27,6 +27,8 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
             { R1999TemplateKey.DontHaveEnoughText, new OverrideScreenData(Priority: 50, FilePath: null) },
             { R1999TemplateKey.SentCodeBtn, new OverrideScreenData(Priority: 50, FilePath: null) },
             { R1999TemplateKey.SonettoGuideLv, new OverrideScreenData(Priority: 101, FilePath: null) },
+            { R1999TemplateKey.RegisterAccPassBtn, new OverrideScreenData(Priority: 90, FilePath: null) },
+            { R1999TemplateKey.UntickButton, new OverrideScreenData(Priority: 50, FilePath: null) },
         };
     }
 
@@ -74,6 +76,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.RegisterBtn,
         R1999TemplateKey.SendCodeBtn,
         R1999TemplateKey.RegisterAccHeader,
+        R1999TemplateKey.RegisterAccHeader1,
         R1999TemplateKey.SentCodeBtn,
         R1999TemplateKey.RegisterAccPassBtn,
         R1999TemplateKey.SomeoneFamiliarText,
@@ -81,6 +84,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.GuideDealExtraDmgText,
         R1999TemplateKey.ProfileTextMotto,
         R1999TemplateKey.StartLoginBtn,
+        R1999TemplateKey.UntickButton,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

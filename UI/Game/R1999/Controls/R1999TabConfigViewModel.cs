@@ -131,7 +131,14 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
     [RelayCommand]
     public void TestCommand()
     {
-        TestEmail();
+        if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+        {
+            RxEventManager.Dispatch(
+                R1999Action.SaveResultOk.Create(
+                    new BaseActionPayload(selectedEmulatorId)
+                )
+            );
+        }
     }
 
     private async Task<Unit> TestEmail()

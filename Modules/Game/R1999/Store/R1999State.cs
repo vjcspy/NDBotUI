@@ -53,6 +53,7 @@ public enum R1999TemplateKey
     RegisterBtn,
     SendCodeBtn,
     RegisterAccHeader,
+    RegisterAccHeader1,
     SentCodeBtn,
     RegisterAccPassBtn,
     SomeoneFamiliarText,
@@ -60,6 +61,7 @@ public enum R1999TemplateKey
     GuideDealExtraDmgText,
     ProfileTextMotto,
     StartLoginBtn,
+    UntickButton,
 }
 
 public enum R1999ReRollStatus
