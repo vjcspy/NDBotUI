@@ -75,6 +75,8 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(55.7f, 84.5f));
                 await Task.Delay(200);
+                await emulatorConnection.ClickPPointAsync(new PPoint(65.4f, 86.1f));
+                await Task.Delay(200);
                 isClicked = true;
                 break;
             }
@@ -112,6 +114,20 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             case R1999TemplateKey.ReturnStoryText:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(82.2f, 39.4f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.RitualTimeKeeperText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(75.1f, 85.4f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.FullyPreparedText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(94.1f, 86.5f));
                 isClicked = true;
                 break;
             }

@@ -21,6 +21,8 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.HoldSkill2Text,
         R1999TemplateKey.LinkSkillNeighboring,
         R1999TemplateKey.SkillTimekeeperText,
+        R1999TemplateKey.RitualTimeKeeperText,
+        R1999TemplateKey.FullyPreparedText,
         R1999TemplateKey.GuideMeUltimate,
         R1999TemplateKey.SkillUltimateText,
         R1999TemplateKey.ReturnStoryText,

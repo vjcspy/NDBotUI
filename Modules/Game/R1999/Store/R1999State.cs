@@ -18,6 +18,8 @@ public enum R1999TemplateKey
     HoldSkill2Text,
     LinkSkillNeighboring,
     SkillTimekeeperText,
+    RitualTimeKeeperText,
+    FullyPreparedText,
     GuideMeUltimate,
     SkillUltimateText,
     ReturnStoryText,
