@@ -106,6 +106,10 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                         await emulatorConnection.ClickPPointAsync(new PPoint(50.2f, 70.9f));
                         return CoreAction.Empty;
                     }
+                    else
+                    {
+                        Logger.Info("Verification code not found");
+                    }
 
                     return CoreAction.Empty;
                 }
