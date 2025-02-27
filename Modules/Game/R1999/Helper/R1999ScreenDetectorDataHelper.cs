@@ -26,6 +26,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
             { R1999TemplateKey.LackUnilogText, new OverrideScreenData(Priority: 50, FilePath: null) },
             { R1999TemplateKey.DontHaveEnoughText, new OverrideScreenData(Priority: 50, FilePath: null) },
             { R1999TemplateKey.SentCodeBtn, new OverrideScreenData(Priority: 50, FilePath: null) },
+            { R1999TemplateKey.SonettoGuideLv, new OverrideScreenData(Priority: 101, FilePath: null) },
         };
     }
 
@@ -75,6 +76,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.SentCodeBtn,
         R1999TemplateKey.RegisterAccPassBtn,
         R1999TemplateKey.SomeoneFamiliarText,
+        R1999TemplateKey.SonettoGuideLv,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

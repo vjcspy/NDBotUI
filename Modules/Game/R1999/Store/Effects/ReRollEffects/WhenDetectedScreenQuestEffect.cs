@@ -113,7 +113,7 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
             case R1999TemplateKey.ReturnStoryText:
             {
-                await emulatorConnection.ClickPPointAsync(new PPoint(82.2f, 39.4f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.3f, 6.3f));
                 isClicked = true;
                 break;
             }
@@ -249,6 +249,24 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 break;
             }
 
+            case R1999TemplateKey.SonettoGuideLv:
+            {
+                //click level
+                await emulatorConnection.ClickPPointAsync(new PPoint(68.4f, 20.2f));
+                await Task.Delay(4000);
+                //select lv3
+                await emulatorConnection.ClickPPointAsync(new PPoint(88.5f, 51.3f));
+                await Task.Delay(3000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(80.2f, 70.0f));
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(80.8f, 82.0f));
+                await Task.Delay(1000);
+                // return story
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.0f, 6.0f));
+                isClicked = true;
+                break;
+            }
+
             case R1999TemplateKey.CheckCrewText:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(88.7f, 54.7f));
@@ -258,18 +276,6 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(15.1f, 35.1f));
                 await Task.Delay(1500);
 
-                //click level
-                await emulatorConnection.ClickPPointAsync(new PPoint(68.4f, 20.2f));
-                await Task.Delay(1500);
-                //select lv3
-                await emulatorConnection.ClickPPointAsync(new PPoint(88.5f, 51.3f));
-                await Task.Delay(1000);
-                await emulatorConnection.ClickPPointAsync(new PPoint(80.2f, 70.0f));
-                await Task.Delay(1000);
-                await emulatorConnection.ClickPPointAsync(new PPoint(80.8f, 82.0f));
-                await Task.Delay(1000);
-                // return story
-                await emulatorConnection.ClickPPointAsync(new PPoint(11.0f, 6.0f));
                 isClicked = true;
                 break;
             }

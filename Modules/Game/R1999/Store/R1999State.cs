@@ -55,6 +55,7 @@ public enum R1999TemplateKey
     SentCodeBtn,
     RegisterAccPassBtn,
     SomeoneFamiliarText,
+    SonettoGuideLv,
 }
 
 public enum R1999ReRollStatus
