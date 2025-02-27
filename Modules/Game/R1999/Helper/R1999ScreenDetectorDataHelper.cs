@@ -77,6 +77,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.RegisterAccPassBtn,
         R1999TemplateKey.SomeoneFamiliarText,
         R1999TemplateKey.SonettoGuideLv,
+        R1999TemplateKey.GuideDealExtraDmgText,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

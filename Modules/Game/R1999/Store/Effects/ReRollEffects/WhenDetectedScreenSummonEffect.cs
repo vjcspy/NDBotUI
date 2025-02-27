@@ -102,16 +102,17 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.4f, 22.3f));
                     await Task.Delay(1000);
 
+                    // only click when have reward
                     var points = await ScanTemplateAsync([R1999TemplateKey.ClaimChapter14Button,], emulatorConnection);
                     if (points.Length > 0)
                     {
                         await emulatorConnection.ClickPPointAsync(new PPoint(46.5f, 81.9f));
                     }
 
-                    await Task.Delay(2000);
+                    await Task.Delay(10000);
                     // tab2
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.3f, 35.6f));
-                    await Task.Delay(1000);
+                    await Task.Delay(2000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.2f, 83.3f));
 
                     return R1999Action.GotChapterReward.Create(baseActionPayload);
@@ -151,6 +152,8 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
             case R1999TemplateKey.SummonWheel:
             {
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                await Task.Delay(100);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);

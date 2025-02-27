@@ -56,6 +56,7 @@ public enum R1999TemplateKey
     RegisterAccPassBtn,
     SomeoneFamiliarText,
     SonettoGuideLv,
+    GuideDealExtraDmgText,
 }
 
 public enum R1999ReRollStatus

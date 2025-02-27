@@ -117,6 +117,12 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 isClicked = true;
                 break;
             }
+            case R1999TemplateKey.GuideDealExtraDmgText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(87.6f, 12.9f));
+                isClicked = true;
+                break;
+            }
 
             case R1999TemplateKey.RitualTimeKeeperText:
             {
