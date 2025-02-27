@@ -75,18 +75,18 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     {
                         break;
                     }
-
+                    await Task.Delay(1000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.8f, 9.2f));
-                    await Task.Delay(2000);
+                    await Task.Delay(2500);
 
                     // get 1 uni
-                    await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 22.7f));
-                    await Task.Delay(1000);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 34.2f));
+                    await Task.Delay(1500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
-
+                    await Task.Delay(1500);
                     //  bind account
-                    await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 48.1f));
-                    await Task.Delay(1000);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(7.5f, 48.4f));
+                    await Task.Delay(2500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(90.5f, 87.1f));
 
                     return R1999Action.GotDailyReward.Create(baseActionPayload);
@@ -96,20 +96,20 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                 {
                     // lay qua chapter
                     await emulatorConnection.ClickPPointAsync(new PPoint(28.8f, 10.4f));
-                    await Task.Delay(2000);
+                    await Task.Delay(2500);
 
                     // tab1
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.4f, 22.3f));
-                    await Task.Delay(1000);
+                    await Task.Delay(1500);
 
                     // only click when have reward
                     var points = await ScanTemplateAsync([R1999TemplateKey.ClaimChapter14Button,], emulatorConnection);
                     if (points.Length > 0)
                     {
                         await emulatorConnection.ClickPPointAsync(new PPoint(46.5f, 81.9f));
+                        await Task.Delay(10000);
                     }
 
-                    await Task.Delay(10000);
                     // tab2
                     await emulatorConnection.ClickPPointAsync(new PPoint(7.3f, 35.6f));
                     await Task.Delay(2000);
@@ -140,6 +140,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                 isClicked = true;
                 break;
             }
+
             case R1999TemplateKey.SummonX1Text:
             {
                 // click banner willow
@@ -212,7 +213,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus >= R1999ReRollStatus.FinishQuest;
+                return currentStatus is >= R1999ReRollStatus.FinishQuest and < R1999ReRollStatus.RollFinished;
             }
         }
 

@@ -31,6 +31,11 @@ public class WhenCouldNotDetectScreenEffect : EffectBase
         return false;
     }
 
+    protected override bool IsParallel()
+    {
+        return false;
+    }
+
     protected override async Task<EventAction> Process(EventAction action)
     {
         if (action.Payload is not BaseActionPayload baseActionPayload)

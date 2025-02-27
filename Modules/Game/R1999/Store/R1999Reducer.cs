@@ -326,7 +326,7 @@ public class R1999Reducer
                 using var context = new ApplicationDbContext();
                 var accountService = new R1999AccountService(context);
                 var nextAccount = accountService.CreateNewAccount(R1999DataHelper.GetAccountEmail());
-
+                Logger.Info(">> Created new account in DB");
 
                 var newJobReRollState = gameInstance.JobReRollState with
                 {

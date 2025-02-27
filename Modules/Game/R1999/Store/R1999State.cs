@@ -44,6 +44,7 @@ public enum R1999TemplateKey
     LackUnilogText,
     DontHaveEnoughText,
     CharacterLevelText,
+    CharacterLevelText1,
     SettingButton,
     LogOutExitBtn,
     LoginLogoutBtn,
@@ -57,6 +58,8 @@ public enum R1999TemplateKey
     SomeoneFamiliarText,
     SonettoGuideLv,
     GuideDealExtraDmgText,
+    ProfileTextMotto,
+    StartLoginBtn,
 }
 
 public enum R1999ReRollStatus

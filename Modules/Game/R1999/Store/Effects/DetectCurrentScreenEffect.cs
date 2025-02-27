@@ -46,9 +46,11 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.LackUnilogText,
         R1999TemplateKey.DontHaveEnoughText,
         R1999TemplateKey.CharacterLevelText,
+        R1999TemplateKey.CharacterLevelText1,
         R1999TemplateKey.SomeoneFamiliarText,
         R1999TemplateKey.SonettoGuideLv,
         R1999TemplateKey.GuideDealExtraDmgText,
+        R1999TemplateKey.StartLoginBtn,
     ];
 
     private readonly Enum[] RenewAccountTemplates = [
@@ -57,10 +59,14 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.SettingButton,
         R1999TemplateKey.LogOutExitBtn,
         R1999TemplateKey.ConfirmBtn,
+        R1999TemplateKey.LoginLogoutBtn,
         R1999TemplateKey.LoginAnotherAccBtn,
-        // R1999TemplateKey.RegisterBtn,
+        R1999TemplateKey.RegisterBtn,
         R1999TemplateKey.RegisterAccHeader,
-        R1999TemplateKey.SentCodeBtn,
+        // R1999TemplateKey.SentCodeBtn,
+        R1999TemplateKey.ProfileTextMotto,
+        R1999TemplateKey.LoginWithEmailBtn,
+
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()
@@ -102,6 +108,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
         if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.SaveResultOk)
         {
+            Logger.Info("Change to RenewAccountTemplates");
             checkTemplates = RenewAccountTemplates;
         }
 

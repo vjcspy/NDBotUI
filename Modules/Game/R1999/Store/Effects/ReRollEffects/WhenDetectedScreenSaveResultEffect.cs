@@ -32,7 +32,7 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info(">>Process WhenDetectedScreenSummonEffect");
+        Logger.Info(">>Process WhenDetectedScreenSaveResultEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {
@@ -58,9 +58,12 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
                 break;
 
             case R1999TemplateKey.CharacterLevelText:
+            case R1999TemplateKey.CharacterLevelText1:
                 var isSaveOk = await SaveResult(emulatorConnection);
                 if (isSaveOk)
                 {
+                    await Task.Delay(1000);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(11.4f, 6f));
                     return R1999Action.SaveResultOk.Create(baseActionPayload);
                 }
 

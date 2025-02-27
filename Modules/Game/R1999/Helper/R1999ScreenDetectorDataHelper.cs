@@ -65,6 +65,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.LackUnilogText,
         R1999TemplateKey.DontHaveEnoughText,
         R1999TemplateKey.CharacterLevelText,
+        R1999TemplateKey.CharacterLevelText1, // optimize scan
         R1999TemplateKey.SettingButton,
         R1999TemplateKey.LogOutExitBtn,
         R1999TemplateKey.LoginLogoutBtn,
@@ -78,6 +79,8 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.SomeoneFamiliarText,
         R1999TemplateKey.SonettoGuideLv,
         R1999TemplateKey.GuideDealExtraDmgText,
+        R1999TemplateKey.ProfileTextMotto,
+        R1999TemplateKey.StartLoginBtn,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

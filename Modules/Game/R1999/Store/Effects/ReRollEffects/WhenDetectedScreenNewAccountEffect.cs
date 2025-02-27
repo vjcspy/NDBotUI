@@ -40,7 +40,7 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info(">>Process WhenDetectedScreenSummonEffect");
+        Logger.Info(">>Process WhenDetectedScreenNewAccountEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {
@@ -60,6 +60,13 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
 
         switch (detectTemplatePoint.TemplateKey)
         {
+            case R1999TemplateKey.CharacterLevelText1:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.1f, 6.3f));
+                isClicked = true;
+                break;
+            }
+
             case R1999TemplateKey.SummonX1Text:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(11.3f, 7.2f));
@@ -89,6 +96,8 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                     {
                         return R1999Action.ClickedSendCode.Create(baseActionPayload);
                     }
+
+                    return CoreAction.Empty;
                 }
 
                 if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.SentCode)
@@ -106,10 +115,8 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                         await emulatorConnection.ClickPPointAsync(new PPoint(50.2f, 70.9f));
                         return CoreAction.Empty;
                     }
-                    else
-                    {
-                        Logger.Info("Verification code not found");
-                    }
+
+                    Logger.Info("Verification code not found");
 
                     return CoreAction.Empty;
                 }
@@ -129,8 +136,18 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 return CoreAction.Empty;
             }
 
-            case R1999TemplateKey.SentCodeBtn:
-                return R1999Action.SentCode.Create(baseActionPayload);
+            // case R1999TemplateKey.SentCodeBtn:
+            // {
+            //     return R1999Action.SentCode.Create(baseActionPayload);
+            // }
+
+            case R1999TemplateKey.ProfileTextMotto:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.6f, 5.8f));
+
+                isClicked = true;
+                break;
+            }
 
 
             default:
@@ -138,7 +155,7 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 if (_clickOnTemplateKeys.Contains(detectTemplatePoint.TemplateKey))
                 {
                     Logger.Info(
-                        $"Click template {detectTemplatePoint.TemplateKey} on {detectTemplatePoint.Point}"
+                        $">>>> Click template {detectTemplatePoint.TemplateKey} on {detectTemplatePoint.Point}"
                     );
                     await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
                     isClicked = true;
@@ -185,8 +202,10 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
         await emulatorConnection.SendTextAsync(
             $"{R1999DataHelper.GetAccountEmail(gameInstance.JobReRollState.Ordinal)}"
         );
-        await Task.Delay(150);
+        await Task.Delay(550);
         // click send code;
+        await emulatorConnection.ClickPPointAsync(new PPoint(60.4f, 51.7f));
+        await Task.Delay(150);
         await emulatorConnection.ClickPPointAsync(new PPoint(60.4f, 51.7f));
 
 

@@ -14,5 +14,6 @@ public class R1999Effects
         new WhenCouldNotDetectScreenEffect(),
         new WhenDetectedScreenSummonEffect(),
         new WhenDetectedScreenSaveResultEffect(),
+        new WhenDetectedScreenNewAccountEffect(),
     ];
 }
