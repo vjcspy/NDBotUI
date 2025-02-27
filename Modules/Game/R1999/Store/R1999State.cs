@@ -54,6 +54,7 @@ public enum R1999TemplateKey
     RegisterAccHeader,
     SentCodeBtn,
     RegisterAccPassBtn,
+    SomeoneFamiliarText,
 }
 
 public enum R1999ReRollStatus

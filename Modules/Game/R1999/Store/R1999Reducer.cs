@@ -76,6 +76,43 @@ public class R1999Reducer
                 return state;
             }
 
+            case R1999Action.Type.CouldNotDetectScreen:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                var newJobReRollState = gameInstance.JobReRollState with
+                {
+                    DetectScreenTry = gameInstance.JobReRollState.DetectScreenTry + 1,
+                    CurrentScreen =  new CurrentScreen(R1999TemplateKey.Unknown.ToString()),
+                };
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    JobReRollState = newJobReRollState,
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
             case R1999Action.Type.DetectScreen:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload)

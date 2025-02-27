@@ -167,7 +167,6 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
                 break;
             }
-                ;
 
             case R1999TemplateKey.StartLoss8Button:
             case R1999TemplateKey.StartLoss8Button2:
@@ -222,10 +221,30 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(100);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(300);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await Task.Delay(300);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(2000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 73.9f));
                 await Task.Delay(10000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(4f, 5.3f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.SomeoneFamiliarText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 74.1f));
+                isClicked = true;
+                break;
+            }
+
+            case R1999TemplateKey.SummonX1Text:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(11.5f, 5.8f));
+                await Task.Delay(100);
+                await emulatorConnection.ClickPPointAsync(new PPoint(3.7f, 6.0f));
                 isClicked = true;
                 break;
             }
