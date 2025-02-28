@@ -134,7 +134,7 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
         if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
         {
             RxEventManager.Dispatch(
-                R1999Action.SaveResultOk.Create(
+                R1999Action.GotEmailReward.Create(
                     new BaseActionPayload(selectedEmulatorId)
                 )
             );

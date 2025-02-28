@@ -76,12 +76,16 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     {
                         break;
                     }
+
                     await Task.Delay(1000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.8f, 9.2f));
                     await Task.Delay(7500);
 
                     // get 1 uni
-                    var dailyRewardPoints = await ScanTemplateAsync([R1999TemplateKey.GetDailyUnilogTabText,], emulatorConnection);
+                    var dailyRewardPoints = await ScanTemplateAsync(
+                        [R1999TemplateKey.GetDailyUnilogTabText,],
+                        emulatorConnection
+                    );
                     if (dailyRewardPoints.Length > 0)
                     {
                         Logger.Info(">>>> Found daily reward tab, click it");
@@ -91,6 +95,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     {
                         await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 22.7f));
                     }
+
                     await Task.Delay(1500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
                     await Task.Delay(5000);
@@ -161,7 +166,24 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(10.5f, 82.1f));
                 await Task.Delay(700);
 
-                await emulatorConnection.ClickPPointAsync(new PPoint(59.5f, 89.4f));
+                var gameInstance =
+                    AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
+                if (gameInstance == null)
+                {
+                    return CoreAction.Empty;
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus < R1999ReRollStatus.RollX1)
+                {
+                    // roll x10
+                    await emulatorConnection.ClickPPointAsync(new PPoint(83.3f, 89.4f));
+                }
+                else
+                {
+                    // roll x1
+                    await emulatorConnection.ClickPPointAsync(new PPoint(59.5f, 89.4f));
+                }
+
                 isClicked = true;
                 break;
             }
@@ -198,6 +220,20 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
             }
             case R1999TemplateKey.DontHaveEnoughText:
             {
+                var gameInstance =
+                    AppStore.Instance.R1999Store.State.GetGameInstance(baseActionPayload.EmulatorId);
+                if (gameInstance == null)
+                {
+                    return CoreAction.Empty;
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus < R1999ReRollStatus.RollX1)
+                {
+                    await emulatorConnection.ClickPPointAsync(new PPoint(39f, 58.2f));
+                    return R1999Action.RollX1.Create(baseActionPayload);
+                }
+
+                // click cancel
                 await emulatorConnection.ClickPPointAsync(new PPoint(39f, 58.2f));
                 return R1999Action.RollFinished.Create(baseActionPayload);
             }

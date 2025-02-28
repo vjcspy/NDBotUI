@@ -18,6 +18,7 @@ public class R1999Action
         GotDailyReward,
         GotChapterReward,
         GotEmailReward,
+        RollX1,
         RollFinished,
         SaveResultOk,
 
@@ -38,6 +39,7 @@ public class R1999Action
     public static readonly EventActionFactory GotDailyReward = new(Type.GotDailyReward);
     public static readonly EventActionFactory GotChapterReward = new(Type.GotChapterReward);
     public static readonly EventActionFactory GotEmailReward = new(Type.GotEmailReward);
+    public static readonly EventActionFactory RollX1 = new(Type.RollX1);
     public static readonly EventActionFactory RollFinished = new(Type.RollFinished);
     public static readonly EventActionFactory SaveResultOk = new(Type.SaveResultOk);
 

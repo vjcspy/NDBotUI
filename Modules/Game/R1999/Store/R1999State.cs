@@ -76,6 +76,7 @@ public enum R1999ReRollStatus
     Got1UniCurrentDay,
     GotChapterReward,
     GotEmailReward,
+    RollX1,
     RollFinished,
     SaveResultOk,
 

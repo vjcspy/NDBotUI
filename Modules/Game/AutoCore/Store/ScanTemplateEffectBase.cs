@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AdvancedSharpAdbClient.Models;
 using Emgu.CV;
+using LanguageExt;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Game.AutoCore.Helper;
@@ -41,20 +41,35 @@ public abstract class DetectScreenEffectBase : EffectBase
         }
 
         var screenshotEmguMat = screenshot.ToEmguMat();
+        // Tạo SemaphoreSlim cho phép tối đa 2 thread chạy đồng thời
+        var semaphore = new SemaphoreSlim(5); // 2 thread tối đa
+
+
         var tasks = templateKeys
             .Select(
-                templateKey =>
-                    Observable
-                        .FromAsync(
-                            () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, templateKey))
-                        )
-                        .SubscribeOn(Scheduler.Default)
-            );
+                async templateKey =>
+                {
+                    // Chờ đến khi có thread trống
+                    await semaphore.WaitAsync();
 
-        var result = await tasks
-            .Merge(3)
-            .Where(res => res != null)
+                    try
+                    {
+                        // Gọi hàm DetectCurrentScreenByEmguCV trong một thread mới
+                        return await Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, templateKey));
+                    }
+                    finally
+                    {
+                        // Giải phóng semaphore để cho phép thread khác thực thi
+                        semaphore.Release();
+                    }
+                }
+            )
             .ToArray();
+
+        // Chạy tất cả các task đồng thời và lấy kết quả
+        var result = await Task
+            .WhenAll(tasks) // Chạy đồng thời tất cả các task
+            .Select(res => res.Where(a => a != null));
 
         var resultOrdered = result.OrderBy(
             point =>

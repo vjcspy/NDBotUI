@@ -71,7 +71,8 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
             case R1999TemplateKey.SummonX1Text:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(11.3f, 7.2f));
-                return R1999Action.RollFinished.Create(baseActionPayload);
+                isClicked = true;
+                break;
             }
 
             case R1999TemplateKey.HomeMail:
