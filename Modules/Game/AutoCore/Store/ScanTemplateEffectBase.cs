@@ -52,7 +52,7 @@ public abstract class DetectScreenEffectBase : EffectBase
             );
 
         var result = await tasks
-            .Merge(5)
+            .Merge(3)
             .Where(res => res != null)
             .ToArray();
 
