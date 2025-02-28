@@ -4,6 +4,6 @@ public class R1999DataHelper
 {
     public static string GetAccountEmail(string? ordinal = null)
     {
-        return ordinal != null ? $"dinhkhoi.le.game+{ordinal}@gmail.com" : "dinhkhoi.le.game@gmail.com";
+        return ordinal != null ? $"dinhkhoi.le.sg+{ordinal}@gmail.com" : "dinhkhoi.le.sg@gmail.com";
     }
 }

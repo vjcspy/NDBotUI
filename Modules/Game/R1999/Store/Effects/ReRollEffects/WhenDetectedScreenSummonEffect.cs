@@ -94,7 +94,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
                     await Task.Delay(2500);
                     //  bind account
-                    await emulatorConnection.ClickPPointAsync(new PPoint(7.5f, 48.4f));
+                    await emulatorConnection.ClickPPointAsync(new PPoint(8.5f, 48.4f));
                     await Task.Delay(1500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(90.5f, 87.1f));
 
@@ -116,7 +116,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     if (points.Length > 0)
                     {
                         await emulatorConnection.ClickPPointAsync(new PPoint(46.5f, 81.9f));
-                        await Task.Delay(10000);
+                        await Task.Delay(11000);
                     }
 
                     // tab2
