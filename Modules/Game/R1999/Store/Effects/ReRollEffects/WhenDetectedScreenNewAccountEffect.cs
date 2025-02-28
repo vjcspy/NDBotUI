@@ -270,12 +270,16 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
             var getEmailTasks = listemail.Select(email => GmailAPIHelper.GetEmailByIdAsync(email.Id));
             var results = await Task.WhenAll(getEmailTasks);
             var verificationCode = results
-                .Where(content => content.To == R1999DataHelper.GetAccountEmail(Ordinal))
+                .Where(content =>
+                    {
+                        return content.To.Contains(R1999DataHelper.GetAccountEmail(Ordinal));
+                    }
+                )
                 .Select(
                     result =>
                     {
                         var body = result.Body;
-
+                        Logger.Info($"body: {body}");
                         // Regex để tìm mã xác minh
                         var pattern = @"verification code:\s*(\d+)";
 
