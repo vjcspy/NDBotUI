@@ -240,27 +240,27 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
 
                 await Task.Delay(300);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(300);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(300);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(300);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
+                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
                 await Task.Delay(300);
-                await emulatorConnection.SwipePPointAsync(new PPoint(63.6f, 49.2f), new PPoint(63.5f, 78.1f),300);
+                await emulatorConnection.SwipePPointAsync(new PPoint(63.6f, 49.2f), new PPoint(63.5f, 78.1f), 300);
                 await Task.Delay(500);
-                await emulatorConnection.SwipePPointAsync(new PPoint(62.3f, 45.5f), new PPoint(64f, 75.4f),500);
+                await emulatorConnection.SwipePPointAsync(new PPoint(62.3f, 45.5f), new PPoint(64f, 75.4f), 500);
 
 
                 await Task.Delay(2500);

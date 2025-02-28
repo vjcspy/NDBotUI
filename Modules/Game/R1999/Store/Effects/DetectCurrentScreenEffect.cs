@@ -69,6 +69,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.LoginWithEmailBtn,
         R1999TemplateKey.RegisterAccPassBtn,
         R1999TemplateKey.UntickButton,
+        R1999TemplateKey.CharacterLevelText,
     ];
 
     protected override IEventActionFactory[] GetAllowEventActions()

@@ -164,6 +164,13 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 break;
             }
 
+            case R1999TemplateKey.CharacterLevelText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(10.9f, 5.7f));
+                isClicked = true;
+                break;
+            }
+
 
             default:
             {
