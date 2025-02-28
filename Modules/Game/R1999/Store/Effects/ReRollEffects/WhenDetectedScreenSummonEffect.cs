@@ -88,15 +88,15 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     }
                     else
                     {
-                        await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 34.2f));
+                        await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 22.7f));
                     }
                     await Task.Delay(1500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
-                    await Task.Delay(3500);
+                    await Task.Delay(5000);
                     //  bind account
-                    await emulatorConnection.ClickPPointAsync(new PPoint(8.5f, 48.4f));
+                    await emulatorConnection.ClickPPointAsync(new PPoint(8.2f, 48f));
                     await emulatorConnection.ClickPPointAsync(new PPoint(9.5f, 48.4f));
-                    await Task.Delay(1500);
+                    await Task.Delay(2500);
                     await emulatorConnection.ClickPPointAsync(new PPoint(90.5f, 87.1f));
 
                     return R1999Action.GotDailyReward.Create(baseActionPayload);
