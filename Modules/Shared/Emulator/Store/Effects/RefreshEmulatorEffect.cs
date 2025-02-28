@@ -15,11 +15,12 @@ public class RefreshEmulatorEffect : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
+        Logger.Info(">>Process RefreshEmulatorEffect");
         try
         {
             await Task.Delay(0);
             var emulatorManager = EmulatorManager.Instance;
-            emulatorManager.RefreshDevices(true, false);
+            emulatorManager.RefreshDevices(false, false);
             return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
         }
         catch (Exception e)
