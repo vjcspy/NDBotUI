@@ -64,6 +64,7 @@ public enum R1999TemplateKey
     UntickButton,
     GetDailyUnilogTabText,
     DebuftCard,
+    VerttinGoesText,
 }
 
 public enum R1999ReRollStatus

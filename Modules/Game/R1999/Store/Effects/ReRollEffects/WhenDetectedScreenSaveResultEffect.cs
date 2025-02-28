@@ -59,6 +59,7 @@ public class WhenDetectedScreenSaveResultEffect : DetectScreenEffectBase
 
             case R1999TemplateKey.CharacterLevelText:
             case R1999TemplateKey.CharacterLevelText1:
+                await Task.Delay(1000);
                 var isSaveOk = await SaveResult(emulatorConnection);
                 if (isSaveOk)
                 {

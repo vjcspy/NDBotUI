@@ -73,6 +73,13 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 break;
             }
 
+            case R1999TemplateKey.VerttinGoesText:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(3.4f, 6.0f));
+                isClicked = true;
+                break;
+            }
+
             case R1999TemplateKey.SelectSkill1Text:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(55.7f, 84.5f));

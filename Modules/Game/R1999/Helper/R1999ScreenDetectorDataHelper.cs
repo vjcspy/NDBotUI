@@ -30,6 +30,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
             { R1999TemplateKey.SonettoGuideLv, new OverrideScreenData(Priority: 101, FilePath: null) },
             { R1999TemplateKey.RegisterAccPassBtn, new OverrideScreenData(Priority: 90, FilePath: null) },
             { R1999TemplateKey.UntickButton, new OverrideScreenData(Priority: 50, FilePath: null) },
+            { R1999TemplateKey.VerttinGoesText, new OverrideScreenData(Priority: 50, FilePath: null) },
         };
     }
 
@@ -88,6 +89,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.UntickButton,
         R1999TemplateKey.GetDailyUnilogTabText,
         R1999TemplateKey.DebuftCard,
+        R1999TemplateKey.VerttinGoesText,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

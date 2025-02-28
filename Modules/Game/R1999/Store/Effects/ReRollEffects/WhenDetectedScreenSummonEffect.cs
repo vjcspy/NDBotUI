@@ -69,6 +69,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
                 if (gameInstance.JobReRollState.ReRollStatus < R1999ReRollStatus.Got1UniCurrentDay)
                 {
+                    await Task.Delay(1000);
                     // always save name
                     var isSaveOk = await SaveResult(emulatorConnection);
                     if (!isSaveOk)
