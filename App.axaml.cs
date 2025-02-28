@@ -5,6 +5,8 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using NDBotUI.Infrastructure;
+using NDBotUI.Modules.Core.Db;
+using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Shared.Emulator.Store;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.UI.Base.ViewModels;
@@ -43,6 +45,10 @@ public class App : Application
             {
                 DataContext = vm,
             };
+
+            using var context = new ApplicationDbContext();
+            context.EnsureDatabaseCreated();
+            CoreDataHelper.InitConfigData();
 
             RxEventManager.Dispatch(EmulatorAction.EmulatorInitAction.Create());
         }

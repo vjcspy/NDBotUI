@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using NDBotUI.Modules.Core.Model;
 using NDBotUI.Modules.Game.R1999.Db;
 
 namespace NDBotUI.Modules.Core.Db;
@@ -7,10 +8,18 @@ namespace NDBotUI.Modules.Core.Db;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<R1999Account> R1999Accounts { get; set; }
-
+    public DbSet<Config> Configs { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=database.db");
+    }
+
+    /// <summary>
+    /// Tự động chạy migrations và cập nhật database khi ứng dụng khởi động
+    /// </summary>
+    public void EnsureDatabaseCreated()
+    {
+        Database.Migrate(); // Áp dụng migrations nếu cần
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +34,10 @@ public class ApplicationDbContext : DbContext
                 v => v.ToString(), // Chuyển enum thành chuỗi khi lưu
                 v => (AccountStatus)Enum.Parse(typeof(AccountStatus), v)
             ); // Chuyển chuỗi thành enum khi đọc
+
+        modelBuilder.Entity<Config>()
+            .HasIndex(c => c.Name)
+            .IsUnique();
     }
 
     public override int SaveChanges()

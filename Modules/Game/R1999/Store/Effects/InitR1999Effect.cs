@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Db;
+using NDBotUI.Modules.Core.Helper;
+using NDBotUI.Modules.Core.Repository;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Helper;
 using NDBotUI.Modules.Shared.EventManager;
@@ -18,6 +21,13 @@ public class InitR1999Effect: EffectBase
         // Init template for scanning image
         R1999ScreenDetectorDataHelper.GetInstance().LoadData();
 
+        await using var context = new ApplicationDbContext();
+        var configRepository = new ConfigRepository(context);
+        var emailConfig = await configRepository.GetByNameAsync("r1999_email");
+        if (emailConfig != null && !string.IsNullOrEmpty(emailConfig.Value))
+        {
+            R1999DataHelper.AccountEmail = emailConfig.Value;
+        }
         return CoreAction.Empty;
     }
 }
