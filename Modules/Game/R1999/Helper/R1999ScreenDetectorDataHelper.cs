@@ -85,6 +85,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.ProfileTextMotto,
         R1999TemplateKey.StartLoginBtn,
         R1999TemplateKey.UntickButton,
+        R1999TemplateKey.GetDailyUnilogTabText,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()

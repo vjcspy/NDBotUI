@@ -77,11 +77,20 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     }
                     await Task.Delay(1000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(22.8f, 9.2f));
-                    await Task.Delay(2500);
+                    await Task.Delay(7500);
 
                     // get 1 uni
-                    await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 34.2f));
-                    await Task.Delay(3000);
+                    var dailyRewardPoints = await ScanTemplateAsync([R1999TemplateKey.GetDailyUnilogTabText,], emulatorConnection);
+                    if (dailyRewardPoints.Length > 0)
+                    {
+                        Logger.Info(">>>> Found daily reward tab, click it");
+                        await emulatorConnection.ClickOnPointAsync(dailyRewardPoints[0].Point);
+                    }
+                    else
+                    {
+                        await emulatorConnection.ClickPPointAsync(new PPoint(7.7f, 34.2f));
+                    }
+                    await Task.Delay(2000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(24.7f, 66.7f));
                     await Task.Delay(1500);
                     //  bind account
@@ -144,8 +153,12 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
             case R1999TemplateKey.SummonX1Text:
             {
                 // click banner willow
-                await emulatorConnection.ClickPPointAsync(new PPoint(10.5f, 39.1f));
-                await Task.Delay(500);
+                // await emulatorConnection.ClickPPointAsync(new PPoint(10.5f, 39.1f));
+
+                // banner Amongst the lake
+                await emulatorConnection.ClickPPointAsync(new PPoint(10.5f, 82.1f));
+                await Task.Delay(700);
+
                 await emulatorConnection.ClickPPointAsync(new PPoint(59.5f, 89.4f));
                 isClicked = true;
                 break;
@@ -153,22 +166,23 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
 
             case R1999TemplateKey.SummonWheel:
             {
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(100);
-                await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
-                await Task.Delay(6000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(94.8f, 5.2f));
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(100);
+                // await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f), 200);
+                // await Task.Delay(6000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(92.3f, 7.1f));
                 isClicked = true;
                 break;

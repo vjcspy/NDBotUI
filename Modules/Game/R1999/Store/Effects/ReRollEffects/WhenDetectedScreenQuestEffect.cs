@@ -134,6 +134,12 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
             case R1999TemplateKey.FullyPreparedText:
             {
+                await emulatorConnection.ClickPPointAsync(new PPoint(85.3f, 78.9f));
+                await Task.Delay(100);
+                await emulatorConnection.ClickPPointAsync(new PPoint(78.3f, 78.9f));
+                await Task.Delay(100);
+                await emulatorConnection.ClickPPointAsync(new PPoint(70.7f, 78.9f));
+                await Task.Delay(100);
                 await emulatorConnection.ClickPPointAsync(new PPoint(94.1f, 86.5f));
                 await Task.Delay(500);
                 await emulatorConnection.ClickPPointAsync(new PPoint(85.7f, 85.3f));
@@ -217,6 +223,14 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             }
             case R1999TemplateKey.SummonWheel:
             {
+                await Task.Delay(1500);
+                // try skip first
+                await emulatorConnection.ClickPPointAsync(new PPoint(92.0f, 5.7f));
+                await Task.Delay(500);
+                await emulatorConnection.ClickPPointAsync(new PPoint(61.3f, 59f));
+
+
+                await Task.Delay(300);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(100);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
@@ -228,7 +242,7 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(100);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
-                await Task.Delay(100);
+                await Task.Delay(300);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(300);
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
@@ -236,9 +250,13 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 await emulatorConnection.SwipePPointAsync(new PPoint(59.1f, 36.0f), new PPoint(60.1f, 56.9f),200);
                 await Task.Delay(300);
                 await emulatorConnection.SwipePPointAsync(new PPoint(63.6f, 49.2f), new PPoint(63.5f, 78.1f),300);
-                await Task.Delay(2000);
+                await Task.Delay(500);
+                await emulatorConnection.SwipePPointAsync(new PPoint(62.3f, 45.5f), new PPoint(64f, 75.4f),500);
+
+
+                await Task.Delay(2500);
                 await emulatorConnection.ClickPPointAsync(new PPoint(49.9f, 73.9f));
-                await Task.Delay(10000);
+                await Task.Delay(3000);
                 await emulatorConnection.ClickPPointAsync(new PPoint(4f, 5.3f));
                 isClicked = true;
                 break;

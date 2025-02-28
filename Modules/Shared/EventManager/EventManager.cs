@@ -16,7 +16,7 @@ public class RxEventManager
 
     public static void Dispatch(EventAction action)
     {
-        Logger.Info("Dispatching event " + action.Type);
+        // Logger.Info("Dispatching event " + action.Type);
         action.CorrelationId ??= Guid.NewGuid();
 
         AppStore.Instance.Reduce(action);

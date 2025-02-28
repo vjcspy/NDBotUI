@@ -62,6 +62,7 @@ public enum R1999TemplateKey
     ProfileTextMotto,
     StartLoginBtn,
     UntickButton,
+    GetDailyUnilogTabText,
 }
 
 public enum R1999ReRollStatus

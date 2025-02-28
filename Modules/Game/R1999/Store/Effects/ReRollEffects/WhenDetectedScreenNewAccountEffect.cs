@@ -275,6 +275,8 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
 
                         if (match.Success)
                         {
+                            // delete this email
+                            GmailAPIHelper.DeleteEmailAsync(result.Id);
                             return match.Groups[1].Value;
                         }
 
@@ -283,6 +285,7 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                 )
                 .ToList()
                 .FirstOrDefault();
+
 
             return verificationCode;
         }
