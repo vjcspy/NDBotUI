@@ -115,6 +115,7 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             case R1999TemplateKey.ReturnStoryText:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(11.3f, 6.3f));
+                await emulatorConnection.ClickPPointAsync(new PPoint(83.3f, 37.8f));
                 isClicked = true;
                 break;
             }

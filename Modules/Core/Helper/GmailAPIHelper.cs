@@ -17,7 +17,7 @@ namespace NDBotUI.Modules.Core.Helper;
 public class GmailAPIHelper
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private static readonly string[] Scopes = { GmailService.Scope.GmailModify, };
+    private static readonly string[] Scopes = [GmailService.Scope.GmailModify,];
     private static readonly string ApplicationName = "Gmail API C# Helper";
     private static readonly string CredentialPath = "credentials.json";
     private static readonly string TokenPath = "token.json";
@@ -196,30 +196,38 @@ public class GmailAPIHelper
     /// </summary>
     public async Task MoveAllEmailsToTrashAsync()
     {
-        Logger.Info(">>MoveAllEmailsToTrashAsync");
-        if (_service == null)
+        try
         {
-            throw new InvalidOperationException("Gmail service is not initialized.");
+            Logger.Info(">>MoveAllEmailsToTrashAsync");
+            if (_service == null)
+            {
+                throw new InvalidOperationException("Gmail service is not initialized.");
+            }
+
+            var emailList = await GetEmailListAsync(10, "in:inbox");
+
+            if (emailList.Count == 0)
+            {
+                Logger.Info("No emails to move to trash.");
+                return;
+            }
+
+            foreach (var email in emailList)
+            {
+                await _service
+                    .Users
+                    .Messages
+                    .Trash("me", email.Id)
+                    .ExecuteAsync();
+            }
+
+            Logger.Info($"Moved {emailList.Count} emails to trash.");
         }
-
-        var emailList = await GetEmailListAsync(100, "in:inbox");
-
-        if (emailList.Count == 0)
+        catch (Exception e)
         {
-            Console.WriteLine("No emails to move to trash.");
-            return;
+            Logger.Error(e);
+            throw;
         }
-
-        foreach (var email in emailList)
-        {
-            await _service
-                .Users
-                .Messages
-                .Trash("me", email.Id)
-                .ExecuteAsync();
-        }
-
-        Console.WriteLine($"Moved {emailList.Count} emails to trash.");
     }
 
     public async Task DeleteEmailAsync(string emailId)

@@ -139,6 +139,9 @@ public partial class R1999TabConfigViewModel : ObservableViewModelBase
                 )
             );
         }
+
+         // GmailAPIHelper gmailAPIHelper = new();
+         // gmailAPIHelper.MoveAllEmailsToTrashAsync();
     }
 
     private async Task<Unit> TestEmail()
