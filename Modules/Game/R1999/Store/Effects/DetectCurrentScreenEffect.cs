@@ -51,6 +51,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.SonettoGuideLv,
         R1999TemplateKey.GuideDealExtraDmgText,
         R1999TemplateKey.StartLoginBtn,
+        R1999TemplateKey.DebuftCard,
     ];
 
     private readonly Enum[] RenewAccountTemplates = [

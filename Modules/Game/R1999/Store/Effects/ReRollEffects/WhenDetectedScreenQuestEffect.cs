@@ -19,6 +19,7 @@ public class WhenDetectedScreenQuestEffect : EffectBase
         R1999TemplateKey.StartChapter,
         R1999TemplateKey.Chapter3Text,
         R1999TemplateKey.AttackCard,
+        R1999TemplateKey.DebuftCard,
         R1999TemplateKey.StartLoginBtn,
     ];
 

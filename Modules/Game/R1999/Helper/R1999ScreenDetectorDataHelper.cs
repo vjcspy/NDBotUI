@@ -21,6 +21,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
             { R1999TemplateKey.StartChapter, new OverrideScreenData(Priority: 101, FilePath: null) },
             { R1999TemplateKey.Chapter3Text, new OverrideScreenData(Priority: 102, FilePath: null) },
             { R1999TemplateKey.AttackCard, new OverrideScreenData(Priority: 102, FilePath: null) },
+            { R1999TemplateKey.DebuftCard, new OverrideScreenData(Priority: 103, FilePath: null) },
             { R1999TemplateKey.Chapter5Text, new OverrideScreenData(Priority: 70, FilePath: null) },
             { R1999TemplateKey.ExitButton, new OverrideScreenData(Priority: 105, FilePath: null) },
             { R1999TemplateKey.LackUnilogText, new OverrideScreenData(Priority: 50, FilePath: null) },
@@ -86,6 +87,7 @@ public class R1999ScreenDetectorDataHelper : ScreenDetectorDataBase
         R1999TemplateKey.StartLoginBtn,
         R1999TemplateKey.UntickButton,
         R1999TemplateKey.GetDailyUnilogTabText,
+        R1999TemplateKey.DebuftCard,
     ];
 
     public static R1999ScreenDetectorDataHelper GetInstance()
