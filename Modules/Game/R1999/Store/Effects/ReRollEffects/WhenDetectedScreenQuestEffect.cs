@@ -11,6 +11,8 @@ namespace NDBotUI.Modules.Game.R1999.Store.Effects.ReRollEffects;
 
 public class WhenDetectedScreenQuestEffect : EffectBase
 {
+    private static int _attackCardCount;
+
     private readonly Enum[] _clickOnTemplateKeys =
     [
         R1999TemplateKey.SkipMovieBtn1,
@@ -42,7 +44,6 @@ public class WhenDetectedScreenQuestEffect : EffectBase
             return CoreAction.Empty;
         }
 
-        // Click
         var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
         if (emulatorConnection is null)
@@ -52,6 +53,28 @@ public class WhenDetectedScreenQuestEffect : EffectBase
 
         var isClicked = false;
 
+        if (Equals(detectTemplatePoint.TemplateKey, R1999TemplateKey.AttackCard))
+        {
+            _attackCardCount += 1;
+        }
+        else
+        {
+            _attackCardCount = 0;
+        }
+
+        if (_attackCardCount > 10)
+        {
+            await emulatorConnection.ClickPPointAsync(new PPoint(94.3f, 85.4f));
+            await Task.Delay(200);
+            await emulatorConnection.ClickPPointAsync(new PPoint(83.9f, 85.4f));
+            await Task.Delay(200);
+            await emulatorConnection.ClickPPointAsync(new PPoint(74f, 85.4f));
+            await Task.Delay(200);
+            await emulatorConnection.ClickPPointAsync(new PPoint(64.8f, 85.4f));
+            await Task.Delay(200);
+            await emulatorConnection.ClickPPointAsync(new PPoint(56.9f, 85.4f));
+            await Task.Delay(200);
+        }
 
         switch (detectTemplatePoint.TemplateKey)
         {
