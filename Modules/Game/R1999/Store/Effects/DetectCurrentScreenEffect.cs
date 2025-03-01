@@ -53,6 +53,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         R1999TemplateKey.StartLoginBtn,
         R1999TemplateKey.DebuftCard,
         R1999TemplateKey.VerttinGoesText,
+        R1999TemplateKey.InBattleBtn,
     ];
 
     private readonly Enum[] RenewAccountTemplates = [

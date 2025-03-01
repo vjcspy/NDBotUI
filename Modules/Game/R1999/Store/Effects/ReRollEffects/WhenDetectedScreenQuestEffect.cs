@@ -325,6 +325,14 @@ public class WhenDetectedScreenQuestEffect : EffectBase
                 break;
             }
 
+            case R1999TemplateKey.InBattleBtn:
+            {
+                // incase coult not detect any template, click into first card
+                await emulatorConnection.ClickPPointAsync(new PPoint(95.0f, 87.5f));
+                isClicked = true;
+                break;
+            }
+
             case R1999TemplateKey.SelectTargetChapter4:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(12.7f, 64.7f));

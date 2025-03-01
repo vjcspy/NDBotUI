@@ -65,6 +65,7 @@ public enum R1999TemplateKey
     GetDailyUnilogTabText,
     DebuftCard,
     VerttinGoesText,
+    InBattleBtn,
 }
 
 public enum R1999ReRollStatus
