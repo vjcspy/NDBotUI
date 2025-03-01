@@ -191,6 +191,27 @@ public class GmailAPIHelper
                ?? "Unknown";
     }
 
+
+    public async Task MoveToTrash(string id)
+    {
+        try
+        {
+            if (_service == null)
+            {
+                throw new InvalidOperationException("Gmail service is not initialized.");
+            }
+
+            await _service
+                .Users
+                .Messages
+                .Trash("me", id)
+                .ExecuteAsync();
+        }catch (Exception e)
+        {
+            Logger.Error(e);
+        }
+    }
+
     /// <summary>
     ///     Chuyển toàn bộ email trong inbox vào trash
     /// </summary>

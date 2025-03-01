@@ -144,7 +144,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(16.2f, 86f));
                     await Task.Delay(1000);
                     await emulatorConnection.ClickPPointAsync(new PPoint(3.8f, 6.5f));
-                    return R1999Action.GotEmailReward.Create(baseActionPayload);
+                    return R1999Action.RollX1.Create(baseActionPayload);
                 }
 
                 if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotEmailReward)
