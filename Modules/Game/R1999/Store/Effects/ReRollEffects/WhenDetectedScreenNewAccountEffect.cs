@@ -288,7 +288,7 @@ public class WhenDetectedScreenNewAccountEffect : DetectScreenEffectBase
                         if (match.Success)
                         {
                             // delete this email
-                            GmailAPIHelper.MoveAllEmailsToTrashAsync();
+                            GmailAPIHelper.MoveToTrash(result.Id);
                             // GmailAPIHelper.DeleteEmailAsync(result.Id);
                             return match.Groups[1].Value;
                         }

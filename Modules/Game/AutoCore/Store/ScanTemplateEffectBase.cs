@@ -42,7 +42,7 @@ public abstract class DetectScreenEffectBase : EffectBase
 
         var screenshotEmguMat = screenshot.ToEmguMat();
         // Tạo SemaphoreSlim cho phép tối đa 2 thread chạy đồng thời
-        var semaphore = new SemaphoreSlim(3); // 2 thread tối đa
+        var semaphore = new SemaphoreSlim(2); // 2 thread tối đa
 
 
         var tasks = templateKeys

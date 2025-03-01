@@ -147,7 +147,7 @@ public class WhenDetectedScreenSummonEffect : DetectScreenEffectBase
                     return R1999Action.RollX1.Create(baseActionPayload);
                 }
 
-                if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotEmailReward)
+                if (gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.GotEmailReward || gameInstance.JobReRollState.ReRollStatus == R1999ReRollStatus.RollX1)
                 {
                     // click summon
                     await emulatorConnection.ClickPPointAsync(new PPoint(81.7f, 70.3f));
