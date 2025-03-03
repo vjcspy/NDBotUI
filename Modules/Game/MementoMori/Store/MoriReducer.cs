@@ -204,7 +204,7 @@ public class MoriReducer
                                     {
                                         JobReRollState = gameInstance.JobReRollState with
                                         {
-                                            ReRollStatus = ReRollStatus.SaveResult,
+                                            ReRollStatus = ReRollStatus.GetPresents,
                                             ResultId = Guid.NewGuid(),
                                         },
                                     }
@@ -245,6 +245,91 @@ public class MoriReducer
                 return state;
             }
 
+            case MoriAction.Type.GetPresents:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.GetPresents,
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+                // không quan tâm up level nữa
+                Logger.Info("=>>>>>>>>>> Reduce Priority for template CharacterGrowthPossible _______________");
+                TemplateImageDataHelper
+                    .TemplateImageData[MoriTemplateKey.CharacterGrowthPossible]
+                    .SetPriority(emulatorId, 101);
+                return state;
+            }
+
+            case MoriAction.Type.GotPresents:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.GotPresents,
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+                return state;
+            }
+            case MoriAction.Type.RollX1:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.RollX1,
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+                return state;
+            }
+
             case MoriAction.Type.EligibilityLevelCheck:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload)
@@ -261,6 +346,7 @@ public class MoriReducer
                             gameInstance.EmulatorId == emulatorId
                                 ? gameInstance with
                                 {
+                                    State = AutoState.On,
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
                                         ReRollStatus = ReRollStatus.EligibilityLevelCheck,

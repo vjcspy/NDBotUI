@@ -102,6 +102,13 @@ public enum MoriTemplateKey
     EnterLinkInfo,
     SavePassSuccess,
     PrivacySettingsHeader,
+
+    // home
+    HomePresentsIcon,
+    PresentsBoxHeader,
+    BannerNewbie,
+    InvokeCloseButton,
+    NotHaveEnoughDiamondText,
 }
 
 public record GameInstance(

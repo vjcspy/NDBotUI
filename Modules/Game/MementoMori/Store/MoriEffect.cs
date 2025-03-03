@@ -18,6 +18,8 @@ public class MoriEffect
         new OnDetectedTemplateEligibilityLevelEffect(),
         new SpamClickWhenCouldNotDetect(),
 
+        new WhenGetPresentsAndRoll(),
+
         /* After roll*/
         new OnDetectedTemplateSaveResultEffect(),
         new OnDetectedTemplateLinkAccountEffect(),

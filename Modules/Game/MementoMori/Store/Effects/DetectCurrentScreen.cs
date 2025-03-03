@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LanguageExt;
@@ -10,6 +8,7 @@ using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.MementoMori.Helper;
+using NDBotUI.Modules.Game.MementoMori.Store.State;
 using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.Emulator.Services;
 using NDBotUI.Modules.Shared.EventManager;
@@ -19,6 +18,98 @@ namespace NDBotUI.Modules.Game.MementoMori.Store.Effects;
 
 public class DetectCurrentScreen : EffectBase
 {
+    private readonly MoriTemplateKey[] _getPresentsTemplate =
+    [
+        MoriTemplateKey.HomePresentsIcon,
+        MoriTemplateKey.ErrorHeaderPopup,
+        MoriTemplateKey.LoginClaimButton,
+        MoriTemplateKey.LoginClaimButton,
+        MoriTemplateKey.ButtonClaim,
+        MoriTemplateKey.BossBattleButton,
+        MoriTemplateKey.PresentsBoxHeader,
+        MoriTemplateKey.BannerNewbie,
+        MoriTemplateKey.InvokeCloseButton,
+        MoriTemplateKey.NotHaveEnoughDiamondText,
+    ];
+
+    private readonly MoriTemplateKey[] _screenToCheck =
+    [
+        MoriTemplateKey.ErrorHeaderPopup,
+        MoriTemplateKey.TermOfAgreementPopup,
+        MoriTemplateKey.StartStartButton,
+        MoriTemplateKey.IconChar1,
+        MoriTemplateKey.ChallengeButton,
+        MoriTemplateKey.SkipMovieButton,
+
+        MoriTemplateKey.TextSelectFirstCharToTeam,
+        MoriTemplateKey.TextSelectSecondCharToTeam,
+        MoriTemplateKey.TextSelectThirdCharToTeam,
+        MoriTemplateKey.TextSelectFourCharToTeam,
+
+        /* Character growth*/
+        MoriTemplateKey.CharacterGrowthPossible,
+        MoriTemplateKey.GuideClickLevelUpText,
+        MoriTemplateKey.GuideClickEquipAllText,
+        MoriTemplateKey.GuideClickQuestText,
+        MoriTemplateKey.GuideClickTheTownText,
+        MoriTemplateKey.GuideSelectTownButton,
+        MoriTemplateKey.GuideClickRewardText,
+        MoriTemplateKey.GuideClickLevelUpImmediatelyText,
+        MoriTemplateKey.GuideClickDownButton,
+        MoriTemplateKey.GuideChapter12Text,
+        MoriTemplateKey.GuideChapter12Text1,
+
+        MoriTemplateKey.BossBattleButton,
+        MoriTemplateKey.SelectButton,
+        MoriTemplateKey.ButtonClaim,
+
+        MoriTemplateKey.PartyInformation,
+        MoriTemplateKey.CharacterTabHeader,
+        MoriTemplateKey.TapToClose,
+        MoriTemplateKey.NextChapterButton,
+
+        // MoriTemplateKey.BeforeChallengeChapterSix
+        MoriTemplateKey.BeforeChallengeEnemyPower15,
+        MoriTemplateKey.BeforeChallengeEnemyPower16,
+        MoriTemplateKey.BeforeChallengeEnemyPower17,
+        MoriTemplateKey.BeforeChallengeEnemyPower18,
+        MoriTemplateKey.BeforeChallengeEnemyPower19,
+        MoriTemplateKey.BeforeChallengeEnemyPower111,
+        MoriTemplateKey.BeforeChallengeEnemyPower112,
+        MoriTemplateKey.BeforeChallengeEnemyPower21,
+        MoriTemplateKey.BeforeChallengeEnemyPower22,
+        MoriTemplateKey.BeforeChallengeEnemyPower23,
+
+        MoriTemplateKey.StartSettingButton, // Mục đích là không làm gì trong lúc load ở start
+
+        MoriTemplateKey.NextCountryButton,
+        MoriTemplateKey.CharacterGrowthTabHeader,
+        MoriTemplateKey.SkipSceneShotButton,
+        MoriTemplateKey.HomeNewPlayerText,
+
+        /*In battle*/
+        MoriTemplateKey.InBattleX1,
+        MoriTemplateKey.InBattleX2,
+
+        /*Home*/
+        MoriTemplateKey.LoginClaimButton,
+        MoriTemplateKey.HomeIconBpText,
+        MoriTemplateKey.ReturnToTitleButton,
+
+        // Reset
+        MoriTemplateKey.ReturnToTitleHeader,
+        MoriTemplateKey.ResetGameDataButton,
+        MoriTemplateKey.ResetGameDataHeader,
+        MoriTemplateKey.ConfirmGameDataResetHeader,
+        MoriTemplateKey.DownloadUpdateButton,
+
+        // Link
+        MoriTemplateKey.EnterYourLinkAccountText,
+        MoriTemplateKey.PerformAccountLink,
+        MoriTemplateKey.SetLinkPassword,
+        MoriTemplateKey.EnterLinkInfo,
+    ];
+
     private DetectedTemplatePoint? DetectCurrentScreenByEmguCV(
         EmguCVSharp screenshotMat,
         MoriTemplateKey moriTemplateKey
@@ -81,89 +172,26 @@ public class DetectCurrentScreen : EffectBase
                 return CoreAction.Empty;
             }
 
-            MoriTemplateKey[] screenToCheck =
-            [
-                MoriTemplateKey.ErrorHeaderPopup,
-                MoriTemplateKey.TermOfAgreementPopup,
-                MoriTemplateKey.StartStartButton,
-                MoriTemplateKey.IconChar1,
-                MoriTemplateKey.ChallengeButton,
-                MoriTemplateKey.SkipMovieButton,
-
-                MoriTemplateKey.TextSelectFirstCharToTeam,
-                MoriTemplateKey.TextSelectSecondCharToTeam,
-                MoriTemplateKey.TextSelectThirdCharToTeam,
-                MoriTemplateKey.TextSelectFourCharToTeam,
-
-                /* Character growth*/
-                MoriTemplateKey.CharacterGrowthPossible,
-                MoriTemplateKey.GuideClickLevelUpText,
-                MoriTemplateKey.GuideClickEquipAllText,
-                MoriTemplateKey.GuideClickQuestText,
-                MoriTemplateKey.GuideClickTheTownText,
-                MoriTemplateKey.GuideSelectTownButton,
-                MoriTemplateKey.GuideClickRewardText,
-                MoriTemplateKey.GuideClickLevelUpImmediatelyText,
-                MoriTemplateKey.GuideClickDownButton,
-                MoriTemplateKey.GuideChapter12Text,
-                MoriTemplateKey.GuideChapter12Text1,
-
-                MoriTemplateKey.BossBattleButton,
-                MoriTemplateKey.SelectButton,
-                MoriTemplateKey.ButtonClaim,
-
-                MoriTemplateKey.PartyInformation,
-                MoriTemplateKey.CharacterTabHeader,
-                MoriTemplateKey.TapToClose,
-                MoriTemplateKey.NextChapterButton,
-
-                // MoriTemplateKey.BeforeChallengeChapterSix
-                MoriTemplateKey.BeforeChallengeEnemyPower15,
-                MoriTemplateKey.BeforeChallengeEnemyPower16,
-                MoriTemplateKey.BeforeChallengeEnemyPower17,
-                MoriTemplateKey.BeforeChallengeEnemyPower18,
-                MoriTemplateKey.BeforeChallengeEnemyPower19,
-                MoriTemplateKey.BeforeChallengeEnemyPower111,
-                MoriTemplateKey.BeforeChallengeEnemyPower112,
-                MoriTemplateKey.BeforeChallengeEnemyPower21,
-                MoriTemplateKey.BeforeChallengeEnemyPower22,
-                MoriTemplateKey.BeforeChallengeEnemyPower23,
-
-                MoriTemplateKey.StartSettingButton, // Mục đích là không làm gì trong lúc load ở start
-
-                MoriTemplateKey.NextCountryButton,
-                MoriTemplateKey.CharacterGrowthTabHeader,
-                MoriTemplateKey.SkipSceneShotButton,
-                MoriTemplateKey.HomeNewPlayerText,
-
-                /*In battle*/
-                MoriTemplateKey.InBattleX1,
-                MoriTemplateKey.InBattleX2,
-
-                /*Home*/
-                MoriTemplateKey.LoginClaimButton,
-                MoriTemplateKey.HomeIconBpText,
-                MoriTemplateKey.ReturnToTitleButton,
-
-                // Reset
-                MoriTemplateKey.ReturnToTitleHeader,
-                MoriTemplateKey.ResetGameDataButton,
-                MoriTemplateKey.ResetGameDataHeader,
-                MoriTemplateKey.ConfirmGameDataResetHeader,
-                MoriTemplateKey.DownloadUpdateButton,
-
-                // Link
-                MoriTemplateKey.EnterYourLinkAccountText,
-                MoriTemplateKey.PerformAccountLink,
-                MoriTemplateKey.SetLinkPassword,
-                MoriTemplateKey.EnterLinkInfo,
-            ];
 
             var emulatorConnection = EmulatorManager.Instance.GetConnection(baseActionPayload.EmulatorId);
 
             if (emulatorConnection == null)
             {
                 return CoreAction.Empty;
+            }
+
+            var gameInstance =
+                AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+
+            if (gameInstance == null)
+            {
+                return CoreAction.Empty;
+            }
+
+            var templateChecks = _screenToCheck;
+            if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.GetPresents || gameInstance.JobReRollState.ReRollStatus == ReRollStatus.GotPresents|| gameInstance.JobReRollState.ReRollStatus == ReRollStatus.RollX1)
+            {
+                templateChecks = _getPresentsTemplate;
             }
 
             // Optimize by use one screenshot
@@ -177,7 +205,7 @@ public class DetectCurrentScreen : EffectBase
 
             var semaphore = new SemaphoreSlim(2); // 2 thread tối đa
 
-            var tasks = screenToCheck
+            var tasks = templateChecks
                 .Select(
                     async templateKey =>
                     {
@@ -203,12 +231,14 @@ public class DetectCurrentScreen : EffectBase
                 .WhenAll(tasks) // Chạy đồng thời tất cả các task
                 .Select(res => res.Where(a => a != null));
 
-            var detectedTemplatePoint = result.OrderBy(
-                point =>
-                    TemplateImageDataHelper
-                        .TemplateImageData[point!.MoriTemplateKey]
-                        .GetPriority(baseActionPayload.EmulatorId)
-            ).FirstOrDefault();
+            var detectedTemplatePoint = result
+                .OrderBy(
+                    point =>
+                        TemplateImageDataHelper
+                            .TemplateImageData[point!.MoriTemplateKey]
+                            .GetPriority(baseActionPayload.EmulatorId)
+                )
+                .FirstOrDefault();
 
             if (detectedTemplatePoint != null)
             {

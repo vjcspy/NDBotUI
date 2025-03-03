@@ -15,6 +15,9 @@ public enum ReRollStatus
     EligibilityLevelPassed,
 
     NextChapter,
+    GetPresents,
+    GotPresents,
+    RollX1,
     SaveResult,
     LinkAccount,
     ResetUserData,

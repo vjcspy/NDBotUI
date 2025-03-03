@@ -30,6 +30,9 @@ public class MoriAction
         ClickedAfterDetectedMoriScreen,
         CouldNotDetectMoriScreen,
 
+        GetPresents,
+        GotPresents,
+        RollX1,
         /* After roll*/
         SaveResult,
         LinkAccount,
@@ -60,7 +63,9 @@ public class MoriAction
     public static readonly EventActionFactory DetectedMoriScreen = new(Type.DetectedMoriScreen);
     public static readonly EventActionFactory CouldNotDetectMoriScreen = new(Type.CouldNotDetectMoriScreen);
     public static readonly EventActionFactory ClickedAfterDetectedMoriScreen = new(Type.ClickedAfterDetectedMoriScreen);
-
+    public static readonly EventActionFactory GetPresents = new(Type.GetPresents);
+    public static readonly EventActionFactory GotPresents = new(Type.GotPresents);
+    public static readonly EventActionFactory RollX1 = new(Type.RollX1);
 
     public static readonly EventActionFactory SaveResult = new(Type.SaveResult);
     public static readonly EventActionFactory LinkAccount = new(Type.LinkAccount);

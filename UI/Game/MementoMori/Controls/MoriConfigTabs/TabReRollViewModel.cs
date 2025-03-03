@@ -8,6 +8,7 @@ using NDBotUI.Modules.Game.MementoMori.Typing;
 using NDBotUI.Modules.Shared.EventManager;
 using NDBotUI.UI.Base.Extensions;
 using NDBotUI.UI.Base.ViewModels;
+using NLog.Fluent;
 using ReactiveUI;
 
 namespace NDBotUI.UI.Game.MementoMori.Controls.MoriConfigTabs;
@@ -124,13 +125,14 @@ public partial class TabReRollViewModel : ObservableViewModelBase
     {
         if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
         {
+            Logger.Info("TEST COMMAND >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             RxEventManager.Dispatch(
-                MoriAction.ResetUserData.Create(
+                MoriAction.GotPresents.Create(
                     new BaseActionPayload(selectedEmulatorId)
                 )
             );
         }
 
-        RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
+        // RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 }

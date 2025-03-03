@@ -675,6 +675,51 @@ public static class TemplateImageDataHelper
                 priority: 10
             )
         },
+        {
+            MoriTemplateKey.HomePresentsIcon,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "HomePresentsIcon.png",
+                ],
+                priority: 70
+            )
+        },
+        {
+            MoriTemplateKey.PresentsBoxHeader,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "PresentsBoxHeader.png",
+                ],
+                priority: 70
+            )
+        },
+        {
+            MoriTemplateKey.BannerNewbie,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "BannerNewbie.png",
+                ],
+                priority: 70
+            )
+        },
+        {
+            MoriTemplateKey.InvokeCloseButton,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "InvokeCloseButton.png",
+                ],
+                priority: 100
+            )
+        },
+        {
+            MoriTemplateKey.NotHaveEnoughDiamondText,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "NotHaveEnoughDiamondText.png",
+                ],
+                priority: 100
+            )
+        },
     };
 
     public static void LoadTemplateImages()
