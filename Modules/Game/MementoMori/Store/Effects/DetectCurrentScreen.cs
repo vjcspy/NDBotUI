@@ -30,6 +30,7 @@ public class DetectCurrentScreen : EffectBase
         MoriTemplateKey.BannerNewbie,
         MoriTemplateKey.InvokeCloseButton,
         MoriTemplateKey.NotHaveEnoughDiamondText,
+        MoriTemplateKey.SpendDiamondsInvoke,
     ];
 
     private readonly MoriTemplateKey[] _screenToCheck =

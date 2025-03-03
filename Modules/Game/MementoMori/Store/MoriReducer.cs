@@ -303,6 +303,36 @@ public class MoriReducer
                 };
                 return state;
             }
+
+            case MoriAction.Type.SaveResult:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        ReRollStatus = ReRollStatus.SaveResult,
+                                        ResultId = Guid.NewGuid(),
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+                return state;
+            }
+
+
             case MoriAction.Type.RollX1:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload)

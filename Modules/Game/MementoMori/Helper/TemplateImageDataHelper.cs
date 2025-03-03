@@ -720,6 +720,15 @@ public static class TemplateImageDataHelper
                 priority: 50
             )
         },
+        {
+            MoriTemplateKey.SpendDiamondsInvoke,
+            new TemplateImageData(
+                [
+                    "Resources", "game", "mementomori", "image-detector", "reroll", "SpendDiamondsInvoke.png",
+                ],
+                priority: 50
+            )
+        },
     };
 
     public static void LoadTemplateImages()

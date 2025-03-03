@@ -197,7 +197,7 @@ public class OnDetectedTemplateSaveResultEffect : ScanTemplateEffectBase
 
         if (gameInstance?.JobReRollState.ResultId == null)
         {
-            Logger.Error("Could not get game instance");
+            Logger.Error("Could not get ResultId");
             return false;
         }
 

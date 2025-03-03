@@ -141,6 +141,14 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
 
             case MoriTemplateKey.NotHaveEnoughDiamondText:
             {
+                if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.RollX1)
+                {
+                    // click cancel
+                    await emulatorConnection.ClickPPointAsync(new PPoint(42.2f, 64.0f));
+                    await Task.Delay(500);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(21.0f, 95.0f));
+                    return MoriAction.SaveResult.Create(baseActionPayload);
+                }
                 await emulatorConnection.ClickPPointAsync(new PPoint(43.2f, 64.0f));
                 await Task.Delay(500);
                 return MoriAction.RollX1.Create(baseActionPayload);
@@ -175,6 +183,20 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
                     // click invoke 1
                     await emulatorConnection.ClickPPointAsync(new PPoint(75.5f, 79.9f));
                     await Task.Delay(1000);
+                    isClicked = true;
+                    // ReSharper disable once RedundantJumpStatement
+                    break;
+                }
+
+                break;
+            }
+
+            case MoriTemplateKey.SpendDiamondsInvoke:
+            {
+                if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.RollX1)
+                {
+                    // click confirm
+                    await emulatorConnection.ClickPPointAsync(new PPoint(57.3f, 68.5f));
                     isClicked = true;
                     // ReSharper disable once RedundantJumpStatement
                     break;
