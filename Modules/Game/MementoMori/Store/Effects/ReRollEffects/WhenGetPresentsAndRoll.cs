@@ -92,6 +92,14 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
                 break;
             }
 
+            case MoriTemplateKey.BeforeChallengeEnemyPower23:
+            {
+                Logger.Info("Click Close");
+                await emulatorConnection.ClickPPointAsync(new PPoint(93.7f, 7.3f));
+                isClicked = true;
+                break;
+            }
+
             case MoriTemplateKey.HomePresentsIcon:
             {
                 if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.GetPresents)
