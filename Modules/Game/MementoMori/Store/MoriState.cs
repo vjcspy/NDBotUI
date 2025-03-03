@@ -109,6 +109,7 @@ public enum MoriTemplateKey
     BannerNewbie,
     InvokeCloseButton,
     NotHaveEnoughDiamondText,
+    SpendDiamondsInvoke,
 }
 
 public record GameInstance(

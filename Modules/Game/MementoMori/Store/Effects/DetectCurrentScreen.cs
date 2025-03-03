@@ -189,7 +189,7 @@ public class DetectCurrentScreen : EffectBase
             }
 
             var templateChecks = _screenToCheck;
-            if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.GetPresents || gameInstance.JobReRollState.ReRollStatus == ReRollStatus.GotPresents|| gameInstance.JobReRollState.ReRollStatus == ReRollStatus.RollX1)
+            if (gameInstance.JobReRollState.ReRollStatus is ReRollStatus.GetPresents or ReRollStatus.GotPresents or ReRollStatus.RollX1)
             {
                 templateChecks = _getPresentsTemplate;
             }

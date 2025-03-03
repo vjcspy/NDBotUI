@@ -106,13 +106,12 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
                     // click invoke
                     await emulatorConnection.ClickPPointAsync(new PPoint(67.5f, 94.5f));
                     isClicked = true;
-                    break;
                 }
 
                 break;
             }
 
-        case MoriTemplateKey.BossBattleButton:
+            case MoriTemplateKey.BossBattleButton:
             {
                 // click home
                 await emulatorConnection.ClickPPointAsync(new PPoint(9.2f, 94.8f));
@@ -142,6 +141,8 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
 
             case MoriTemplateKey.NotHaveEnoughDiamondText:
             {
+                await emulatorConnection.ClickPPointAsync(new PPoint(43.2f, 64.0f));
+                await Task.Delay(500);
                 return MoriAction.RollX1.Create(baseActionPayload);
             }
 
@@ -163,6 +164,20 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(90.5f, 80.8f));
                     await Task.Delay(1000);
                     isClicked = true;
+                    break;
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus == ReRollStatus.RollX1)
+                {
+                    // click banner
+                    await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                    await Task.Delay(500);
+                    // click invoke 1
+                    await emulatorConnection.ClickPPointAsync(new PPoint(75.5f, 79.9f));
+                    await Task.Delay(1000);
+                    isClicked = true;
+                    // ReSharper disable once RedundantJumpStatement
+                    break;
                 }
 
                 break;
@@ -193,6 +208,7 @@ public class WhenGetPresentsAndRoll : ScanTemplateEffectBase
                     await emulatorConnection.ClickPPointAsync(new PPoint(67.5f, 93.8f));
                     isClicked = true;
                 }
+
                 break;
             }
 

@@ -717,7 +717,7 @@ public static class TemplateImageDataHelper
                 [
                     "Resources", "game", "mementomori", "image-detector", "reroll", "NotHaveEnoughDiamondText.png",
                 ],
-                priority: 100
+                priority: 50
             )
         },
     };
