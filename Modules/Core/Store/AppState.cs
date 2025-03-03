@@ -10,6 +10,6 @@ public record AppState(string AppName, Game Game, int Count)
 {
     public static AppState factory()
     {
-        return new AppState("NDBot", Game.R1999, 0);
+        return new AppState("NDBot", Game.MementoMori, 0);
     }
 }

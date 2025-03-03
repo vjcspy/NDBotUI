@@ -122,6 +122,15 @@ public partial class TabReRollViewModel : ObservableViewModelBase
     [RelayCommand]
     public void TestCommand()
     {
+        if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
+        {
+            RxEventManager.Dispatch(
+                MoriAction.ResetUserData.Create(
+                    new BaseActionPayload(selectedEmulatorId)
+                )
+            );
+        }
+
         RxEventManager.Dispatch(MoriAction.TriggerManually.Create());
     }
 }

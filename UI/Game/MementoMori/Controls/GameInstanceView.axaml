@@ -13,7 +13,7 @@
     <!-- <UserControl.DataContext> -->
     <!--     <controls:GameInstanceViewModel /> -->
     <!-- </UserControl.DataContext> -->
-    <Grid RowDefinitions="*" ColumnDefinitions="*">
+    <Grid RowDefinitions="*,35" ColumnDefinitions="*">
         <DataGrid Grid.Row="0"
                   x:Name="DataGrid"
                   ItemsSource="{Binding Store.MoriStore.State.GameInstances}"
@@ -90,5 +90,6 @@
 
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Row="1" HorizontalAlignment="Center" Content="Reload Emulator" Command="{Binding ReloadEmulator}" />
     </Grid>
 </UserControl>

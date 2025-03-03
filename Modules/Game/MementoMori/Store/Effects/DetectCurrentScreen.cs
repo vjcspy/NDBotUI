@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using LanguageExt;
 using NDBotUI.Modules.Core.Extensions;
 using NDBotUI.Modules.Core.Helper;
 using NDBotUI.Modules.Core.Store;
@@ -173,31 +175,40 @@ public class DetectCurrentScreen : EffectBase
 
             var screenshotEmguMat = screenshot.ToEmguMat();
 
+            var semaphore = new SemaphoreSlim(2); // 2 thread tối đa
+
             var tasks = screenToCheck
                 .Select(
-                    moriTemplateKey =>
-                        Observable
-                            .FromAsync(
-                                () => Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, moriTemplateKey))
-                            )
-                            .SubscribeOn(Scheduler.Default)
-                );
+                    async templateKey =>
+                    {
+                        // Chờ đến khi có thread trống
+                        await semaphore.WaitAsync();
 
-            var result = await tasks
-                .Merge()
-                .Where(res => res != null)
-                .ToList();
-
-            Logger.Info($"Found {result.Count} detected template points");
-
-            var detectedTemplatePoint = result
-                .OrderBy(
-                    point =>
-                        TemplateImageDataHelper
-                            .TemplateImageData[point!.MoriTemplateKey]
-                            .GetPriority(baseActionPayload.EmulatorId)
+                        try
+                        {
+                            // Gọi hàm DetectCurrentScreenByEmguCV trong một thread mới
+                            return await Task.Run(() => DetectCurrentScreenByEmguCV(screenshotEmguMat, templateKey));
+                        }
+                        finally
+                        {
+                            // Giải phóng semaphore để cho phép thread khác thực thi
+                            semaphore.Release();
+                        }
+                    }
                 )
-                .FirstOrDefault();
+                .ToArray();
+
+            // Chạy tất cả các task đồng thời và lấy kết quả
+            var result = await Task
+                .WhenAll(tasks) // Chạy đồng thời tất cả các task
+                .Select(res => res.Where(a => a != null));
+
+            var detectedTemplatePoint = result.OrderBy(
+                point =>
+                    TemplateImageDataHelper
+                        .TemplateImageData[point!.MoriTemplateKey]
+                        .GetPriority(baseActionPayload.EmulatorId)
+            ).FirstOrDefault();
 
             if (detectedTemplatePoint != null)
             {

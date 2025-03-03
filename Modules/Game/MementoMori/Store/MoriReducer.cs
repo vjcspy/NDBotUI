@@ -318,6 +318,7 @@ public class MoriReducer
                             gameInstance.EmulatorId == emulatorId
                                 ? gameInstance with
                                 {
+                                    State = AutoState.On,
                                     JobReRollState = gameInstance.JobReRollState with
                                     {
                                         ReRollStatus = ReRollStatus.ResetUserData,
