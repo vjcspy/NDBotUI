@@ -20,7 +20,7 @@ public class RefreshEmulatorEffect : EffectBase
         {
             await Task.Delay(0);
             var emulatorManager = EmulatorManager.Instance;
-            emulatorManager.RefreshDevices(false, false);
+            emulatorManager.RefreshDevices(true, false);
             return EmulatorAction.EmulatorConnectSuccessAction.Create(emulatorManager.EmulatorConnections);
         }
         catch (Exception e)

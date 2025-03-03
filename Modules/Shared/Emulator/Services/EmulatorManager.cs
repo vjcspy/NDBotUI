@@ -22,7 +22,7 @@ public class EmulatorManager(AdbHelper adbHelper)
         Lst<EmulatorConnection> newConnections = [];
 
         var devices = adbHelper.ConnectByGetDevices();
-        Logger.Debug("Found {0} devices", devices.Count());
+        Logger.Info("Found {0} devices", devices.Count());
 
         foreach (var emulatorScanData in devices)
         {
