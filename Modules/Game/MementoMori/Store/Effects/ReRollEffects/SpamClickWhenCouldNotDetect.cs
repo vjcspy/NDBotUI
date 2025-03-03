@@ -13,6 +13,11 @@ public class SpamClickWhenCouldNotDetect : EffectBase
         return [MoriAction.CouldNotDetectMoriScreen,];
     }
 
+    protected override bool IsParallel()
+    {
+        return false;
+    }
+
     protected override async Task<EventAction> Process(EventAction action)
     {
         if (action.Payload is not BaseActionPayload baseActionPayload)
@@ -29,7 +34,7 @@ public class SpamClickWhenCouldNotDetect : EffectBase
         }
 
         await emulatorConnection.ClickPPointAsync(new PPoint(93.2f, 93.6f));
-        await Task.Delay(250);
+        await Task.Delay(1550);
         // await emulatorConnection.ClickPPointAsync(new PPoint(95.6f, 6.8f));
 
 

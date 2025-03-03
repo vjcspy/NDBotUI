@@ -14,6 +14,11 @@ public class WhenFoundCharacterGrowthPossible : EffectBase
         return [MoriAction.DetectedMoriScreen,];
     }
 
+    protected override bool IsParallel()
+    {
+        return false;
+    }
+
     protected override bool Filter(EventAction action)
     {
         if (action.Payload is BaseActionPayload baseActionPayload)
