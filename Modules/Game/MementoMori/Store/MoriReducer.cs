@@ -360,6 +360,33 @@ public class MoriReducer
                 return state;
             }
 
+            case MoriAction.Type.SelectedServer:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        gameInstance =>
+                            gameInstance.EmulatorId == emulatorId
+                                ? gameInstance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = gameInstance.JobReRollState with
+                                    {
+                                        SelectedServer = true,
+                                    },
+                                }
+                                : gameInstance
+                    ),
+                };
+                return state;
+            }
+
             case MoriAction.Type.EligibilityLevelCheck:
             {
                 if (action.Payload is not BaseActionPayload baseActionPayload)

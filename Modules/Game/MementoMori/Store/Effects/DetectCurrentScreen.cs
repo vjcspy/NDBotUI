@@ -205,7 +205,7 @@ public class DetectCurrentScreen : EffectBase
 
             var screenshotEmguMat = screenshot.ToEmguMat();
 
-            var semaphore = new SemaphoreSlim(2); // 2 thread tối đa
+            var semaphore = new SemaphoreSlim(5); // 2 thread tối đa
 
             var tasks = templateChecks
                 .Select(

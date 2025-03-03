@@ -37,6 +37,7 @@ public class MoriAction
         SaveResult,
         LinkAccount,
         ResetUserData,
+        SelectedServer,
     }
 
     public static readonly EventActionFactory TriggerManually = new(Type.TriggerManually);
@@ -70,4 +71,5 @@ public class MoriAction
     public static readonly EventActionFactory SaveResult = new(Type.SaveResult);
     public static readonly EventActionFactory LinkAccount = new(Type.LinkAccount);
     public static readonly EventActionFactory ResetUserData = new(Type.ResetUserData);
+    public static readonly EventActionFactory SelectedServer = new(Type.SelectedServer);
 }

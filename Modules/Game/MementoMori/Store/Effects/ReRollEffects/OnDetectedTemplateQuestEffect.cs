@@ -53,11 +53,17 @@ public class OnDetectedTemplateQuestEffect : EffectBase
             return CoreAction.Empty;
         }
 
+        var gameInstance = AppStore.Instance.MoriStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+
+        if (gameInstance == null)
+        {
+            return CoreAction.Empty;
+        }
+
         var isClicked = false;
         MoriTemplateKey[] clickOnMoriTemplateKeys =
         [
             MoriTemplateKey.SkipMovieButton,
-            MoriTemplateKey.StartStartButton,
             MoriTemplateKey.IconChar1,
             MoriTemplateKey.ChallengeButton,
             MoriTemplateKey.TapToClose,
@@ -105,6 +111,22 @@ public class OnDetectedTemplateQuestEffect : EffectBase
                 // Đang đi quest mà vào character tab thì đi ra quest thôi, tr khi là đang level up
                 await emulatorConnection.ClickPPointAsync(new PPoint(44f, 94.4f));
                 break;
+            case MoriTemplateKey.StartStartButton:
+                if (gameInstance.JobReRollState.SelectedServer == false)
+                {
+                    // dam bao select dung server
+                    await emulatorConnection.ClickPPointAsync(new PPoint(51.3f, 79.3f));
+                    await Task.Delay(2000);
+                    // click select server
+                    await emulatorConnection.ClickPPointAsync(new PPoint(19.4f, 31.4f));
+                    await Task.Delay(1000);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(43.2f, 22.5f));
+                    return MoriAction.SelectedServer.Create(baseActionPayload);
+                }
+                await emulatorConnection.ClickOnPointAsync(detectedTemplatePoint.Point);
+                isClicked = true;
+                break;
+
             case MoriTemplateKey.StartSettingButton:
                 break;
             case MoriTemplateKey.LoginClaimButton:

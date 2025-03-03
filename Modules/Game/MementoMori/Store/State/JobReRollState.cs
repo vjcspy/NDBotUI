@@ -32,7 +32,8 @@ public record JobReRollState(
     int DetectScreenTry,
     int CurrentLevel,
     int LevelUpCharPosition,
-    Guid? ResultId
+    Guid? ResultId,
+    bool? SelectedServer = false
 )
 {
     public static JobReRollState Factory()
