@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.AutoCore.Typing;
+using NDBotUI.Modules.Game.Ete.Store;
 using NDBotUI.Modules.Game.Ete.Typing;
 using NDBotUI.Modules.Game.R1999.Store;
 using NDBotUI.Modules.Game.R1999.Typing;
@@ -111,7 +112,7 @@ public partial class EteTabConfigViewModel:ObservableViewModelBase
             if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
             {
                 RxEventManager.Dispatch(
-                    R1999Action.ToggleStartStopReRoll.Create(
+                    EteAction.ToggleStartStopReRoll.Create(
                         new BaseActionPayload(selectedEmulatorId)
                     )
                 );
