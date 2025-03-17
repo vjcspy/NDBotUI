@@ -24,7 +24,9 @@ public class CouldNotFoundScreenEffect : EffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus == EteReRollStatus.Start;
+                return currentStatus == EteReRollStatus.Start
+                       || currentStatus == EteReRollStatus.Step1HomeScreen
+                       || currentStatus == EteReRollStatus.Step3HomeScreen;
             }
         }
 
@@ -51,7 +53,7 @@ public class CouldNotFoundScreenEffect : EffectBase
             return CoreAction.Empty;
         }
 
-        await emulatorConnection.ClickPPointAsync(new PPoint(89f, 6f));
+        await emulatorConnection.ClickPPointAsync(new PPoint(93, 6.2f));
         await Task.Delay(250);
         // await emulatorConnection.ClickPPointAsync(new PPoint(95.6f, 6.8f));
 

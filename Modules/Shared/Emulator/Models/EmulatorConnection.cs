@@ -122,7 +122,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public async Task<Unit> ClickOnPointAsync(Point point)
     {
-        Logger.Info($"Emulator: {Id} - Click on: {point}");
+        // Logger.Info($"Emulator: {Id} - Click on: {point}");
         await emulatorScanData.AdbClient.ClickAsync(emulatorScanData.DeviceData, point);
 
         return Unit.Default;
@@ -130,7 +130,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public async Task<Unit> SwipeAsync(Point from, Point to, int speed = 1000)
     {
-        Logger.Info($"Emulator: {Id} - Swipe from: {from} to: {to}");
+        // Logger.Info($"Emulator: {Id} - Swipe from: {from} to: {to}");
         await emulatorScanData.AdbClient.SwipeAsync(emulatorScanData.DeviceData, from, to, speed);
 
         return Unit.Default;
@@ -156,7 +156,7 @@ public class EmulatorConnection(EmulatorScanData emulatorScanData)
 
     public Unit ClickOnPoint(Point point)
     {
-        Logger.Info($"Emulator: {Id} - Click on: {point}");
+        // Logger.Info($"Emulator: {Id} - Click on: {point}");
         emulatorScanData.AdbClient.Click(emulatorScanData.DeviceData, point);
 
         return Unit.Default;

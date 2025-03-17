@@ -12,5 +12,9 @@ public class EteEffects
 
         new ReRollStartEffect(),
         new CouldNotFoundScreenEffect(),
+        new ReRollHomeStep1Effect(),
+        new ReRollHomeStep2Effect(),
+        new ReRollHomeStep3Effect(),
+        new ReRollGetRewardEffect(),
     ];
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NDBotUI.Modules.Core.Store;
 using NDBotUI.Modules.Game.AutoCore.Store;
 using NDBotUI.Modules.Game.R1999.Store;
 using NDBotUI.Modules.Shared.Emulator.Services;
@@ -17,6 +18,10 @@ public class ReRollStartEffect : EffectBase
         EteTemplateKey.LoginAgreementText,
         EteTemplateKey.ClickStrike,
         EteTemplateKey.GuideNoPrblText,
+        EteTemplateKey.CloseDailyRwBttn,
+        EteTemplateKey.BackBtn,
+        // EteTemplateKey.ConfirmButton, // TODO: delete
+        // EteTemplateKey.ConfirmButton1, // TODO: delete
     ];
 
     protected override bool IsParallel()
@@ -27,6 +32,23 @@ public class ReRollStartEffect : EffectBase
     protected override IEventActionFactory[] GetAllowEventActions()
     {
         return [EteAction.DetectScreen,];
+    }
+
+    protected override bool Filter(EventAction action)
+    {
+        if (action.Payload is BaseActionPayload baseActionPayload)
+        {
+            var gameInstance =
+                AppStore.Instance.EteStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+            if (gameInstance is { } gameInstanceData)
+            {
+                var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
+
+                return currentStatus == EteReRollStatus.Start;
+            }
+        }
+
+        return false;
     }
 
     protected override async Task<EventAction> Process(EventAction action)
@@ -132,6 +154,11 @@ public class ReRollStartEffect : EffectBase
                 break;
             }
 
+            case EteTemplateKey.HomeSupplyBtn:
+            {
+                return EteAction.GetReward.Create(baseActionPayload);
+            }
+
             default:
             {
                 if (_clickOnTemplateKeys.Contains(detectTemplatePoint.TemplateKey))
@@ -147,6 +174,6 @@ public class ReRollStartEffect : EffectBase
             }
         }
 
-        return isClicked ? R1999Action.ClickedAfterDetectedScreen.Create(baseActionPayload) : CoreAction.Empty;
+        return isClicked ? EteAction.ClickedAfterDetectedScreen.Create(baseActionPayload) : CoreAction.Empty;
     }
 }

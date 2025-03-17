@@ -19,6 +19,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         EteTemplateKey.GraphicQualityText,
 
         EteTemplateKey.SkipButton,
+        EteTemplateKey.CloseDailyRwBttn,
         EteTemplateKey.ClickStrike,
 
         // In battle
@@ -32,6 +33,62 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
         EteTemplateKey.GuideNoPrblText,
         EteTemplateKey.GuideEnterName,
+
+        EteTemplateKey.HomeSupplyBtn, // detect duoc supply chung to da ok de re-roll
+        // EteTemplateKey.SupplyBannerStandard,
+        EteTemplateKey.GuideSupplyQuick, // condition to home step 1
+        EteTemplateKey.GuideSupplyBack, // condition to home step 1
+        EteTemplateKey.GuideSupplyFree, // condition to home step 1
+        // EteTemplateKey.ConfirmButton, // TODO: delete
+        // EteTemplateKey.ConfirmButton1,  // TODO: delete
+
+        EteTemplateKey.GuideContinueBattle, // condition to home step 2
+        // EteTemplateKey.Mission1Header, // TODO: delete
+        EteTemplateKey.MissionStartBtn, // TODO: delete
+        EteTemplateKey.Mission1Task, // condition to home step 2
+        EteTemplateKey.BackBtn,
+    ];
+
+    private readonly Enum[] RewardScreenTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.CloseDailyRwBttn,
+        EteTemplateKey.EmailClaimAllBtn,
+    ];
+
+    private readonly Enum[] Step1HomeScreenTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.GuideSupplyQuick,
+        EteTemplateKey.SupplyBannerStandard,
+        EteTemplateKey.GuideSupplyFree,
+        EteTemplateKey.ConfirmButton,
+        EteTemplateKey.ConfirmButton1,
+        EteTemplateKey.GuideSupplyBack,
+
+        EteTemplateKey.GuideContinueBattle, // condition to home step 2
+    ];
+
+    private readonly Enum[] Step2HomeScreenTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.GuideContinueBattle,
+        EteTemplateKey.Mission1Header,
+        EteTemplateKey.Mission1Task,
+        EteTemplateKey.MissionStartBtn, // condition to home step 3
+    ];
+
+    private readonly Enum[] Step3HomeScreenTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.Mission1Header,
+        EteTemplateKey.Mission1Task,
+        EteTemplateKey.MissionStartBtn,
+        EteTemplateKey.CloseDailyRwBttn,
     ];
 
 
@@ -47,7 +104,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
     protected override int GetThrottleTime()
     {
-        return 5;
+        return 4;
     }
 
     protected override async Task<EventAction> Process(EventAction action)
@@ -72,11 +129,27 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
             return CoreAction.Empty;
         }
 
-        // if (gameInstance.JobReRollState.ReRollStatus >= R1999ReRollStatus.SaveResultOk)
-        // {
-        //     Logger.Info("Change to RenewAccountTemplates");
-        //     checkTemplates = RenewAccountTemplates;
-        // }
+        if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step1HomeScreen)
+        {
+            Logger.Info("Change to Step1HomeScreenTemplates");
+            checkTemplates = Step1HomeScreenTemplates;
+        }
+        else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step2HomeScreen)
+        {
+            Logger.Info("Change to Step2HomeScreenTemplates");
+            checkTemplates = Step2HomeScreenTemplates;
+        }
+        else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step3HomeScreen)
+        {
+            Logger.Info("Change to Step2HomeScreenTemplates");
+            checkTemplates = Step3HomeScreenTemplates;
+        }
+        else if (gameInstance.JobReRollState.ReRollStatus >= EteReRollStatus.GetReward
+                 && gameInstance.JobReRollState.ReRollStatus <= EteReRollStatus.GotCodelReward)
+        {
+            Logger.Info("Change to Step2HomeScreenTemplates");
+            checkTemplates = RewardScreenTemplates;
+        }
 
         // Optimize by use one screenshot
         var screenshot = await emulatorConnection.TakeScreenshotAsync();

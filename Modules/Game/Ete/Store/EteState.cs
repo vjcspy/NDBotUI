@@ -11,6 +11,7 @@ namespace NDBotUI.Modules.Game.Ete.Store;
 public enum EteTemplateKey
 {
     Unknown,
+    BackBtn,
     StartCloseDialogButton,
     LoginAgreementText,
     GraphicQualityText,
@@ -27,12 +28,38 @@ public enum EteTemplateKey
 
     GuideNoPrblText,
     GuideEnterName,
+
+    HomeSupplyBtn,
+    GuideSupplyQuick,
+    SupplyBannerStandard,
+    GuideSupplyFree,
+    ConfirmButton,
+    ConfirmButton1,
+    GuideSupplyBack,
+
+    GuideContinueBattle,
+    Mission1Header,
+    Mission1Task,
+    MissionStartBtn,
+    CloseDailyRwBttn,
+
+    EmailClaimAllBtn,
 }
 
 public enum EteReRollStatus
 {
     Open = 0, // chưa làm gì hết
     Start, // Bấm start
+
+    Step1HomeScreen, // Xong mở đầu, vào được home
+    Step2HomeScreen, // Xong mở đầu, vao battle lan nua
+    Step3HomeScreen, // Xong mở đầu, Done battle
+
+    GetReward,
+    GotEmailReward,
+    GotCodelReward,
+
+    DoReRoll,
 }
 
 public record EteJobReRollState(
