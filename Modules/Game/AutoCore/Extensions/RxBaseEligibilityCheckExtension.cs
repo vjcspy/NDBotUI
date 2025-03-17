@@ -65,6 +65,22 @@ public static class RxBaseEligibilityCheckExtension
                             false
                         );
                 }
+                else if (AppStore.Instance.State.Game == Core.Store.Game.EteChronicle)
+                {
+                    isHasGameInstance = AppStore
+                        .Instance
+                        .EteStore
+                        .State
+                        .GameInstances
+                        .Find(
+                            instance =>
+                                instance.EmulatorId == baseActionPayload.EmulatorId
+                        )
+                        .Match(
+                            game => game.State == AutoState.On,
+                            false
+                        );
+                }
 
                 if (!isHasGameInstance)
                 {

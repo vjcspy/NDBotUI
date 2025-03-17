@@ -11,6 +11,7 @@ namespace NDBotUI.Modules.Game.Ete.Store;
 public enum EteTemplateKey
 {
     Unknown,
+    StartCloseDialogButton,
 }
 
 public enum EteReRollStatus

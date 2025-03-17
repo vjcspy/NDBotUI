@@ -9,10 +9,15 @@ public class EteAction
         InitEte,
         ToggleStartStopReRoll,
 
-        TriggerScanCurrentScreen
+        TriggerScanCurrentScreen,
+        DetectScreen,
+        CouldNotDetectScreen
     }
 
     public static readonly EventActionFactory InitEte = new(Type.InitEte);
     public static readonly EventActionFactory ToggleStartStopReRoll = new(Type.ToggleStartStopReRoll);
+
     public static readonly EventActionFactory TriggerScanCurrentScreen = new(Type.TriggerScanCurrentScreen);
+    public static readonly EventActionFactory DetectScreen = new(Type.DetectScreen);
+    public static readonly EventActionFactory CouldNotDetectScreen = new(Type.CouldNotDetectScreen);
 }

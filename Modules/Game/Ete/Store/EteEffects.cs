@@ -7,5 +7,6 @@ public class EteEffects
     public static readonly object[] Effects =
     [
         new InitEteEffect(),
+        new DetectCurrentScreenEffect(),
     ];
 }
