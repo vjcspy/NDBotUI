@@ -26,6 +26,7 @@ public class CouldNotFoundScreenEffect : EffectBase
 
                 return currentStatus == EteReRollStatus.Start
                        || currentStatus == EteReRollStatus.Step1HomeScreen
+                       || currentStatus == EteReRollStatus.Step3HomeScreen
                        || currentStatus == EteReRollStatus.Step3HomeScreen;
             }
         }

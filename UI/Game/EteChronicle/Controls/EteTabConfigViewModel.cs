@@ -127,11 +127,11 @@ public partial class EteTabConfigViewModel:ObservableViewModelBase
     {
         if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
         {
-            // RxEventManager.Dispatch(
-            //     R1999Action.SaveResultOk.Create(
-            //         new BaseActionPayload(selectedEmulatorId)
-            //     )
-            // );
+            RxEventManager.Dispatch(
+                EteAction.DoReRoll.Create(
+                    new BaseActionPayload(selectedEmulatorId)
+                )
+            );
         }
     }
 }

@@ -251,6 +251,7 @@ public class EteReducer
                             instance.EmulatorId == emulatorId
                                 ? instance with
                                 {
+                                    State = AutoState.On,
                                     JobReRollState = instance.JobReRollState with
                                     {
                                         ReRollStatus = EteReRollStatus.DoReRoll,

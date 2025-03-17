@@ -44,9 +44,19 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
         EteTemplateKey.GuideContinueBattle, // condition to home step 2
         // EteTemplateKey.Mission1Header, // TODO: delete
-        EteTemplateKey.MissionStartBtn, // TODO: delete
+        // EteTemplateKey.MissionStartBtn, // TODO: delete
         EteTemplateKey.Mission1Task, // condition to home step 2
         EteTemplateKey.BackBtn,
+    ];
+
+    private readonly Enum[] DoReRollTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.BannerCharDragon,
+        EteTemplateKey.Supply10xTextConfirm,
+        EteTemplateKey.SupplySkipText,
+        EteTemplateKey.SupplyExtraText,
     ];
 
     private readonly Enum[] RewardScreenTemplates =
@@ -131,24 +141,25 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
         if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step1HomeScreen)
         {
-            Logger.Info("Change to Step1HomeScreenTemplates");
             checkTemplates = Step1HomeScreenTemplates;
         }
         else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step2HomeScreen)
         {
-            Logger.Info("Change to Step2HomeScreenTemplates");
             checkTemplates = Step2HomeScreenTemplates;
         }
         else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.Step3HomeScreen)
         {
-            Logger.Info("Change to Step2HomeScreenTemplates");
             checkTemplates = Step3HomeScreenTemplates;
         }
         else if (gameInstance.JobReRollState.ReRollStatus >= EteReRollStatus.GetReward
                  && gameInstance.JobReRollState.ReRollStatus <= EteReRollStatus.GotCodelReward)
         {
-            Logger.Info("Change to Step2HomeScreenTemplates");
             checkTemplates = RewardScreenTemplates;
+        }
+        else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
+        {
+            Logger.Info("Change to DoReRollTemplates");
+            checkTemplates = DoReRollTemplates;
         }
 
         // Optimize by use one screenshot

@@ -44,6 +44,10 @@ public enum EteTemplateKey
     CloseDailyRwBttn,
 
     EmailClaimAllBtn,
+    BannerCharDragon,
+    Supply10xTextConfirm,
+    SupplySkipText,
+    SupplyExtraText,
 }
 
 public enum EteReRollStatus
@@ -60,6 +64,8 @@ public enum EteReRollStatus
     GotCodelReward,
 
     DoReRoll,
+    DoReRollCharOk,
+    DoReRollWeaponOk,
 }
 
 public record EteJobReRollState(

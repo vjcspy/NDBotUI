@@ -31,6 +31,7 @@ public class EteScreenDetectorDataHelper : ScreenDetectorDataBase
             { EteTemplateKey.Mission1Task, new OverrideScreenData(Priority: 70, FilePath: null) },
             { EteTemplateKey.MissionStartBtn, new OverrideScreenData(Priority: 70, FilePath: null) },
             { EteTemplateKey.CloseDailyRwBttn, new OverrideScreenData(Priority: 70, FilePath: null) },
+            { EteTemplateKey.Supply10xTextConfirm, new OverrideScreenData(Priority: 70, FilePath: null) },
         };
     }
 
@@ -68,6 +69,10 @@ public class EteScreenDetectorDataHelper : ScreenDetectorDataBase
             EteTemplateKey.CloseDailyRwBttn,
 
             EteTemplateKey.EmailClaimAllBtn,
+            EteTemplateKey.BannerCharDragon,
+            EteTemplateKey.Supply10xTextConfirm,
+            EteTemplateKey.SupplySkipText,
+            EteTemplateKey.SupplyExtraText,
         ];
 
     public static EteScreenDetectorDataHelper GetInstance()

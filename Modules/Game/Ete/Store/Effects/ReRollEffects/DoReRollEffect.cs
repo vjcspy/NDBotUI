@@ -10,13 +10,16 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.Ete.Store.Effects.ReRollEffects;
 
-public class ReRollGetRewardEffect : EffectBase
+public class DoReRollEffect : EffectBase
 {
     private readonly Enum[] _clickOnTemplateKeys =
     [
         EteTemplateKey.ConfirmButton,
         EteTemplateKey.ConfirmButton1,
         EteTemplateKey.CloseDailyRwBttn,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.SupplySkipText,
+        EteTemplateKey.SupplyExtraText,
     ];
 
     protected override bool IsParallel()
@@ -34,7 +37,7 @@ public class ReRollGetRewardEffect : EffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus >= EteReRollStatus.GetReward || currentStatus < EteReRollStatus.DoReRoll;
+                return currentStatus == EteReRollStatus.DoReRoll;
             }
         }
 
@@ -82,38 +85,27 @@ public class ReRollGetRewardEffect : EffectBase
                 break;
             }
 
-            case EteTemplateKey.HomeSupplyBtn:
+            case EteTemplateKey.BannerCharDragon:
             {
-                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.GetReward)
-                {
-                    await emulatorConnection.ClickPPointAsync(new PPoint(5.9f, 20.9f));
-                    isClicked = true;
-                }else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.GotEmailReward)
+                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
                 {
                     await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
-                    return EteAction.DoReRoll.Create(baseActionPayload);
-                }
-                break;
-            }
-
-            case EteTemplateKey.EmailClaimAllBtn:
-            {
-                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.GetReward)
-                {
-                    await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
-                    await Task.Delay(1000);
-                    await emulatorConnection.ClickPPointAsync(new PPoint(25.9f, 85.9f));
-                    return EteAction.GotEmailReward.Create(baseActionPayload);
-                }
-                else
-                {
-                    // click back
-                    await emulatorConnection.ClickPPointAsync(new PPoint(4.7f, 5.7f));
+                    await Task.Delay(200);
+                    await emulatorConnection.ClickPPointAsync(new PPoint(88.6f, 91.2f));
                     isClicked = true;
                 }
 
                 break;
             }
+
+            // bang confirm
+            case EteTemplateKey.Supply10xTextConfirm:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(60f, 81f));
+                isClicked = true;
+                break;
+            }
+
 
             default:
             {
