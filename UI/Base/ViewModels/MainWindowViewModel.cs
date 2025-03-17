@@ -23,9 +23,20 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
         this.WhenActivated(
             disposables =>
             {
-                // Router.Navigate.Execute(new R1999ContainerViewModel(this));
-                Router.Navigate.Execute(new MoriContainerViewModel(this));
-                // Router.Navigate.Execute(new ProductPageViewModel(this));
+                var appStore = AppStore.Instance;
+                var currentGame= appStore.State.Game;
+
+                if (currentGame == Modules.Core.Store.Game.MementoMori)
+                {
+                    Router.Navigate.Execute(new MoriContainerViewModel(this));
+                }else if (currentGame == Modules.Core.Store.Game.R1999)
+                {
+                    Router.Navigate.Execute(new R1999ContainerViewModel(this));
+                }
+                else
+                {
+                    Router.Navigate.Execute(new MoriContainerViewModel(this));
+                }
 
                 Disposable
                     .Create(() => Console.WriteLine("MainWindowViewModel bị hủy!"))
