@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Disposables;
 using NDBotUI.Modules.Core.Store;
+using NDBotUI.UI.Game.EteChronicle.Controls;
 using NDBotUI.UI.Game.MementoMori.Controls;
 using NDBotUI.UI.Game.R1999.Controls;
 using ReactiveUI;
@@ -24,14 +25,19 @@ public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
             disposables =>
             {
                 var appStore = AppStore.Instance;
-                var currentGame= appStore.State.Game;
+                var currentGame = appStore.State.Game;
 
                 if (currentGame == Modules.Core.Store.Game.MementoMori)
                 {
                     Router.Navigate.Execute(new MoriContainerViewModel(this));
-                }else if (currentGame == Modules.Core.Store.Game.R1999)
+                }
+                else if (currentGame == Modules.Core.Store.Game.R1999)
                 {
                     Router.Navigate.Execute(new R1999ContainerViewModel(this));
+                }
+                else if (currentGame == Modules.Core.Store.Game.EteChronicle)
+                {
+                    Router.Navigate.Execute(new EteContainerViewModel(this));
                 }
                 else
                 {

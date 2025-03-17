@@ -1,6 +1,7 @@
 ﻿using System;
 using NDBotUI.UI.Base.ViewModels;
 using NDBotUI.UI.Base.Views;
+using NDBotUI.UI.Game.EteChronicle.Controls;
 using NDBotUI.UI.Game.MementoMori.Controls;
 using NDBotUI.UI.Game.R1999.Controls;
 using NDBotUI.UI.TedBed.ViewModels;
@@ -32,6 +33,9 @@ public class AppViewLocator : IViewLocator
 
             // R1999
             R1999ContainerViewModel context => new R1999ContainerView { DataContext = context, },
+
+            // Ete
+            EteContainerViewModel context => new EteContainerView { DataContext = context, },
 
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel)),
         };

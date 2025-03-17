@@ -1,0 +1,44 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:NDBotUI.UI.Base.Views"
+             xmlns:controls1="clr-namespace:NDBotUI.UI.Game.EteChronicle.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="NDBotUI.UI.Game.EteChronicle.Controls.EteContainerView"
+             x:DataType="controls1:EteContainerViewModel">
+    <Grid>
+        <views:LoadingView IsVisible="{Binding IsLoading}" />
+        <Grid RowDefinitions="50,*,50"
+              IsVisible="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+            <!-- Header (cố định chiều cao) -->
+            <Border Grid.Row="0" Background="#141729">
+                <TextBlock Text="ETE Chronicle" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+
+            <!-- Content -->
+            <Grid Grid.Row="1" RowDefinitions="*" ColumnDefinitions="*">
+                <Grid RowDefinitions="200,1,*">
+                    <Grid Grid.Row="0">
+                        <controls1:EteGameInstanceView />
+                    </Grid>
+
+                    <!-- Thanh chia có thể kéo -->
+                    <GridSplitter Height="1" Background="Gray" Grid.Row="1"
+                                  VerticalAlignment="Stretch"
+                                  ShowsPreview="True" />
+
+                    <Grid Grid.Row="2">
+                        <!-- <controls:R1999ConfigView Grid.Column="0" HorizontalAlignment="Stretch" -->
+                        <!--                           VerticalAlignment="Stretch" /> -->
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Footer (cố định chiều cao) -->
+            <Border Background="#141729" Grid.Row="2">
+                <TextBlock Text="NDBot v0.1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using NDBotUI.Modules.Game.Ete.Store;
 using NDBotUI.Modules.Game.MementoMori.Store;
 using NDBotUI.Modules.Game.R1999.Store;
 using NDBotUI.Modules.Shared.Emulator.Store;
@@ -17,6 +18,7 @@ public partial class AppStore : ObservableObject
     public MoriStore MoriStore { get; } = MoriStore.Instance;
 
     public R1999Store R1999Store { get; } = R1999Store.Instance;
+    public EteStore EteStore { get; } = EteStore.Instance;
 
     public void Reduce(EventAction action)
     {
@@ -24,5 +26,6 @@ public partial class AppStore : ObservableObject
         EmulatorStore.Instance.Reduce(action);
         MoriStore.Instance.Reduce(action);
         R1999Store.Instance.Reduce(action);
+        EteStore.Instance.Reduce(action);
     }
 }
