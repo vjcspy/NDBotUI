@@ -29,8 +29,8 @@
                                   ShowsPreview="True" />
 
                     <Grid Grid.Row="2">
-                        <!-- <controls:R1999ConfigView Grid.Column="0" HorizontalAlignment="Stretch" -->
-                        <!--                           VerticalAlignment="Stretch" /> -->
+                        <controls1:EteConfigView Grid.Column="0" HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch" />
                     </Grid>
                 </Grid>
             </Grid>
