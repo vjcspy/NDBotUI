@@ -52,6 +52,7 @@ public enum EteTemplateKey
     SupplyTapEmpty,
     SupplyConsum1000Text,
     LackMoneyText,
+    CloseXBtn,
 }
 
 public enum EteReRollStatus

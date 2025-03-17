@@ -17,5 +17,6 @@ public class EteEffects
         new ReRollHomeStep3Effect(),
         new ReRollGetRewardEffect(),
         new DoReRollEffect(),
+        new SaveResultEffect(),
     ];
 }

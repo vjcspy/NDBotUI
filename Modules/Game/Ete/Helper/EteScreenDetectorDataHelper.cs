@@ -77,6 +77,7 @@ public class EteScreenDetectorDataHelper : ScreenDetectorDataBase
             EteTemplateKey.SupplyTapEmpty,
             EteTemplateKey.SupplyConsum1000Text,
             EteTemplateKey.LackMoneyText,
+            EteTemplateKey.CloseXBtn,
         ];
 
     public static EteScreenDetectorDataHelper GetInstance()

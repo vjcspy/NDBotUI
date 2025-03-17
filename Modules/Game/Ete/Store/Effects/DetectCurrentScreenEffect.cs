@@ -105,6 +105,14 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         EteTemplateKey.CloseDailyRwBttn,
     ];
 
+    private readonly Enum[] SaveResultTemplates =
+    [
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.BackBtn,
+        EteTemplateKey.CloseDailyRwBttn,
+        EteTemplateKey.CloseXBtn,
+    ];
+
 
     protected override IEventActionFactory[] GetAllowEventActions()
     {
@@ -160,10 +168,15 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         {
             checkTemplates = RewardScreenTemplates;
         }
-        else if (gameInstance.JobReRollState.ReRollStatus >= EteReRollStatus.DoReRoll && gameInstance.JobReRollState.ReRollStatus <= EteReRollStatus.DoReRollCharOk)
+        else if (gameInstance.JobReRollState.ReRollStatus >= EteReRollStatus.DoReRoll && gameInstance.JobReRollState.ReRollStatus < EteReRollStatus.DoReRollCharOk)
         {
             Logger.Info("Change to DoReRollTemplates");
             checkTemplates = DoReRollTemplates;
+        }
+        else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollCharOk)
+        {
+            Logger.Info("Change to SaveResultTemplates");
+            checkTemplates = SaveResultTemplates;
         }
 
         // Optimize by use one screenshot

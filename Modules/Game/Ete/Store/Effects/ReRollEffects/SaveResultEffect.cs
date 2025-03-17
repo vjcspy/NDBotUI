@@ -10,18 +10,13 @@ using NDBotUI.Modules.Shared.EventManager;
 
 namespace NDBotUI.Modules.Game.Ete.Store.Effects.ReRollEffects;
 
-public class DoReRollEffect : EffectBase
+public class SaveResultEffect : EffectBase
 {
     private readonly Enum[] _clickOnTemplateKeys =
     [
-        EteTemplateKey.ConfirmButton,
-        EteTemplateKey.ConfirmButton1,
+        EteTemplateKey.BackBtn,
         EteTemplateKey.CloseDailyRwBttn,
-        EteTemplateKey.HomeSupplyBtn,
-        EteTemplateKey.SupplySkipText,
-        EteTemplateKey.SupplyExtraText,
-        EteTemplateKey.SupplyConfirmBtn,
-        EteTemplateKey.SupplyTapEmpty,
+        EteTemplateKey.CloseXBtn,
     ];
 
     protected override bool IsParallel()
@@ -39,7 +34,7 @@ public class DoReRollEffect : EffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus >= EteReRollStatus.DoReRoll && currentStatus < EteReRollStatus.DoReRollCharOk;
+                return currentStatus == EteReRollStatus.DoReRollCharOk;
             }
         }
 
@@ -53,7 +48,7 @@ public class DoReRollEffect : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info(">>Process DoReRollEffect");
+        Logger.Info(">>Process SaveResultEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {
@@ -86,58 +81,6 @@ public class DoReRollEffect : EffectBase
                 isClicked = true;
                 break;
             }
-
-            case EteTemplateKey.BannerCharDragon:
-            {
-                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
-                {
-                    await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
-                    await Task.Delay(1000);
-                    // click x10
-                    await emulatorConnection.ClickPPointAsync(new PPoint(88.6f, 91.2f));
-                    isClicked = true;
-                }
-
-                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollLackMoneyX10)
-                {
-                    await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
-                    await Task.Delay(1000);
-                    // click x1
-                    await emulatorConnection.ClickPPointAsync(new PPoint(72.1f, 91.2f));
-                    isClicked = true;
-                }
-
-                break;
-            }
-
-            // bang confirm
-            case EteTemplateKey.Supply10xTextConfirm:
-            {
-                await emulatorConnection.ClickPPointAsync(new PPoint(60f, 81f));
-                isClicked = true;
-                break;
-            }
-
-            case EteTemplateKey.SupplyConsum1000Text:
-            {
-                await emulatorConnection.ClickPPointAsync(new PPoint(59f, 69.3f));
-                isClicked = true;
-                break;
-            }
-
-            case EteTemplateKey.LackMoneyText:
-            {
-                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollLackMoneyX10)
-                {
-                    await emulatorConnection.ClickPPointAsync(new PPoint(36.8f, 69.5f));
-                    return EteAction.DoReRollCharOk.Create(baseActionPayload);
-                }
-
-                // cancel
-                await emulatorConnection.ClickPPointAsync(new PPoint(36.8f, 69.5f));
-                return EteAction.DoReRollLackMoneyX10.Create(baseActionPayload);
-            }
-
 
             default:
             {

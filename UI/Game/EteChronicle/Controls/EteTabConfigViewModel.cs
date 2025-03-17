@@ -128,7 +128,7 @@ public partial class EteTabConfigViewModel:ObservableViewModelBase
         if (AppStore.Instance.EmulatorStore.State.SelectedEmulatorId is { } selectedEmulatorId)
         {
             RxEventManager.Dispatch(
-                EteAction.DoReRoll.Create(
+                EteAction.DoReRollCharOk.Create(
                     new BaseActionPayload(selectedEmulatorId)
                 )
             );
