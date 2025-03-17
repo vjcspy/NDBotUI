@@ -53,6 +53,8 @@ public enum EteTemplateKey
     SupplyConsum1000Text,
     LackMoneyText,
     CloseXBtn,
+    CharacterIconScreen,
+    ReplenishDailyBtn,
 }
 
 public enum EteReRollStatus

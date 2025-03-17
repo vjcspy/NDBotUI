@@ -78,6 +78,15 @@ public class ReRollStartEffect : EffectBase
                 break;
             }
 
+            case EteTemplateKey.ReplenishDailyBtn:
+            {
+                await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(92f, 13.6f));
+                isClicked = true;
+                break;
+            }
+
             case EteTemplateKey.GraphicQualityText:
             {
                 await emulatorConnection.ClickPPointAsync(new PPoint(50.7f, 88.7f));
@@ -129,6 +138,10 @@ public class ReRollStartEffect : EffectBase
             case EteTemplateKey.InBattleCharIcon1:
             case EteTemplateKey.InBattleCharIcon11:
             {
+                await emulatorConnection.ClickPPointAsync(new PPoint(91.2f, 78.2f));
+                await Task.Delay(100);
+                await emulatorConnection.ClickPPointAsync(new PPoint(91.2f, 78.2f));
+                await Task.Delay(100);
                 await emulatorConnection.ClickPPointAsync(new PPoint(91.2f, 78.2f));
                 await Task.Delay(100);
                 await emulatorConnection.ClickPPointAsync(new PPoint(72.6f, 85.8f));

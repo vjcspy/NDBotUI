@@ -26,7 +26,6 @@ public class CouldNotFoundScreenEffect : EffectBase
 
                 return currentStatus == EteReRollStatus.Start
                        || currentStatus == EteReRollStatus.Step1HomeScreen
-                       || currentStatus == EteReRollStatus.Step3HomeScreen
                        || currentStatus == EteReRollStatus.Step3HomeScreen;
             }
         }
@@ -54,7 +53,16 @@ public class CouldNotFoundScreenEffect : EffectBase
             return CoreAction.Empty;
         }
 
+        var gameInstance =
+            AppStore.Instance.EteStore.State.GetGameInstance(baseActionPayload.EmulatorId);
+
+
+
         await emulatorConnection.ClickPPointAsync(new PPoint(93, 6.2f));
+        if (gameInstance?.JobReRollState.ReRollStatus == EteReRollStatus.Start)
+        {
+            await emulatorConnection.ClickPPointAsync(new PPoint(82.2f, 74.7f));
+        }
         await Task.Delay(250);
         // await emulatorConnection.ClickPPointAsync(new PPoint(95.6f, 6.8f));
 

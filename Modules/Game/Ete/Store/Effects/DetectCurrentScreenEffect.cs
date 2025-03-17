@@ -47,6 +47,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         // EteTemplateKey.MissionStartBtn, // TODO: delete
         EteTemplateKey.Mission1Task, // condition to home step 2
         EteTemplateKey.BackBtn,
+        EteTemplateKey.ReplenishDailyBtn,
     ];
 
     private readonly Enum[] DoReRollTemplates =
@@ -65,6 +66,13 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
     private readonly Enum[] RewardScreenTemplates =
     [
+        EteTemplateKey.GuideSupplyQuick, // condition to home step 1
+        EteTemplateKey.GuideSupplyFree, // condition to home step 1
+        // EteTemplateKey.ConfirmButton, // TODO: delete
+        // EteTemplateKey.ConfirmButton1,  // TODO: delete
+
+        // EteTemplateKey.GuideContinueBattle, // condition to home step 2
+
         EteTemplateKey.SkipButton,
         EteTemplateKey.HomeSupplyBtn,
         EteTemplateKey.CloseDailyRwBttn,
@@ -103,6 +111,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         EteTemplateKey.Mission1Task,
         EteTemplateKey.MissionStartBtn,
         EteTemplateKey.CloseDailyRwBttn,
+        EteTemplateKey.ReplenishDailyBtn,
     ];
 
     private readonly Enum[] SaveResultTemplates =
@@ -111,6 +120,8 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         EteTemplateKey.BackBtn,
         EteTemplateKey.CloseDailyRwBttn,
         EteTemplateKey.CloseXBtn,
+        EteTemplateKey.HomeSupplyBtn,
+        EteTemplateKey.CharacterIconScreen,
     ];
 
 

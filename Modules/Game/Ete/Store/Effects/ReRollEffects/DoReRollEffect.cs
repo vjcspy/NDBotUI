@@ -87,6 +87,15 @@ public class DoReRollEffect : EffectBase
                 break;
             }
 
+            case EteTemplateKey.ReplenishDailyBtn:
+            {
+                await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(92f, 13.6f));
+                isClicked = true;
+                break;
+            }
+
             case EteTemplateKey.BannerCharDragon:
             {
                 if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
@@ -130,7 +139,7 @@ public class DoReRollEffect : EffectBase
                 if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollLackMoneyX10)
                 {
                     await emulatorConnection.ClickPPointAsync(new PPoint(36.8f, 69.5f));
-                    return EteAction.DoReRollCharOk.Create(baseActionPayload);
+                    return EteAction.ToggleStartStopReRoll.Create(baseActionPayload);
                 }
 
                 // cancel

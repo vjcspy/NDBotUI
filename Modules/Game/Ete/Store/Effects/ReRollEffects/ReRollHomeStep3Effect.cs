@@ -94,6 +94,14 @@ public class ReRollHomeStep3Effect : EffectBase
                 return EteAction.GetReward.Create(baseActionPayload);
             }
 
+            case EteTemplateKey.ReplenishDailyBtn:
+            {
+                await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
+                await Task.Delay(2000);
+                await emulatorConnection.ClickPPointAsync(new PPoint(92f, 13.6f));
+                break;
+            }
+
             default:
             {
                 if (_clickOnTemplateKeys.Contains(detectTemplatePoint.TemplateKey))

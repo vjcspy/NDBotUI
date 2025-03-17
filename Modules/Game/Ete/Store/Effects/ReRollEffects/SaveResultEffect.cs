@@ -82,6 +82,21 @@ public class SaveResultEffect : EffectBase
                 break;
             }
 
+            case EteTemplateKey.HomeSupplyBtn:
+            {
+                // char
+                await emulatorConnection.ClickPPointAsync(new PPoint(86.6f, 54.5f));
+                isClicked = true;
+                break;
+            }
+
+            case EteTemplateKey.CharacterIconScreen:
+            {
+                // save result
+
+                break;
+            }
+
             default:
             {
                 if (_clickOnTemplateKeys.Contains(detectTemplatePoint.TemplateKey))
