@@ -1,4 +1,5 @@
 ﻿using NDBotUI.Modules.Game.Ete.Store.Effects;
+using NDBotUI.Modules.Game.Ete.Store.Effects.ReRollEffects;
 
 namespace NDBotUI.Modules.Game.Ete.Store;
 
@@ -8,5 +9,8 @@ public class EteEffects
     [
         new InitEteEffect(),
         new DetectCurrentScreenEffect(),
+
+        new ReRollStartEffect(),
+        new CouldNotFoundScreenEffect(),
     ];
 }

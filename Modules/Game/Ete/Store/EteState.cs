@@ -12,6 +12,21 @@ public enum EteTemplateKey
 {
     Unknown,
     StartCloseDialogButton,
+    LoginAgreementText,
+    GraphicQualityText,
+    SkipButton,
+    ClickStrike,
+    GuideJoystick,
+    GuideNormalAttk,
+
+    GuideIntrinsicSkill,
+    InBattleCharIcon1,
+    InBattleCharIcon11,
+    GuideEnemy2Assault,
+    GuideEnemy2Assault2,
+
+    GuideNoPrblText,
+    GuideEnterName,
 }
 
 public enum EteReRollStatus

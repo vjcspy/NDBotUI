@@ -15,6 +15,23 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
     private readonly Enum[] CheckTemplatesAll =
     [
         EteTemplateKey.StartCloseDialogButton,
+        EteTemplateKey.LoginAgreementText,
+        EteTemplateKey.GraphicQualityText,
+
+        EteTemplateKey.SkipButton,
+        EteTemplateKey.ClickStrike,
+
+        // In battle
+        EteTemplateKey.GuideJoystick,
+        EteTemplateKey.GuideNormalAttk,
+        EteTemplateKey.GuideIntrinsicSkill,
+        EteTemplateKey.InBattleCharIcon1,
+        EteTemplateKey.InBattleCharIcon11,
+        EteTemplateKey.GuideEnemy2Assault,
+        EteTemplateKey.GuideEnemy2Assault2,
+
+        EteTemplateKey.GuideNoPrblText,
+        EteTemplateKey.GuideEnterName,
     ];
 
 
@@ -30,7 +47,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
 
     protected override int GetThrottleTime()
     {
-        return 4;
+        return 5;
     }
 
     protected override async Task<EventAction> Process(EventAction action)
