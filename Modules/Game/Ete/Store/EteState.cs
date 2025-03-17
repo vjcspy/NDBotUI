@@ -48,6 +48,10 @@ public enum EteTemplateKey
     Supply10xTextConfirm,
     SupplySkipText,
     SupplyExtraText,
+    SupplyConfirmBtn,
+    SupplyTapEmpty,
+    SupplyConsum1000Text,
+    LackMoneyText,
 }
 
 public enum EteReRollStatus
@@ -64,8 +68,9 @@ public enum EteReRollStatus
     GotCodelReward,
 
     DoReRoll,
-    DoReRollCharOk,
     DoReRollWeaponOk,
+    DoReRollLackMoneyX10,
+    DoReRollCharOk,
 }
 
 public record EteJobReRollState(

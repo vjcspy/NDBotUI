@@ -73,6 +73,10 @@ public class EteScreenDetectorDataHelper : ScreenDetectorDataBase
             EteTemplateKey.Supply10xTextConfirm,
             EteTemplateKey.SupplySkipText,
             EteTemplateKey.SupplyExtraText,
+            EteTemplateKey.SupplyConfirmBtn,
+            EteTemplateKey.SupplyTapEmpty,
+            EteTemplateKey.SupplyConsum1000Text,
+            EteTemplateKey.LackMoneyText,
         ];
 
     public static EteScreenDetectorDataHelper GetInstance()

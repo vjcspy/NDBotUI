@@ -20,6 +20,8 @@ public class DoReRollEffect : EffectBase
         EteTemplateKey.HomeSupplyBtn,
         EteTemplateKey.SupplySkipText,
         EteTemplateKey.SupplyExtraText,
+        EteTemplateKey.SupplyConfirmBtn,
+        EteTemplateKey.SupplyTapEmpty,
     ];
 
     protected override bool IsParallel()
@@ -37,7 +39,7 @@ public class DoReRollEffect : EffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus == EteReRollStatus.DoReRoll;
+                return currentStatus >= EteReRollStatus.DoReRoll && currentStatus < EteReRollStatus.DoReRollCharOk;
             }
         }
 
@@ -51,7 +53,7 @@ public class DoReRollEffect : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info(">>Process ReRollHomeStep3Effect");
+        Logger.Info(">>Process DoReRollEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {
@@ -90,8 +92,18 @@ public class DoReRollEffect : EffectBase
                 if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
                 {
                     await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
-                    await Task.Delay(200);
+                    await Task.Delay(1000);
+                    // click x10
                     await emulatorConnection.ClickPPointAsync(new PPoint(88.6f, 91.2f));
+                    isClicked = true;
+                }
+
+                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollLackMoneyX10)
+                {
+                    await emulatorConnection.ClickOnPointAsync(detectTemplatePoint.Point);
+                    await Task.Delay(1000);
+                    // click x1
+                    await emulatorConnection.ClickPPointAsync(new PPoint(72.1f, 91.2f));
                     isClicked = true;
                 }
 
@@ -104,6 +116,25 @@ public class DoReRollEffect : EffectBase
                 await emulatorConnection.ClickPPointAsync(new PPoint(60f, 81f));
                 isClicked = true;
                 break;
+            }
+
+            case EteTemplateKey.SupplyConsum1000Text:
+            {
+                await emulatorConnection.ClickPPointAsync(new PPoint(59f, 69.3f));
+                isClicked = true;
+                break;
+            }
+
+            case EteTemplateKey.LackMoneyText:
+            {
+                if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRollLackMoneyX10)
+                {
+                    return EteAction.DoReRollCharOk.Create(baseActionPayload);
+                }
+
+                // cancel
+                await emulatorConnection.ClickPPointAsync(new PPoint(36.8f, 69.5f));
+                return EteAction.DoReRollLackMoneyX10.Create(baseActionPayload);
             }
 
 

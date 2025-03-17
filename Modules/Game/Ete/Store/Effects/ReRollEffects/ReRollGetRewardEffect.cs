@@ -34,7 +34,7 @@ public class ReRollGetRewardEffect : EffectBase
             {
                 var currentStatus = gameInstanceData.JobReRollState.ReRollStatus;
 
-                return currentStatus >= EteReRollStatus.GetReward || currentStatus < EteReRollStatus.DoReRoll;
+                return currentStatus >= EteReRollStatus.GetReward && currentStatus < EteReRollStatus.DoReRoll;
             }
         }
 
@@ -48,7 +48,7 @@ public class ReRollGetRewardEffect : EffectBase
 
     protected override async Task<EventAction> Process(EventAction action)
     {
-        Logger.Info(">>Process ReRollHomeStep3Effect");
+        Logger.Info(">>Process ReRollGetRewardEffect");
         if (action.Payload is not BaseActionPayload baseActionPayload
             || baseActionPayload.Data is not DetectTemplatePoint detectTemplatePoint)
         {

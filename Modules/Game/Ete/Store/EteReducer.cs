@@ -264,6 +264,76 @@ public class EteReducer
                 return state;
             }
 
+            case EteAction.Type.DoReRollLackMoneyX10:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = instance.JobReRollState with
+                                    {
+                                        ReRollStatus = EteReRollStatus.DoReRollLackMoneyX10,
+                                    },
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
+            case EteAction.Type.DoReRollCharOk:
+            {
+                if (action.Payload is not BaseActionPayload baseActionPayload)
+                {
+                    return state;
+                }
+
+                var emulatorId = baseActionPayload.EmulatorId;
+
+                var gameInstance = state.GetGameInstance(emulatorId);
+                if (gameInstance == null)
+                {
+                    return state;
+                }
+
+                state = state with
+                {
+                    GameInstances = state.GameInstances.Map(
+                        instance =>
+                            instance.EmulatorId == emulatorId
+                                ? instance with
+                                {
+                                    State = AutoState.On,
+                                    JobReRollState = instance.JobReRollState with
+                                    {
+                                        ReRollStatus = EteReRollStatus.DoReRollCharOk,
+                                    },
+                                }
+                                : instance
+                    ),
+                };
+
+                return state;
+            }
+
             default:
                 return state;
         }

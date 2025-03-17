@@ -57,6 +57,10 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         EteTemplateKey.Supply10xTextConfirm,
         EteTemplateKey.SupplySkipText,
         EteTemplateKey.SupplyExtraText,
+        EteTemplateKey.SupplyConfirmBtn,
+        EteTemplateKey.SupplyTapEmpty,
+        EteTemplateKey.SupplyConsum1000Text,
+        EteTemplateKey.LackMoneyText,
     ];
 
     private readonly Enum[] RewardScreenTemplates =
@@ -156,7 +160,7 @@ public class DetectCurrentScreenEffect : DetectScreenEffectBase
         {
             checkTemplates = RewardScreenTemplates;
         }
-        else if (gameInstance.JobReRollState.ReRollStatus == EteReRollStatus.DoReRoll)
+        else if (gameInstance.JobReRollState.ReRollStatus >= EteReRollStatus.DoReRoll && gameInstance.JobReRollState.ReRollStatus <= EteReRollStatus.DoReRollCharOk)
         {
             Logger.Info("Change to DoReRollTemplates");
             checkTemplates = DoReRollTemplates;

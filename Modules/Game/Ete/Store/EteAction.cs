@@ -19,8 +19,9 @@ public class EteAction
         GotCodeReward,
 
         DoReRoll,
-        DoReRollCharOk,
         DoReRollWeaponOk,
+        DoReRollLackMoneyX10,
+        DoReRollCharOk,
     }
 
     public static readonly EventActionFactory InitEte = new(Type.InitEte);
@@ -37,4 +38,5 @@ public class EteAction
     public static readonly EventActionFactory DoReRoll = new(Type.DoReRoll);
     public static readonly EventActionFactory DoReRollCharOk = new(Type.DoReRollCharOk);
     public static readonly EventActionFactory DoReRollWeaponOk = new(Type.DoReRollWeaponOk);
+    public static readonly EventActionFactory DoReRollLackMoneyX10 = new(Type.DoReRollLackMoneyX10);
 }
